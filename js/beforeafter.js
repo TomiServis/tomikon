@@ -1,8 +1,12 @@
 const slider = document.getElementById("slider");
 const after = document.querySelector(".after");
-const line = document.getElementById("line");
+const divider = document.querySelector(".divider");
 
 slider.addEventListener("input", () => {
-    after.style.width = slider.value + "%";
-    line.style.left = slider.value + "%";
+
+    const value = slider.value;
+
+    after.style.width = value + "%";
+    divider.style.left = value + "%";
+
 });
