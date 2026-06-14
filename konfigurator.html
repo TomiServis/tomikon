@@ -186,6 +186,28 @@ border-color:#008cff;
 </style>
 
 </head>
+
+  <script>
+
+const gameButtons =
+document.querySelectorAll(".option-btn");
+
+gameButtons.forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+gameButtons.forEach(btn=>
+btn.classList.remove("active")
+);
+
+button.classList.add("active");
+
+});
+
+});
+
+</script>
+  
 <body>
 
 <div class="container">
