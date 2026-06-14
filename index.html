@@ -129,6 +129,15 @@ id="slider">
 
 </section>
 
+  <script>
+const slider = document.getElementById("slider");
+const after = document.querySelector(".after");
+
+slider.addEventListener("input", () => {
+    after.style.width = slider.value + "%";
+});
+</script>
+
 <section class="section" id="about">
 <h2>O nás</h2>
 
