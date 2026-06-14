@@ -62,11 +62,33 @@ padding:40px;
 }
 
   .result-content{
-display:flex;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
 align-items:center;
-justify-content:space-between;
-gap:50px;
-flex-wrap:wrap;
+}
+
+.result-info{
+background:#0d0d0d;
+padding:30px;
+border-radius:25px;
+border:1px solid rgba(0,140,255,.25);
+}
+
+.preview-image{
+width:100%;
+max-width:500px;
+display:block;
+margin:auto;
+border-radius:25px;
+border:1px solid rgba(0,140,255,.3);
+box-shadow:0 0 40px rgba(0,140,255,.2);
+}
+
+@media(max-width:900px){
+.result-content{
+grid-template-columns:1fr;
+}
 }
 
 .container{
@@ -339,17 +361,6 @@ id="budget"
 
 </div>
 
-<div>
-
-<img id="pcPreview"
-src="pc1.png"
-style="
-width:400px;
-max-width:100%;
-border-radius:20px;
-border:1px solid rgba(0,140,255,.3);
-box-shadow:0 0 30px rgba(0,140,255,.2);
-">
 
 </div>
 
