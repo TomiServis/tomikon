@@ -37,10 +37,14 @@ z-index:1000;
 }
 
 .logo img{
-height:120px;
+height:180px;
 filter:
 drop-shadow(0 0 10px #008cff)
 drop-shadow(0 0 25px #008cff);
+  nav{
+padding:20px 10%;
+height:110px;
+}
 }
 
 nav a{
@@ -95,9 +99,10 @@ padding:100px 10%;
 
 .cards{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
+grid-template-columns:repeat(2,1fr);
+gap:30px;
 margin-top:40px;
+min-height:140px;
 }
 
 .card{
@@ -125,8 +130,16 @@ margin-top:40px;
 }
 
 .gallery img{
-width:100%;
-border-radius:20px;
+height:450px;
+object-fit:cover;
+transition:.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.04);
+box-shadow:
+0 0 25px rgba(0,140,255,.4),
+0 0 60px rgba(0,140,255,.2);
 }
 
 footer{
@@ -190,7 +203,23 @@ box-shadow:
 0 0 20px rgba(0,140,255,0.4),
 0 0 50px rgba(0,140,255,0.25);
 }
-  
+
+.stats{
+display:flex;
+gap:60px;
+margin-top:40px;
+justify-content:center;
+}
+
+.stats h3{
+font-size:40px;
+color:#008cff;
+}
+
+.stats p{
+color:#aaa;
+}
+
 </style>
 </head>
 
@@ -217,6 +246,25 @@ filter:
 drop-shadow(0 0 20px #008cff)
 drop-shadow(0 0 50px #008cff);
 ">
+  
+  <div class="stats">
+
+<div>
+<h3>100+</h3>
+<p>Servisov</p>
+</div>
+
+<div>
+<h3>50+</h3>
+<p>Postavených PC</p>
+</div>
+
+<div>
+<h3>5★</h3>
+<p>Spokojnosť</p>
+</div>
+
+</div>
 
 <div class="hero-gallery">
 
@@ -283,6 +331,36 @@ skladanie herných PC a predaj príslušenstva.
 <img src="pc3.png" alt="">
 <img src="pc4.png" alt="">
 </div>
+</section>
+
+  <section class="section">
+
+<h2>Prečo TOMIKON?</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>⚡ Rýchly servis</h3>
+<p>Väčšina opráv do 24 hodín.</p>
+</div>
+
+<div class="card">
+<h3>🎮 Herné zostavy</h3>
+<p>PC zostavené na mieru podľa rozpočtu.</p>
+</div>
+
+<div class="card">
+<h3>🛡️ Záruka</h3>
+<p>Po servise vždy testujeme stabilitu.</p>
+</div>
+
+<div class="card">
+<h3>📍 Slovensko</h3>
+<p>Osobný prístup ku každému zákazníkovi.</p>
+</div>
+
+</div>
+
 </section>
 
 <section class="section" id="contact">
