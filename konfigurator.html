@@ -154,6 +154,35 @@ width:40%;
 background:#008cff;
 }
 
+  .game-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-top:25px;
+}
+
+.option-btn{
+padding:20px;
+background:#111;
+border:1px solid #333;
+border-radius:15px;
+color:white;
+cursor:pointer;
+font-size:18px;
+transition:.3s;
+}
+
+.option-btn:hover{
+border-color:#008cff;
+box-shadow:0 0 20px rgba(0,140,255,.3);
+transform:translateY(-3px);
+}
+
+.option-btn.active{
+background:#008cff;
+border-color:#008cff;
+}
+
 </style>
 
 </head>
@@ -206,6 +235,23 @@ background:#008cff;
 </div>
 
 <h2>2. Rozpočet</h2>
+
+  <div class="config-box">
+
+<h2>3. Aké hry hráš?</h2>
+
+<div class="game-grid">
+
+<button class="option-btn">🎯 CS2</button>
+<button class="option-btn">🏗 Minecraft</button>
+<button class="option-btn">🎮 Fortnite</button>
+<button class="option-btn">🚔 GTA V</button>
+<button class="option-btn">⚔ Valorant</button>
+<button class="option-btn">💥 Warzone</button>
+
+</div>
+
+</div>
   
 <div style="
 display:flex;
@@ -244,9 +290,15 @@ display:none;
 
 <h2>🎮 Odhad FPS</h2>
 
-<p id="fps1">CS2: 300 FPS</p>
-<p id="fps2">Fortnite: 180 FPS</p>
-<p id="fps3">GTA V: 170 FPS</p>
+<div id="fpsBox">
+
+<p>🎯 CS2: <span id="cs2fps">350</span> FPS</p>
+
+<p>🎮 Fortnite: <span id="fortnitefps">220</span> FPS</p>
+
+<p>🚔 GTA V: <span id="gtavfps">180</span> FPS</p>
+
+</div>
 
 <h2>Odporúčaná zostava</h2>
 
