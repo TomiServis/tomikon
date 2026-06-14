@@ -3,10 +3,10 @@ const after = document.querySelector(".after");
 
 if(slider && after){
 
-    slider.addEventListener("input", function(){
+slider.addEventListener("input", function(){
 
-        after.style.width = this.value + "%";
+after.style.width = this.value + "%";
 
-    });
+});
 
 }
