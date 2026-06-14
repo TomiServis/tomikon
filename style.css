@@ -270,7 +270,7 @@ gap:20px;
 
 }
 
-  .compare-container{
+  .before-after{
 position:relative;
 max-width:1000px;
 margin:auto;
@@ -285,7 +285,7 @@ width:100%;
 display:block;
 }
 
-.compare-overlay{
+.after{
 position:absolute;
 top:0;
 left:0;
@@ -299,7 +299,7 @@ width:1000px;
 max-width:none;
 }
 
-.compare-slider{
+.#slider{
 position:absolute;
 left:0;
 bottom:20px;
