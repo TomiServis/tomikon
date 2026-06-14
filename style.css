@@ -266,6 +266,7 @@ height:auto;
 flex-direction:column;
 gap:20px;
 }
+}
 .before-after{
 position:relative;
 max-width:900px;
