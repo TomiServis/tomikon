@@ -72,6 +72,19 @@ padding:30px;
 border-radius:20px;
 margin-top:30px;
 border:1px solid rgba(0,140,255,.3);
+
+  <a href="mailto:info@tomistore.sk" 
+style="
+display:inline-block;
+margin-top:20px;
+padding:15px 30px;
+background:#008cff;
+color:white;
+text-decoration:none;
+border-radius:15px;
+">
+📩 Poslať dopyt
+</a>
 }
 
 .price{
@@ -80,11 +93,30 @@ color:#008cff;
 margin-top:15px;
 }
 
+  .progress{
+width:100%;
+height:15px;
+background:#111;
+border-radius:20px;
+overflow:hidden;
+margin-bottom:30px;
+}
+
+.progress-bar{
+height:100%;
+width:40%;
+background:#008cff;
+}
+
 </style>
+
 </head>
 <body>
 
 <div class="container">
+  <div class="progress">
+<div class="progress-bar"></div>
+</div>
 
 <h1>🖥️ TOMIKON PC Konfigurátor</h1>
 
@@ -105,6 +137,28 @@ margin-top:15px;
 
 <div class="step">
 
+  <div class="step">
+
+<h2>2. Dizajn zostavy</h2>
+
+<div class="buttons">
+
+<div class="choice">⚫ Čierna</div>
+<div class="choice">⚪ Biela</div>
+
+</div>
+
+<br>
+
+<div class="buttons">
+
+<div class="choice">🌈 RGB Áno</div>
+<div class="choice">🚫 RGB Nie</div>
+
+</div>
+
+</div>
+
 <h2>2. Rozpočet</h2>
 
 <input
@@ -124,6 +178,13 @@ id="budget"
 </div>
 
 <div class="result">
+  <hr style="margin:20px 0;border-color:#222;">
+
+<h2>🎮 Odhad FPS</h2>
+
+<p id="fps1">CS2: 300 FPS</p>
+<p id="fps2">Fortnite: 180 FPS</p>
+<p id="fps3">GTA V: 170 FPS</p>
 
 <h2>Odporúčaná zostava</h2>
 
@@ -147,6 +208,9 @@ const value=parseInt(budget.value);
 document.getElementById('budgetValue').innerText=value;
 
 if(value<900){
+  fps1.innerText='CS2: 250 FPS';
+fps2.innerText='Fortnite: 140 FPS';
+fps3.innerText='GTA V: 120 FPS';
 
 cpu.innerText='CPU: Ryzen 5 5600';
 gpu.innerText='GPU: RTX 4060';
@@ -156,6 +220,9 @@ ssd.innerText='SSD: 1TB NVMe';
 }
 
 else if(value<1400){
+  fps1.innerText='CS2: 350 FPS';
+fps2.innerText='Fortnite: 220 FPS';
+fps3.innerText='GTA V: 180 FPS';
 
 cpu.innerText='CPU: Ryzen 7 5700X';
 gpu.innerText='GPU: RTX 4070';
@@ -165,6 +232,9 @@ ssd.innerText='SSD: 1TB NVMe';
 }
 
 else if(value<1900){
+  fps1.innerText='CS2: 500 FPS';
+fps2.innerText='Fortnite: 320 FPS';
+fps3.innerText='GTA V: 240 FPS';
 
 cpu.innerText='CPU: Ryzen 7 7800X3D';
 gpu.innerText='GPU: RTX 5070';
@@ -174,7 +244,10 @@ ssd.innerText='SSD: 2TB NVMe';
 }
 
 else{
-
+fps1.innerText='CS2: 700 FPS';
+fps2.innerText='Fortnite: 450 FPS';
+fps3.innerText='GTA V: 320 FPS';
+  
 cpu.innerText='CPU: Ryzen 9 9950X';
 gpu.innerText='GPU: RTX 5080';
 ram.innerText='RAM: 64GB DDR5';
