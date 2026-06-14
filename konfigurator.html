@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tomikon PC Konfigurátor</title>
+
+<style>
+
+body{
+background:#050505;
+color:white;
+font-family:Inter,sans-serif;
+padding:50px;
+text-align:center;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+input[type=range]{
+width:100%;
+}
+
+.box{
+background:#111;
+padding:30px;
+margin-top:30px;
+border-radius:20px;
+border:1px solid rgba(0,140,255,.3);
+}
+
+h1{
+margin-bottom:20px;
+}
+
+.price{
+font-size:40px;
+color:#008cff;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>🖥️ Postav si vysnívaný PC</h1>
+
+<input
+type="range"
+min="500"
+max="2500"
+step="100"
+value="1000"
+id="budget"
+>
+
+<div class="price">
+<span id="price">1000</span> €
+</div>
+
+<div class="box">
+
+<h2 id="cpu">Ryzen 5 5600</h2>
+
+<h2 id="gpu">RTX 4060</h2>
+
+<h2 id="ram">16 GB RAM</h2>
+
+</div>
+
+</div>
+
+<script>
+
+const budget=document.getElementById('budget');
+
+budget.addEventListener('input',()=>{
+
+const value=parseInt(budget.value);
+
+document.getElementById('price').innerText=value;
+
+if(value<900){
+
+cpu.innerText='Ryzen 5 5600';
+gpu.innerText='RTX 4060';
+ram.innerText='16 GB RAM';
+
+}
+
+else if(value<1400){
+
+cpu.innerText='Ryzen 7 5700X';
+gpu.innerText='RTX 4070';
+ram.innerText='32 GB RAM';
+
+}
+
+else if(value<1900){
+
+cpu.innerText='Ryzen 7 7800X3D';
+gpu.innerText='RTX 5070';
+ram.innerText='32 GB RAM';
+
+}
+
+else{
+
+cpu.innerText='Ryzen 9 9950X';
+gpu.innerText='RTX 5080';
+ram.innerText='64 GB RAM';
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
