@@ -1,44 +1,83 @@
+```html
 <!DOCTYPE html>
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tomikon PC Konfigurátor</title>
+<title>TOMIKON Konfigurátor</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
 body{
 background:#050505;
 color:white;
-font-family:Inter,sans-serif;
-padding:50px;
-text-align:center;
+padding:40px;
 }
 
 .container{
-max-width:900px;
+max-width:1000px;
 margin:auto;
 }
 
-input[type=range]{
-width:100%;
+h1{
+text-align:center;
+margin-bottom:40px;
 }
 
-.box{
+.step{
 background:#111;
 padding:30px;
-margin-top:30px;
 border-radius:20px;
+margin-bottom:20px;
 border:1px solid rgba(0,140,255,.3);
 }
 
-h1{
+h2{
 margin-bottom:20px;
+}
+
+.buttons{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.choice{
+padding:15px 25px;
+background:#1a1a1a;
+border:1px solid #333;
+border-radius:15px;
+cursor:pointer;
+}
+
+.choice:hover{
+border-color:#008cff;
+}
+
+.range{
+width:100%;
+margin-top:20px;
+}
+
+.result{
+background:#111;
+padding:30px;
+border-radius:20px;
+margin-top:30px;
+border:1px solid rgba(0,140,255,.3);
 }
 
 .price{
 font-size:40px;
 color:#008cff;
+margin-top:15px;
 }
 
 </style>
@@ -47,9 +86,29 @@ color:#008cff;
 
 <div class="container">
 
-<h1>🖥️ Postav si vysnívaný PC</h1>
+<h1>🖥️ TOMIKON PC Konfigurátor</h1>
+
+<div class="step">
+
+<h2>1. Na čo bude PC?</h2>
+
+<div class="buttons">
+
+<div class="choice">🎮 Gaming</div>
+<div class="choice">🎥 Streaming</div>
+<div class="choice">🎬 Strih videa</div>
+<div class="choice">🏢 Kancelária</div>
+
+</div>
+
+</div>
+
+<div class="step">
+
+<h2>2. Rozpočet</h2>
 
 <input
+class="range"
 type="range"
 min="500"
 max="2500"
@@ -59,16 +118,19 @@ id="budget"
 >
 
 <div class="price">
-<span id="price">1000</span> €
+<span id="budgetValue">1000</span> €
 </div>
 
-<div class="box">
+</div>
 
-<h2 id="cpu">Ryzen 5 5600</h2>
+<div class="result">
 
-<h2 id="gpu">RTX 4060</h2>
+<h2>Odporúčaná zostava</h2>
 
-<h2 id="ram">16 GB RAM</h2>
+<p id="cpu">CPU: Ryzen 5 5600</p>
+<p id="gpu">GPU: RTX 4060</p>
+<p id="ram">RAM: 16GB DDR4</p>
+<p id="ssd">SSD: 1TB NVMe</p>
 
 </div>
 
@@ -82,37 +144,41 @@ budget.addEventListener('input',()=>{
 
 const value=parseInt(budget.value);
 
-document.getElementById('price').innerText=value;
+document.getElementById('budgetValue').innerText=value;
 
 if(value<900){
 
-cpu.innerText='Ryzen 5 5600';
-gpu.innerText='RTX 4060';
-ram.innerText='16 GB RAM';
+cpu.innerText='CPU: Ryzen 5 5600';
+gpu.innerText='GPU: RTX 4060';
+ram.innerText='RAM: 16GB DDR4';
+ssd.innerText='SSD: 1TB NVMe';
 
 }
 
 else if(value<1400){
 
-cpu.innerText='Ryzen 7 5700X';
-gpu.innerText='RTX 4070';
-ram.innerText='32 GB RAM';
+cpu.innerText='CPU: Ryzen 7 5700X';
+gpu.innerText='GPU: RTX 4070';
+ram.innerText='RAM: 32GB DDR4';
+ssd.innerText='SSD: 1TB NVMe';
 
 }
 
 else if(value<1900){
 
-cpu.innerText='Ryzen 7 7800X3D';
-gpu.innerText='RTX 5070';
-ram.innerText='32 GB RAM';
+cpu.innerText='CPU: Ryzen 7 7800X3D';
+gpu.innerText='GPU: RTX 5070';
+ram.innerText='RAM: 32GB DDR5';
+ssd.innerText='SSD: 2TB NVMe';
 
 }
 
 else{
 
-cpu.innerText='Ryzen 9 9950X';
-gpu.innerText='RTX 5080';
-ram.innerText='64 GB RAM';
+cpu.innerText='CPU: Ryzen 9 9950X';
+gpu.innerText='GPU: RTX 5080';
+ram.innerText='RAM: 64GB DDR5';
+ssd.innerText='SSD: 2TB NVMe';
 
 }
 
@@ -122,3 +188,4 @@ ram.innerText='64 GB RAM';
 
 </body>
 </html>
+```
