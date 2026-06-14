@@ -307,3 +307,14 @@ opacity:0;
 cursor:ew-resize;
 z-index:20;
 }
+
+#line{
+position:absolute;
+top:0;
+left:50%;
+width:4px;
+height:100%;
+background:white;
+box-shadow:0 0 15px #008cff;
+z-index:15;
+}
