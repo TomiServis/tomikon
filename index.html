@@ -279,10 +279,74 @@ gap:20px;
 }
 
 }
+
+  .compare-container{
+position:relative;
+max-width:1000px;
+margin:auto;
+overflow:hidden;
+border-radius:25px;
+border:1px solid rgba(0,140,255,.3);
+}
+
+.compare-img img,
+.compare-overlay img{
+width:100%;
+display:block;
+}
+
+.compare-overlay{
+position:absolute;
+top:0;
+left:0;
+width:50%;
+height:100%;
+overflow:hidden;
+}
+
+.compare-overlay img{
+width:1000px;
+max-width:none;
+}
+
+.compare-slider{
+position:absolute;
+left:0;
+bottom:20px;
+width:100%;
+z-index:5;
+}
+
+.compare-slider::-webkit-slider-thumb{
+-webkit-appearance:none;
+width:24px;
+height:24px;
+border-radius:50%;
+background:white;
+cursor:pointer;
+box-shadow:0 0 20px #008cff;
+}
   
 </style>
 </head>
+  
+<script>
 
+const slider =
+document.getElementById("compareSlider");
+
+const overlay =
+document.getElementById("overlay");
+
+slider.addEventListener("input",()=>{
+
+overlay.style.width =
+slider.value + "%";
+
+});
+
+</script>
+  
 <body>
 
 <nav>
@@ -305,6 +369,34 @@ drop-shadow(0 0 50px #008cff);
 </nav>
 
 <section class="hero">
+
+  <section class="section">
+
+<h2 style="text-align:center;margin-bottom:50px;">
+🧹 Premena počítača
+</h2>
+
+<div class="compare-container">
+
+<div class="compare-img">
+<img src="dirtypc.jpg" alt="Pred čistením">
+</div>
+
+<div class="compare-overlay" id="overlay">
+<img src="cleanpc.jpg" alt="Po čistení">
+</div>
+
+<input
+type="range"
+min="0"
+max="100"
+value="50"
+class="compare-slider"
+id="compareSlider">
+
+</div>
+
+</section>
 
 <img src="logo.png" alt="Tomikon"
 style="
