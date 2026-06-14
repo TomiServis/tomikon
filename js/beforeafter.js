@@ -4,9 +4,7 @@ const divider = document.querySelector(".divider");
 
 slider.addEventListener("input", () => {
 
-    const value = slider.value;
-
-    after.style.width = value + "%";
-    divider.style.left = value + "%";
+    after.style.width = slider.value + "%";
+    divider.style.left = slider.value + "%";
 
 });
