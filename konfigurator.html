@@ -61,6 +61,14 @@ color:white;
 padding:40px;
 }
 
+  .result-content{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:50px;
+flex-wrap:wrap;
+}
+
 .container{
 max-width:1000px;
 margin:auto;
@@ -115,20 +123,6 @@ border:1px solid rgba(0,140,255,.3);
 margin-top:40px;
 }
 
-  <a href="mailto:info@tomistore.sk" 
-style="
-display:inline-block;
-margin-top:20px;
-padding:15px 30px;
-background:#008cff;
-color:white;
-text-decoration:none;
-border-radius:15px;
-">
-📩 Poslať dopyt
-</a>
-}
-
 .price{
 font-size:60px;
 font-weight:800;
@@ -181,6 +175,23 @@ transform:translateY(-3px);
 .option-btn.active{
 background:#008cff;
 border-color:#008cff;
+}
+
+.result hr{
+display:none;
+}
+  
+  .result-content{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:50px;
+flex-wrap:wrap;
+}
+
+.result-content > div{
+flex:1;
+min-width:300px;
 }
 
 </style>
@@ -272,8 +283,6 @@ button.classList.add("active");
 <button class="option-btn">💥 Warzone</button>
 
 </div>
-
-</div>
   
 <div style="
 display:flex;
@@ -303,26 +312,66 @@ id="budget"
 <span id="budgetValue">1000</span> €
 </div>
 
-</div>
+<div class="result">
+
+<div class="result-content">
 
 <div class="result">
-.result hr{
-display:none;
-}
+
+<div class="result-content">
+
+<div>
 
 <h2>🎮 Odhad FPS</h2>
 
-<div id="fpsBox">
+<p id="fps1">🎯 CS2: 350 FPS</p>
+<p id="fps2">🎮 Fortnite: 220 FPS</p>
+<p id="fps3">🚔 GTA V: 180 FPS</p>
 
-<p>🎯 CS2: <span id="cs2fps">350</span> FPS</p>
+<br>
 
-<p>🎮 Fortnite: <span id="fortnitefps">220</span> FPS</p>
+<h2>🖥️ Odporúčaná zostava</h2>
 
-<p>🚔 GTA V: <span id="gtavfps">180</span> FPS</p>
+<p id="cpu">CPU: Ryzen 5 5600</p>
+<p id="gpu">GPU: RTX 4060</p>
+<p id="ram">RAM: 16GB DDR4</p>
+<p id="ssd">SSD: 1TB NVMe</p>
 
 </div>
 
-<h2>Odporúčaná zostava</h2>
+<div>
+
+<img id="pcPreview"
+src="pc1.png"
+style="
+width:400px;
+max-width:100%;
+border-radius:20px;
+border:1px solid rgba(0,140,255,.3);
+box-shadow:0 0 30px rgba(0,140,255,.2);
+">
+
+</div>
+
+</div>
+
+</div>
+
+<img id="pcPreview"
+src="pc1.png"
+style="
+width:400px;
+max-width:100%;
+border-radius:20px;
+border:1px solid rgba(0,140,255,.3);
+box-shadow:0 0 30px rgba(0,140,255,.2);
+">
+
+</div>
+
+</div>
+
+</div>
 
   <img id="pcPreview"
 src="pc1.png"
@@ -345,9 +394,18 @@ box-shadow:0 0 30px rgba(0,140,255,.2);
 </div>
 
 <script>
+  
 
 const budget=document.getElementById('budget');
 
+  const fps1 = document.getElementById("fps1");
+const fps2 = document.getElementById("fps2");
+const fps3 = document.getElementById("fps3");
+
+const cpu = document.getElementById("cpu");
+const gpu = document.getElementById("gpu");
+const ram = document.getElementById("ram");
+const ssd = document.getElementById("ssd");
 budget.addEventListener('input',()=>{
 
 const value=parseInt(budget.value);
