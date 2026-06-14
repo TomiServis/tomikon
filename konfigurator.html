@@ -8,6 +8,47 @@
 
 <style>
 
+  .range{
+-webkit-appearance:none;
+width:100%;
+height:12px;
+border-radius:20px;
+background:linear-gradient(
+90deg,
+#008cff,
+#00d4ff
+);
+outline:none;
+margin-top:30px;
+}
+
+.range::-webkit-slider-thumb{
+-webkit-appearance:none;
+appearance:none;
+width:30px;
+height:30px;
+border-radius:50%;
+background:white;
+cursor:pointer;
+box-shadow:
+0 0 15px #008cff,
+0 0 30px #008cff;
+transition:.3s;
+}
+
+.range::-webkit-slider-thumb:hover{
+transform:scale(1.2);
+}
+
+.range::-moz-range-thumb{
+width:30px;
+height:30px;
+border-radius:50%;
+background:white;
+border:none;
+cursor:pointer;
+}
+
 *{
 margin:0;
 padding:0;
@@ -88,9 +129,13 @@ border-radius:15px;
 }
 
 .price{
-font-size:40px;
-color:#008cff;
-margin-top:15px;
+font-size:60px;
+font-weight:800;
+color:#fff;
+margin-top:20px;
+text-shadow:
+0 0 15px #008cff,
+0 0 35px #008cff;
 }
 
   .progress{
@@ -160,7 +205,21 @@ background:#008cff;
 </div>
 
 <h2>2. Rozpočet</h2>
-
+  
+<div style="
+display:flex;
+justify-content:space-between;
+color:#888;
+font-size:14px;
+margin-bottom:10px;
+">
+<span>500€</span>
+<span>1000€</span>
+<span>1500€</span>
+<span>2000€</span>
+<span>2500€+</span>
+</div>
+  
 <input
 class="range"
 type="range"
