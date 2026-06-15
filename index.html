@@ -84,6 +84,40 @@ a pomáhame zákazníkom získať maximum z ich techniky.
 🖥️ Konfigurátor PC
 </a>
   </section>
+
+  <section class="section fade">
+
+<h2 style="text-align:center;">
+🌡️ Reálne výsledky po čistení
+</h2>
+
+<div class="results">
+
+<div class="result-card">
+<h3>Pred čistením</h3>
+<div class="temp before-temp">0°C</div>
+<p>Vysoké teploty, hlučné ventilátory a nižší výkon.</p>
+</div>
+
+<div class="result-card">
+<h3>Po čistení</h3>
+<div class="temp after-temp">
+<span id="minTemp">0</span>° - <span id="maxTemp">0</span>°C
+</div>
+<p>Nižšie teploty, tichší chod a stabilnejší výkon.</p>
+</div>
+
+<div class="result-card">
+<h3>Zlepšenie</h3>
+<div class="temp improvement">
+-<span id="minDrop">0</span>° až -<span id="maxDrop">0</span>°C
+</div>
+<p>Výrazné zníženie teplôt po servise.</p>
+</div>
+
+</div>
+
+</section>
   
   <section class="section">
 
@@ -107,6 +141,118 @@ a pomáhame zákazníkom získať maximum z ich techniky.
         max="100"
         value="50"
         id="slider">
+
+</div>
+
+<section class="section" style="text-align:center;">
+
+<h2>Je váš počítač hlučný alebo sa prehrieva?</h2>
+
+<p>
+Objednajte si profesionálne čistenie ešte dnes.
+</p>
+
+<a href="#contact" class="btn btn-special">
+📞 Objednať čistenie
+</a>
+
+</section>
+
+<h2>Prečo čistiť počítač?</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>🌡️ Nižšie teploty</h3>
+<p>Po čistení a výmene pasty dokáže procesor pracovať aj o 10-20°C chladnejšie.</p>
+</div>
+
+<div class="card">
+<h3>⚡ Vyšší výkon</h3>
+<p>Prehriaty počítač znižuje výkon. Čistý systém beží plynulejšie.</p>
+</div>
+
+<div class="card">
+<h3>🔇 Tichší chod</h3>
+<p>Ventilátory nemusia bežať na plné otáčky.</p>
+</div>
+
+<div class="card">
+<h3>🛡️ Dlhšia životnosť</h3>
+<p>Menej prachu znamená menšie opotrebenie komponentov.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Cenník čistenia</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>💻 Notebook</h3>
+<p>od 25€</p>
+</div>
+
+<div class="card">
+<h3>🖥️ Stolný PC</h3>
+<p>od 20€</p>
+</div>
+
+<div class="card">
+<h3>🌡️ Výmena teplovodivej pasty</h3>
+<p>od 10€</p>
+</div>
+
+<div class="card">
+<h3>⚙️ Kompletný servis</h3>
+<p>individuálne</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section fade">  
+
+<section class="section">
+
+<h2 style="text-align:center;">Ako prebieha čistenie?</h2>
+
+<div class="steps">
+
+<div class="step">
+<span>1</span>
+<h3>Diagnostika</h3>
+<p>Kontrola stavu počítača.</p>
+</div>
+
+<div class="step">
+<span>2</span>
+<h3>Rozobratie</h3>
+<p>Bezpečné rozobratie zostavy.</p>
+</div>
+
+<div class="step">
+<span>3</span>
+<h3>Čistenie</h3>
+<p>Odstránenie prachu a nečistôt.</p>
+</div>
+
+<div class="step">
+<span>4</span>
+<h3>Pasta</h3>
+<p>Výmena teplovodivej pasty.</p>
+</div>
+
+<div class="step">
+<span>5</span>
+<h3>Testovanie</h3>
+<p>Kontrola teplôt a stability.</p>
+</div>
 
 </div>
 
@@ -228,6 +374,77 @@ Instagram
   
 <script src="js/beforeafter.js"></script>
   
+<script>
+const counters = document.querySelectorAll('.temp');
+
+const animateCounter = (el,target) => {
+
+let current = 0;
+
+const timer = setInterval(() => {
+
+current += Math.ceil(target / 40);
+
+if(current >= target){
+current = target;
+clearInterval(timer);
+}
+
+if(el.classList.contains('improvement')){
+el.innerText = '-' + current + '°C';
+}else{
+el.innerText = current + '°C';
+}
+
+},25);
+
+};
+
+let started = false;
+
+window.addEventListener('scroll',()=>{
+
+const section = document.querySelector('.results');
+
+if(!section || started) return;
+
+const top = section.getBoundingClientRect().top;
+
+if(top < window.innerHeight-100){
+
+started = true;
+
+animateCounter(document.querySelector('.before-temp'),89);
+
+function animateRange(id,target){
+
+let el=document.getElementById(id);
+let count=0;
+
+let interval=setInterval(()=>{
+
+count++;
+
+el.textContent=count;
+
+if(count>=target){
+clearInterval(interval);
+}
+
+},25);
+
+}
+
+animateRange("minTemp",65);
+animateRange("maxTemp",72);
+
+animateRange("minDrop",17);
+animateRange("maxDrop",24);
+
+}
+
+});
+</script>
+
 </body>
 </html>
-```
