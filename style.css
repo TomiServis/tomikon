@@ -541,3 +541,66 @@ transition:.10s;
 .logo img:hover{
 transform:scale(1.5);
 }
+
+.hero::before{
+content:'';
+position:absolute;
+
+width:700px;
+height:700px;
+
+background:#008cff;
+
+border-radius:50%;
+
+filter:blur(250px);
+
+opacity:.12;
+
+z-index:-1;
+}
+body::before{
+content:'';
+position:fixed;
+inset:0;
+
+background-image:
+url("https://www.transparenttextures.com/patterns/hexellence.png");
+
+opacity:.08;
+
+pointer-events:none;
+z-index:-1;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+
+background:
+linear-gradient(
+120deg,
+transparent 0%,
+rgba(0,140,255,.06) 25%,
+transparent 50%,
+rgba(0,140,255,.04) 75%,
+transparent 100%
+);
+
+background-size:600px 600px;
+
+animation:moveLight 13s linear infinite;
+
+pointer-events:none;
+z-index:-1;
+}
+
+@keyframes moveLight{
+from{
+background-position:0 0;
+}
+to{
+background-position:600px 600px;
+}
+}
