@@ -2,22 +2,14 @@ const slider = document.getElementById("slider");
 const after = document.querySelector(".after");
 const line = document.querySelector(".slider-line");
 
-if(slider && after && line){
+slider.addEventListener("input", function(){
 
-    function updateSlider(){
+    const value = this.value;
 
-        const value = slider.value;
+    after.style.width = value + "%";
+    line.style.left = value + "%";
 
-        after.style.clipPath =
-            `inset(0 ${100 - value}% 0 0)`;
-
-        line.style.left = value + "%";
-    }
-
-    updateSlider();
-
-    slider.addEventListener("input", updateSlider);
-}
+});
 
 after.style.width = slider.value + "%";
 line.style.left = slider.value + "%";
