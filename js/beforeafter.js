@@ -1,3 +1,4 @@
+// SLIDER
 const slider = document.getElementById("slider");
 const after = document.querySelector(".after");
 const line = document.querySelector(".slider-line");
@@ -13,10 +14,9 @@ if (slider && after && line && beforeAfter && afterImg) {
         after.style.width = value + "%";
         line.style.left = value + "%";
 
-        // obrázok v .after musí mať veľkosť
-        // celého kontajnera
         afterImg.style.width = beforeAfter.clientWidth + "px";
         afterImg.style.height = beforeAfter.clientHeight + "px";
+
     }
 
     updateSlider();
@@ -24,10 +24,11 @@ if (slider && after && line && beforeAfter && afterImg) {
     slider.addEventListener("input", updateSlider);
 
     window.addEventListener("resize", updateSlider);
+
 }
 
-after.style.width = slider.value + "%";
-line.style.left = slider.value + "%";
+
+// ĎALEJ UŽ TVOJ PÔVODNÝ KÓD
 
 const faders = document.querySelectorAll('.fade');
 
