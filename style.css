@@ -1011,4 +1011,51 @@ resize:vertical;
         height:500px;
     }
 
+  /* =========================
+   MOBILNÁ VERZIA
+   ========================= */
+
+@media (max-width: 768px){
+
+    html,
+    body{
+        width:100%;
+        max-width:100%;
+        overflow-x:hidden;
+    }
+
+    *{
+        max-width:100%;
+    }
+
+    .section{
+        width:100%;
+        max-width:100%;
+        padding-left:15px;
+        padding-right:15px;
+        overflow:hidden;
+    }
+
+    nav{
+        width:100%;
+        max-width:100%;
+        padding:8px 15px;
+    }
+
+    .hero{
+        width:100%;
+        max-width:100%;
+        overflow:hidden;
+    }
+
+    .cards,
+    .results,
+    .steps,
+    .gallery{
+        width:100%;
+        max-width:100%;
+    }
+
+}
+
 }
