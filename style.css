@@ -915,14 +915,6 @@ resize:vertical;
 
 @media (max-width:768px){
 
-.before-after{
-touch-action:pan-y;
-}
-
-#slider{
-touch-action:pan-y;
-}
-
 }
 
 /* NAVIGÁCIA */
