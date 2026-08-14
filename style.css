@@ -1059,3 +1059,68 @@ resize:vertical;
 }
 
 }
+/* =========================
+   MOBIL - BEFORE / AFTER
+   ========================= */
+
+@media (max-width: 768px){
+
+    html,
+    body{
+        width:100%;
+        max-width:100%;
+        overflow-x:hidden !important;
+    }
+
+    .before-after{
+        width:100%;
+        max-width:100%;
+        height:500px;
+        margin-left:auto;
+        margin-right:auto;
+        overflow:hidden;
+    }
+
+    .before-after .base-img{
+        width:100%;
+        height:100%;
+        object-fit:contain;
+    }
+
+    .before-after .after{
+        height:100%;
+        overflow:hidden;
+    }
+
+    .before-after .after img{
+        width:100% !important;
+        height:100% !important;
+        max-width:none !important;
+        object-fit:contain;
+    }
+
+    .before-after #slider{
+        position:absolute;
+        inset:0;
+        width:100%;
+        height:100%;
+        opacity:0;
+        z-index:50;
+        cursor:ew-resize;
+
+        /* DÔLEŽITÉ PRE MOBIL */
+        touch-action:pan-y;
+    }
+
+    .before-after .slider-line{
+        z-index:20;
+        pointer-events:none;
+    }
+
+    .before-after .label-left,
+    .before-after .label-right{
+        z-index:30;
+        pointer-events:none;
+    }
+
+}
