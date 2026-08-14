@@ -2,14 +2,18 @@ const slider = document.getElementById("slider");
 const after = document.querySelector(".after");
 const line = document.querySelector(".slider-line");
 
-slider.addEventListener("input", function(){
+if (slider && after && line) {
 
-    const value = this.value;
+    slider.addEventListener("input", function () {
 
-    after.style.width = value + "%";
-    line.style.left = value + "%";
+        const value = this.value;
 
-});
+        after.style.width = value + "%";
+        line.style.left = value + "%";
+
+    });
+
+}
 
 after.style.width = slider.value + "%";
 line.style.left = slider.value + "%";
