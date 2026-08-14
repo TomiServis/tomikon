@@ -338,9 +338,7 @@ z-index:10;
 pointer-events:none;
 }
 
-.before-after{
-touch-action:pan-y;
-}
+
 
 .steps{
 display:grid;
