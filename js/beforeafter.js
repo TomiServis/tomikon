@@ -4,14 +4,19 @@ const line = document.querySelector(".slider-line");
 
 if (slider && after && line) {
 
-    slider.addEventListener("input", function () {
+    const updateSlider = () => {
 
-        const value = this.value;
+        const value = slider.value;
 
-        after.style.width = value + "%";
+        after.style.clipPath = `inset(0 ${100 - value}% 0 0)`;
+
         line.style.left = value + "%";
 
-    });
+    };
+
+    updateSlider();
+
+    slider.addEventListener("input", updateSlider);
 
 }
 
