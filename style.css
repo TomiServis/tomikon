@@ -856,3 +856,55 @@ background-position:600px 600px;
     }
 
 }
+
+
+/* =========================
+   KONTAKTNÝ FORMULÁR
+========================= */
+
+.form-group{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-bottom:25px;
+}
+
+.form-group label{
+font-size:18px;
+font-weight:700;
+color:white;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+width:100%;
+padding:17px 20px;
+background:#0b0b0b;
+color:white;
+border:1px solid rgba(0,140,255,.35);
+border-radius:15px;
+font-family:'Inter',sans-serif;
+font-size:16px;
+outline:none;
+transition:.25s;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder{
+color:#666;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+border-color:#008cff;
+box-shadow:
+0 0 15px rgba(0,140,255,.2),
+0 0 30px rgba(0,140,255,.08);
+}
+
+.form-group textarea{
+min-height:150px;
+resize:vertical;
+}
