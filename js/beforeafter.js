@@ -18,8 +18,6 @@ if (slider && after && line) {
 after.style.width = slider.value + "%";
 line.style.left = slider.value + "%";
 
-});
-
 const faders = document.querySelectorAll('.fade');
 
 window.addEventListener('scroll', () => {
