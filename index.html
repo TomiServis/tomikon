@@ -390,72 +390,148 @@ method="POST">
 <div class="form-row">
 
 <div class="form-group">
+
 <label>Meno</label>
-<input type="text" placeholder="Tvoje meno" required>
+
+<input
+type="text"
+name="meno"
+placeholder="Tvoje meno"
+required>
+
 </div>
 
+
 <div class="form-group">
+
 <label>Telefón</label>
-<input type="tel" placeholder="0900 123 456" required>
+
+<input
+type="tel"
+name="telefon"
+placeholder="0900 123 456"
+required>
+
 </div>
 
 </div>
+
 
 <div class="form-group">
+
 <label>Čo chceš vyčistiť?</label>
 
 <div class="options">
 
 <label class="option">
-<input type="radio" name="device" value="pc" required>
+
+<input
+type="radio"
+name="device"
+value="Stolný PC"
+required>
+
 <span>🖥️ Stolný PC</span>
+
 </label>
+
 
 <label class="option">
-<input type="radio" name="device" value="notebook">
+
+<input
+type="radio"
+name="device"
+value="Notebook">
+
 <span>💻 Notebook</span>
+
 </label>
 
 </div>
+
 </div>
 
+
 <div class="form-group">
+
 <label>Čo potrebuješ?</label>
 
 <div class="options">
 
 <label class="option">
-<input type="checkbox" name="service" value="clean">
+
+<input
+type="checkbox"
+name="service"
+value="Čistenie">
+
 <span>🧹 Čistenie</span>
+
 </label>
 
+
 <label class="option">
-<input type="checkbox" name="service" value="paste">
+
+<input
+type="checkbox"
+name="service"
+value="Výmena pasty">
+
 <span>🌡️ Výmena pasty</span>
+
 </label>
+
 
 <label class="option">
-<input type="checkbox" name="service" value="complete">
+
+<input
+type="checkbox"
+name="service"
+value="Kompletný servis">
+
 <span>⚙️ Kompletný servis</span>
+
 </label>
 
 </div>
+
 </div>
+
 
 <div class="form-group">
 
 <label>Čo sa s PC deje?</label>
 
 <select name="problem">
-<option value="">Vyber problém</option>
-<option>🌡️ Prehrieva sa</option>
-<option>🔊 Je hlučný</option>
-<option>🧹 Je veľmi zaprášený</option>
-<option>⚡ Má slabý výkon</option>
-<option>❓ Neviem, potrebujem diagnostiku</option>
+
+<option value="">
+Vyber problém
+</option>
+
+<option value="Prehrieva sa">
+🌡️ Prehrieva sa
+</option>
+
+<option value="Je hlučný">
+🔊 Je hlučný
+</option>
+
+<option value="Je veľmi zaprášený">
+🧹 Je veľmi zaprášený
+</option>
+
+<option value="Má slabý výkon">
+⚡ Má slabý výkon
+</option>
+
+<option value="Potrebujem diagnostiku">
+❓ Neviem, potrebujem diagnostiku
+</option>
+
 </select>
 
 </div>
+
 
 <div class="form-group">
 
@@ -468,6 +544,17 @@ rows="5">
 </textarea>
 
 </div>
+
+
+<button
+type="submit"
+class="form-submit">
+
+📩 Odoslať požiadavku
+
+</button>
+
+</form>
 
 <button type="submit" class="form-submit">
 📩 Odoslať požiadavku
