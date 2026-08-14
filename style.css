@@ -1135,3 +1135,9 @@ overflow-x:hidden;
 img{
 max-width:100%;
 }
+
+
+html,
+body{
+touch-action:pan-y;
+}
