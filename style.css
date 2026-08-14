@@ -962,29 +962,15 @@ resize:vertical;
 }
 
 .before-after #slider{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-opacity:0;
-cursor:ew-resize;
-z-index:10;
-pointer-events:auto;
-}
-
-.before-after #slider{
     position:absolute;
     top:0;
     left:0;
-
     width:100%;
     height:100%;
-
     opacity:0;
     cursor:ew-resize;
-
     z-index:10;
+    pointer-events:auto;
 }
 
 @media (max-width:768px){
