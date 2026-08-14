@@ -910,14 +910,11 @@ box-shadow:
 min-height:150px;
 resize:vertical;
 }
-
 /* =========================
    MOBILNÁ VERZIA
 ========================= */
 
-@media (max-width:768px){
-
-}
+@media (max-width: 768px){
 
 /* NAVIGÁCIA */
 
@@ -1127,15 +1124,3 @@ font-size:14px;
 }
 
 }
-
-html,
-body{
-width:100%;
-max-width:100%;
-overflow-x:hidden;
-}
-
-img{
-max-width:100%;
-}
-
