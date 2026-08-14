@@ -27,6 +27,79 @@ if (slider && after && line && beforeAfter && afterImg) {
 
 }
 
+/* =========================
+   MOBILNÉ OVLÁDANIE SLIDERA
+   ========================= */
+
+if (beforeAfter && slider && after && line) {
+
+    let startX = 0;
+    let startY = 0;
+    let dragging = false;
+
+    beforeAfter.addEventListener("touchstart", function(e){
+
+        if (e.touches.length !== 1) return;
+
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+
+        dragging = false;
+
+    }, {passive:true});
+
+
+    beforeAfter.addEventListener("touchmove", function(e){
+
+        if (e.touches.length !== 1) return;
+
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+
+        const diffX = currentX - startX;
+        const diffY = currentY - startY;
+
+        /* ešte nevieme, či chce scrollovať alebo slider */
+        if (!dragging && Math.abs(diffX) < 8 && Math.abs(diffY) < 8) {
+            return;
+        }
+
+        /* ak ide viac hore/dole → necháme telefón scrollovať */
+        if (!dragging && Math.abs(diffY) > Math.abs(diffX)) {
+            return;
+        }
+
+        /* vodorovný pohyb = slider */
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+
+            dragging = true;
+
+            e.preventDefault();
+
+            const rect = beforeAfter.getBoundingClientRect();
+
+            let value =
+                ((currentX - rect.left) / rect.width) * 100;
+
+            value = Math.max(0, Math.min(100, value));
+
+            slider.value = value;
+
+            after.style.width = value + "%";
+            line.style.left = value + "%";
+        }
+
+    }, {passive:false});
+
+
+    beforeAfter.addEventListener("touchend", function(){
+
+        dragging = false;
+
+    }, {passive:true});
+
+}
+
 
 // ĎALEJ UŽ TVOJ PÔVODNÝ KÓD
 
