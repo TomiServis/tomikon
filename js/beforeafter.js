@@ -1,13 +1,85 @@
 const slider = document.getElementById("slider");
+const beforeAfter = document.querySelector(".before-after");
 const after = document.querySelector(".after");
 const line = document.querySelector(".slider-line");
 
-slider.addEventListener("input", () => {
+let startX = 0;
+let startY = 0;
+let dragging = false;
 
-after.style.width = slider.value + "%";
-line.style.left = slider.value + "%";
+function updateSlider(clientX){
+
+const rect = beforeAfter.getBoundingClientRect();
+
+let percent =
+((clientX - rect.left) / rect.width) * 100;
+
+percent = Math.max(0, Math.min(100, percent));
+
+slider.value = percent;
+
+after.style.width = percent + "%";
+line.style.left = percent + "%";
+
+}
+
+beforeAfter.addEventListener("pointerdown", (e) => {
+
+startX = e.clientX;
+startY = e.clientY;
+
+dragging = false;
 
 });
+
+beforeAfter.addEventListener("pointermove", (e) => {
+
+const moveX = Math.abs(e.clientX - startX);
+const moveY = Math.abs(e.clientY - startY);
+
+if(!dragging){
+
+if(moveX < 10 && moveY < 10){
+return;
+}
+
+/* pohyb hore/dole = normálny scroll */
+
+if(moveY > moveX){
+return;
+}
+
+/* pohyb doľava/doprava = slider */
+
+dragging = true;
+
+}
+
+if(dragging){
+
+e.preventDefault();
+
+updateSlider(e.clientX);
+
+}
+
+}, {passive:false});
+
+beforeAfter.addEventListener("pointerup", () => {
+
+dragging = false;
+
+});
+
+beforeAfter.addEventListener("pointercancel", () => {
+
+dragging = false;
+
+});
+
+slider.value = 50;
+after.style.width = "50%";
+line.style.left = "50%";
 
 const faders = document.querySelectorAll('.fade');
 
