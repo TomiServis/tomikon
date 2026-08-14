@@ -604,3 +604,176 @@ to{
 background-position:600px 600px;
 }
 }
+
+.contact-form-section{
+max-width:1000px;
+margin:auto;
+}
+
+.form-subtitle{
+text-align:center;
+color:#999;
+margin-top:15px;
+margin-bottom:40px;
+}
+
+.service-form{
+max-width:800px;
+margin:auto;
+padding:40px;
+
+background:rgba(15,15,15,.75);
+border:1px solid rgba(0,140,255,.3);
+border-radius:25px;
+
+backdrop-filter:blur(20px);
+
+box-shadow:
+0 0 40px rgba(0,140,255,.08);
+}
+
+.form-row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.form-group{
+margin-bottom:25px;
+}
+
+.form-group label{
+display:block;
+margin-bottom:10px;
+font-weight:600;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group select,
+.form-group textarea{
+
+width:100%;
+
+padding:16px;
+
+background:#0b0b0b;
+color:white;
+
+border:1px solid rgba(0,140,255,.25);
+border-radius:12px;
+
+font-size:16px;
+
+outline:none;
+
+transition:.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+border-color:#008cff;
+
+box-shadow:
+0 0 15px rgba(0,140,255,.2);
+}
+
+.form-group textarea{
+resize:vertical;
+}
+
+.options{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.option{
+cursor:pointer;
+}
+
+.option input{
+display:none;
+}
+
+.option span{
+
+display:block;
+
+padding:15px 20px;
+
+border-radius:14px;
+
+background:#0b0b0b;
+
+border:1px solid rgba(0,140,255,.25);
+
+transition:.3s;
+}
+
+.option input:checked + span{
+
+background:rgba(0,140,255,.15);
+
+border-color:#008cff;
+
+box-shadow:
+0 0 20px rgba(0,140,255,.2);
+
+transform:translateY(-2px);
+}
+
+.form-submit{
+
+width:100%;
+
+padding:18px;
+
+border:none;
+
+border-radius:50px;
+
+background:#008cff;
+
+color:white;
+
+font-size:17px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+}
+
+.form-submit:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 0 20px rgba(0,140,255,.7),
+0 0 50px rgba(0,140,255,.3);
+}
+
+
+@media(max-width:700px){
+
+.form-row{
+grid-template-columns:1fr;
+}
+
+.service-form{
+padding:25px;
+}
+
+.options{
+flex-direction:column;
+}
+
+.option span{
+text-align:center;
+}
+
+}
