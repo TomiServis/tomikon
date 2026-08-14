@@ -1153,4 +1153,113 @@ resize:vertical;
         pointer-events:none;
     }
 
+  
+
+}
+
+/* =================================
+   MOBILNÝ BEFORE / AFTER SLIDER
+   ================================= */
+
+@media (max-width: 768px){
+
+    html,
+    body{
+        width:100%;
+        max-width:100%;
+        overflow-x:clip;
+    }
+
+    .before-after{
+        position:relative;
+        width:100%;
+        max-width:100%;
+        height:500px;
+        margin:40px auto;
+        overflow:hidden;
+
+        /* veľmi dôležité */
+        touch-action:pan-y;
+    }
+
+    /* základný obrázok */
+    .before-after .base-img{
+        position:absolute;
+        inset:0;
+
+        width:100%;
+        height:100%;
+
+        object-fit:contain;
+    }
+
+    /* vrchná vrstva */
+    .before-after .after{
+        position:absolute;
+        top:0;
+        left:0;
+
+        width:50%;
+        height:100%;
+
+        overflow:hidden;
+    }
+
+    /* obrázok v hornej vrstve */
+    .before-after .after img{
+        position:absolute;
+        top:0;
+        left:0;
+
+        width:100% !important;
+        height:100% !important;
+
+        max-width:none !important;
+
+        object-fit:contain;
+    }
+
+    /* čiara */
+    .before-after .slider-line{
+        position:absolute;
+        top:0;
+
+        width:3px;
+        height:100%;
+
+        pointer-events:none;
+        z-index:20;
+    }
+
+    /* popisky */
+    .before-after .label-left,
+    .before-after .label-right{
+        pointer-events:none;
+        z-index:30;
+    }
+
+    /*
+       RANGE INPUT:
+       už ho nenatiahneme cez celý obrázok.
+       Tým prestane blokovať scroll.
+    */
+
+    .before-after #slider{
+        position:absolute;
+
+        left:10%;
+        bottom:15px;
+
+        width:80%;
+        height:35px;
+
+        opacity:1;
+
+        z-index:50;
+
+        cursor:pointer;
+
+        touch-action:pan-x;
+    }
+
 }
