@@ -1,18 +1,29 @@
 const slider = document.getElementById("slider");
 const after = document.querySelector(".after");
 const line = document.querySelector(".slider-line");
+const beforeAfter = document.querySelector(".before-after");
+const afterImg = document.querySelector(".after img");
 
-if (slider && after && line) {
+if (slider && after && line && beforeAfter && afterImg) {
 
-    slider.addEventListener("input", function () {
+    function updateSlider() {
 
-        const value = this.value;
+        const value = slider.value;
 
         after.style.width = value + "%";
         line.style.left = value + "%";
 
-    });
+        // obrázok v .after musí mať veľkosť
+        // celého kontajnera
+        afterImg.style.width = beforeAfter.clientWidth + "px";
+        afterImg.style.height = beforeAfter.clientHeight + "px";
+    }
 
+    updateSlider();
+
+    slider.addEventListener("input", updateSlider);
+
+    window.addEventListener("resize", updateSlider);
 }
 
 after.style.width = slider.value + "%";
