@@ -979,9 +979,8 @@ resize:vertical;
     }
 
     .before-after .after img{
-        width:100vw;
-        max-width:none;
-        height:500px;
+        width:100%;
+        height:100%;
         object-fit:contain;
     }
 
