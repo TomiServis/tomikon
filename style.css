@@ -915,7 +915,6 @@ resize:vertical;
     inset:0;
     width:100%;
     height:100%;
-    object-fit:fill;
     display:block;
 }
 
@@ -936,7 +935,6 @@ resize:vertical;
     height:100%;
     max-width:none;
     max-height:none;
-    object-fit:fill;
     display:block;
 }
 
@@ -1003,4 +1001,122 @@ resize:vertical;
         margin:30px auto;
     }
 
+  /* BEFORE / AFTER */
+
+.before-after{
+    position:relative;
+    width:100%;
+    max-width:900px;
+    height:600px;
+    margin:50px auto;
+    overflow:hidden;
+    border-radius:25px;
+    border:1px solid rgba(0,140,255,.3);
+    background:#050505;
+}
+
+/* OBA OBRÁZKY SÚ PRESNE NA SEBE */
+
+.before-after .base-img,
+.before-after .after img{
+    position:absolute;
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+    object-position:center;
+
+    display:block;
+}
+
+/* VRCHNÝ OBRÁZOK */
+
+.before-after .after{
+    position:absolute;
+    top:0;
+    left:0;
+
+    width:50%;
+    height:100%;
+
+    overflow:hidden;
+
+    z-index:2;
+}
+
+/*
+   DÔLEŽITÉ:
+   obrázok vo vnútri .after musí mať
+   rovnakú veľkosť ako celý kontajner
+*/
+
+.before-after .after img{
+    width:900px;
+    height:600px;
+    max-width:none;
+}
+
+/* ČIARA */
+
+.before-after .slider-line{
+    position:absolute;
+
+    top:0;
+    left:50%;
+
+    width:3px;
+    height:100%;
+
+    background:#00aaff;
+
+    box-shadow:
+        0 0 10px #00aaff,
+        0 0 20px #00aaff,
+        0 0 40px #00aaff;
+
+    z-index:5;
+
+    transform:translateX(-50%);
+
+    pointer-events:none;
+}
+
+/* SLIDER */
+
+.before-after #slider{
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    margin:0;
+
+    opacity:0;
+
+    cursor:ew-resize;
+
+    z-index:10;
+}
+
+
+/* MOBIL */
+
+@media(max-width:768px){
+
+    .before-after{
+        height:500px;
+    }
+
+    .before-after .after img{
+        width:100%;
+        height:500px;
+    }
+
+}
 }
