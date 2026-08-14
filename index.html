@@ -382,7 +382,10 @@ Instagram
 Vyplň krátky formulár a ozveme sa ti ohľadom servisu.
 </p>
 
-<form class="service-form">
+<form
+class="service-form"
+action="https://formspree.io/f/mdendypz"
+method="POST">
 
 <div class="form-row">
 
@@ -443,7 +446,7 @@ Vyplň krátky formulár a ozveme sa ti ohľadom servisu.
 
 <label>Čo sa s PC deje?</label>
 
-<select>
+<select name="problem">
 <option value="">Vyber problém</option>
 <option>🌡️ Prehrieva sa</option>
 <option>🔊 Je hlučný</option>
@@ -459,6 +462,7 @@ Vyplň krátky formulár a ozveme sa ti ohľadom servisu.
 <label>Poznámka</label>
 
 <textarea
+name="poznamka"
 placeholder="Napíš nám napríklad čo sa s počítačom deje..."
 rows="5">
 </textarea>
