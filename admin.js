@@ -1184,3 +1184,5 @@ if (copyFacebook) {
     );
 
 }
+
+checkUser();
