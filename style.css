@@ -1141,34 +1141,80 @@ resize:vertical;
     */
 
     .before-after #slider{
-        position:absolute;
+    position:absolute;
 
-        top:0;
-        left:0;
+    top:0;
+    left:0;
 
-        width:100%;
-        height:100%;
+    width:100%;
+    height:45px;
 
-        margin:0;
-        padding:0;
+    margin:0;
+    padding:0;
 
-        opacity:0;
+    opacity:1;
 
-        z-index:100;
+    z-index:100;
 
-        cursor:ew-resize;
+    cursor:ew-resize;
 
-        -webkit-appearance:none;
-        appearance:none;
+    -webkit-appearance:none;
+    appearance:none;
 
-        /*
-           Dôležité:
-           slider reaguje na pohyb prsta,
-           stránka sa pritom môže normálne
-           posúvať hore/dole.
-        */
-        touch-action:none;
-    }
+    background:transparent;
+    border:none;
+
+    touch-action:pan-y;
+}
+
+/* schová vodorovnú lištu */
+.before-after #slider::-webkit-slider-runnable-track{
+    height:4px;
+    background:transparent;
+}
+
+/* gulička */
+.before-after #slider::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+
+    width:22px;
+    height:22px;
+
+    margin-top:-9px;
+
+    border-radius:50%;
+
+    background:#159cff;
+    border:3px solid white;
+
+    box-shadow:
+        0 0 8px #159cff,
+        0 0 18px #159cff;
+
+    cursor:ew-resize;
+}
+
+.before-after #slider::-moz-range-track{
+    height:4px;
+    background:transparent;
+}
+
+.before-after #slider::-moz-range-thumb{
+    width:22px;
+    height:22px;
+
+    border-radius:50%;
+
+    background:#159cff;
+    border:3px solid white;
+
+    box-shadow:
+        0 0 8px #159cff,
+        0 0 18px #159cff;
+
+    cursor:ew-resize;
+}
 
 }
 
