@@ -2,7 +2,7 @@ const REVIEWS_SUPABASE_URL =
 "https://sjhlzllylobreeehziae.supabase.co";
 
 const REVIEWS_SUPABASE_KEY =
-"SEM_VLOZ_TVOJ_PUBLISHABLE_KEY";
+"sb_publishable_3GLcmT1aTqaGija1nFtziA_iGUYqt7_";
 
 
 const reviewsClient =
