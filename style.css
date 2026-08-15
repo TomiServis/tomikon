@@ -1081,7 +1081,7 @@ resize:vertical;
         overflow:hidden;
 
         /* dovolí stránke scrollovať hore/dole */
-        touch-action:pan-y;
+        touch-action:auto;
     }
 
     .before-after .base-img{
@@ -1164,7 +1164,7 @@ resize:vertical;
     background:transparent;
     border:none;
 
-    touch-action:pan-y;
+    touch-action:auto;
 }
 
 /* schová vodorovnú lištu */
