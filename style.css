@@ -1149,10 +1149,10 @@ resize:vertical;
 }
 
 /* =========================================
-   MOBILE BEFORE / AFTER
+   MOBILE - BEFORE / AFTER + SCROLL FIX
    ========================================= */
 
-@media (max-width: 768px){
+@media (max-width:768px){
 
     html,
     body{
@@ -1161,21 +1161,45 @@ resize:vertical;
         overflow-x:hidden;
     }
 
+    /* výkon mobilu */
+    body::before{
+        animation:none !important;
+    }
+
+    .service-form{
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+    }
+
+    .card,
+    .result-card{
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+    }
+
+
+    /* BEFORE / AFTER */
+
     .before-after{
         position:relative;
         width:calc(100% - 28px);
+        max-width:none;
         height:500px;
-        margin:40px auto;
-        overflow:hidden;
 
-        /* dovolí normálne scrollovanie stránky */
+        margin:40px auto;
+
+        overflow:hidden;
+        border-radius:25px;
+
         touch-action:pan-y;
     }
 
-    /* SPODNÝ / ZÁKLADNÝ OBRÁZOK */
+
     .before-after .base-img{
         position:absolute;
-        inset:0;
+
+        top:0;
+        left:0;
 
         width:100%;
         height:100%;
@@ -1183,9 +1207,10 @@ resize:vertical;
         object-fit:contain;
     }
 
-    /* HORNÝ OBRÁZOK */
+
     .before-after .after{
         position:absolute;
+
         top:0;
         left:0;
 
@@ -1193,25 +1218,38 @@ resize:vertical;
         height:100%;
 
         overflow:hidden;
+
+        pointer-events:none;
     }
+
+
+    /*
+       PO obrázok musí zostať rovnako veľký
+       ako celý BEFORE/AFTER box.
+    */
 
     .before-after .after img{
         position:absolute;
+
         top:0;
         left:0;
 
-        width:100% !important;
-        height:100% !important;
+        width:100%;
+        height:100%;
 
-        max-width:none !important;
+        max-width:none;
 
         object-fit:contain;
+
+        pointer-events:none;
     }
 
-    /* MODRÁ ČIARA */
+
     .before-after .slider-line{
         position:absolute;
+
         top:0;
+        left:50%;
 
         width:3px;
         height:100%;
@@ -1219,74 +1257,38 @@ resize:vertical;
         z-index:20;
 
         pointer-events:none;
+
+        background:#00aaff;
+
+        box-shadow:
+            0 0 10px #00aaff,
+            0 0 20px #00aaff,
+            0 0 40px #00aaff;
     }
 
-    /* PRED / PO */
-    .before-after .label-left,
-    .before-after .label-right{
-        z-index:30;
-        pointer-events:none;
-    }
 
     /*
-       INPUT JE NEVIDITEĽNÝ.
-       Stále funguje ako slider,
-       ale vertikálny pohyb nechávame pre stránku.
+       RANGE NESMIE ZABERAŤ CELÝ OBRÁZOK.
+       Na mobile ho necháme mimo dotykovej plochy.
+       Ovládanie spraví JS.
     */
 
     .before-after #slider{
         position:absolute;
 
-        inset:0;
-
-        width:100%;
-        height:100%;
-
-        margin:0;
-        padding:0;
+        width:1px;
+        height:1px;
 
         opacity:0;
 
-        z-index:40;
-
-        cursor:ew-resize;
-
-        -webkit-appearance:none;
-        appearance:none;
-
-        /* DÔLEŽITÉ */
-        touch-action:pan-y;
+        pointer-events:none;
     }
 
-    /* odstránenie natívnej guličky */
 
-    .before-after #slider::-webkit-slider-thumb{
-        -webkit-appearance:none;
-        appearance:none;
-
-        width:44px;
-        height:44px;
-
-        background:transparent;
-        border:0;
-    }
-
-    .before-after #slider::-moz-range-thumb{
-        width:44px;
-        height:44px;
-
-        background:transparent;
-        border:0;
-    }
-
-    .before-after #slider::-webkit-slider-runnable-track{
-        background:transparent;
-        border:0;
-    }
-
-    .before-after #slider::-moz-range-track{
-        background:transparent;
-        border:0;
+    .before-after .label-left,
+    .before-after .label-right{
+        z-index:30;
+        pointer-events:none;
     }
 
 }
