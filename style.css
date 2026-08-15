@@ -1643,16 +1643,15 @@ resize:vertical;
 
 }
 
-/* =========================
-   GALÉRIA - PHOTO POPUP
-========================= */
+/* =================================
+   GALÉRIA - ZVÄČŠENIE FOTKY
+================================= */
 
-.photo-popup{
+.lightbox{
 
     position:fixed;
 
-    top:0;
-    left:0;
+    inset:0;
 
     width:100%;
     height:100%;
@@ -1667,34 +1666,31 @@ resize:vertical;
     padding:30px;
 
     opacity:0;
-
     visibility:hidden;
 
     z-index:99999;
 
-    transition:.3s ease;
+    transition:
+        opacity .3s ease,
+        visibility .3s ease;
 
     cursor:zoom-out;
 }
 
 
-.photo-popup.show{
+.lightbox.active{
 
     opacity:1;
-
     visibility:visible;
-
 }
 
 
-.photo-popup img{
+.lightbox img{
 
-    max-width:90%;
-
-    max-height:90%;
+    max-width:90vw;
+    max-height:85vh;
 
     width:auto;
-
     height:auto;
 
     object-fit:contain;
@@ -1707,35 +1703,32 @@ resize:vertical;
         0 0 30px rgba(0,140,255,.5),
         0 0 80px rgba(0,140,255,.25);
 
-    transform:scale(.7);
+    transform:scale(.75);
 
-    transition:.3s ease;
+    transition:transform .3s ease;
 
     cursor:default;
 }
 
 
-.photo-popup.show img{
+.lightbox.active img{
 
     transform:scale(1);
 
 }
 
 
-.photo-close{
+.lightbox-close{
 
     position:absolute;
 
     top:25px;
-    right:35px;
+    right:30px;
 
     width:50px;
     height:50px;
 
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
+    border:none;
 
     border-radius:50%;
 
@@ -1743,34 +1736,36 @@ resize:vertical;
 
     color:white;
 
-    font-size:38px;
+    font-size:35px;
 
     cursor:pointer;
 
     z-index:100000;
 
-    box-shadow:0 0 25px rgba(0,140,255,.6);
+    box-shadow:
+        0 0 20px rgba(0,140,255,.6);
 
 }
 
 
 @media(max-width:768px){
 
-    .photo-popup{
+    .lightbox{
 
         padding:15px;
 
     }
 
-    .photo-popup img{
+    .lightbox img{
 
-        max-width:95%;
+        max-width:95vw;
+        max-height:80vh;
 
-        max-height:80%;
+        border-radius:15px;
 
     }
 
-    .photo-close{
+    .lightbox-close{
 
         top:15px;
         right:15px;
@@ -1778,7 +1773,7 @@ resize:vertical;
         width:45px;
         height:45px;
 
-        font-size:32px;
+        font-size:30px;
 
     }
 
