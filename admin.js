@@ -444,3 +444,195 @@ function escapeHTML(text) {
 // =========================
 
 checkUser();
+
+// =========================
+// AI SOCIÁLNE SIETE
+// =========================
+
+const generateAIButton =
+    document.getElementById("generateAIButton");
+
+if(generateAIButton){
+
+    generateAIButton.addEventListener(
+        "click",
+        async () => {
+
+            const service =
+                document.getElementById("aiService").value;
+
+            const description =
+                document.getElementById("aiDescription")
+                .value
+                .trim();
+
+            const message =
+                document.getElementById("aiMessage");
+
+            const results =
+                document.getElementById("aiResults");
+
+            const loading =
+                document.getElementById("aiLoading");
+
+            if(!description){
+
+                message.textContent =
+                    "❌ Napíš krátky popis.";
+
+                return;
+            }
+
+            generateAIButton.disabled = true;
+
+            loading.style.display = "block";
+            results.style.display = "none";
+
+            message.textContent = "";
+
+            try{
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient.functions.invoke(
+                        "generate-social-post-ts",
+                        {
+                            body:{
+                                service,
+                                description
+                            }
+                        }
+                    );
+
+                if(error){
+
+                    console.error(
+                        "AI FUNCTION ERROR:",
+                        error
+                    );
+
+                    throw error;
+                }
+
+                if(!data){
+
+                    throw new Error(
+                        "AI nevrátila žiadne dáta."
+                    );
+                }
+
+                if(data.error){
+
+                    throw new Error(
+                        data.error
+                    );
+                }
+
+                document.getElementById(
+                    "instagramResult"
+                ).value =
+                    data.instagram || "";
+
+                document.getElementById(
+                    "facebookResult"
+                ).value =
+                    data.facebook || "";
+
+                results.style.display = "block";
+
+                message.textContent =
+                    "✅ Príspevky boli vytvorené.";
+
+            }catch(error){
+
+                console.error(
+                    "AI ERROR:",
+                    error
+                );
+
+                message.textContent =
+                    "❌ Nepodarilo sa vytvoriť príspevok: " +
+                    error.message;
+
+            }finally{
+
+                loading.style.display = "none";
+
+                generateAIButton.disabled = false;
+
+            }
+
+        }
+    );
+
+}
+
+
+// =========================
+// KOPÍROVANIE
+// =========================
+
+const copyInstagram =
+    document.getElementById("copyInstagram");
+
+if(copyInstagram){
+
+    copyInstagram.addEventListener(
+        "click",
+        async () => {
+
+            const text =
+                document.getElementById(
+                    "instagramResult"
+                ).value;
+
+            await navigator.clipboard.writeText(text);
+
+            copyInstagram.textContent =
+                "✅ Skopírované!";
+
+            setTimeout(() => {
+
+                copyInstagram.textContent =
+                    "📋 Kopírovať Instagram";
+
+            },1500);
+
+        }
+    );
+
+}
+
+
+const copyFacebook =
+    document.getElementById("copyFacebook");
+
+if(copyFacebook){
+
+    copyFacebook.addEventListener(
+        "click",
+        async () => {
+
+            const text =
+                document.getElementById(
+                    "facebookResult"
+                ).value;
+
+            await navigator.clipboard.writeText(text);
+
+            copyFacebook.textContent =
+                "✅ Skopírované!";
+
+            setTimeout(() => {
+
+                copyFacebook.textContent =
+                    "📋 Kopírovať Facebook";
+
+            },1500);
+
+        }
+    );
+
+}
