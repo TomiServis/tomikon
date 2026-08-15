@@ -572,86 +572,65 @@ if (generateAIButton) {
 
 
         // malé oneskorenie, aby to pôsobilo ako generovanie
-        setTimeout(async () => {
+setTimeout(async () => {
 
-            const result =
-                generateTomikonPost(
-                    service,
-                    description
-                );
+    const result =
+        generateTomikonPost(
+            service,
+            description
+        );
 
+    instagramResult.value =
+        result.instagram;
 
-            instagramResult.value =
-                result.instagram;
-
-            facebookResult.value =
-                result.facebook;
-
-            const { error: saveError } =
-    await supabaseClient
-        .from("ai_posts")
-        .insert({
-            service: service,
-            description: description,
-            instagram: result.instagram,
-            facebook: result.facebook
-        });
-
-if (saveError) {
-
-    console.error(
-        "AI HISTORY SAVE ERROR:",
-        saveError
-    );
-
-} else {
-
-    console.log(
-        "✅ TOMIKON AI príspevok uložený."
-    );
-
-    loadAIHistory();
-
-}
-);
-    await supabaseClient
-        .from("ai_posts")
-        .insert({
-            service: service,
-            description: description,
-            instagram: result.instagram,
-            facebook: result.facebook
-        });
-
-if (saveError) {
-
-    console.error(
-        "AI HISTORY SAVE ERROR:",
-        saveError
-    );
-
-} else {
-
-    console.log(
-        "✅ TOMIKON AI príspevok uložený."
-    );
-
-    loadAIHistory();
-
-}
+    facebookResult.value =
+        result.facebook;
 
 
-            results.style.display = "block";
+    // =========================
+    // ULOŽENIE DO HISTÓRIE
+    // =========================
 
-            loading.style.display = "none";
+    const { error: saveError } =
+        await supabaseClient
+            .from("ai_posts")
+            .insert({
+                service: service,
+                description: description,
+                instagram: result.instagram,
+                facebook: result.facebook
+            });
 
-            generateAIButton.disabled = false;
 
-            message.textContent =
-                "✅ TOMIKON AI vytvorila príspevky.";
+    if (saveError) {
+
+        console.error(
+            "AI HISTORY SAVE ERROR:",
+            saveError
+        );
+
+    } else {
+
+        console.log(
+            "✅ TOMIKON AI príspevok uložený."
+        );
+
+        await loadAIHistory();
+
+    }
 
 
-        }, 700);
+    results.style.display = "block";
+
+    loading.style.display = "none";
+
+    generateAIButton.disabled = false;
+
+    message.textContent =
+        "✅ TOMIKON AI vytvorila príspevky.";
+
+
+}, 700);
 
     });
 
