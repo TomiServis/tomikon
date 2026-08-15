@@ -692,7 +692,7 @@ if (generateAIButton) {
         message.textContent = "";
 
 
-        setTimeout(() => {
+        setTimeout(async () => {
 
             const posts =
                 generateTomikonAI(
