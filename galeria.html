@@ -83,6 +83,61 @@ document.addEventListener("keydown", (e) => {
 
 </script>
 
+  <div id="photoPopup" class="photo-popup">
+
+    <span id="photoClose" class="photo-close">&times;</span>
+
+    <img id="popupImage" src="" alt="">
+
+</div>
+
+
+<script>
+
+const photos = document.querySelectorAll(".gallery-item img");
+
+const popup = document.getElementById("photoPopup");
+
+const popupImage = document.getElementById("popupImage");
+
+const closeButton = document.getElementById("photoClose");
+
+
+photos.forEach(function(photo){
+
+    photo.addEventListener("click", function(){
+
+        popupImage.src = this.src;
+
+        popup.classList.add("show");
+
+    });
+
+});
+
+
+closeButton.addEventListener("click", function(){
+
+    popup.classList.remove("show");
+
+});
+
+
+popup.addEventListener("click", function(event){
+
+    if(event.target === popup){
+
+        popup.classList.remove("show");
+
+    }
+
+});
+
+
+</script>
+
+</body>
+
 <body>
 
 
