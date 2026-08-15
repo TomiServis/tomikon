@@ -1263,3 +1263,22 @@ resize:vertical;
     }
 
 }
+
+/* =========================
+   KONTAKTNÝ FORMULÁR - PC
+   ========================= */
+
+.contact-form{
+    width:100%;
+    max-width:900px;
+    margin:40px auto;
+    padding:40px;
+    box-sizing:border-box;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea{
+    width:100%;
+    box-sizing:border-box;
+}
