@@ -1333,3 +1333,34 @@ resize:vertical;
     }
 
 }
+
+/* OPRAVA SIRKY FORMULARA */
+
+#objednavka .service-form{
+    display:block !important;
+    width:100% !important;
+    max-width:900px !important;
+    min-width:0 !important;
+
+    margin:40px auto !important;
+    padding:40px !important;
+
+    box-sizing:border-box !important;
+}
+
+#objednavka .form-row{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:25px !important;
+}
+
+#objednavka .form-group{
+    width:100% !important;
+}
+
+#objednavka input,
+#objednavka select,
+#objednavka textarea{
+    width:100% !important;
+    box-sizing:border-box !important;
+}
