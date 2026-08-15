@@ -1292,3 +1292,56 @@ resize:vertical;
     }
 
 }
+
+
+/* =================================
+   DESKTOP - SIPKY NA SLIDERI
+   ================================= */
+
+@media (min-width:769px){
+
+    .before-after .slider-line::after{
+
+        content:"‹  ›";
+
+        position:absolute;
+
+        top:50%;
+        left:50%;
+
+        transform:translate(-50%,-50%);
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        width:58px;
+        height:38px;
+
+        background:#008cff;
+
+        border:2px solid white;
+
+        border-radius:20px;
+
+        color:white;
+
+        font-size:24px;
+        font-weight:800;
+
+        line-height:1;
+
+        letter-spacing:2px;
+
+        box-shadow:
+            0 0 10px #008cff,
+            0 0 25px #008cff,
+            0 0 45px rgba(0,140,255,.5);
+
+        z-index:50;
+
+        pointer-events:none;
+
+    }
+
+}
