@@ -9,16 +9,21 @@ if (slider && after && line && beforeAfter && afterImg) {
 
     function updateSlider() {
 
-        const value = slider.value;
+    const value = slider.value;
 
-        after.style.width = value + "%";
-        line.style.left = value + "%";
+    after.style.width = value + "%";
 
-        afterImg.style.width = beforeAfter.clientWidth + "px";
-        afterImg.style.height = beforeAfter.clientHeight + "px";
+    line.style.left = value + "%";
 
+    afterImg.style.width = beforeAfter.clientWidth + "px";
+    afterImg.style.height = beforeAfter.clientHeight + "px";
+
+    const handle = document.querySelector(".slider-handle");
+
+    if(handle){
+        handle.style.left = value + "%";
     }
-
+}
     updateSlider();
 
     slider.addEventListener("input", updateSlider);
