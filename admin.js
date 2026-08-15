@@ -572,7 +572,7 @@ if (generateAIButton) {
 
 
         // malé oneskorenie, aby to pôsobilo ako generovanie
-        setTimeout(() => {
+        setTimeout(async () => {
 
             const result =
                 generateTomikonPost(
