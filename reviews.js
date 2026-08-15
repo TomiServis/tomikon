@@ -36,13 +36,13 @@ async function loadPublicReviews(){
 
     if(error){
 
-        console.error(error);
+    console.error("SUPABASE ERROR:", error);
 
-        list.innerHTML =
-        "<p>Nepodarilo sa načítať recenzie.</p>";
+    message.textContent =
+        "❌ " + error.message;
 
-        return;
-    }
+    return;
+}
 
 
     if(!data || data.length === 0){
