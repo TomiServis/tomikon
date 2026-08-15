@@ -1182,8 +1182,6 @@ if (copyFacebook) {
 
 }
 
-checkUser();
-
 // =========================
 // HISTÓRIA TOMIKON AI
 // =========================
@@ -1396,3 +1394,6 @@ async function loadAIHistory() {
         });
 
 }
+
+checkUser();
+loadAIHistory();
