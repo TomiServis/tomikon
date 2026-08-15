@@ -1416,3 +1416,39 @@ resize:vertical;
     }
 
 }
+
+@media (max-width:768px){
+
+    /* úplne schovať natívnu guličku inputu */
+    .before-after #slider::-webkit-slider-thumb{
+        -webkit-appearance:none !important;
+        appearance:none !important;
+
+        width:0 !important;
+        height:0 !important;
+
+        background:transparent !important;
+        border:0 !important;
+        box-shadow:none !important;
+    }
+
+    .before-after #slider::-moz-range-thumb{
+        width:0 !important;
+        height:0 !important;
+
+        background:transparent !important;
+        border:0 !important;
+        box-shadow:none !important;
+    }
+
+    /* schovať aj natívnu track */
+    .before-after #slider::-webkit-slider-runnable-track{
+        background:transparent !important;
+        border:0 !important;
+    }
+
+    .before-after #slider::-moz-range-track{
+        background:transparent !important;
+        border:0 !important;
+    }
+}
