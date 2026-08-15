@@ -609,9 +609,6 @@ if (generateAIButton) {
 // TOMIKON AI PRO
 // =========================
 
-const generateAIButton =
-    document.getElementById("generateAIButton");
-
 const aiStyles = [
     "professional",
     "sales",
