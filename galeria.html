@@ -15,128 +15,6 @@
 
 </head>
 
-  <div class="lightbox" id="lightbox">
-
-    <button class="lightbox-close" id="lightboxClose">
-        ×
-    </button>
-
-    <img id="lightboxImage" src="" alt="">
-
-</div>
-
-<script>
-
-const galleryImages =
-document.querySelectorAll(".gallery-item img");
-
-const lightbox =
-document.getElementById("lightbox");
-
-const lightboxImage =
-document.getElementById("lightboxImage");
-
-const lightboxClose =
-document.getElementById("lightboxClose");
-
-
-galleryImages.forEach(img => {
-
-    img.addEventListener("click", () => {
-
-        lightboxImage.src = img.src;
-
-        lightbox.classList.add("active");
-
-    });
-
-});
-
-
-lightbox.addEventListener("click", (e) => {
-
-    if(e.target === lightbox){
-
-        lightbox.classList.remove("active");
-
-    }
-
-});
-
-
-lightboxClose.addEventListener("click", () => {
-
-    lightbox.classList.remove("active");
-
-});
-
-
-document.addEventListener("keydown", (e) => {
-
-    if(e.key === "Escape"){
-
-        lightbox.classList.remove("active");
-
-    }
-
-});
-
-</script>
-
-  <div id="photoPopup" class="photo-popup">
-
-    <span id="photoClose" class="photo-close">&times;</span>
-
-    <img id="popupImage" src="" alt="">
-
-</div>
-
-
-<script>
-
-const photos = document.querySelectorAll(".gallery-item img");
-
-const popup = document.getElementById("photoPopup");
-
-const popupImage = document.getElementById("popupImage");
-
-const closeButton = document.getElementById("photoClose");
-
-
-photos.forEach(function(photo){
-
-    photo.addEventListener("click", function(){
-
-        popupImage.src = this.src;
-
-        popup.classList.add("show");
-
-    });
-
-});
-
-
-closeButton.addEventListener("click", function(){
-
-    popup.classList.remove("show");
-
-});
-
-
-popup.addEventListener("click", function(event){
-
-    if(event.target === popup){
-
-        popup.classList.remove("show");
-
-    }
-
-});
-
-
-</script>
-
-</body>
 
 <body>
 
@@ -184,8 +62,10 @@ drop-shadow(0 0 50px #008cff);
 <h1>📸 Naša galéria</h1>
 
 <p class="gallery-subtitle">
+
 Pozrite si ukážky našich realizácií, herných zostáv
 a počítačov, ktorým sme dali nový život.
+
 </p>
 
 
@@ -238,7 +118,9 @@ a počítačov, ktorým sme dali nový život.
 
 
 <a href="index.html#objednavka" class="btn btn-special">
+
 📩 Objednať servis
+
 </a>
 
 
@@ -251,6 +133,96 @@ a počítačov, ktorým sme dali nový život.
 © 2025 TOMIKON
 
 </footer>
+
+
+
+<!-- =================================
+     ZVÄČŠENIE FOTKY
+================================= -->
+
+<div class="lightbox" id="lightbox">
+
+<button
+class="lightbox-close"
+id="lightboxClose">
+
+×
+
+</button>
+
+<img
+id="lightboxImage"
+src=""
+alt="">
+
+</div>
+
+
+
+<script>
+
+const galleryImages =
+document.querySelectorAll(".gallery-item img");
+
+const lightbox =
+document.getElementById("lightbox");
+
+const lightboxImage =
+document.getElementById("lightboxImage");
+
+const lightboxClose =
+document.getElementById("lightboxClose");
+
+
+galleryImages.forEach(function(img){
+
+    img.addEventListener("click", function(){
+
+        lightboxImage.src = this.src;
+
+        lightbox.classList.add("active");
+
+    });
+
+});
+
+
+/* klik mimo obrázka */
+
+lightbox.addEventListener("click", function(e){
+
+    if(e.target === lightbox){
+
+        lightbox.classList.remove("active");
+
+    }
+
+});
+
+
+/* X */
+
+lightboxClose.addEventListener("click", function(){
+
+    lightbox.classList.remove("active");
+
+});
+
+
+/* ESC */
+
+document.addEventListener("keydown", function(e){
+
+    if(e.key === "Escape"){
+
+        lightbox.classList.remove("active");
+
+    }
+
+});
+
+
+</script>
 
 
 </body>
