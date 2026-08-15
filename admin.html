@@ -417,6 +417,125 @@
 
         </div>
 
+        <hr style="margin:50px 0; border:0; border-top:1px solid #222;">
+
+<h2>🤖 AI Sociálne siete</h2>
+
+<div class="admin-box">
+
+    <p>
+        Vytvor profesionálny príspevok pre Instagram a Facebook.
+    </p>
+
+    <label>Čo propaguješ?</label>
+
+    <select id="aiService">
+        <option value="Čistenie PC">🧹 Čistenie PC</option>
+        <option value="Výmena teplovodivej pasty">🌡️ Výmena pasty</option>
+        <option value="Kompletný servis PC">⚙️ Kompletný servis PC</option>
+        <option value="Diagnostika PC">🔍 Diagnostika PC</option>
+        <option value="Iné">💻 Iné</option>
+    </select>
+
+    <label style="display:block;margin-top:20px;">
+        Krátky popis
+    </label>
+
+    <textarea
+        id="aiDescription"
+        rows="5"
+        placeholder="Napr. Vyčistili sme herný PC, vymenili pastu a teploty klesli o 20 °C..."
+        style="
+            width:100%;
+            box-sizing:border-box;
+            padding:14px;
+            margin-top:8px;
+            background:#111;
+            color:white;
+            border:1px solid #008cff;
+            border-radius:8px;
+            resize:vertical;
+        "
+    ></textarea>
+
+    <button
+        id="generateAIButton"
+        class="admin-button"
+        style="margin-top:20px;"
+    >
+        ✨ Vygenerovať príspevok
+    </button>
+
+    <div
+        id="aiLoading"
+        style="display:none;margin-top:20px;"
+    >
+        🤖 AI pripravuje príspevok...
+    </div>
+
+    <div id="aiResults" style="display:none;margin-top:30px;">
+
+        <h3>📸 Instagram</h3>
+
+        <textarea
+            id="instagramResult"
+            rows="10"
+            readonly
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                background:#111;
+                color:white;
+                border:1px solid #008cff;
+                border-radius:8px;
+                resize:vertical;
+            "
+        ></textarea>
+
+        <button
+            id="copyInstagram"
+            class="admin-button"
+            style="margin-top:10px;"
+        >
+            📋 Kopírovať Instagram
+        </button>
+
+
+        <h3 style="margin-top:30px;">
+            📘 Facebook
+        </h3>
+
+        <textarea
+            id="facebookResult"
+            rows="10"
+            readonly
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                background:#111;
+                color:white;
+                border:1px solid #008cff;
+                border-radius:8px;
+                resize:vertical;
+            "
+        ></textarea>
+
+        <button
+            id="copyFacebook"
+            class="admin-button"
+            style="margin-top:10px;"
+        >
+            📋 Kopírovať Facebook
+        </button>
+
+    </div>
+
+    <p id="aiMessage"></p>
+
+</div>
+
     </div>
 
 
