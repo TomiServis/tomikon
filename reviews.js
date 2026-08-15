@@ -167,13 +167,13 @@ if(reviewForm){
 
             if(error){
 
-                console.error(error);
+    console.error("SUPABASE ERROR:", error);
 
-                message.textContent =
-                    "❌ Recenziu sa nepodarilo odoslať.";
+    message.textContent =
+        "❌ " + error.message;
 
-                return;
-            }
+    return;
+}
 
 
             reviewForm.reset();
