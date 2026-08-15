@@ -13,54 +13,58 @@ const supabaseClient = window.supabase.createClient(
 
 const loginForm = document.getElementById("loginForm");
 
-loginForm.addEventListener("submit", async (event) => {
+if (loginForm) {
 
-    event.preventDefault();
+    loginForm.addEventListener("submit", async (event) => {
 
-    const email =
-        document.getElementById("email").value;
+        event.preventDefault();
 
-    const password =
-        document.getElementById("password").value;
+        const email =
+            document.getElementById("email").value.trim();
 
-    const error =
-        document.getElementById("error");
+        const password =
+            document.getElementById("password").value;
 
-    error.textContent = "";
+        const error =
+            document.getElementById("error");
 
-    const { error: loginError } =
-        await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-        });
+        error.textContent = "";
 
-    if(loginError){
+        const { error: loginError } =
+            await supabaseClient.auth.signInWithPassword({
+                email,
+                password
+            });
 
-        error.textContent =
-            "Nesprávny e-mail alebo heslo.";
+        if (loginError) {
 
-        return;
-    }
+            error.textContent =
+                "Nesprávny e-mail alebo heslo.";
 
-    showAdmin();
+            return;
+        }
 
-});
+        showAdmin();
+
+    });
+
+}
 
 
 // =========================
 // KONTROLA PRIHLÁSENIA
 // =========================
 
-async function checkUser(){
+async function checkUser() {
 
     const { data } =
         await supabaseClient.auth.getSession();
 
-    if(data.session){
+    if (data.session) {
 
         showAdmin();
 
-    }else{
+    } else {
 
         showLogin();
 
@@ -69,7 +73,11 @@ async function checkUser(){
 }
 
 
-function showAdmin(){
+// =========================
+// ZOBRAZENIE ADMINA
+// =========================
+
+function showAdmin() {
 
     document
         .getElementById("loginSection")
@@ -84,7 +92,7 @@ function showAdmin(){
 }
 
 
-function showLogin(){
+function showLogin() {
 
     document
         .getElementById("loginSection")
@@ -98,72 +106,194 @@ function showLogin(){
 
 
 // =========================
-// NAČÍTANIE RECENZIÍ
+// NAČÍTANIE VŠETKÝCH RECENZIÍ
 // =========================
 
-async function loadReviews(){
+async function loadReviews() {
 
-    const reviewsContainer =
+    const pendingContainer =
         document.getElementById("reviews");
+
+    const approvedContainer =
+        document.getElementById("approvedReviews");
+
+    if (!pendingContainer || !approvedContainer) {
+
+        console.error(
+            "Chýba #reviews alebo #approvedReviews v admin.html"
+        );
+
+        return;
+    }
+
 
     const { data, error } =
         await supabaseClient
         .from("reviews")
         .select("*")
-        .eq("approved", false)
         .order("created_at", {
-            ascending:false
+            ascending: false
         });
 
-    if(error){
 
-        reviewsContainer.innerHTML =
-            "<p>Nepodarilo sa načítať recenzie.</p>";
+    if (error) {
+
+        pendingContainer.innerHTML =
+            "<p>❌ Nepodarilo sa načítať recenzie.</p>";
+
+        approvedContainer.innerHTML =
+            "<p>❌ Nepodarilo sa načítať recenzie.</p>";
 
         console.error(error);
 
         return;
     }
 
-    if(!data || data.length === 0){
 
-        reviewsContainer.innerHTML =
-            "<p>🎉 Žiadne recenzie čakajúce na schválenie.</p>";
+    const pendingReviews =
+        data.filter(review => review.approved === false);
 
-        return;
+    const approvedReviews =
+        data.filter(review => review.approved === true);
+
+
+    // =========================
+    // POČTY
+    // =========================
+
+    const pendingCount =
+        document.getElementById("pendingCount");
+
+    const approvedCount =
+        document.getElementById("approvedCount");
+
+
+    if (pendingCount) {
+
+        pendingCount.textContent =
+            pendingReviews.length;
+
     }
 
-    reviewsContainer.innerHTML = "";
 
-    data.forEach(review => {
+    if (approvedCount) {
 
-        const card =
-            document.createElement("div");
+        approvedCount.textContent =
+            approvedReviews.length;
 
-        card.className = "review-card";
+    }
 
-        const stars =
-            "★".repeat(review.rating) +
-            "☆".repeat(5 - review.rating);
 
-        card.innerHTML = `
+    // =========================
+    // ČAKAJÚCE RECENZIE
+    // =========================
 
-            <h3>${escapeHTML(review.name)}</h3>
+    pendingContainer.innerHTML = "";
 
-            <div class="review-stars">
-                ${stars}
+
+    if (pendingReviews.length === 0) {
+
+        pendingContainer.innerHTML = `
+            <div class="empty-reviews">
+                🎉 Žiadne recenzie čakajúce na schválenie.
             </div>
+        `;
 
-            <p>
-                ${escapeHTML(review.text)}
-            </p>
+    } else {
 
-            <small>
-                ${new Date(review.created_at).toLocaleString("sk-SK")}
-            </small>
+        pendingReviews.forEach(review => {
 
-            <div class="review-actions">
+            pendingContainer.appendChild(
+                createReviewCard(review, true)
+            );
 
+        });
+
+    }
+
+
+    // =========================
+    // SCHVÁLENÉ RECENZIE
+    // =========================
+
+    approvedContainer.innerHTML = "";
+
+
+    if (approvedReviews.length === 0) {
+
+        approvedContainer.innerHTML = `
+            <div class="empty-reviews">
+                Zatiaľ nemáš žiadne schválené recenzie.
+            </div>
+        `;
+
+    } else {
+
+        approvedReviews.forEach(review => {
+
+            approvedContainer.appendChild(
+                createReviewCard(review, false)
+            );
+
+        });
+
+    }
+
+}
+
+
+// =========================
+// VYTVORENIE KARTY RECENZIE
+// =========================
+
+function createReviewCard(review, pending) {
+
+    const card =
+        document.createElement("div");
+
+    card.className = "review-card";
+
+
+    const stars =
+        "★".repeat(Number(review.rating)) +
+        "☆".repeat(5 - Number(review.rating));
+
+
+    const title =
+        pending
+            ? "⏳ Čaká na schválenie"
+            : "✅ Zverejnená";
+
+
+    card.innerHTML = `
+
+        <div class="review-status">
+            ${title}
+        </div>
+
+        <h3>
+            ${escapeHTML(review.name)}
+        </h3>
+
+        <div class="review-stars">
+            ${stars}
+        </div>
+
+        <p class="review-text">
+            "${escapeHTML(review.text)}"
+        </p>
+
+        <small>
+            ${new Date(review.created_at)
+                .toLocaleString("sk-SK")}
+        </small>
+
+        <div class="review-actions">
+
+            ${
+                pending
+                ?
+                `
                 <button
                     class="approve-button"
                     onclick="approveReview(${review.id})">
@@ -171,21 +301,24 @@ async function loadReviews(){
                     ✅ Schváliť
 
                 </button>
+                `
+                :
+                ""
+            }
 
-                <button
-                    class="delete-button"
-                    onclick="deleteReview(${review.id})">
+            <button
+                class="delete-button"
+                onclick="deleteReview(${review.id})">
 
-                    🗑️ Zmazať
+                🗑️ Zmazať
 
-                </button>
+            </button>
 
-            </div>
-        `;
+        </div>
+    `;
 
-        reviewsContainer.appendChild(card);
 
-    });
+    return card;
 
 }
 
@@ -194,26 +327,30 @@ async function loadReviews(){
 // SCHVÁLENIE
 // =========================
 
-async function approveReview(id){
+async function approveReview(id) {
 
     const { error } =
         await supabaseClient
         .from("reviews")
         .update({
-            approved:true
+            approved: true
         })
         .eq("id", id);
 
-    if(error){
 
-        alert("Nepodarilo sa schváliť recenziu.");
+    if (error) {
+
+        alert(
+            "Nepodarilo sa schváliť recenziu."
+        );
 
         console.error(error);
 
         return;
     }
 
-    loadReviews();
+
+    await loadReviews();
 
 }
 
@@ -222,15 +359,20 @@ async function approveReview(id){
 // ZMAZANIE
 // =========================
 
-async function deleteReview(id){
+async function deleteReview(id) {
 
-    if(!confirm(
-        "Naozaj chceš túto recenziu zmazať?"
-    )){
+    const confirmed =
+        confirm(
+            "Naozaj chceš túto recenziu zmazať?\n\nTáto akcia sa nedá vrátiť späť."
+        );
+
+
+    if (!confirmed) {
 
         return;
 
     }
+
 
     const { error } =
         await supabaseClient
@@ -238,16 +380,20 @@ async function deleteReview(id){
         .delete()
         .eq("id", id);
 
-    if(error){
 
-        alert("Nepodarilo sa zmazať recenziu.");
+    if (error) {
+
+        alert(
+            "Nepodarilo sa zmazať recenziu."
+        );
 
         console.error(error);
 
         return;
     }
 
-    loadReviews();
+
+    await loadReviews();
 
 }
 
@@ -256,31 +402,45 @@ async function deleteReview(id){
 // ODHLÁSENIE
 // =========================
 
-document
-.getElementById("logoutButton")
-.addEventListener("click", async () => {
+const logoutButton =
+    document.getElementById("logoutButton");
 
-    await supabaseClient.auth.signOut();
 
-    showLogin();
+if (logoutButton) {
 
-});
+    logoutButton.addEventListener(
+        "click",
+        async () => {
+
+            await supabaseClient.auth.signOut();
+
+            showLogin();
+
+        }
+    );
+
+}
 
 
 // =========================
-// OCHRANA HTML
+// OCHRANA TEXTU
 // =========================
 
-function escapeHTML(text){
+function escapeHTML(text) {
 
     const div =
         document.createElement("div");
 
-    div.textContent = text;
+    div.textContent =
+        text ?? "";
 
     return div.innerHTML;
 
 }
 
+
+// =========================
+// SPUSTENIE
+// =========================
 
 checkUser();
