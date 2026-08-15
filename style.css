@@ -1059,9 +1059,9 @@ resize:vertical;
 }
 
 }
-/* =========================
+/* =================================
    MOBIL - BEFORE / AFTER
-   ========================= */
+   ================================= */
 
 @media (max-width: 768px){
 
@@ -1073,104 +1073,6 @@ resize:vertical;
     }
 
     .before-after{
-        width:100%;
-        max-width:100%;
-        height:500px;
-        margin-left:auto;
-        margin-right:auto;
-        overflow:hidden;
-    }
-
-    .before-after .base-img{
-        width:100%;
-        height:100%;
-        object-fit:contain;
-    }
-
-    .before-after .after{
-        height:100%;
-        overflow:hidden;
-    }
-
-    .before-after .after img{
-        width:100% !important;
-        height:100% !important;
-        max-width:none !important;
-        object-fit:contain;
-    }
-
-@media (max-width:768px){
-
-    .before-after{
-        width:100%;
-        max-width:100%;
-        height:500px;
-        overflow:hidden;
-        touch-action:pan-y;
-    }
-
-    .before-after .base-img{
-        width:100%;
-        height:100%;
-        object-fit:contain;
-    }
-
-    .before-after .after{
-        height:100%;
-        overflow:hidden;
-    }
-
-    .before-after .after img{
-        width:100% !important;
-        height:100% !important;
-        max-width:none !important;
-        object-fit:contain;
-    }
-
-    /* Na mobile nebude neviditeľný input blokovať scroll */
-    .before-after #slider{
-        position:absolute;
-        width:1px;
-        height:1px;
-        opacity:0;
-        pointer-events:none;
-    }
-
-    .before-after .slider-line{
-        pointer-events:none;
-    }
-
-}
-
-    .before-after .slider-line{
-        z-index:20;
-        pointer-events:none;
-    }
-
-    .before-after .label-left,
-    .before-after .label-right{
-        z-index:30;
-        pointer-events:none;
-    }
-
-  
-
-}
-
-/* =================================
-   MOBILNÝ BEFORE / AFTER SLIDER
-   ================================= */
-
-@media (max-width: 768px){
-
-    html,
-    body{
-        width:100%;
-        max-width:100%;
-        overflow-x:clip;
-    }
-
-    .before-after{
         position:relative;
         width:100%;
         max-width:100%;
@@ -1178,11 +1080,10 @@ resize:vertical;
         margin:40px auto;
         overflow:hidden;
 
-        /* veľmi dôležité */
+        /* dovolí stránke scrollovať hore/dole */
         touch-action:pan-y;
     }
 
-    /* základný obrázok */
     .before-after .base-img{
         position:absolute;
         inset:0;
@@ -1193,7 +1094,6 @@ resize:vertical;
         object-fit:contain;
     }
 
-    /* vrchná vrstva */
     .before-after .after{
         position:absolute;
         top:0;
@@ -1205,7 +1105,6 @@ resize:vertical;
         overflow:hidden;
     }
 
-    /* obrázok v hornej vrstve */
     .before-after .after img{
         position:absolute;
         top:0;
@@ -1219,7 +1118,6 @@ resize:vertical;
         object-fit:contain;
     }
 
-    /* čiara */
     .before-after .slider-line{
         position:absolute;
         top:0;
@@ -1231,7 +1129,6 @@ resize:vertical;
         z-index:20;
     }
 
-    /* popisky */
     .before-after .label-left,
     .before-after .label-right{
         pointer-events:none;
@@ -1239,27 +1136,38 @@ resize:vertical;
     }
 
     /*
-       RANGE INPUT:
-       už ho nenatiahneme cez celý obrázok.
-       Tým prestane blokovať scroll.
+       Skrytý input.
+       Bude cez celý slider a JS ho bude ovládať.
     */
 
     .before-after #slider{
         position:absolute;
 
-        left:10%;
-        bottom:15px;
+        top:0;
+        left:0;
 
-        width:80%;
-        height:35px;
+        width:100%;
+        height:100%;
 
-        opacity:1;
+        margin:0;
+        padding:0;
 
-        z-index:50;
+        opacity:0;
 
-        cursor:pointer;
+        z-index:100;
 
-        touch-action:pan-x;
+        cursor:ew-resize;
+
+        -webkit-appearance:none;
+        appearance:none;
+
+        /*
+           Dôležité:
+           slider reaguje na pohyb prsta,
+           stránka sa pritom môže normálne
+           posúvať hore/dole.
+        */
+        touch-action:none;
     }
 
 }
