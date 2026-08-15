@@ -446,6 +446,76 @@ function escapeHTML(text) {
 checkUser();
 
 // =========================
+// TOMIKON AI - FOTKY
+// =========================
+
+const aiPhotos =
+    document.getElementById("aiPhotos");
+
+const aiPhotoPreview =
+    document.getElementById("aiPhotoPreview");
+
+
+if (aiPhotos) {
+
+    aiPhotos.addEventListener("change", () => {
+
+        aiPhotoPreview.innerHTML = "";
+
+        const files =
+            Array.from(aiPhotos.files);
+
+
+        files.forEach(file => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload = function(event) {
+
+                const wrapper =
+                    document.createElement("div");
+
+                wrapper.style.cssText = `
+                    aspect-ratio:1;
+                    border:1px solid #008cff;
+                    border-radius:10px;
+                    overflow:hidden;
+                    background:#111;
+                `;
+
+
+                const img =
+                    document.createElement("img");
+
+                img.src =
+                    event.target.result;
+
+                img.style.cssText = `
+                    width:100%;
+                    height:100%;
+                    object-fit:cover;
+                    display:block;
+                `;
+
+
+                wrapper.appendChild(img);
+
+                aiPhotoPreview.appendChild(wrapper);
+
+            };
+
+
+            reader.readAsDataURL(file);
+
+        });
+
+    });
+
+}
+
+// =========================
 // TOMIKON AI - VLASTNÝ GENERÁTOR
 // =========================
 
