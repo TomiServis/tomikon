@@ -1183,3 +1183,216 @@ if (copyFacebook) {
 }
 
 checkUser();
+
+// =========================
+// HISTÓRIA TOMIKON AI
+// =========================
+
+async function loadAIHistory() {
+
+    const container =
+        document.getElementById("aiHistory");
+
+    if (!container) return;
+
+    const { data, error } =
+        await supabaseClient
+            .from("ai_posts")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
+
+    if (error) {
+
+        console.error("AI HISTORY ERROR:", error);
+
+        container.innerHTML =
+            "<p>❌ Nepodarilo sa načítať históriu.</p>";
+
+        return;
+    }
+
+    if (!data || data.length === 0) {
+
+        container.innerHTML =
+            "<p>📭 Zatiaľ nemáš žiadne uložené príspevky.</p>";
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    data.forEach(post => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "ai-history-card";
+
+        card.innerHTML = `
+
+            <h3>
+                🤖 ${escapeHTML(post.service || "TOMIKON AI")}
+            </h3>
+
+            <small>
+                ${new Date(post.created_at)
+                    .toLocaleString("sk-SK")}
+            </small>
+
+            <p>
+                <strong>Popis:</strong>
+                ${escapeHTML(post.description)}
+            </p>
+
+            <h4>📸 Instagram</h4>
+
+            <textarea
+                readonly
+                class="history-text"
+            >${post.instagram}</textarea>
+
+            <button
+                class="admin-button copy-history-instagram"
+                data-text="${encodeURIComponent(post.instagram)}">
+
+                📋 Kopírovať Instagram
+
+            </button>
+
+            <h4>🟦 Facebook</h4>
+
+            <textarea
+                readonly
+                class="history-text"
+            >${post.facebook}</textarea>
+
+            <button
+                class="admin-button copy-history-facebook"
+                data-text="${encodeURIComponent(post.facebook)}">
+
+                📋 Kopírovať Facebook
+
+            </button>
+
+            <br><br>
+
+            <button
+                class="delete-button history-delete"
+                data-id="${post.id}">
+
+                🗑️ Zmazať
+
+            </button>
+        `;
+
+        container.appendChild(card);
+
+    });
+
+    // KOPÍROVANIE INSTAGRAM
+
+    document
+        .querySelectorAll(".copy-history-instagram")
+        .forEach(button => {
+
+            button.addEventListener("click", async () => {
+
+                const text =
+                    decodeURIComponent(
+                        button.dataset.text
+                    );
+
+                await navigator.clipboard
+                    .writeText(text);
+
+                button.textContent =
+                    "✅ Skopírované!";
+
+                setTimeout(() => {
+
+                    button.textContent =
+                        "📋 Kopírovať Instagram";
+
+                }, 1500);
+
+            });
+
+        });
+
+
+    // KOPÍROVANIE FACEBOOK
+
+    document
+        .querySelectorAll(".copy-history-facebook")
+        .forEach(button => {
+
+            button.addEventListener("click", async () => {
+
+                const text =
+                    decodeURIComponent(
+                        button.dataset.text
+                    );
+
+                await navigator.clipboard
+                    .writeText(text);
+
+                button.textContent =
+                    "✅ Skopírované!";
+
+                setTimeout(() => {
+
+                    button.textContent =
+                        "📋 Kopírovať Facebook";
+
+                }, 1500);
+
+            });
+
+        });
+
+
+    // MAZANIE
+
+    document
+        .querySelectorAll(".history-delete")
+        .forEach(button => {
+
+            button.addEventListener("click", async () => {
+
+                const id =
+                    button.dataset.id;
+
+                if (!confirm(
+                    "Naozaj chceš tento príspevok zmazať?"
+                )) {
+
+                    return;
+
+                }
+
+                const { error } =
+                    await supabaseClient
+                        .from("ai_posts")
+                        .delete()
+                        .eq("id", id);
+
+                if (error) {
+
+                    alert(
+                        "Nepodarilo sa zmazať príspevok."
+                    );
+
+                    console.error(error);
+
+                    return;
+                }
+
+                loadAIHistory();
+
+            });
+
+        });
+
+}
