@@ -606,208 +606,504 @@ if (generateAIButton) {
 
 
 // =========================
-// TOMIKON AI ENGINE
+// TOMIKON AI PRO
 // =========================
 
-function generateTomikonPost(service, description) {
+const generateAIButton =
+    document.getElementById("generateAIButton");
 
-    const desc =
-        description.charAt(0).toUpperCase() +
-        description.slice(1);
+const aiStyles = [
+    "professional",
+    "sales",
+    "social"
+];
 
 
-    // =========================
-    // ČISTENIE PC
-    // =========================
+if (generateAIButton) {
 
-    if (service === "Čistenie PC") {
+    generateAIButton.addEventListener("click", () => {
 
-        return {
+        const service =
+            document.getElementById("aiService").value;
 
-            instagram: `🧹✨ Ďalší počítač dostal poriadny servis!
+        const description =
+            document.getElementById("aiDescription")
+                .value
+                .trim();
 
-${desc}
+        const message =
+            document.getElementById("aiMessage");
 
-Počítač sme dôkladne vyčistili od prachu a dali mu potrebnú starostlivosť. 💻
+        const results =
+            document.getElementById("aiResults");
 
-Čistý počítač znamená lepšie chladenie, správne teploty a spoľahlivejšiu prevádzku. ❄️🔥
+        const loading =
+            document.getElementById("aiLoading");
 
-Ak aj tvoj PC potrebuje vyčistiť, ozvi sa nám. 📩
 
-⭐ TOMIKON – servis počítačov
+        if (!description) {
 
-#TOMIKON #PCservis #CisteniePC #GamingPC #Pocitac #ServisPC`,
+            message.textContent =
+                "❌ Napíš krátky popis.";
 
-            facebook: `🧹✨ Ďalší počítač dostal poriadny servis!
+            return;
 
-${desc}
+        }
 
-Počítač sme dôkladne vyčistili a skontrolovali.
 
-Pravidelné čistenie pomáha počítaču lepšie odvádzať teplo, udržiavať správne teploty a fungovať spoľahlivejšie.
+        generateAIButton.disabled = true;
 
-Ak je tvoj počítač hlučný, prehrieva sa alebo je vo vnútri plný prachu, možno je čas na servis. 💻❄️
+        loading.style.display = "block";
 
-📩 Ozvi sa TOMIKONu a dohodneme servis.
+        results.style.display = "none";
 
-⭐ TOMIKON – servis počítačov
+        message.textContent = "";
 
-#TOMIKON #PCservis #CisteniePC #ServisPC`
-        };
 
-    }
+        setTimeout(() => {
 
+            const posts =
+                generateTomikonAI(
+                    service,
+                    description
+                );
 
-    // =========================
-    // VÝMENA PASTY
-    // =========================
 
-    if (service === "Výmena teplovodivej pasty") {
+            displayAIResults(posts);
 
-        return {
 
-            instagram: `🌡️🔥 Ďalší PC dostal novú teplovodivú pastu!
+            results.style.display = "block";
 
-${desc}
+            loading.style.display = "none";
 
-Stará pasta už nemusí správne odvádzať teplo, čo môže spôsobovať vysoké teploty a hlučnejšie chladenie.
+            generateAIButton.disabled = false;
 
-Po servise môže počítač opäť lepšie odvádzať teplo. ❄️💻
+            message.textContent =
+                "✅ TOMIKON AI vytvorila 3 verzie.";
 
-Potrebuje servis aj tvoj počítač?
+        }, 500);
 
-📩 Ozvi sa TOMIKONu.
+    });
 
-#TOMIKON #PCservis #TeplovodivaPasta #GamingPC #CPU #ServisPC`,
+}
 
-            facebook: `🌡️🔥 Dnes sme riešili teploty počítača.
 
-${desc}
+// =========================
+// GENERÁTOR
+// =========================
 
-Súčasťou servisu bola výmena starej teplovodivej pasty.
+function generateTomikonAI(service, description) {
 
-Teplovodivá pasta pomáha odvádzať teplo medzi procesorom a chladičom. Ak je stará alebo vyschnutá, môže prispievať k vyšším teplotám.
+    const cleanDescription =
+        capitalize(description);
 
-Ak sa tvoj počítač prehrieva alebo je nezvyčajne hlučný, ozvi sa nám. 💻
-
-📩 TOMIKON – servis počítačov
-
-#TOMIKON #PCservis #TeplovodivaPasta #ServisPC`
-        };
-
-    }
-
-
-    // =========================
-    // KOMPLETNÝ SERVIS
-    // =========================
-
-    if (service === "Kompletný servis PC") {
-
-        return {
-
-            instagram: `⚙️🔥 Kompletný servis počítača!
-
-${desc}
-
-Počítač dostal kompletnú starostlivosť a kontrolu. 💻✨
-
-Cieľom servisu je čistý, chladný a spoľahlivý počítač, ktorý bude pripravený na ďalšiu prácu alebo hranie. 🎮
-
-Potrebuje servis aj tvoj PC?
-
-📩 Ozvi sa TOMIKONu.
-
-#TOMIKON #PCservis #ServisPC #GamingPC #Pocitac #CisteniePC`,
-
-            facebook: `⚙️🔥 Kompletný servis počítača!
-
-${desc}
-
-Počítač sme kompletne skontrolovali a vykonali potrebný servis.
-
-Pri kompletnom servise sa zameriavame na stav počítača, čistotu komponentov, chladenie a celkovú funkčnosť.
-
-Ak chceš, aby tvoj počítač fungoval spoľahlivo a mal správne teploty, ozvi sa nám. 💻
-
-📩 TOMIKON – servis počítačov
-
-#TOMIKON #PCservis #ServisPC #GamingPC`
-        };
-
-    }
-
-
-    // =========================
-    // DIAGNOSTIKA
-    // =========================
-
-    if (service === "Diagnostika PC") {
-
-        return {
-
-            instagram: `🔍💻 Niečo nie je v poriadku s počítačom?
-
-${desc}
-
-Pri diagnostike hľadáme príčinu problému a kontrolujeme, čo môže spôsobovať nesprávne fungovanie počítača.
-
-Niekedy stačí malá oprava, inokedy je potrebný väčší servis. Dôležité je najskôr zistiť, kde je problém. 🛠️
-
-📩 Potrebuješ diagnostiku? Ozvi sa TOMIKONu.
-
-#TOMIKON #PCservis #DiagnostikaPC #ServisPC #Pocitac`,
-
-            facebook: `🔍💻 Počítač nefunguje tak, ako má?
-
-${desc}
-
-Pri diagnostike sa snažíme nájsť skutočnú príčinu problému.
-
-Kontrolujeme jednotlivé komponenty, teploty, chladenie a ďalšie možné príčiny problémov.
-
-Ak nevieš, čo je s tvojím počítačom, nemusíš hádať. Najskôr ho diagnostikujeme a následne navrhneme riešenie. 🛠️
-
-📩 Ozvi sa TOMIKONu.
-
-⭐ TOMIKON – servis počítačov
-
-#TOMIKON #PCservis #DiagnostikaPC #ServisPC`
-        };
-
-    }
-
-
-    // =========================
-    // INÉ
-    // =========================
 
     return {
 
-        instagram: `💻✨ Novinka z TOMIKON servisu!
+        professional:
+            createProfessionalPost(
+                service,
+                cleanDescription
+            ),
 
-${desc}
+        sales:
+            createSalesPost(
+                service,
+                cleanDescription
+            ),
 
-O počítače sa treba starať, aby mohli spoľahlivo fungovať čo najdlhšie. 🛠️
+        social:
+            createSocialPost(
+                service,
+                cleanDescription
+            )
 
-Ak potrebuješ servis, kontrolu alebo pomoc s počítačom, ozvi sa nám. 📩
+    };
 
-⭐ TOMIKON – servis počítačov
+}
 
-#TOMIKON #PCservis #Pocitac #ServisPC`,
 
-        facebook: `💻✨ Novinka z TOMIKON servisu!
+// =========================
+// PROFESIONÁLNY
+// =========================
 
-${desc}
+function createProfessionalPost(
+    service,
+    description
+) {
 
-Každý počítač si zaslúži správnu starostlivosť a pravidelnú kontrolu.
+    const title =
+        getServiceTitle(service);
 
-Ak potrebuješ pomoc s počítačom, servis, diagnostiku alebo čistenie, pokojne sa nám ozvi.
+    const hashtags =
+        getHashtags(service);
+
+
+    const instagram = `🔧 ${title}
+
+${description}
+
+Pri servise sme sa zamerali na dôkladnú kontrolu a potrebnú údržbu počítača.
+
+Cieľom je spoľahlivý chod, správne teploty a čo najlepšia starostlivosť o hardware. 💻
+
+📩 Potrebuješ servis alebo diagnostiku počítača?
+Ozvi sa TOMIKONu.
+
+${hashtags}`;
+
+
+    const facebook = `🔧 ${title}
+
+${description}
+
+Pri tomto servise sme sa zamerali na dôkladnú údržbu a kontrolu počítača.
+
+Správna starostlivosť o hardware môže pomôcť so stabilitou, chladením a celkovou spoľahlivosťou počítača. 💻
+
+Ak aj tvoj počítač potrebuje servis, čistenie alebo diagnostiku, pokojne sa nám ozvi.
 
 📩 TOMIKON – servis počítačov
 
-#TOMIKON #PCservis #ServisPC`
+${hashtags}`;
+
+
+    return {
+        instagram,
+        facebook
     };
+
+}
+
+
+// =========================
+// PREDAJNÝ
+// =========================
+
+function createSalesPost(
+    service,
+    description
+) {
+
+    const title =
+        getServiceTitle(service);
+
+    const hashtags =
+        getHashtags(service);
+
+
+    const instagram = `🔥 Ďalší PC dostal poriadny servis!
+
+${description}
+
+Aj tvoj počítač:
+
+🌡️ sa prehrieva?
+🔊 je hlučný?
+🧹 je plný prachu?
+⚡ alebo nefunguje tak ako má?
+
+Nečakaj, kým sa problém zhorší.
+
+📩 Napíš TOMIKONu a dohodni si servis.
+
+${hashtags}`;
+
+
+    const facebook = `🔥 Ďalší počítač je pripravený na ďalšiu prácu alebo hranie!
+
+${description}
+
+Ak máš doma počítač, ktorý sa prehrieva, je hlučný, zaprášený alebo jednoducho nefunguje tak, ako má, nemusíš problém riešiť sám.
+
+V TOMIKONe sa postaráme o servis, čistenie aj diagnostiku. 🛠️💻
+
+📩 Ozvi sa nám a dohodneme sa na servise.
+
+⭐ TOMIKON – servis počítačov
+
+${hashtags}`;
+
+
+    return {
+        instagram,
+        facebook
+    };
+
+}
+
+
+// =========================
+// UVOĽNENÝ / SOCIAL
+// =========================
+
+function createSocialPost(
+    service,
+    description
+) {
+
+    const hashtags =
+        getHashtags(service);
+
+
+    const instagram = `👀 Tak toto už bolo treba!
+
+${description}
+
+Trochu prachu, trochu servisu a PC môže zase dýchať. 😂💻
+
+Výsledok?
+Čistejší počítač, lepšie chladenie a hlavne spokojný zákazník. 🔥
+
+Ak aj tvoj PC potrebuje pomoc, vieš kam napísať. 😎
+
+📩 TOMIKON
+
+${hashtags}`;
+
+
+    const facebook = `👀 Keď už počítač začína vyzerať ako vysávač, je asi čas na servis. 😂
+
+${description}
+
+Dali sme mu trochu lásky, poriadne ho skontrolovali a pripravili na ďalšiu prevádzku. 💻🔥
+
+Ak aj tvoj PC potrebuje vyčistiť, opraviť alebo diagnostikovať, pokojne sa ozvi.
+
+📩 TOMIKON – nech tvoj počítač zase funguje tak, ako má.
+
+${hashtags}`;
+
+
+    return {
+        instagram,
+        facebook
+    };
+
+}
+
+
+// =========================
+// NÁZVY SLUŽIEB
+// =========================
+
+function getServiceTitle(service) {
+
+    switch(service) {
+
+        case "Čistenie PC":
+            return "🧹 Čistenie počítača";
+
+        case "Výmena teplovodivej pasty":
+            return "🌡️ Výmena teplovodivej pasty";
+
+        case "Kompletný servis PC":
+            return "⚙️ Kompletný servis počítača";
+
+        case "Diagnostika PC":
+            return "🔍 Diagnostika počítača";
+
+        default:
+            return "💻 Servis počítača";
+
+    }
+
+}
+
+
+// =========================
+// HASHTAGY
+// =========================
+
+function getHashtags(service) {
+
+    const common =
+        "#TOMIKON #PCservis #ServisPC #Pocitac";
+
+    switch(service) {
+
+        case "Čistenie PC":
+
+            return common +
+                " #CisteniePC #GamingPC";
+
+        case "Výmena teplovodivej pasty":
+
+            return common +
+                " #TeplovodivaPasta #GamingPC";
+
+        case "Kompletný servis PC":
+
+            return common +
+                " #GamingPC #PCmaintenance";
+
+        case "Diagnostika PC":
+
+            return common +
+                " #DiagnostikaPC #PCproblem";
+
+        default:
+
+            return common;
+
+    }
+
+}
+
+
+// =========================
+// CAPITALIZE
+// =========================
+
+function capitalize(text) {
+
+    if (!text) return "";
+
+    return text.charAt(0).toUpperCase() +
+           text.slice(1);
+
+}
+
+
+// =========================
+// ZOBRAZENIE 3 VERZIÍ
+// =========================
+
+function displayAIResults(posts) {
+
+    const instagramResult =
+        document.getElementById(
+            "instagramResult"
+        );
+
+    const facebookResult =
+        document.getElementById(
+            "facebookResult"
+        );
+
+
+    // Zatiaľ použijeme najlepšiu
+    // profesionálnu verziu
+    instagramResult.value =
+        posts.professional.instagram;
+
+    facebookResult.value =
+        posts.professional.facebook;
+
+
+    // uložíme všetky verzie
+    window.tomikonAIVersions =
+        posts;
+
+
+    addStyleButtons();
+
+}
+
+
+// =========================
+// PREPÍNANIE ŠTÝLOV
+// =========================
+
+function addStyleButtons() {
+
+    const results =
+        document.getElementById("aiResults");
+
+
+    if (
+        document.getElementById(
+            "tomikonStyleButtons"
+        )
+    ) return;
+
+
+    const box =
+        document.createElement("div");
+
+    box.id =
+        "tomikonStyleButtons";
+
+    box.style.cssText = `
+        display:flex;
+        gap:10px;
+        flex-wrap:wrap;
+        margin-bottom:20px;
+    `;
+
+
+    box.innerHTML = `
+
+        <button
+            type="button"
+            class="admin-button tomikon-style-button"
+            data-style="professional">
+
+            🟢 Profesionálny
+
+        </button>
+
+        <button
+            type="button"
+            class="admin-button tomikon-style-button"
+            data-style="sales">
+
+            🔴 Predajný
+
+        </button>
+
+        <button
+            type="button"
+            class="admin-button tomikon-style-button"
+            data-style="social">
+
+            🔵 Uvoľnený
+
+        </button>
+
+    `;
+
+
+    results.insertBefore(
+        box,
+        results.firstElementChild
+    );
+
+
+    box
+        .querySelectorAll(
+            ".tomikon-style-button"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const style =
+                        button.dataset.style;
+
+                    const version =
+                        window.tomikonAIVersions[
+                            style
+                        ];
+
+
+                    document.getElementById(
+                        "instagramResult"
+                    ).value =
+                        version.instagram;
+
+
+                    document.getElementById(
+                        "facebookResult"
+                    ).value =
+                        version.facebook;
+
+                }
+            );
+
+        });
 
 }
 
@@ -817,7 +1113,9 @@ Ak potrebuješ pomoc s počítačom, servis, diagnostiku alebo čistenie, pokojn
 // =========================
 
 const copyInstagram =
-    document.getElementById("copyInstagram");
+    document.getElementById(
+        "copyInstagram"
+    );
 
 if (copyInstagram) {
 
@@ -830,25 +1128,18 @@ if (copyInstagram) {
                     "instagramResult"
                 ).value;
 
-            try {
+            await navigator.clipboard
+                .writeText(text);
 
-                await navigator.clipboard.writeText(text);
+            copyInstagram.textContent =
+                "✅ Skopírované!";
+
+            setTimeout(() => {
 
                 copyInstagram.textContent =
-                    "✅ Skopírované!";
+                    "📋 Kopírovať Instagram";
 
-                setTimeout(() => {
-
-                    copyInstagram.textContent =
-                        "📋 Kopírovať Instagram";
-
-                }, 1500);
-
-            } catch (error) {
-
-                console.error(error);
-
-            }
+            }, 1500);
 
         }
     );
@@ -861,7 +1152,9 @@ if (copyInstagram) {
 // =========================
 
 const copyFacebook =
-    document.getElementById("copyFacebook");
+    document.getElementById(
+        "copyFacebook"
+    );
 
 if (copyFacebook) {
 
@@ -874,25 +1167,18 @@ if (copyFacebook) {
                     "facebookResult"
                 ).value;
 
-            try {
+            await navigator.clipboard
+                .writeText(text);
 
-                await navigator.clipboard.writeText(text);
+            copyFacebook.textContent =
+                "✅ Skopírované!";
+
+            setTimeout(() => {
 
                 copyFacebook.textContent =
-                    "✅ Skopírované!";
+                    "📋 Kopírovať Facebook";
 
-                setTimeout(() => {
-
-                    copyFacebook.textContent =
-                        "📋 Kopírovať Facebook";
-
-                }, 1500);
-
-            } catch (error) {
-
-                console.error(error);
-
-            }
+            }, 1500);
 
         }
     );
