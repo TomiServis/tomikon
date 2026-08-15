@@ -15,6 +15,73 @@
 
 </head>
 
+  <div class="lightbox" id="lightbox">
+
+    <button class="lightbox-close" id="lightboxClose">
+        ×
+    </button>
+
+    <img id="lightboxImage" src="" alt="">
+
+</div>
+
+<script>
+
+const galleryImages =
+document.querySelectorAll(".gallery-item img");
+
+const lightbox =
+document.getElementById("lightbox");
+
+const lightboxImage =
+document.getElementById("lightboxImage");
+
+const lightboxClose =
+document.getElementById("lightboxClose");
+
+
+galleryImages.forEach(img => {
+
+    img.addEventListener("click", () => {
+
+        lightboxImage.src = img.src;
+
+        lightbox.classList.add("active");
+
+    });
+
+});
+
+
+lightbox.addEventListener("click", (e) => {
+
+    if(e.target === lightbox){
+
+        lightbox.classList.remove("active");
+
+    }
+
+});
+
+
+lightboxClose.addEventListener("click", () => {
+
+    lightbox.classList.remove("active");
+
+});
+
+
+document.addEventListener("keydown", (e) => {
+
+    if(e.key === "Escape"){
+
+        lightbox.classList.remove("active");
+
+    }
+
+});
+
+</script>
 
 <body>
 
