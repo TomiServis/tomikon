@@ -588,6 +588,14 @@ if (generateAIButton) {
                 result.facebook;
 
             const { error: saveError } =
+
+                const { data: sessionData } =
+    await supabaseClient.auth.getSession();
+
+console.log(
+    "TOMIKON AI SESSION:",
+    sessionData.session?.user?.id
+);
     await supabaseClient
         .from("ai_posts")
         .insert({
