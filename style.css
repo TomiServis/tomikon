@@ -997,279 +997,10 @@ resize:vertical;
 
 
 /* MOBIL */
-
-@media (max-width:768px){
-
-    .before-after{
-        width:100%;
-        height:500px;
-    }
-
-    .before-after .base-img,
-    .before-after .after img{
-        width:100%;
-        height:500px;
-    }
-
-  /* =========================
-   MOBILNÁ VERZIA
-   ========================= */
-
-@media (max-width: 768px){
-
-    html,
-    body{
-        width:100%;
-        max-width:100%;
-        overflow-x:hidden;
-    }
-
-    *{
-        max-width:100%;
-    }
-
-    .section{
-        width:100%;
-        max-width:100%;
-        padding-left:15px;
-        padding-right:15px;
-        overflow:hidden;
-    }
-
-    nav{
-        width:100%;
-        max-width:100%;
-        padding:8px 15px;
-    }
-
-    .hero{
-        width:100%;
-        max-width:100%;
-        overflow:hidden;
-    }
-
-    .cards,
-    .results,
-    .steps,
-    .gallery{
-        width:100%;
-        max-width:100%;
-    }
-
-}
-
-}
-
-@media (max-width:768px){
-
-    .before-after #slider::-webkit-slider-thumb{
-        -webkit-appearance:none;
-        appearance:none;
-
-        width:1px;
-        height:1px;
-
-        background:transparent;
-        border:none;
-        box-shadow:none;
-    }
-
-    .before-after #slider::-moz-range-thumb{
-        width:1px;
-        height:1px;
-
-        background:transparent;
-        border:none;
-        box-shadow:none;
-    }
-
-}
-
 /* =================================
    MOBIL - BEFORE / AFTER
    ================================= */
 
-@media (max-width: 768px){
-
-    html,
-    body{
-        width:100%;
-        max-width:100%;
-        overflow-x:hidden !important;
-    }
-
-    .before-after{
-        position:relative;
-        width:100%;
-        max-width:100%;
-        height:500px;
-        margin:40px auto;
-        overflow:hidden;
-
-        /* dovolí stránke scrollovať hore/dole */
-        touch-action:auto;
-    }
-
-    .before-after .base-img{
-    position:absolute;
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:contain;
-}
-
-.before-after .after{
-    position:absolute;
-    top:0;
-    left:0;
-
-    width:50%;
-    height:100%;
-
-    overflow:hidden;
-}
-
-.before-after .after img{
-    position:absolute;
-    top:0;
-    left:0;
-
-    height:100%;
-    max-width:none;
-
-    object-fit:contain;
-}
-
-    .before-after .slider-line{
-        position:absolute;
-        top:0;
-
-        width:3px;
-        height:100%;
-
-        pointer-events:none;
-        z-index:20;
-    }
-
-    .before-after .label-left,
-    .before-after .label-right{
-        pointer-events:none;
-        z-index:30;
-    }
-
-    /*
-       Skrytý input.
-       Bude cez celý slider a JS ho bude ovládať.
-    */
-
-    .before-after #slider{
-    position:absolute;
-
-    top:0;
-    left:0;
-
-    width:100%;
-    height:45px;
-
-    margin:0;
-    padding:0;
-
-    opacity:1;
-
-    z-index:100;
-
-    cursor:ew-resize;
-
-    -webkit-appearance:none;
-    appearance:none;
-
-    background:transparent;
-    border:none;
-
-    touch-action:auto;
-}
-
-/* schová vodorovnú lištu */
-.before-after #slider::-webkit-slider-runnable-track{
-    height:4px;
-    background:transparent;
-}
-
-/* gulička */
-.before-after #slider::-webkit-slider-thumb{
-    -webkit-appearance:none;
-    appearance:none;
-
-    width:22px;
-    height:22px;
-
-    margin-top:-9px;
-
-    border-radius:50%;
-
-    background:#159cff;
-    border:3px solid white;
-
-    box-shadow:
-        0 0 8px #159cff,
-        0 0 18px #159cff;
-
-    cursor:ew-resize;
-}
-
-.before-after #slider::-moz-range-track{
-    height:4px;
-    background:transparent;
-}
-
-.before-after #slider::-moz-range-thumb{
-    width:22px;
-    height:22px;
-
-    border-radius:50%;
-
-    background:#159cff;
-    border:3px solid white;
-
-    box-shadow:
-        0 0 8px #159cff,
-        0 0 18px #159cff;
-
-    cursor:ew-resize;
-}
-
-}
-
-@media (max-width:768px){
-
-    .before-after .slider-handle{
-        position:absolute;
-
-        top:10px;
-        left:50%;
-
-        width:22px;
-        height:22px;
-
-        transform:translateX(-50%);
-
-        border-radius:50%;
-
-        background:#159cff;
-        border:3px solid white;
-
-        box-shadow:
-            0 0 8px #159cff,
-            0 0 18px #159cff;
-
-        z-index:101;
-
-        pointer-events:none;
-    }
-
-}
 
 /* =========================
    KONTAKTNÝ FORMULÁR - PC
@@ -1417,38 +1148,145 @@ resize:vertical;
 
 }
 
-@media (max-width:768px){
+/* =========================================
+   MOBILE BEFORE / AFTER
+   ========================================= */
 
-    /* úplne schovať natívnu guličku inputu */
+@media (max-width: 768px){
+
+    html,
+    body{
+        width:100%;
+        max-width:100%;
+        overflow-x:hidden;
+    }
+
+    .before-after{
+        position:relative;
+        width:calc(100% - 28px);
+        height:500px;
+        margin:40px auto;
+        overflow:hidden;
+
+        /* dovolí normálne scrollovanie stránky */
+        touch-action:pan-y;
+    }
+
+    /* SPODNÝ / ZÁKLADNÝ OBRÁZOK */
+    .before-after .base-img{
+        position:absolute;
+        inset:0;
+
+        width:100%;
+        height:100%;
+
+        object-fit:contain;
+    }
+
+    /* HORNÝ OBRÁZOK */
+    .before-after .after{
+        position:absolute;
+        top:0;
+        left:0;
+
+        width:50%;
+        height:100%;
+
+        overflow:hidden;
+    }
+
+    .before-after .after img{
+        position:absolute;
+        top:0;
+        left:0;
+
+        width:100% !important;
+        height:100% !important;
+
+        max-width:none !important;
+
+        object-fit:contain;
+    }
+
+    /* MODRÁ ČIARA */
+    .before-after .slider-line{
+        position:absolute;
+        top:0;
+
+        width:3px;
+        height:100%;
+
+        z-index:20;
+
+        pointer-events:none;
+    }
+
+    /* PRED / PO */
+    .before-after .label-left,
+    .before-after .label-right{
+        z-index:30;
+        pointer-events:none;
+    }
+
+    /*
+       INPUT JE NEVIDITEĽNÝ.
+       Stále funguje ako slider,
+       ale vertikálny pohyb nechávame pre stránku.
+    */
+
+    .before-after #slider{
+        position:absolute;
+
+        inset:0;
+
+        width:100%;
+        height:100%;
+
+        margin:0;
+        padding:0;
+
+        opacity:0;
+
+        z-index:40;
+
+        cursor:ew-resize;
+
+        -webkit-appearance:none;
+        appearance:none;
+
+        /* DÔLEŽITÉ */
+        touch-action:pan-y;
+    }
+
+    /* odstránenie natívnej guličky */
+
     .before-after #slider::-webkit-slider-thumb{
-        -webkit-appearance:none !important;
-        appearance:none !important;
+        -webkit-appearance:none;
+        appearance:none;
 
-        width:0 !important;
-        height:0 !important;
+        width:44px;
+        height:44px;
 
-        background:transparent !important;
-        border:0 !important;
-        box-shadow:none !important;
+        background:transparent;
+        border:0;
     }
 
     .before-after #slider::-moz-range-thumb{
-        width:0 !important;
-        height:0 !important;
+        width:44px;
+        height:44px;
 
-        background:transparent !important;
-        border:0 !important;
-        box-shadow:none !important;
+        background:transparent;
+        border:0;
     }
 
-    /* schovať aj natívnu track */
     .before-after #slider::-webkit-slider-runnable-track{
-        background:transparent !important;
-        border:0 !important;
+        background:transparent;
+        border:0;
     }
 
     .before-after #slider::-moz-range-track{
-        background:transparent !important;
-        border:0 !important;
+        background:transparent;
+        border:0;
     }
+
 }
