@@ -430,6 +430,34 @@
     <label>Čo propaguješ?</label>
 
     <select id="aiService">
+        <label>📸 Fotky</label>
+
+<input
+    type="file"
+    id="aiPhotos"
+    accept="image/*"
+    multiple
+    style="
+        width:100%;
+        box-sizing:border-box;
+        padding:12px;
+        margin:8px 0 15px;
+        background:#111;
+        color:white;
+        border:1px solid #008cff;
+        border-radius:8px;
+    "
+>
+
+<div
+    id="aiPhotoPreview"
+    style="
+        display:grid;
+        grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
+        gap:10px;
+        margin-top:15px;
+    "
+></div>
         <option value="Čistenie PC">🧹 Čistenie PC</option>
         <option value="Výmena teplovodivej pasty">🌡️ Výmena pasty</option>
         <option value="Kompletný servis PC">⚙️ Kompletný servis PC</option>
