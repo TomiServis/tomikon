@@ -158,11 +158,10 @@ if(reviewForm){
 
 console.log("ODOSIELAM RECENZIU:", reviewData);
 
-const { data, error } =
+const { error } =
     await reviewsClient
     .from("reviews")
-    .insert(reviewData)
-    .select();
+    .insert(reviewData);
 
 
             if(error){
