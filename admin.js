@@ -587,6 +587,33 @@ if (generateAIButton) {
             facebookResult.value =
                 result.facebook;
 
+            const { error: saveError } =
+    await supabaseClient
+        .from("ai_posts")
+        .insert({
+            service: service,
+            description: description,
+            instagram: result.instagram,
+            facebook: result.facebook
+        });
+
+if (saveError) {
+
+    console.error(
+        "AI HISTORY SAVE ERROR:",
+        saveError
+    );
+
+} else {
+
+    console.log(
+        "✅ TOMIKON AI príspevok uložený."
+    );
+
+    loadAIHistory();
+
+}
+
 
             results.style.display = "block";
 
