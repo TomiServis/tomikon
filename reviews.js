@@ -149,20 +149,20 @@ if(reviewForm){
                 "Odosielam...";
 
 
-            const { error } =
-                await reviewsClient
-                .from("reviews")
-                .insert({
+            const reviewData = {
+    name: name,
+    rating: rating,
+    text: text,
+    approved: false
+};
 
-                    name:name,
+console.log("ODOSIELAM RECENZIU:", reviewData);
 
-                    rating:rating,
-
-                    text:text,
-
-                    approved:false
-
-                });
+const { data, error } =
+    await reviewsClient
+    .from("reviews")
+    .insert(reviewData)
+    .select();
 
 
             if(error){
