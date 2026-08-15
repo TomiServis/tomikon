@@ -1936,3 +1936,22 @@ resize:vertical;
     }
 
 }
+
+.admin-box select,
+.admin-box textarea{
+    width:100%;
+    box-sizing:border-box;
+}
+
+.admin-box select{
+    padding:14px;
+    margin:8px 0 15px;
+    background:#111;
+    color:white;
+    border:1px solid #008cff;
+    border-radius:8px;
+}
+
+#aiMessage{
+    margin-top:15px;
+}
