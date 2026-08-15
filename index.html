@@ -562,6 +562,128 @@ class="form-submit">
 </form>
 
 </section>
+
+  <!-- =================================
+     RECENZIE
+================================= -->
+
+<section class="section reviews-section" id="recenzie">
+
+    <h2 style="text-align:center;">
+        ⭐ Recenzie zákazníkov
+    </h2>
+
+    <p class="reviews-subtitle">
+        Pozrite si skúsenosti našich zákazníkov.
+    </p>
+
+
+    <!-- SCHVÁLENÉ RECENZIE -->
+
+    <div id="reviewsList" class="reviews-list">
+
+        <p class="reviews-loading">
+            Načítavam recenzie...
+        </p>
+
+    </div>
+
+
+    <!-- FORMULÁR NA RECENZIU -->
+
+    <div class="review-form-box">
+
+        <h3>⭐ Pridaj svoju recenziu</h3>
+
+        <p>
+            Tvoja recenzia bude najskôr skontrolovaná
+            a následne zverejnená.
+        </p>
+
+
+        <form id="reviewForm">
+
+
+            <div class="review-input">
+
+                <label>Meno</label>
+
+                <input
+                    type="text"
+                    id="reviewName"
+                    placeholder="Tvoje meno"
+                    maxlength="50"
+                    required>
+
+            </div>
+
+
+            <div class="review-input">
+
+                <label>Hodnotenie</label>
+
+                <select id="reviewRating" required>
+
+                    <option value="">
+                        Vyber hodnotenie
+                    </option>
+
+                    <option value="5">
+                        ⭐⭐⭐⭐⭐
+                    </option>
+
+                    <option value="4">
+                        ⭐⭐⭐⭐
+                    </option>
+
+                    <option value="3">
+                        ⭐⭐⭐
+                    </option>
+
+                    <option value="2">
+                        ⭐⭐
+                    </option>
+
+                    <option value="1">
+                        ⭐
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="review-input">
+
+                <label>Recenzia</label>
+
+                <textarea
+                    id="reviewText"
+                    placeholder="Napíš svoju skúsenosť..."
+                    rows="5"
+                    maxlength="500"
+                    required></textarea>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="form-submit">
+
+                ⭐ Odoslať recenziu
+
+            </button>
+
+
+            <p id="reviewMessage"></p>
+
+
+        </form>
+
+    </div>
+
+</section>
   
 
 <footer>
