@@ -588,13 +588,31 @@ if (generateAIButton) {
                 result.facebook;
 
             const { error: saveError } =
+    await supabaseClient
+        .from("ai_posts")
+        .insert({
+            service: service,
+            description: description,
+            instagram: result.instagram,
+            facebook: result.facebook
+        });
 
-                const { data: sessionData } =
-    await supabaseClient.auth.getSession();
+if (saveError) {
 
-console.log(
-    "TOMIKON AI SESSION:",
-    sessionData.session?.user?.id
+    console.error(
+        "AI HISTORY SAVE ERROR:",
+        saveError
+    );
+
+} else {
+
+    console.log(
+        "✅ TOMIKON AI príspevok uložený."
+    );
+
+    loadAIHistory();
+
+}
 );
     await supabaseClient
         .from("ai_posts")
