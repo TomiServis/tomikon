@@ -16,11 +16,29 @@ if (slider && after && line && beforeAfter && afterImg) {
 
     let handle = document.querySelector(".slider-handle");
 
+if (window.matchMedia("(max-width: 768px)").matches) {
+
     if (!handle) {
         handle = document.createElement("div");
         handle.className = "slider-handle";
         beforeAfter.appendChild(handle);
     }
+
+    handle.style.position = "absolute";
+    handle.style.top = "18px";
+    handle.style.width = "22px";
+    handle.style.height = "22px";
+    handle.style.borderRadius = "50%";
+    handle.style.background = "#008cff";
+    handle.style.border = "3px solid white";
+    handle.style.boxShadow = "0 0 12px #008cff, 0 0 25px #008cff";
+    handle.style.transform = "translateX(-50%)";
+    handle.style.zIndex = "50";
+    handle.style.pointerEvents = "auto";
+    handle.style.touchAction = "none";
+    handle.style.cursor = "ew-resize";
+
+}
 
     // základný vzhľad guličky
     handle.style.position = "absolute";
