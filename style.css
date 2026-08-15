@@ -1364,3 +1364,48 @@ resize:vertical;
     width:100% !important;
     box-sizing:border-box !important;
 }
+
+/* =========================
+   FORMULAR - DESKTOP OPRAVA
+========================= */
+
+@media (min-width:769px){
+
+    #objednavka{
+        width:100% !important;
+        max-width:none !important;
+        padding-left:10% !important;
+        padding-right:10% !important;
+    }
+
+    #objednavka .service-form{
+        display:block !important;
+        width:100% !important;
+        max-width:900px !important;
+        min-width:700px !important;
+        margin:40px auto !important;
+        padding:40px !important;
+        box-sizing:border-box !important;
+    }
+
+    #objednavka .form-row{
+        display:grid !important;
+        grid-template-columns:1fr 1fr !important;
+        gap:25px !important;
+        width:100% !important;
+    }
+
+    #objednavka .form-group{
+        width:100% !important;
+    }
+
+    #objednavka input[type="text"],
+    #objednavka input[type="tel"],
+    #objednavka input[type="email"],
+    #objednavka select,
+    #objednavka textarea{
+        width:100% !important;
+        box-sizing:border-box !important;
+    }
+
+}
