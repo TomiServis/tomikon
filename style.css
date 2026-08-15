@@ -1282,3 +1282,34 @@ resize:vertical;
     width:100%;
     box-sizing:border-box;
 }
+
+
+/* =========================
+   KONTAKTNÝ FORMULÁR - DESKTOP
+   ========================= */
+
+.contact-form-section{
+    width:100%;
+}
+
+.service-form{
+    width:100%;
+    max-width:850px;
+    margin:40px auto 0;
+    padding:40px;
+    box-sizing:border-box;
+
+    background:rgba(15,15,15,.7);
+    border:1px solid rgba(0,140,255,.3);
+    border-radius:25px;
+
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+}
+
+.service-form input,
+.service-form select,
+.service-form textarea{
+    width:100%;
+    box-sizing:border-box;
+}
