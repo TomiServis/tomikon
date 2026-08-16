@@ -12,8 +12,12 @@ const bazarClient =
 
 
 // =========================
-// POMOCNÁ FUNKCIA
+// POMOCNÉ FUNKCIE
 // =========================
+
+const $ = (id) =>
+    document.getElementById(id);
+
 
 function escapeHTML(value){
 
@@ -40,14 +44,10 @@ const listingId =
     params.get("id");
 
 
-// =========================
-// ELEMENT
-// =========================
-
-const detailContent =
-    document.getElementById(
-        "detailContent"
-    );
+console.log(
+    "ID INZERÁTU:",
+    listingId
+);
 
 
 // =========================
@@ -56,218 +56,391 @@ const detailContent =
 
 if(!listingId){
 
-    detailContent.innerHTML = `
-        <div class="error">
-            ❌ Inzerát nebol nájdený.
-        </div>
-    `;
+    $("loadingBox").style.display =
+        "none";
+
+    $("errorBox").style.display =
+        "block";
 
 }else{
 
-    loadListing();
+    loadDetail();
 
 }
 
 
 // =========================
-// NAČÍTANIE INZERÁTU
+// NAČÍTANIE DETAILU
 // =========================
 
-async function loadListing(){
+async function loadDetail(){
 
-    const {
-        data: listing,
-        error
-    } =
-        await bazarClient
-        .from("bazar_listings")
-        .select(`
-            id,
-            title,
-            category,
-            price,
-            city,
-            contact,
-            description,
-            created_at
-        `)
-        .eq("id", listingId)
-        .eq("approved", true)
-        .single();
+    try{
+
+        const {
+            data: listing,
+            error: listingError
+        } =
+            await bazarClient
+                .from("bazar_listings")
+                .select(`
+                    id,
+                    title,
+                    category,
+                    price,
+                    city,
+                    contact,
+                    description,
+                    created_at,
+                    approved
+                `)
+                .eq("id", listingId)
+                .eq("approved", true)
+                .single();
 
 
-    // =========================
-    // CHYBA
-    // =========================
+        // =========================
+        // CHYBA INZERÁTU
+        // =========================
 
-    if(error){
+        if(listingError){
+
+            console.error(
+                "LISTING ERROR:",
+                listingError
+            );
+
+            showError();
+
+            return;
+        }
+
+
+        if(!listing){
+
+            showError();
+
+            return;
+        }
+
+
+        // =========================
+        // NAČÍTANIE FOTIEK
+        // =========================
+
+        const {
+            data: images,
+            error: imagesError
+        } =
+            await bazarClient
+                .from("bazar_images")
+                .select(`
+                    id,
+                    listing_id,
+                    image_url,
+                    sort_order
+                `)
+                .eq(
+                    "listing_id",
+                    listingId
+                )
+                .order(
+                    "sort_order",
+                    {
+                        ascending:true
+                    }
+                );
+
+
+        if(imagesError){
+
+            console.error(
+                "IMAGES ERROR:",
+                imagesError
+            );
+
+        }
+
+
+        // =========================
+        // VYPLNENIE ÚDAJOV
+        // =========================
+
+        $("detailCategory")
+            .textContent =
+            listing.category || "";
+
+
+        $("detailTitle")
+            .textContent =
+            listing.title || "";
+
+
+        $("detailPrice")
+            .textContent =
+            Number(
+                listing.price
+            ).toLocaleString(
+                "sk-SK",
+                {
+                    minimumFractionDigits:2,
+                    maximumFractionDigits:2
+                }
+            ) + " €";
+
+
+        $("detailCity")
+            .textContent =
+            listing.city || "";
+
+
+        $("detailContact")
+            .textContent =
+            listing.contact || "";
+
+
+        $("detailDescription")
+            .textContent =
+            listing.description || "";
+
+
+        $("detailDate")
+            .textContent =
+            new Date(
+                listing.created_at
+            ).toLocaleDateString(
+                "sk-SK"
+            );
+
+
+        // =========================
+        // FOTKY
+        // =========================
+
+        const validImages =
+            images || [];
+
+
+        if(validImages.length > 0){
+
+            setMainImage(
+                validImages[0].image_url
+            );
+
+
+            renderThumbnails(
+                validImages
+            );
+
+        }else{
+
+            $("mainImage").style.display =
+                "none";
+
+            $("thumbnails").innerHTML =
+                `
+                <div style="
+                    width:100%;
+                    text-align:center;
+                    color:#777;
+                    padding:30px;
+                ">
+                    🖥️ Inzerát nemá fotografie
+                </div>
+                `;
+
+        }
+
+
+        // =========================
+        // ZOBRAZIŤ DETAIL
+        // =========================
+
+        $("loadingBox").style.display =
+            "none";
+
+        $("detailBox").style.display =
+            "block";
+
+    }
+    catch(error){
 
         console.error(
             "DETAIL ERROR:",
             error
         );
 
-        detailContent.innerHTML = `
-            <div class="error">
-                ❌ Tento inzerát neexistuje
-                alebo ešte nebol schválený.
-            </div>
-        `;
-
-        return;
+        showError();
 
     }
 
+}
 
-    // =========================
-    // CENA
-    // =========================
 
-    const price =
-        Number(
-            listing.price
-        ).toLocaleString(
-            "sk-SK",
-            {
-                minimumFractionDigits:2,
-                maximumFractionDigits:2
+// =========================
+// HLAVNÁ FOTKA
+// =========================
+
+function setMainImage(url){
+
+    const mainImage =
+        $("mainImage");
+
+    mainImage.src =
+        url;
+
+    mainImage.onclick =
+        function(){
+
+            openImageModal(url);
+
+        };
+
+}
+
+
+// =========================
+// NÁHĽADY FOTIEK
+// =========================
+
+function renderThumbnails(images){
+
+    const container =
+        $("thumbnails");
+
+    container.innerHTML =
+        "";
+
+
+    images.forEach(
+        (image,index) => {
+
+            const img =
+                document.createElement("img");
+
+            img.className =
+                "thumbnail";
+
+
+            if(index === 0){
+
+                img.classList.add(
+                    "active"
+                );
+
             }
-        );
 
 
-    // =========================
-    // DETAIL
-    // =========================
-
-    detailContent.innerHTML = `
-
-        <div class="detail-layout">
+            img.src =
+                image.image_url;
 
 
-            <!-- =====================
-                 ĽAVÁ STRANA
-            ====================== -->
-
-            <div>
-
-                <div
-                    style="
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        min-height:300px;
-                        background:#050505;
-                        border-radius:12px;
-                        border:1px solid #222;
-                        font-size:120px;
-                    "
-                >
-                    🖥️
-                </div>
-
-            </div>
+            img.alt =
+                "Fotka inzerátu";
 
 
-            <!-- =====================
-                 PRAVÁ STRANA
-            ====================== -->
+            img.addEventListener(
+                "click",
+                function(){
 
-            <div>
-
-                <div class="detail-category">
-
-                    ${escapeHTML(
-                        listing.category
-                    )}
-
-                </div>
+                    setMainImage(
+                        image.image_url
+                    );
 
 
-                <h2 class="detail-title">
+                    document
+                        .querySelectorAll(
+                            ".thumbnail"
+                        )
+                        .forEach(
+                            thumbnail => {
 
-                    ${escapeHTML(
-                        listing.title
-                    )}
+                                thumbnail.classList
+                                    .remove(
+                                        "active"
+                                    );
 
-                </h2>
-
-
-                <div class="detail-price">
-
-                    ${price} €
-
-                </div>
-
-
-                <div class="detail-info">
-
-                    <div>
-
-                        📍
-                        <strong>Mesto:</strong>
-
-                        ${escapeHTML(
-                            listing.city
-                        )}
-
-                    </div>
+                            }
+                        );
 
 
-                    <div>
+                    img.classList.add(
+                        "active"
+                    );
 
-                        📅
-                        <strong>Pridané:</strong>
-
-                        ${new Date(
-                            listing.created_at
-                        ).toLocaleDateString(
-                            "sk-SK"
-                        )}
-
-                    </div>
-
-                </div>
+                }
+            );
 
 
-                <div>
+            container.appendChild(
+                img
+            );
 
-                    <h3>
-                        📝 Popis
-                    </h3>
+        }
+    );
 
-
-                    <div class="detail-description">
-
-                        ${escapeHTML(
-                            listing.description
-                        )}
-
-                    </div>
-
-                </div>
+}
 
 
-                <div class="contact-box">
+// =========================
+// LIGHTBOX
+// =========================
 
-                    <h3>
-                        📞 Kontakt na predajcu
-                    </h3>
+function openImageModal(url){
+
+    $("modalImage").src =
+        url;
+
+    $("imageModal").style.display =
+        "flex";
+
+}
 
 
-                    <div class="contact-value">
+$("closeImageModal")
+    .addEventListener(
+        "click",
+        function(){
 
-                        ${escapeHTML(
-                            listing.contact
-                        )}
+            $("imageModal").style.display =
+                "none";
 
-                    </div>
+        }
+    );
 
-                </div>
 
-            </div>
+$("imageModal")
+    .addEventListener(
+        "click",
+        function(event){
 
-        </div>
+            if(
+                event.target ===
+                $("imageModal")
+            ){
 
-    `;
+                $("imageModal").style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+
+// =========================
+// CHYBA
+// =========================
+
+function showError(){
+
+    $("loadingBox").style.display =
+        "none";
+
+    $("detailBox").style.display =
+        "none";
+
+    $("errorBox").style.display =
+        "block";
 
 }
