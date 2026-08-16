@@ -1014,7 +1014,337 @@ $("bazarForm")
 
 });
 
+// =========================
+// TOMIKON BAZÁR - AUTH
+// =========================
 
+let authMode = "login";
+
+
+const loggedOutBox =
+    $("loggedOutBox");
+
+const loggedInBox =
+    $("loggedInBox");
+
+const authModal =
+    $("authModal");
+
+const authTitle =
+    $("authTitle");
+
+const authSubmitButton =
+    $("authSubmitButton");
+
+const authEmail =
+    $("authEmail");
+
+const authPassword =
+    $("authPassword");
+
+const authMessage =
+    $("authMessage");
+
+
+// =========================
+// ZOBRAZENIE AUTH
+// =========================
+
+function openAuth(mode) {
+
+    authMode = mode;
+
+    authModal.style.display =
+        "flex";
+
+
+    authMessage.textContent =
+        "";
+
+
+    if(mode === "login"){
+
+        authTitle.textContent =
+            "🔐 Prihlásenie";
+
+        authSubmitButton.textContent =
+            "Prihlásiť sa";
+
+    }else{
+
+        authTitle.textContent =
+            "✨ Vytvorenie účtu";
+
+        authSubmitButton.textContent =
+            "Vytvoriť účet";
+
+    }
+
+}
+
+
+// =========================
+// ZATVORENIE
+// =========================
+
+$("closeAuthButton")
+.addEventListener(
+    "click",
+    () => {
+
+        authModal.style.display =
+            "none";
+
+    }
+);
+
+
+// =========================
+// LOGIN
+// =========================
+
+$("showLoginButton")
+.addEventListener(
+    "click",
+    () => {
+
+        openAuth("login");
+
+    }
+);
+
+
+// =========================
+// REGISTRÁCIA
+// =========================
+
+$("showRegisterButton")
+.addEventListener(
+    "click",
+    () => {
+
+        openAuth("register");
+
+    }
+);
+
+
+// =========================
+// PRIHLÁSENIE / REGISTRÁCIA
+// =========================
+
+authSubmitButton
+.addEventListener(
+    "click",
+    async () => {
+
+        const email =
+            authEmail.value
+                .trim();
+
+        const password =
+            authPassword.value;
+
+
+        if(!email || !password){
+
+            authMessage.textContent =
+                "❌ Vyplň e-mail a heslo.";
+
+            return;
+
+        }
+
+
+        authSubmitButton.disabled =
+            true;
+
+
+        authMessage.textContent =
+            "⏳ Pracujem...";
+
+
+        // =========================
+        // REGISTRÁCIA
+        // =========================
+
+        if(authMode === "register"){
+
+            const {
+                data,
+                error
+            } =
+                await bazarClient.auth.signUp({
+
+                    email,
+                    password
+
+                });
+
+
+            if(error){
+
+                console.error(
+                    "REGISTER ERROR:",
+                    error
+                );
+
+
+                authMessage.textContent =
+                    "❌ " + error.message;
+
+                authSubmitButton.disabled =
+                    false;
+
+                return;
+
+            }
+
+
+            if(!data.session){
+
+                authMessage.textContent =
+                    "✅ Účet bol vytvorený. " +
+                    "Skontroluj e-mail a potvrď registráciu.";
+
+            }else{
+
+                authMessage.textContent =
+                    "✅ Účet bol vytvorený.";
+
+                authModal.style.display =
+                    "none";
+
+            }
+
+
+            authSubmitButton.disabled =
+                false;
+
+            return;
+
+        }
+
+
+        // =========================
+        // PRIHLÁSENIE
+        // =========================
+
+        const {
+            error
+        } =
+            await bazarClient.auth
+            .signInWithPassword({
+
+                email,
+                password
+
+            });
+
+
+        if(error){
+
+            console.error(
+                "LOGIN ERROR:",
+                error
+            );
+
+
+            authMessage.textContent =
+                "❌ Nesprávny e-mail alebo heslo.";
+
+            authSubmitButton.disabled =
+                false;
+
+            return;
+
+        }
+
+
+        authModal.style.display =
+            "none";
+
+
+        authEmail.value =
+            "";
+
+        authPassword.value =
+            "";
+
+
+        await updateAuthUI();
+
+    }
+);
+
+
+// =========================
+// AUTH UI
+// =========================
+
+async function updateAuthUI(){
+
+    const {
+        data
+    } =
+        await bazarClient.auth.getSession();
+
+
+    const user =
+        data.session?.user;
+
+
+    if(user){
+
+        loggedOutBox.style.display =
+            "none";
+
+
+        loggedInBox.style.display =
+            "block";
+
+
+        $("userEmail")
+            .textContent =
+            "👤 " + user.email;
+
+
+    }else{
+
+        loggedOutBox.style.display =
+            "block";
+
+
+        loggedInBox.style.display =
+            "none";
+
+    }
+
+}
+
+
+// =========================
+// ODHLÁSENIE
+// =========================
+
+$("logoutBazarButton")
+.addEventListener(
+    "click",
+    async () => {
+
+        await bazarClient.auth.signOut();
+
+        await updateAuthUI();
+
+    }
+);
+
+
+// =========================
+// SPUSTENIE AUTH
+// =========================
+
+updateAuthUI();
 // =========================
 // SPUSTENIE
 // =========================
