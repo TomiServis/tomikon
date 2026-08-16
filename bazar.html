@@ -20,6 +20,67 @@
 </style>
 </head>
 <body>
+  <!-- =========================
+     PRIHLÁSENIE BAZÁR
+========================= -->
+
+<div class="bazar-auth">
+
+    <div id="loggedOutBox">
+
+        <h2>👤 TOMIKON účet</h2>
+
+        <p>
+            Prihlás sa alebo si vytvor účet
+            a pridávaj vlastné inzeráty.
+        </p>
+
+        <button
+            id="showLoginButton"
+            class="bazar-button">
+
+            🔐 Prihlásiť sa
+
+        </button>
+
+        <button
+            id="showRegisterButton"
+            class="bazar-button">
+
+            ✨ Vytvoriť účet
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="loggedInBox"
+        style="display:none;">
+
+        <h2>👋 Vitaj na TOMIKON BAZÁRI</h2>
+
+        <p id="userEmail"></p>
+
+        <button
+            id="myListingsButton"
+            class="bazar-button">
+
+            📦 Moje inzeráty
+
+        </button>
+
+        <button
+            id="logoutBazarButton"
+            class="bazar-button">
+
+            🚪 Odhlásiť
+
+        </button>
+
+    </div>
+
+</div>
 <main class="bazar">
 <header style="text-align:center">
 <h1>🛒 TOMIKON BAZÁR</h1>
