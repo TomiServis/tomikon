@@ -2440,3 +2440,33 @@ body {
     }
 
 }
+
+.bazar-main-image {
+    width: 100%;
+    height: 210px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #080d13;
+    border: 1px solid #1e3b52;
+}
+
+.bazar-main-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform .25s ease;
+}
+
+.bazar-card:hover .bazar-main-image img {
+    transform: scale(1.025);
+}
+
+.bazar-no-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+    color: #687887;
+}
