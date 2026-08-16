@@ -1609,6 +1609,72 @@ if (myListingsButton) {
 
 }
 
+const forgotPasswordButton =
+    $("forgotPasswordButton");
+
+if (forgotPasswordButton) {
+
+    forgotPasswordButton.addEventListener(
+        "click",
+        async () => {
+
+            const email =
+                $("authEmail").value.trim();
+
+            if (!email) {
+
+                $("authMessage").textContent =
+                    "⚠️ Najprv zadaj svoj e-mail.";
+
+                $("authEmail").focus();
+
+                return;
+            }
+
+            forgotPasswordButton.disabled = true;
+
+            $("authMessage").textContent =
+                "📨 Odosielam odkaz na obnovenie hesla...";
+
+
+            const { error } =
+                await bazarClient.auth.resetPasswordForEmail(
+                    email,
+                    {
+                        redirectTo:
+                            "https://tomistore.sk/reset-hesla.html"
+                    }
+                );
+
+
+            if (error) {
+
+                console.error(
+                    "PASSWORD RESET ERROR:",
+                    error
+                );
+
+                $("authMessage").textContent =
+                    "❌ " + error.message;
+
+                forgotPasswordButton.disabled =
+                    false;
+
+                return;
+            }
+
+
+            $("authMessage").textContent =
+                "✅ Ak účet s týmto e-mailom existuje, poslali sme ti odkaz na obnovenie hesla.";
+
+            forgotPasswordButton.disabled =
+                false;
+
+        }
+    );
+
+}
+
 
 // =========================
 // SPUSTENIE AUTH
