@@ -1,658 +1,408 @@
 /* =========================================================
-   TOMIKON BAZÁR – ADMIN
+   TOMIKON BAZÁR – ADMIN DESIGN
+   Tento súbor upravuje iba sekciu #bazarPendingListings.
+   Ostatné časti existujúceho admina nemení.
 ========================================================= */
 
-* {
-    box-sizing: border-box;
+#bazarPendingListings {
+    margin-top: 18px;
+    color: #fff;
 }
 
-body {
-    margin: 0;
+/* =========================
+   ŠTATISTIKY
+========================= */
+
+#bazarPendingListings .admin-stat {
+    min-height: 78px;
+    padding: 16px 18px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     background:
-        radial-gradient(
-            circle at 50% -10%,
-            rgba(0,140,255,.10),
-            transparent 35%
-        ),
-        #03070d;
+        linear-gradient(
+            145deg,
+            rgba(15, 24, 34, .95),
+            rgba(7, 12, 18, .98)
+        );
 
-    color: #fff;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-}
-
-
-/* =========================================================
-   TOPBAR
-========================================================= */
-
-.admin-topbar {
-
-    min-height: 64px;
-
-    padding: 10px 28px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    background: rgba(5,8,12,.94);
-
-    border-bottom:
-        1px solid rgba(0,140,255,.25);
+    border: 1px solid rgba(0, 140, 255, .25);
+    border-radius: 12px;
 
     box-shadow:
-        0 5px 25px rgba(0,0,0,.3);
-
-    position: relative;
-
-    z-index: 10;
-}
-
-
-.admin-logo {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    color: #fff;
-
-    text-decoration: none;
-
-    font-size: 20px;
-
-    font-weight: 900;
-}
-
-
-.admin-logo small {
-
-    color: #008cff;
-
-    font-size: 11px;
-
-    letter-spacing: .7px;
-}
-
-
-.admin-topbar-right {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 9px;
-}
-
-
-#adminEmail {
-
-    color: #8c99a7;
-
-    font-size: 13px;
-}
-
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.admin-button {
-
-    border: 1px solid #008cff;
-
-    background: #008cff;
-
-    color: #fff;
-
-    border-radius: 8px;
-
-    padding: 9px 14px;
-
-    font-weight: 800;
-
-    cursor: pointer;
-
-    text-decoration: none;
+        inset 0 1px 0 rgba(255,255,255,.025),
+        0 8px 25px rgba(0,0,0,.18);
 
     transition:
         transform .18s ease,
+        border-color .18s ease,
         box-shadow .18s ease;
 }
 
-
-.admin-button:hover {
-
+#bazarPendingListings .admin-stat:hover {
     transform: translateY(-2px);
+    border-color: rgba(0, 140, 255, .55);
 
     box-shadow:
-        0 7px 20px rgba(0,140,255,.25);
+        0 10px 30px rgba(0,0,0,.25),
+        0 0 20px rgba(0,140,255,.08);
 }
 
-
-.admin-button.secondary {
-
-    background: transparent;
-
-    border-color: #31506a;
-}
-
-
-.admin-button.danger {
-
-    background: #b3263e;
-
-    border-color: #b3263e;
-}
-
-
-/* =========================================================
-   PAGE
-========================================================= */
-
-.admin-page {
-
-    max-width: 1250px;
-
-    margin: auto;
-
-    padding:
-        45px 22px 80px;
-}
-
-
-.admin-header {
-
-    margin-bottom: 28px;
-}
-
-
-.admin-badge {
-
-    display: inline-block;
-
-    padding: 6px 11px;
-
-    border-radius: 999px;
-
-    color: #6fc5ff;
-
-    background:
-        rgba(0,140,255,.10);
-
-    border:
-        1px solid rgba(0,140,255,.35);
-
-    font-size: 11px;
-
-    font-weight: 900;
-
-    letter-spacing: .6px;
-}
-
-
-.admin-header h1 {
-
-    margin:
-        12px 0 7px;
-
-    font-size: 38px;
-}
-
-
-.admin-header p {
-
-    margin: 0;
-
-    color: #8d99a6;
-}
-
-
-/* =========================================================
-   STATS
-========================================================= */
-
-.admin-stats {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap: 16px;
-
-    margin-bottom: 25px;
-}
-
-
-.admin-stat {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 15px;
-
-    padding: 20px;
-
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #101820,
-            #070b10
-        );
-
-    border:
-        1px solid #263746;
-}
-
-
-.admin-stat-icon {
-
-    font-size: 27px;
-}
-
-
-.admin-stat strong {
-
+#bazarPendingListings .admin-stat-number {
     display: block;
 
-    font-size: 27px;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 900;
+
+    color: #fff;
 }
 
+#bazarPendingListings .admin-stat-label {
+    display: block;
 
-.admin-stat small {
+    margin-top: 6px;
 
-    color: #8996a3;
-
-    font-size: 12px;
+    color: #8f9aaa;
+    font-size: 11px;
+    font-weight: 600;
 }
 
-
-.admin-stat.pending {
-
-    border-color:
-        rgba(255,190,0,.35);
+/* druhá karta – čakajúce */
+#bazarPendingListings .admin-stat:nth-child(2) {
+    border-color: rgba(255,190,0,.35);
 }
 
-
-.admin-stat.approved {
-
-    border-color:
-        rgba(0,208,132,.35);
+/* tretia karta – schválené */
+#bazarPendingListings .admin-stat:nth-child(3) {
+    border-color: rgba(0,210,130,.30);
 }
 
+/* =========================
+   VYHĽADÁVANIE + FILTRE
+========================= */
 
-/* =========================================================
-   PANEL
-========================================================= */
+#bazarPendingListings #bazarAdminSearch,
+#bazarPendingListings #bazarAdminStatus {
+    height: 42px;
 
-.admin-panel {
-
-    padding: 22px;
-
-    border-radius: 16px;
+    border: 1px solid #1d3142 !important;
+    border-radius: 9px !important;
 
     background:
         linear-gradient(
-            145deg,
-            rgba(13,18,25,.98),
-            rgba(5,9,14,.98)
-        );
+            180deg,
+            #0d151d,
+            #090e14
+        ) !important;
 
-    border:
-        1px solid rgba(0,140,255,.35);
-
-    box-shadow:
-        0 15px 40px rgba(0,0,0,.3);
-}
-
-
-.admin-panel-header h2 {
-
-    margin: 0 0 5px;
-
-    font-size: 22px;
-}
-
-
-.admin-panel-header p {
-
-    margin: 0;
-
-    color: #7f8c99;
+    color: #fff !important;
 
     font-size: 13px;
-}
-
-
-/* =========================================================
-   FILTERS
-========================================================= */
-
-.admin-filters {
-
-    display: grid;
-
-    grid-template-columns:
-        2fr 1fr 1fr;
-
-    gap: 10px;
-
-    margin:
-        22px 0;
-}
-
-
-.admin-filters input,
-.admin-filters select {
-
-    width: 100%;
-
-    min-height: 43px;
-
-    padding: 0 13px;
-
-    border-radius: 9px;
-
-    border:
-        1px solid #263746;
-
-    background: #0b1118;
-
-    color: #fff;
 
     outline: none;
-}
-
-
-.admin-filters input:focus,
-.admin-filters select:focus {
-
-    border-color: #008cff;
-
-    box-shadow:
-        0 0 0 3px rgba(0,140,255,.08);
-}
-
-
-/* =========================================================
-   LISTINGS
-========================================================= */
-
-.admin-listings {
-
-    display: grid;
-
-    gap: 10px;
-}
-
-
-.admin-loading {
-
-    padding: 50px;
-
-    text-align: center;
-
-    color: #8b98a5;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 700px) {
-
-    .admin-topbar {
-
-        padding: 9px 12px;
-
-        align-items: flex-start;
-
-        flex-direction: column;
-    }
-
-
-    .admin-topbar-right {
-
-        width: 100%;
-
-        flex-wrap: wrap;
-    }
-
-
-    #adminEmail {
-
-        width: 100%;
-
-        font-size: 11px;
-    }
-
-
-    .admin-page {
-
-        padding:
-            30px 12px 60px;
-    }
-
-
-    .admin-header h1 {
-
-        font-size: 30px;
-    }
-
-
-    .admin-stats {
-
-        grid-template-columns: 1fr;
-    }
-
-
-    .admin-panel {
-
-        padding: 15px;
-    }
-
-
-    .admin-filters {
-
-        grid-template-columns: 1fr;
-    }
-
-}
-
-/* =========================================================
-   ADMIN LISTING
-========================================================= */
-
-.admin-listing {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 20px;
-
-    padding: 17px;
-
-    border: 1px solid #22303d;
-
-    border-radius: 12px;
-
-    background: #080d13;
 
     transition:
         border-color .18s ease,
-        transform .18s ease,
+        box-shadow .18s ease,
         background .18s ease;
 }
 
-
-.admin-listing:hover {
-
-    border-color: #008cff;
-
-    background: #0b121a;
-
-    transform: translateY(-1px);
+#bazarPendingListings #bazarAdminSearch {
+    padding-left: 14px !important;
 }
 
-
-.admin-listing-main {
-
-    min-width: 0;
-
-    flex: 1;
+#bazarPendingListings #bazarAdminSearch::placeholder {
+    color: #687482;
 }
 
+#bazarPendingListings #bazarAdminSearch:focus,
+#bazarPendingListings #bazarAdminStatus:focus {
+    border-color: #008cff !important;
 
-.admin-listing-top {
+    box-shadow:
+        0 0 0 3px rgba(0,140,255,.10);
+}
 
+#bazarPendingListings #bazarAdminStatus option {
+    background: #0b1016;
+    color: #fff;
+}
+
+/* =========================
+   VÝSLEDKY
+========================= */
+
+#bazarPendingListings #bazarAdminResults {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
+/* =========================
+   KARTA INZERÁTU
+========================= */
+
+#bazarPendingListings .review-card {
+    position: relative;
+
+    margin: 0 !important;
+    padding: 16px 18px !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13, 21, 29, .96),
+            rgba(7, 12, 18, .98)
+        ) !important;
+
+    border: 1px solid #1c2d3c !important;
+    border-radius: 11px !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.025),
+        0 5px 20px rgba(0,0,0,.14);
+
+    transition:
+        transform .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease;
+
+    overflow: hidden;
+}
+
+#bazarPendingListings .review-card:hover {
+    transform: translateY(-2px);
+
+    border-color: rgba(0,140,255,.55) !important;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.28),
+        0 0 22px rgba(0,140,255,.07);
+}
+
+/* jemný modrý pásik */
+#bazarPendingListings .review-card::before {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 2px;
+
+    background: #008cff;
+
+    opacity: .7;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+#bazarPendingListings .review-status {
+    display: inline-flex;
     align-items: center;
 
-    gap: 10px;
+    width: fit-content;
 
     margin-bottom: 7px;
+    padding: 4px 8px;
+
+    border-radius: 6px;
+
+    background: rgba(0,210,130,.10);
+    border: 1px solid rgba(0,210,130,.25);
+
+    color: #00d084;
+
+    font-size: 10px;
+    font-weight: 800;
 }
 
+#bazarPendingListings .review-card:has(.review-status) {
+    /* iba vizuálne oddelenie karty */
+}
 
-.admin-status {
+/* =========================
+   TEXT
+========================= */
 
-    display: inline-block;
+#bazarPendingListings .review-card h3 {
+    margin: 0 0 8px !important;
 
-    padding: 5px 9px;
+    color: #fff !important;
 
-    border-radius: 999px;
-
-    font-size: 11px;
+    font-size: 15px !important;
+    line-height: 1.35;
 
     font-weight: 800;
 }
 
+#bazarPendingListings .review-text {
+    margin: 4px 0 !important;
 
-.admin-status.approved {
+    color: #8793a0 !important;
 
-    color: #00d084;
-
-    background:
-        rgba(0,208,132,.10);
-
-    border:
-        1px solid rgba(0,208,132,.25);
+    font-size: 11px !important;
+    line-height: 1.65;
 }
 
-
-.admin-status.pending {
-
-    color: #ffbd00;
-
-    background:
-        rgba(255,189,0,.10);
-
-    border:
-        1px solid rgba(255,189,0,.25);
+#bazarPendingListings .review-text strong {
+    color: #b9c4ce;
+    font-weight: 700;
 }
 
+#bazarPendingListings .review-card small {
+    display: block;
 
-.admin-listing-date {
+    margin-top: 8px;
 
-    color: #71808d;
+    color: #5f6b77 !important;
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
+/* =========================
+   CENA – zvýraznenie
+========================= */
 
-.admin-listing h3 {
-
-    margin: 0 0 9px;
-
-    font-size: 18px;
-
-    word-break: break-word;
+#bazarPendingListings .review-card .review-text strong {
+    /* nechávame údaje čisté; cena bude zvýraznená cez JS
+       neskôr môžeme oddeliť do vlastného elementu */
 }
 
+/* =========================
+   TLAČIDLÁ
+========================= */
 
-.admin-listing-meta {
-
-    display: flex;
-
+#bazarPendingListings .review-actions {
+    display: flex !important;
     align-items: center;
+    justify-content: flex-end;
 
-    flex-wrap: wrap;
+    gap: 8px;
 
-    gap: 15px;
-
-    color: #8997a5;
-
-    font-size: 12px;
+    margin-top: 12px !important;
 }
 
+#bazarPendingListings .review-actions button {
+    min-height: 34px;
 
-.admin-listing-meta strong {
+    padding: 8px 13px !important;
 
-    color: #008cff;
+    border-radius: 7px !important;
 
-    font-size: 16px;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+
+    cursor: pointer;
+
+    transition:
+        transform .15s ease,
+        filter .15s ease,
+        box-shadow .15s ease;
 }
 
-
-.admin-listing-contact {
-
-    margin-top: 9px;
-
-    color: #8997a5;
-
-    font-size: 12px;
+#bazarPendingListings .review-actions button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
 }
 
+#bazarPendingListings .approve-button {
+    background: #008cff !important;
+    border: 1px solid #008cff !important;
+    color: #fff !important;
 
-.admin-listing-actions {
-
-    flex-shrink: 0;
+    box-shadow:
+        0 5px 14px rgba(0,140,255,.18);
 }
 
+#bazarPendingListings .delete-button {
+    background: rgba(230,55,75,.10) !important;
+    border: 1px solid rgba(230,55,75,.45) !important;
+    color: #ff6074 !important;
+}
 
-@media (max-width:700px) {
+#bazarPendingListings .delete-button:hover {
+    background: rgba(230,55,75,.18) !important;
+}
 
-    .admin-listing {
+/* =========================
+   EMPTY STATE
+========================= */
+
+#bazarPendingListings .empty-reviews {
+    padding: 35px 20px;
+
+    text-align: center;
+
+    background: #0a1016;
+
+    border: 1px dashed #263746;
+    border-radius: 10px;
+
+    color: #7d8995;
+}
+
+/* =========================
+   LOADING
+========================= */
+
+#bazarPendingListings > p {
+    padding: 25px;
+
+    text-align: center;
+
+    color: #7d8995;
+}
+
+/* =========================
+   MOBIL
+========================= */
+
+@media (max-width: 700px) {
+
+    #bazarPendingListings > div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    #bazarPendingListings .review-card {
+        padding: 14px !important;
+    }
+
+    #bazarPendingListings .review-actions {
+        justify-content: stretch;
 
         flex-direction: column;
-
-        align-items: stretch;
     }
 
-
-    .admin-listing-actions {
-
+    #bazarPendingListings .review-actions button {
         width: 100%;
     }
 
+}
 
-    .admin-listing-actions .admin-button {
+@media (max-width: 450px) {
 
-        display: block;
+    #bazarPendingListings {
+        margin-top: 12px;
+    }
 
-        width: 100%;
+    #bazarPendingListings .admin-stat {
+        min-height: 70px;
+        padding: 13px 15px;
+    }
 
-        text-align: center;
+    #bazarPendingListings .admin-stat-number {
+        font-size: 21px;
+    }
+
+    #bazarPendingListings .review-card h3 {
+        font-size: 14px !important;
     }
 
 }
