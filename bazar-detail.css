@@ -701,3 +701,58 @@
     }
 
 }
+
+/* =========================
+   KLIKNUTEĽNÝ KONTAKT
+========================= */
+
+.contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #008cff;
+    text-decoration: none;
+
+    font-size: 18px;
+    font-weight: 800;
+
+    padding: 8px 12px;
+
+    border-radius: 8px;
+
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.contact-link:hover {
+    color: #fff;
+
+    background: rgba(0,140,255,.12);
+
+    box-shadow:
+        0 0 15px rgba(0,140,255,.18);
+
+    transform: translateY(-1px);
+}
+
+.contact-link:active {
+    transform: scale(.97);
+}
+
+
+@media (max-width: 600px) {
+
+    .contact-link {
+        font-size: 17px;
+
+        padding: 10px 12px;
+
+        max-width: 100%;
+
+        word-break: break-word;
+    }
+
+}
