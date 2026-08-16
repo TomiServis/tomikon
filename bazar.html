@@ -10,6 +10,57 @@
 <link rel="stylesheet" href="bazar.css">
 </head>
 <body>
+
+  <header class="topbar">
+
+    <div class="topbar-logo">
+        🛒 <span>TOMIKON</span>
+        <small>BAZÁR</small>
+    </div>
+
+    <div class="topbar-user">
+
+        <div id="loggedOutBox" class="auth-buttons">
+
+            <button
+                id="showLoginButton"
+                class="topbar-btn login-btn">
+                🔐 Prihlásiť sa
+            </button>
+
+            <button
+                id="showRegisterButton"
+                class="topbar-btn register-btn">
+                ✨ Vytvoriť účet
+            </button>
+
+        </div>
+
+
+        <div
+            id="loggedInBox"
+            class="logged-user"
+            style="display:none;">
+
+            <span id="userEmail"></span>
+
+            <button
+                id="myListingsButton"
+                class="topbar-btn">
+                📦 Moje inzeráty
+            </button>
+
+            <button
+                id="logoutBazarButton"
+                class="topbar-btn logout-btn">
+                🚪 Odhlásiť
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
   <!-- =========================
      PRIHLÁSENIE BAZÁR
 ========================= -->
