@@ -36,11 +36,182 @@ function escapeHTML(value){
 // NÁHĽAD FOTIEK
 // =========================
 
-const bazarImagesInput = $("bazarImages");
-const imagePreview = $("imagePreview");
+// =========================
+// VÝBER A NÁHĽAD FOTIEK
+// =========================
 
-// Tu držíme skutočný zoznam vybraných fotiek
-let selectedImageFiles = [];
+const bazarImages = document.getElementById("bazarImages");
+const imagePreview = document.getElementById("imagePreview");
+
+let selectedImages = [];
+
+
+bazarImages.addEventListener("change", () => {
+
+    const newFiles = Array.from(bazarImages.files);
+
+    // pridáme nové fotky k už vybraným
+    selectedImages = [
+        ...selectedImages,
+        ...newFiles
+    ];
+
+    // maximálne 8 fotiek
+    if (selectedImages.length > 8) {
+
+        selectedImages =
+            selectedImages.slice(0, 8);
+
+        alert("Môžeš vybrať maximálne 8 fotiek.");
+
+    }
+
+    renderImagePreview();
+
+});
+
+
+function renderImagePreview() {
+
+    imagePreview.innerHTML = "";
+
+    selectedImages.forEach((file, index) => {
+
+        const wrapper =
+            document.createElement("div");
+
+        wrapper.style.position = "relative";
+        wrapper.style.width = "110px";
+        wrapper.style.height = "110px";
+
+
+        const img =
+            document.createElement("img");
+
+        img.src =
+            URL.createObjectURL(file);
+
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "8px";
+        img.style.border = "1px solid #008cff";
+
+
+        // =========================
+        // X TLAČIDLO
+        // =========================
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.type = "button";
+
+        removeButton.innerHTML = "×";
+
+        removeButton.title =
+            "Odstrániť fotku";
+
+
+        removeButton.style.position =
+            "absolute";
+
+        removeButton.style.top =
+            "4px";
+
+        removeButton.style.right =
+            "4px";
+
+        removeButton.style.width =
+            "24px";
+
+        removeButton.style.height =
+            "24px";
+
+        removeButton.style.padding =
+            "0";
+
+        removeButton.style.border =
+            "0";
+
+        removeButton.style.borderRadius =
+            "50%";
+
+        removeButton.style.background =
+            "rgba(220,0,0,.9)";
+
+        removeButton.style.color =
+            "#fff";
+
+        removeButton.style.fontSize =
+            "18px";
+
+        removeButton.style.fontWeight =
+            "bold";
+
+        removeButton.style.lineHeight =
+            "24px";
+
+        removeButton.style.cursor =
+            "pointer";
+
+        removeButton.style.zIndex =
+            "5";
+
+
+        removeButton.addEventListener(
+            "click",
+            () => {
+
+                selectedImages.splice(
+                    index,
+                    1
+                );
+
+                renderImagePreview();
+
+                updateFileInput();
+
+            }
+        );
+
+
+        wrapper.appendChild(img);
+
+        wrapper.appendChild(
+            removeButton
+        );
+
+        imagePreview.appendChild(
+            wrapper
+        );
+
+    });
+
+}
+
+
+// =========================
+// AKTUALIZÁCIA INPUTU
+// =========================
+
+function updateFileInput() {
+
+    const dataTransfer =
+        new DataTransfer();
+
+    selectedImages.forEach(
+        file => {
+
+            dataTransfer.items.add(file);
+
+        }
+    );
+
+    bazarImages.files =
+        dataTransfer.files;
+
+}
 
 
 // =========================
