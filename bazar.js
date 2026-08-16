@@ -501,70 +501,34 @@ card.addEventListener("click", function(){
             [];
 
 
-        // =========================
-        // FOTKY
-        // =========================
+       // =========================
+// HLAVNÁ FOTKA
+// =========================
 
-        let imagesHTML = "";
+let imagesHTML = "";
 
+if (listingImages.length > 0) {
 
-        if(listingImages.length > 0){
+    const mainImage = listingImages[0];
 
-            imagesHTML = `
+    imagesHTML = `
+        <div class="bazar-main-image">
+            <img
+                src="${escapeHTML(mainImage.image_url)}"
+                alt="${escapeHTML(listing.title)}"
+            >
+        </div>
+    `;
 
-                <div
-                    class="bazar-images"
-                    style="
-                        display:flex;
-                        flex-wrap:wrap;
-                        gap:10px;
-                        margin-bottom:15px;
-                    "
-                >
+} else {
 
-                    ${listingImages.map(image => `
+    imagesHTML = `
+        <div class="bazar-main-image bazar-no-image">
+            🖥️
+        </div>
+    `;
 
-                        <img
-                            src="${escapeHTML(image.image_url)}"
-                            alt="${escapeHTML(listing.title)}"
-                            style="
-                                width:180px;
-                                height:135px;
-                                object-fit:cover;
-                                border-radius:10px;
-                                border:1px solid #008cff;
-                                cursor:pointer;
-                            "
-                            onclick="
-                                window.open(
-                                    '${escapeHTML(image.image_url)}',
-                                    '_blank'
-                                )
-                            "
-                        >
-
-                    `).join("")}
-
-                </div>
-
-            `;
-
-        }else{
-
-            imagesHTML = `
-
-                <div
-                    style="
-                        font-size:42px;
-                        margin-bottom:10px;
-                    "
-                >
-                    🖥️
-                </div>
-
-            `;
-
-        }
+}
 
 
         card.innerHTML =
