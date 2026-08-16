@@ -1354,6 +1354,26 @@ $("logoutBazarButton")
     }
 );
 
+const myListingsButton =
+    document.getElementById(
+        "myListingsButton"
+    );
+
+
+if (myListingsButton) {
+
+    myListingsButton.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "moje-inzeraty.html";
+
+        }
+    );
+
+}
+
 
 // =========================
 // SPUSTENIE AUTH
