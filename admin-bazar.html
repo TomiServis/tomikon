@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="sk">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
+<title>Admin | TOMIKON BAZÁR</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin-bazar.css">
+
+</head>
+
+
+<body>
+
+
+<header class="admin-topbar">
+
+    <a
+        href="bazar.html"
+        class="admin-logo"
+    >
+
+        🛒
+
+        <span>TOMIKON</span>
+
+        <small>BAZÁR ADMIN</small>
+
+    </a>
+
+
+    <div class="admin-topbar-right">
+
+        <span id="adminEmail">
+            Načítavam...
+        </span>
+
+
+        <button
+            id="backBazarButton"
+            class="admin-button secondary"
+            type="button"
+        >
+
+            ← Bazár
+
+        </button>
+
+
+        <button
+            id="adminLogoutButton"
+            class="admin-button danger"
+            type="button"
+        >
+
+            🚪 Odhlásiť
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<main class="admin-page">
+
+
+    <!-- =========================
+         HLAVIČKA
+    ========================= -->
+
+    <section class="admin-header">
+
+        <div>
+
+            <div class="admin-badge">
+                🛡️ ADMIN
+            </div>
+
+            <h1>
+                Správa bazáru
+            </h1>
+
+            <p>
+                Kontrola, schvaľovanie a správa inzerátov.
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         ŠTATISTIKY
+    ========================= -->
+
+    <section class="admin-stats">
+
+        <div class="admin-stat">
+
+            <span class="admin-stat-icon">
+                📦
+            </span>
+
+            <div>
+
+                <strong id="totalListings">
+                    0
+                </strong>
+
+                <small>
+                    Všetky inzeráty
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-stat pending">
+
+            <span class="admin-stat-icon">
+                ⏳
+            </span>
+
+            <div>
+
+                <strong id="pendingListings">
+                    0
+                </strong>
+
+                <small>
+                    Čakajú na schválenie
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-stat approved">
+
+            <span class="admin-stat-icon">
+                ✅
+            </span>
+
+            <div>
+
+                <strong id="approvedListings">
+                    0
+                </strong>
+
+                <small>
+                    Schválené
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         FILTRE
+    ========================= -->
+
+    <section class="admin-panel">
+
+        <div class="admin-panel-header">
+
+            <div>
+
+                <h2>
+                    📋 Inzeráty
+                </h2>
+
+                <p>
+                    Správa všetkých používateľských inzerátov
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-filters">
+
+            <input
+                id="adminSearch"
+                type="search"
+                placeholder="🔎 Hľadať inzerát..."
+            >
+
+
+            <select id="adminStatusFilter">
+
+                <option value="">
+                    Všetky stavy
+                </option>
+
+                <option value="pending">
+                    ⏳ Čakajúce
+                </option>
+
+                <option value="approved">
+                    ✅ Schválené
+                </option>
+
+            </select>
+
+
+            <select id="adminCategoryFilter">
+
+                <option value="">
+                    Všetky kategórie
+                </option>
+
+                <option value="Stolný PC">
+                    Stolný PC
+                </option>
+
+                <option value="Notebook">
+                    Notebook
+                </option>
+
+                <option value="Grafická karta">
+                    Grafická karta
+                </option>
+
+                <option value="Procesor">
+                    Procesor
+                </option>
+
+                <option value="RAM">
+                    RAM
+                </option>
+
+                <option value="SSD / HDD">
+                    SSD / HDD
+                </option>
+
+                <option value="Monitor">
+                    Monitor
+                </option>
+
+                <option value="Príslušenstvo">
+                    Príslušenstvo
+                </option>
+
+                <option value="Iné">
+                    Iné
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div
+            id="adminListings"
+            class="admin-listings"
+        >
+
+            <div class="admin-loading">
+                ⏳ Načítavam inzeráty...
+            </div>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="admin-bazar.js"></script>
+
+
+</body>
+
+</html>
