@@ -350,12 +350,14 @@ function renderThumbnails(images){
 
 
             img.addEventListener(
-                "click",
-                function(){
+    "click",
+    function(){
 
-                    setMainImage(
-                        image.image_url
-                    );
+        setMainImage(
+            image.image_url
+        );
+
+        openGallery(index);
 
 
                     document
