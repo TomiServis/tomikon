@@ -1,17 +1,12 @@
-const SUPABASE_URL = "https://sjhlzllylobreeehziae.supabase.co";
-const SUPABASE_KEY = "sb_publishable_3GLcmT1aTqaGija1nFtziA_iGUYqt7_";
+const SUPABASE_URL = “https://sjhlzllylobreeehziae.supabase.co”; const
+SUPABASE_KEY = “sb_publishable_3GLcmT1aTqaGija1nFtziA_iGUYqt7_”;
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+const supabaseClient = window.supabase.createClient( SUPABASE_URL,
+SUPABASE_KEY );
 
+// ========================= // PRIHLÁSENIE // =========================
 
-// =========================
-// PRIHLÁSENIE
-// =========================
-
-const loginForm = document.getElementById("loginForm");
+const loginForm = document.getElementById(“loginForm”);
 
 if (loginForm) {
 
@@ -42,18 +37,12 @@ if (loginForm) {
         "Nesprávny e-mail alebo heslo.";
 
     return;
+
 }
 
+const { data: sessionData } = await supabaseClient.auth.getSession();
 
-const {
-    data: sessionData
-} =
-    await supabaseClient.auth.getSession();
-
-
-const user =
-    sessionData.session?.user;
-
+const user = sessionData.session?.user;
 
 if (!user || user.id !== ADMIN_USER_ID) {
 
@@ -66,21 +55,16 @@ if (!user || user.id !== ADMIN_USER_ID) {
 
 }
 
-
 showAdmin();
 
     });
 
 }
 
+// ========================= // KONTROLA ADMINA //
+=========================
 
-// =========================
-// KONTROLA ADMINA
-// =========================
-
-const ADMIN_USER_ID =
-    "149cd8c4-276b-4dfb-84af-e5fe15f0a8a9";
-
+const ADMIN_USER_ID = “149cd8c4-276b-4dfb-84af-e5fe15f0a8a9”;
 
 async function checkUser() {
 
@@ -126,10 +110,8 @@ async function checkUser() {
 
 }
 
-
-// =========================
-// ZOBRAZENIE ADMINA
-// =========================
+// ========================= // ZOBRAZENIE ADMINA //
+=========================
 
 function showAdmin() {
 
@@ -147,7 +129,6 @@ function showAdmin() {
 
 }
 
-
 function showLogin() {
 
     document
@@ -160,10 +141,8 @@ function showLogin() {
 
 }
 
-
-// =========================
-// NAČÍTANIE VŠETKÝCH RECENZIÍ
-// =========================
+// ========================= // NAČÍTANIE VŠETKÝCH RECENZIÍ //
+=========================
 
 async function loadReviews() {
 
@@ -297,10 +276,8 @@ async function loadReviews() {
 
 }
 
-
-// =========================
-// VYTVORENIE KARTY RECENZIE
-// =========================
+// ========================= // VYTVORENIE KARTY RECENZIE //
+=========================
 
 function createReviewCard(review, pending) {
 
@@ -378,10 +355,7 @@ function createReviewCard(review, pending) {
 
 }
 
-
-// =========================
-// SCHVÁLENIE
-// =========================
+// ========================= // SCHVÁLENIE // =========================
 
 async function approveReview(id) {
 
@@ -410,10 +384,7 @@ async function approveReview(id) {
 
 }
 
-
-// =========================
-// ZMAZANIE
-// =========================
+// ========================= // ZMAZANIE // =========================
 
 async function deleteReview(id) {
 
@@ -453,14 +424,9 @@ async function deleteReview(id) {
 
 }
 
+// ========================= // ODHLÁSENIE // =========================
 
-// =========================
-// ODHLÁSENIE
-// =========================
-
-const logoutButton =
-    document.getElementById("logoutButton");
-
+const logoutButton = document.getElementById(“logoutButton”);
 
 if (logoutButton) {
 
@@ -477,10 +443,8 @@ if (logoutButton) {
 
 }
 
-
-// =========================
-// OCHRANA TEXTU
-// =========================
+// ========================= // OCHRANA TEXTU //
+=========================
 
 function escapeHTML(text) {
 
@@ -494,23 +458,16 @@ function escapeHTML(text) {
 
 }
 
-
-// =========================
-// SPUSTENIE
-// =========================
+// ========================= // SPUSTENIE // =========================
 
 checkUser();
 
-// =========================
-// TOMIKON AI - FOTKY
-// =========================
+// ========================= // TOMIKON AI - FOTKY //
+=========================
 
-const aiPhotos =
-    document.getElementById("aiPhotos");
+const aiPhotos = document.getElementById(“aiPhotos”);
 
-const aiPhotoPreview =
-    document.getElementById("aiPhotoPreview");
-
+const aiPhotoPreview = document.getElementById(“aiPhotoPreview”);
 
 if (aiPhotos) {
 
@@ -571,12 +528,10 @@ if (aiPhotos) {
 
 }
 
-// =========================
-// TOMIKON AI - VLASTNÝ GENERÁTOR
-// =========================
+// ========================= // TOMIKON AI - VLASTNÝ GENERÁTOR //
+=========================
 
-const generateAIButton =
-    document.getElementById("generateAIButton");
+const generateAIButton = document.getElementById(“generateAIButton”);
 
 if (generateAIButton) {
 
@@ -628,6 +583,7 @@ if (generateAIButton) {
 
 
         // malé oneskorenie, aby to pôsobilo ako generovanie
+
 setTimeout(async () => {
 
     const result =
@@ -685,24 +641,16 @@ setTimeout(async () => {
     message.textContent =
         "✅ TOMIKON AI vytvorila príspevky.";
 
-
 }, 700);
 
     });
 
 }
 
+// ========================= // TOMIKON AI PRO //
+=========================
 
-// =========================
-// TOMIKON AI PRO
-// =========================
-
-const aiStyles = [
-    "professional",
-    "sales",
-    "social"
-];
-
+const aiStyles = [ “professional”, “sales”, “social”];
 
 if (generateAIButton) {
 
@@ -772,10 +720,7 @@ if (generateAIButton) {
 
 }
 
-
-// =========================
-// GENERÁTOR
-// =========================
+// ========================= // GENERÁTOR // =========================
 
 function generateTomikonAI(service, description) {
 
@@ -807,15 +752,10 @@ function generateTomikonAI(service, description) {
 
 }
 
+// ========================= // PROFESIONÁLNY //
+=========================
 
-// =========================
-// PROFESIONÁLNY
-// =========================
-
-function createProfessionalPost(
-    service,
-    description
-) {
+function createProfessionalPost( service, description ) {
 
     const title =
         getServiceTitle(service);
@@ -828,30 +768,32 @@ function createProfessionalPost(
 
 ${description}
 
-Pri servise sme sa zamerali na dôkladnú kontrolu a potrebnú údržbu počítača.
+Pri servise sme sa zamerali na dôkladnú kontrolu a potrebnú údržbu
+počítača.
 
-Cieľom je spoľahlivý chod, správne teploty a čo najlepšia starostlivosť o hardware. 💻
+Cieľom je spoľahlivý chod, správne teploty a čo najlepšia starostlivosť
+o hardware. 💻
 
-📩 Potrebuješ servis alebo diagnostiku počítača?
-Ozvi sa TOMIKONu.
+📩 Potrebuješ servis alebo diagnostiku počítača? Ozvi sa TOMIKONu.
 
 ${hashtags}`;
-
 
     const facebook = `🔧 ${title}
 
 ${description}
 
-Pri tomto servise sme sa zamerali na dôkladnú údržbu a kontrolu počítača.
+Pri tomto servise sme sa zamerali na dôkladnú údržbu a kontrolu
+počítača.
 
-Správna starostlivosť o hardware môže pomôcť so stabilitou, chladením a celkovou spoľahlivosťou počítača. 💻
+Správna starostlivosť o hardware môže pomôcť so stabilitou, chladením a
+celkovou spoľahlivosťou počítača. 💻
 
-Ak aj tvoj počítač potrebuje servis, čistenie alebo diagnostiku, pokojne sa nám ozvi.
+Ak aj tvoj počítač potrebuje servis, čistenie alebo diagnostiku, pokojne
+sa nám ozvi.
 
 📩 TOMIKON – servis počítačov
 
 ${hashtags}`;
-
 
     return {
         instagram,
@@ -860,15 +802,9 @@ ${hashtags}`;
 
 }
 
+// ========================= // PREDAJNÝ // =========================
 
-// =========================
-// PREDAJNÝ
-// =========================
-
-function createSalesPost(
-    service,
-    description
-) {
+function createSalesPost( service, description ) {
 
     const title =
         getServiceTitle(service);
@@ -883,10 +819,8 @@ ${description}
 
 Aj tvoj počítač:
 
-🌡️ sa prehrieva?
-🔊 je hlučný?
-🧹 je plný prachu?
-⚡ alebo nefunguje tak ako má?
+🌡️ sa prehrieva? 🔊 je hlučný? 🧹 je plný prachu? ⚡ alebo nefunguje tak
+ako má?
 
 Nečakaj, kým sa problém zhorší.
 
@@ -894,12 +828,12 @@ Nečakaj, kým sa problém zhorší.
 
 ${hashtags}`;
 
-
     const facebook = `🔥 Ďalší počítač je pripravený na ďalšiu prácu alebo hranie!
 
 ${description}
 
-Ak máš doma počítač, ktorý sa prehrieva, je hlučný, zaprášený alebo jednoducho nefunguje tak, ako má, nemusíš problém riešiť sám.
+Ak máš doma počítač, ktorý sa prehrieva, je hlučný, zaprášený alebo
+jednoducho nefunguje tak, ako má, nemusíš problém riešiť sám.
 
 V TOMIKONe sa postaráme o servis, čistenie aj diagnostiku. 🛠️💻
 
@@ -909,7 +843,6 @@ V TOMIKONe sa postaráme o servis, čistenie aj diagnostiku. 🛠️💻
 
 ${hashtags}`;
 
-
     return {
         instagram,
         facebook
@@ -917,15 +850,10 @@ ${hashtags}`;
 
 }
 
+// ========================= // UVOĽNENÝ / SOCIAL //
+=========================
 
-// =========================
-// UVOĽNENÝ / SOCIAL
-// =========================
-
-function createSocialPost(
-    service,
-    description
-) {
+function createSocialPost( service, description ) {
 
     const hashtags =
         getHashtags(service);
@@ -937,8 +865,8 @@ ${description}
 
 Trochu prachu, trochu servisu a PC môže zase dýchať. 😂💻
 
-Výsledok?
-Čistejší počítač, lepšie chladenie a hlavne spokojný zákazník. 🔥
+Výsledok? Čistejší počítač, lepšie chladenie a hlavne spokojný zákazník.
+🔥
 
 Ak aj tvoj PC potrebuje pomoc, vieš kam napísať. 😎
 
@@ -946,19 +874,19 @@ Ak aj tvoj PC potrebuje pomoc, vieš kam napísať. 😎
 
 ${hashtags}`;
 
-
     const facebook = `👀 Keď už počítač začína vyzerať ako vysávač, je asi čas na servis. 😂
 
 ${description}
 
-Dali sme mu trochu lásky, poriadne ho skontrolovali a pripravili na ďalšiu prevádzku. 💻🔥
+Dali sme mu trochu lásky, poriadne ho skontrolovali a pripravili na
+ďalšiu prevádzku. 💻🔥
 
-Ak aj tvoj PC potrebuje vyčistiť, opraviť alebo diagnostikovať, pokojne sa ozvi.
+Ak aj tvoj PC potrebuje vyčistiť, opraviť alebo diagnostikovať, pokojne
+sa ozvi.
 
 📩 TOMIKON – nech tvoj počítač zase funguje tak, ako má.
 
 ${hashtags}`;
-
 
     return {
         instagram,
@@ -967,10 +895,8 @@ ${hashtags}`;
 
 }
 
-
-// =========================
-// NÁZVY SLUŽIEB
-// =========================
+// ========================= // NÁZVY SLUŽIEB //
+=========================
 
 function getServiceTitle(service) {
 
@@ -995,10 +921,7 @@ function getServiceTitle(service) {
 
 }
 
-
-// =========================
-// HASHTAGY
-// =========================
+// ========================= // HASHTAGY // =========================
 
 function getHashtags(service) {
 
@@ -1035,10 +958,7 @@ function getHashtags(service) {
 
 }
 
-
-// =========================
-// CAPITALIZE
-// =========================
+// ========================= // CAPITALIZE // =========================
 
 function capitalize(text) {
 
@@ -1049,10 +969,8 @@ function capitalize(text) {
 
 }
 
-
-// =========================
-// ZOBRAZENIE 3 VERZIÍ
-// =========================
+// ========================= // ZOBRAZENIE 3 VERZIÍ //
+=========================
 
 function displayAIResults(posts) {
 
@@ -1085,10 +1003,8 @@ function displayAIResults(posts) {
 
 }
 
-
-// =========================
-// PREPÍNANIE ŠTÝLOV
-// =========================
+// ========================= // PREPÍNANIE ŠTÝLOV //
+=========================
 
 function addStyleButtons() {
 
@@ -1192,15 +1108,10 @@ function addStyleButtons() {
 
 }
 
+// ========================= // KOPÍROVANIE INSTAGRAM //
+=========================
 
-// =========================
-// KOPÍROVANIE INSTAGRAM
-// =========================
-
-const copyInstagram =
-    document.getElementById(
-        "copyInstagram"
-    );
+const copyInstagram = document.getElementById( “copyInstagram” );
 
 if (copyInstagram) {
 
@@ -1231,15 +1142,10 @@ if (copyInstagram) {
 
 }
 
+// ========================= // KOPÍROVANIE FACEBOOK //
+=========================
 
-// =========================
-// KOPÍROVANIE FACEBOOK
-// =========================
-
-const copyFacebook =
-    document.getElementById(
-        "copyFacebook"
-    );
+const copyFacebook = document.getElementById( “copyFacebook” );
 
 if (copyFacebook) {
 
@@ -1270,9 +1176,8 @@ if (copyFacebook) {
 
 }
 
-// =========================
-// HISTÓRIA TOMIKON AI
-// =========================
+// ========================= // HISTÓRIA TOMIKON AI //
+=========================
 
 async function loadAIHistory() {
 
@@ -1483,49 +1388,36 @@ async function loadAIHistory() {
 
 }
 
-// =========================
-// TOMIKON BAZÁR - ADMIN
-// =========================
+// ========================= // TOMIKON BAZÁR - ADMIN //
+=========================
+
+let bazarAdminListings = [];
 
 async function loadBazarAdmin() {
 
-    const container =
-        document.getElementById("bazarPendingListings");
-
+    const container = document.getElementById("bazarPendingListings");
     if (!container) return;
 
+    container.innerHTML = "<p>⏳ Načítavam inzeráty...</p>";
 
-    container.innerHTML =
-        "<p>Načítavam inzeráty...</p>";
-
-
-    const { data, error } =
-        await supabaseClient
-            .from("bazar_listings")
-            .select(`
-                id,
-                seller_id,
-                title,
-                category,
-                price,
-                city,
-                contact,
-                description,
-                created_at,
-                approved
-            `)
-            .eq("approved", false)
-            .order("created_at", {
-                ascending: false
-            });
-
+    const { data, error } = await supabaseClient
+        .from("bazar_listings")
+        .select(`
+            id,
+            seller_id,
+            title,
+            category,
+            price,
+            city,
+            contact,
+            description,
+            created_at,
+            approved
+        `)
+        .order("created_at", { ascending: false });
 
     if (error) {
-
-        console.error(
-            "BAZÁR ADMIN ERROR:",
-            error
-        );
+        console.error("BAZÁR ADMIN ERROR:", error);
 
         container.innerHTML = `
             <div class="empty-reviews">
@@ -1534,66 +1426,196 @@ async function loadBazarAdmin() {
                 ${escapeHTML(error.message)}
             </div>
         `;
-
         return;
     }
 
+    bazarAdminListings = data || [];
+    renderBazarAdmin();
 
-    // =========================
-    // ŽIADNE ČAKAJÚCE
-    // =========================
+}
 
-    if (!data || data.length === 0) {
+// ========================= // VYKRESLENIE BAZÁRU //
+=========================
 
-        container.innerHTML = `
+function renderBazarAdmin() {
+
+    const container = document.getElementById("bazarPendingListings");
+    if (!container) return;
+
+    const pending = bazarAdminListings.filter(
+        listing => listing.approved === false
+    );
+
+    const approved = bazarAdminListings.filter(
+        listing => listing.approved === true
+    );
+
+    container.innerHTML = `
+
+        <div
+            style="
+                display:grid;
+                grid-template-columns:repeat(3,1fr);
+                gap:15px;
+                margin-bottom:25px;
+            "
+        >
+
+            <div class="admin-stat">
+                <span class="admin-stat-number">
+                    ${bazarAdminListings.length}
+                </span>
+                <span class="admin-stat-label">
+                    📦 Všetky inzeráty
+                </span>
+            </div>
+
+            <div class="admin-stat">
+                <span class="admin-stat-number">
+                    ${pending.length}
+                </span>
+                <span class="admin-stat-label">
+                    ⏳ Čakajúce
+                </span>
+            </div>
+
+            <div class="admin-stat">
+                <span class="admin-stat-number">
+                    ${approved.length}
+                </span>
+                <span class="admin-stat-label">
+                    ✅ Schválené
+                </span>
+            </div>
+
+        </div>
+
+        <div
+            style="
+                display:grid;
+                grid-template-columns:2fr 1fr;
+                gap:10px;
+                margin-bottom:25px;
+            "
+        >
+
+            <input
+                id="bazarAdminSearch"
+                type="search"
+                placeholder="🔎 Hľadať inzerát..."
+                style="
+                    width:100%;
+                    box-sizing:border-box;
+                    padding:12px;
+                    background:#111;
+                    color:white;
+                    border:1px solid #008cff;
+                    border-radius:8px;
+                "
+            >
+
+            <select
+                id="bazarAdminStatus"
+                style="
+                    width:100%;
+                    box-sizing:border-box;
+                    padding:12px;
+                    background:#111;
+                    color:white;
+                    border:1px solid #008cff;
+                    border-radius:8px;
+                "
+            >
+                <option value="all">Všetky stavy</option>
+                <option value="pending">⏳ Čakajúce</option>
+                <option value="approved">✅ Schválené</option>
+            </select>
+
+        </div>
+
+        <div id="bazarAdminResults"></div>
+    `;
+
+    const search = document.getElementById("bazarAdminSearch");
+    const status = document.getElementById("bazarAdminStatus");
+
+    function applyFilters() {
+
+        const searchText = search.value.trim().toLowerCase();
+        const selectedStatus = status.value;
+
+        const filtered = bazarAdminListings.filter(listing => {
+
+            const matchesSearch =
+                !searchText ||
+                String(listing.title || "").toLowerCase().includes(searchText) ||
+                String(listing.category || "").toLowerCase().includes(searchText) ||
+                String(listing.city || "").toLowerCase().includes(searchText) ||
+                String(listing.contact || "").toLowerCase().includes(searchText);
+
+            const matchesStatus =
+                selectedStatus === "all" ||
+                (selectedStatus === "pending" && listing.approved === false) ||
+                (selectedStatus === "approved" && listing.approved === true);
+
+            return matchesSearch && matchesStatus;
+        });
+
+        renderBazarResults(filtered);
+    }
+
+    search.addEventListener("input", applyFilters);
+    status.addEventListener("change", applyFilters);
+
+    applyFilters();
+
+}
+
+// ========================= // KARTY INZERÁTOV //
+=========================
+
+function renderBazarResults(listings) {
+
+    const results = document.getElementById("bazarAdminResults");
+    if (!results) return;
+
+    if (!listings || listings.length === 0) {
+        results.innerHTML = `
             <div class="empty-reviews">
-                🎉 Žiadne inzeráty čakajúce na schválenie.
+                📭 Žiadne inzeráty nezodpovedajú výberu.
             </div>
         `;
-
         return;
     }
 
+    results.innerHTML = "";
 
-    // =========================
-    // VYKRESLENIE
-    // =========================
+    listings.forEach(listing => {
 
-    container.innerHTML = "";
+        const card = document.createElement("div");
+        card.className = "review-card";
 
+        const price = Number(listing.price || 0).toLocaleString(
+            "sk-SK",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
 
-    data.forEach(listing => {
-
-        const card =
-            document.createElement("div");
-
-
-        card.className =
-            "review-card";
-
-
-        const price =
-            Number(listing.price || 0)
-                .toLocaleString(
-                    "sk-SK",
-                    {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    }
-                );
-
+        const isApproved = listing.approved === true;
 
         card.innerHTML = `
 
             <div class="review-status">
-                ⏳ Čaká na schválenie
+                ${isApproved
+                    ? "✅ Zverejnený inzerát"
+                    : "⏳ Čaká na schválenie"}
             </div>
-
 
             <h3>
                 🖥️ ${escapeHTML(listing.title)}
             </h3>
-
 
             <p class="review-text">
 
@@ -1617,7 +1639,6 @@ async function loadBazarAdmin() {
 
             </p>
 
-
             <p class="review-text">
 
                 <strong>Popis:</strong>
@@ -1628,79 +1649,55 @@ async function loadBazarAdmin() {
 
             </p>
 
-
             <small>
-
-                📅
-                ${new Date(
-                    listing.created_at
-                ).toLocaleString("sk-SK")}
-
+                📅 ${new Date(listing.created_at).toLocaleString("sk-SK")}
             </small>
-
 
             <div class="review-actions">
 
+                ${!isApproved ? `
+                    <button
+                        type="button"
+                        class="approve-button"
+                        onclick="approveBazarListing(${listing.id})"
+                    >
+                        ✅ Schváliť
+                    </button>
+                ` : ""}
+
                 <button
-                    class="approve-button"
-                    onclick="approveBazarListing(${listing.id})">
-
-                    ✅ Schváliť
-
-                </button>
-
-
-                <button
+                    type="button"
                     class="delete-button"
-                    onclick="deleteBazarListing(${listing.id})">
-
+                    onclick="deleteBazarListing(${listing.id})"
+                >
                     🗑️ Zmazať
-
                 </button>
 
             </div>
-
         `;
 
-
-        container.appendChild(card);
-
+        results.appendChild(card);
     });
 
 }
 
-
-// =========================
-// SCHVÁLENIE INZERÁTU
-// =========================
+// ========================= // SCHVÁLENIE INZERÁTU //
+=========================
 
 async function approveBazarListing(id) {
 
-    const confirmed =
-        confirm(
-            "Naozaj chceš tento inzerát schváliť?"
-        );
+    if (!confirm("Naozaj chceš tento inzerát schváliť?")) {
+        return;
+    }
 
-
-    if (!confirmed) return;
-
-
-    const { error } =
-        await supabaseClient
-            .from("bazar_listings")
-            .update({
-                approved: true
-            })
-            .eq("id", id);
-
+    const { error } = await supabaseClient
+        .from("bazar_listings")
+        .update({ approved: true })
+        .eq("id", id);
 
     if (error) {
 
-        console.error(
-            "BAZÁR APPROVE ERROR:",
-            error
-        );
-
+        console.error("BAZÁR APPROVE ERROR:", error);
 
         alert(
             "❌ Nepodarilo sa schváliť inzerát.\n\n" +
@@ -1710,47 +1707,32 @@ async function approveBazarListing(id) {
         return;
     }
 
-
-    alert(
-        "✅ Inzerát bol schválený."
-    );
-
+    alert("✅ Inzerát bol schválený.");
 
     await loadBazarAdmin();
 
 }
 
-
-// =========================
-// ZMAZANIE INZERÁTU
-// =========================
+// ========================= // ZMAZANIE INZERÁTU //
+=========================
 
 async function deleteBazarListing(id) {
 
-    const confirmed =
-        confirm(
-            "Naozaj chceš tento inzerát zmazať?\n\n" +
-            "Táto akcia sa nedá vrátiť späť."
-        );
+    if (!confirm(
+        "Naozaj chceš tento inzerát zmazať?\n\n" +
+        "Táto akcia sa nedá vrátiť späť."
+    )) {
+        return;
+    }
 
-
-    if (!confirmed) return;
-
-
-    const { error } =
-        await supabaseClient
-            .from("bazar_listings")
-            .delete()
-            .eq("id", id);
-
+    const { error } = await supabaseClient
+        .from("bazar_listings")
+        .delete()
+        .eq("id", id);
 
     if (error) {
 
-        console.error(
-            "BAZÁR DELETE ERROR:",
-            error
-        );
-
+        console.error("BAZÁR DELETE ERROR:", error);
 
         alert(
             "❌ Nepodarilo sa zmazať inzerát.\n\n" +
@@ -1760,14 +1742,33 @@ async function deleteBazarListing(id) {
         return;
     }
 
-
-    alert(
-        "🗑️ Inzerát bol zmazaný."
-    );
-
+    alert("🗑️ Inzerát bol zmazaný.");
 
     await loadBazarAdmin();
 
 }
+
+// ========================= // RESPONSIVE ADMIN BAZÁR //
+=========================
+
+const bazarAdminStyle = document.createElement(“style”);
+
+bazarAdminStyle.textContent = `
+
+    @media(max-width:700px){
+
+        #bazarPendingListings > div:first-child{
+            grid-template-columns:1fr !important;
+        }
+
+        #bazarPendingListings > div:nth-child(2){
+            grid-template-columns:1fr !important;
+        }
+
+    }
+
+`;
+
+document.head.appendChild(bazarAdminStyle);
 
 checkUser();
