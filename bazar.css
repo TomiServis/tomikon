@@ -2470,3 +2470,44 @@ body {
     font-size: 42px;
     color: #687887;
 }
+
+/* =========================================================
+   KRÁTKY POPIS NA HLAVNEJ STRÁNKE
+   ========================================================= */
+
+.bazar-description-preview {
+    color: #9aa6b2;
+
+    font-size: 14px;
+
+    line-height: 1.55;
+
+    margin: 12px 0;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+
+    overflow: hidden;
+
+    max-height: calc(1.55em * 4);
+
+    position: relative;
+}
+
+/* jemné "..." na konci */
+
+.bazar-description-preview::after {
+    content: "";
+}
+
+/* Na mobile ešte kratší popis */
+
+@media (max-width: 600px) {
+
+    .bazar-description-preview {
+        -webkit-line-clamp: 3;
+        max-height: calc(1.55em * 3);
+    }
+
+}
