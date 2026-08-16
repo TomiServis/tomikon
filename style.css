@@ -2095,3 +2095,52 @@ resize:vertical;
     }
 
 }
+
+/* =========================================================
+   TOMIKON – MOBILNÁ RESPONZIVITA
+   IBA MOBIL
+========================================================= */
+
+@media (max-width: 600px) {
+
+    /* základ */
+    html,
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* hlavný obsah */
+    main {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* nadpisy */
+    h1 {
+        font-size: 30px;
+        line-height: 1.15;
+    }
+
+    h2 {
+        font-size: 24px;
+        line-height: 1.2;
+    }
+
+    h3 {
+        font-size: 19px;
+    }
+
+    /* tlačidlá */
+    button,
+    a {
+        max-width: 100%;
+    }
+
+    /* obrázky */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+}
