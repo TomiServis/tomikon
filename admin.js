@@ -1429,4 +1429,291 @@ async function loadAIHistory() {
 
 }
 
+// =========================
+// TOMIKON BAZÁR - ADMIN
+// =========================
+
+async function loadBazarAdmin() {
+
+    const container =
+        document.getElementById("bazarPendingListings");
+
+    if (!container) return;
+
+
+    container.innerHTML =
+        "<p>Načítavam inzeráty...</p>";
+
+
+    const { data, error } =
+        await supabaseClient
+            .from("bazar_listings")
+            .select(`
+                id,
+                seller_id,
+                title,
+                category,
+                price,
+                city,
+                contact,
+                description,
+                created_at,
+                approved
+            `)
+            .eq("approved", false)
+            .order("created_at", {
+                ascending: false
+            });
+
+
+    if (error) {
+
+        console.error(
+            "BAZÁR ADMIN ERROR:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="empty-reviews">
+                ❌ Nepodarilo sa načítať inzeráty.
+                <br><br>
+                ${escapeHTML(error.message)}
+            </div>
+        `;
+
+        return;
+    }
+
+
+    // =========================
+    // ŽIADNE ČAKAJÚCE
+    // =========================
+
+    if (!data || data.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty-reviews">
+                🎉 Žiadne inzeráty čakajúce na schválenie.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    // =========================
+    // VYKRESLENIE
+    // =========================
+
+    container.innerHTML = "";
+
+
+    data.forEach(listing => {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "review-card";
+
+
+        const price =
+            Number(listing.price || 0)
+                .toLocaleString(
+                    "sk-SK",
+                    {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }
+                );
+
+
+        card.innerHTML = `
+
+            <div class="review-status">
+                ⏳ Čaká na schválenie
+            </div>
+
+
+            <h3>
+                🖥️ ${escapeHTML(listing.title)}
+            </h3>
+
+
+            <p class="review-text">
+
+                <strong>Kategória:</strong>
+                ${escapeHTML(listing.category)}
+
+                <br>
+
+                <strong>Cena:</strong>
+                ${price} €
+
+                <br>
+
+                <strong>Mesto:</strong>
+                📍 ${escapeHTML(listing.city)}
+
+                <br>
+
+                <strong>Kontakt:</strong>
+                📞 ${escapeHTML(listing.contact)}
+
+            </p>
+
+
+            <p class="review-text">
+
+                <strong>Popis:</strong>
+
+                <br>
+
+                ${escapeHTML(listing.description)}
+
+            </p>
+
+
+            <small>
+
+                📅
+                ${new Date(
+                    listing.created_at
+                ).toLocaleString("sk-SK")}
+
+            </small>
+
+
+            <div class="review-actions">
+
+                <button
+                    class="approve-button"
+                    onclick="approveBazarListing(${listing.id})">
+
+                    ✅ Schváliť
+
+                </button>
+
+
+                <button
+                    class="delete-button"
+                    onclick="deleteBazarListing(${listing.id})">
+
+                    🗑️ Zmazať
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+// =========================
+// SCHVÁLENIE INZERÁTU
+// =========================
+
+async function approveBazarListing(id) {
+
+    const confirmed =
+        confirm(
+            "Naozaj chceš tento inzerát schváliť?"
+        );
+
+
+    if (!confirmed) return;
+
+
+    const { error } =
+        await supabaseClient
+            .from("bazar_listings")
+            .update({
+                approved: true
+            })
+            .eq("id", id);
+
+
+    if (error) {
+
+        console.error(
+            "BAZÁR APPROVE ERROR:",
+            error
+        );
+
+
+        alert(
+            "❌ Nepodarilo sa schváliť inzerát.\n\n" +
+            error.message
+        );
+
+        return;
+    }
+
+
+    alert(
+        "✅ Inzerát bol schválený."
+    );
+
+
+    await loadBazarAdmin();
+
+}
+
+
+// =========================
+// ZMAZANIE INZERÁTU
+// =========================
+
+async function deleteBazarListing(id) {
+
+    const confirmed =
+        confirm(
+            "Naozaj chceš tento inzerát zmazať?\n\n" +
+            "Táto akcia sa nedá vrátiť späť."
+        );
+
+
+    if (!confirmed) return;
+
+
+    const { error } =
+        await supabaseClient
+            .from("bazar_listings")
+            .delete()
+            .eq("id", id);
+
+
+    if (error) {
+
+        console.error(
+            "BAZÁR DELETE ERROR:",
+            error
+        );
+
+
+        alert(
+            "❌ Nepodarilo sa zmazať inzerát.\n\n" +
+            error.message
+        );
+
+        return;
+    }
+
+
+    alert(
+        "🗑️ Inzerát bol zmazaný."
+    );
+
+
+    await loadBazarAdmin();
+
+}
+
 checkUser();
