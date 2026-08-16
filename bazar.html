@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TOMIKON BAZÁR</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.bazar{max-width:1150px;margin:auto;padding:40px 20px 80px}
+.bazar-box{background:#0b0b0b;border:1px solid #008cff;border-radius:15px;padding:25px;margin:25px 0;box-shadow:0 0 25px rgba(0,140,255,.12)}
+.bazar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.bazar-card{background:#0b0b0b;border:1px solid #222;border-radius:14px;padding:20px}
+.bazar-card h3{margin:8px 0}.bazar-price{font-size:22px;font-weight:bold;color:#08f}
+.bazar-meta{color:#aaa;font-size:14px}.bazar-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bazar-form .full{grid-column:1/-1}.bazar-form input,.bazar-form select,.bazar-form textarea{width:100%;box-sizing:border-box;padding:12px;background:#111;color:#fff;border:1px solid #08f;border-radius:8px}
+.bazar-form textarea{min-height:120px}.bazar-button{display:inline-block;padding:12px 20px;border:0;border-radius:8px;background:#08f;color:#fff;font-weight:bold;cursor:pointer}
+#bazarMessage{margin-top:12px;font-weight:bold}
+@media(max-width:800px){.bazar-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.bazar-grid,.bazar-form{grid-template-columns:1fr}.bazar-form .full{grid-column:auto}}
+</style>
+</head>
+<body>
+<main class="bazar">
+<header style="text-align:center">
+<h1>🛒 TOMIKON BAZÁR</h1>
+<p>PC technika, komponenty a príslušenstvo na jednom mieste.</p>
+<a class="bazar-button" href="index.html">← Späť na hlavnú stránku</a>
+</header>
+
+<section class="bazar-box">
+<h2>➕ Pridať inzerát</h2>
+<p>Po odoslaní bude inzerát čakať na schválenie administrátorom.</p>
+<form id="bazarForm" class="bazar-form">
+<div><label>Názov</label><input id="title" required placeholder="Herný PC RTX 3060"></div>
+<div><label>Kategória</label><select id="category" required>
+<option value="">Vyber kategóriu</option><option>Stolný PC</option><option>Notebook</option>
+<option>Grafická karta</option><option>Procesor</option><option>RAM</option>
+<option>SSD / HDD</option><option>Monitor</option><option>Príslušenstvo</option><option>Iné</option>
+</select></div>
+<div><label>Cena (€)</label><input id="price" type="number" min="0" step="0.01" required></div>
+<div><label>Mesto</label><input id="city" required placeholder="Bratislava"></div>
+<div><label>Kontakt</label><input id="contact" required placeholder="telefón alebo e-mail"></div>
+<div class="full"><label>Popis</label><textarea id="description" required placeholder="Stav, komponenty, príslušenstvo..."></textarea></div>
+<div class="full"><button class="bazar-button" type="submit">📤 Odoslať inzerát</button></div>
+</form>
+<div id="bazarMessage"></div>
+</section>
+
+<section class="bazar-box">
+<h2>🔎 Inzeráty</h2>
+<div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px">
+<input id="search" placeholder="Hľadaj..."><select id="filterCategory"><option value="">Všetky kategórie</option><option>Stolný PC</option><option>Notebook</option><option>Grafická karta</option><option>Procesor</option><option>RAM</option><option>SSD / HDD</option><option>Monitor</option><option>Príslušenstvo</option><option>Iné</option></select>
+<input id="minPrice" type="number" placeholder="Cena od"><input id="maxPrice" type="number" placeholder="Cena do">
+</div>
+</section>
+
+<section>
+<div id="bazarListings" class="bazar-grid"><p>Načítavam...</p></div>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="bazar.js"></script>
+</body>
+</html>
