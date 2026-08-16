@@ -1170,16 +1170,23 @@ authSubmitButton
 
         if(authMode === "register"){
 
-            const {
-                data,
-                error
-            } =
-                await bazarClient.auth.signUp({
+           const {
+    data,
+    error
+} =
+    await bazarClient.auth.signUp({
 
-                    email,
-                    password
+        email,
+        password,
 
-                });
+        options: {
+
+            emailRedirectTo:
+                "https://tomistore.sk/bazar.html"
+
+        }
+
+    });
 
 
             if(error){
