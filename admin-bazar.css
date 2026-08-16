@@ -474,3 +474,185 @@ body {
     }
 
 }
+
+/* =========================================================
+   ADMIN LISTING
+========================================================= */
+
+.admin-listing {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 17px;
+
+    border: 1px solid #22303d;
+
+    border-radius: 12px;
+
+    background: #080d13;
+
+    transition:
+        border-color .18s ease,
+        transform .18s ease,
+        background .18s ease;
+}
+
+
+.admin-listing:hover {
+
+    border-color: #008cff;
+
+    background: #0b121a;
+
+    transform: translateY(-1px);
+}
+
+
+.admin-listing-main {
+
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.admin-listing-top {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 7px;
+}
+
+
+.admin-status {
+
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+
+.admin-status.approved {
+
+    color: #00d084;
+
+    background:
+        rgba(0,208,132,.10);
+
+    border:
+        1px solid rgba(0,208,132,.25);
+}
+
+
+.admin-status.pending {
+
+    color: #ffbd00;
+
+    background:
+        rgba(255,189,0,.10);
+
+    border:
+        1px solid rgba(255,189,0,.25);
+}
+
+
+.admin-listing-date {
+
+    color: #71808d;
+
+    font-size: 11px;
+}
+
+
+.admin-listing h3 {
+
+    margin: 0 0 9px;
+
+    font-size: 18px;
+
+    word-break: break-word;
+}
+
+
+.admin-listing-meta {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    color: #8997a5;
+
+    font-size: 12px;
+}
+
+
+.admin-listing-meta strong {
+
+    color: #008cff;
+
+    font-size: 16px;
+}
+
+
+.admin-listing-contact {
+
+    margin-top: 9px;
+
+    color: #8997a5;
+
+    font-size: 12px;
+}
+
+
+.admin-listing-actions {
+
+    flex-shrink: 0;
+}
+
+
+@media (max-width:700px) {
+
+    .admin-listing {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .admin-listing-actions {
+
+        width: 100%;
+    }
+
+
+    .admin-listing-actions .admin-button {
+
+        display: block;
+
+        width: 100%;
+
+        text-align: center;
+    }
+
+}
