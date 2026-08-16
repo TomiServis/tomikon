@@ -2511,3 +2511,27 @@ body {
     }
 
 }
+
+/* =========================================================
+   KLIKNUTEĽNÉ LOGO BAZÁRU
+   ========================================================= */
+
+.bazar-logo-link {
+    text-decoration: none;
+    color: inherit;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
+}
+
+.bazar-logo-link:hover {
+    transform: translateY(-1px);
+    opacity: .9;
+}
+
+.bazar-logo-link:active {
+    transform: scale(.98);
+}
