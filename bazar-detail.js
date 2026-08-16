@@ -217,21 +217,27 @@ async function loadDetail(){
         // FOTKY
         // =========================
 
-        const validImages =
-            images || [];
+       const validImages = images || [];
 
 
-        if(validImages.length > 0){
+// Uložíme všetky fotky do galérie
+galleryImages = validImages.map(
+    image => image.image_url
+);
 
-            setMainImage(
-                validImages[0].image_url
-            );
+
+if(validImages.length > 0){
+
+    setMainImage(
+        validImages[0].image_url
+    );
 
 
-            renderThumbnails(
-                validImages
-            );
+    renderThumbnails(
+        validImages
+    );
 
+}
         }else{
 
             $("mainImage").style.display =
@@ -382,50 +388,6 @@ function renderThumbnails(images){
 }
 
 
-// =========================
-// LIGHTBOX
-// =========================
-
-function openImageModal(url){
-
-    $("modalImage").src =
-        url;
-
-    $("imageModal").style.display =
-        "flex";
-
-}
-
-
-$("closeImageModal")
-    .addEventListener(
-        "click",
-        function(){
-
-            $("imageModal").style.display =
-                "none";
-
-        }
-    );
-
-
-$("imageModal")
-    .addEventListener(
-        "click",
-        function(event){
-
-            if(
-                event.target ===
-                $("imageModal")
-            ){
-
-                $("imageModal").style.display =
-                    "none";
-
-            }
-
-        }
-    );
 
 
 // =========================
