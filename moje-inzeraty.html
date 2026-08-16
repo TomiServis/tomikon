@@ -250,6 +250,85 @@
 
 </main>
 
+    <!-- EDIT MODAL -->
+<div id="editModal" class="edit-modal">
+
+    <div class="edit-box">
+
+        <button id="closeEditModal" class="edit-close">
+            ✕
+        </button>
+
+        <h2>✏️ Upraviť inzerát</h2>
+
+        <form id="editForm">
+
+            <input type="hidden" id="editId">
+
+            <label>Názov</label>
+            <input id="editTitle" required>
+
+            <label>Kategória</label>
+            <select id="editCategory" required>
+                <option value="">Vyber kategóriu</option>
+                <option>Stolný PC</option>
+                <option>Notebook</option>
+                <option>Grafická karta</option>
+                <option>Procesor</option>
+                <option>RAM</option>
+                <option>SSD / HDD</option>
+                <option>Monitor</option>
+                <option>Príslušenstvo</option>
+                <option>Iné</option>
+            </select>
+
+            <label>Cena (€)</label>
+            <input
+                id="editPrice"
+                type="number"
+                min="0"
+                step="0.01"
+                required
+            >
+
+            <label>Mesto</label>
+            <input id="editCity" required>
+
+            <label>Kontakt</label>
+            <input id="editContact" required>
+
+            <label>Popis</label>
+            <textarea
+                id="editDescription"
+                required
+            ></textarea>
+
+            <div class="edit-actions">
+
+                <button
+                    type="button"
+                    id="cancelEdit"
+                    class="edit-cancel"
+                >
+                    Zrušiť
+                </button>
+
+                <button
+                    type="submit"
+                    class="edit-save"
+                >
+                    💾 Uložiť zmeny
+                </button>
+
+            </div>
+
+            <p id="editMessage"></p>
+
+        </form>
+
+    </div>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
