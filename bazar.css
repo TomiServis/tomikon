@@ -1118,17 +1118,22 @@
         );
 
     border: 1px solid #292929;
-
     border-radius: 15px;
 
     padding: 18px;
 
-    transition:
-        transform .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease;
-
     cursor: pointer;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.bazar-card:hover {
+    border-color: #008cff;
+
+    box-shadow:
+        0 0 18px rgba(0,140,255,.16);
 }
 
 .bazar-card:hover {
