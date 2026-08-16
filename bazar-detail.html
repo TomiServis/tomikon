@@ -469,17 +469,55 @@ body{
      LIGHTBOX
 ========================= -->
 
+<!-- =========================
+     FULLSCREEN GALÉRIA
+========================= -->
+
 <div id="imageModal">
 
-    <span id="closeImageModal">
-        ×
-    </span>
-
-    <img
-        id="modalImage"
-        src=""
-        alt="Fotka inzerátu"
+    <button
+        id="closeImageModal"
+        class="gallery-close"
+        type="button"
     >
+        ×
+    </button>
+
+
+    <button
+        id="prevImage"
+        class="gallery-arrow gallery-prev"
+        type="button"
+    >
+        ‹
+    </button>
+
+
+    <div class="gallery-content">
+
+        <img
+            id="modalImage"
+            src=""
+            alt="Fotka inzerátu"
+        >
+
+        <div
+            id="imageCounter"
+            class="image-counter"
+        >
+            1 / 1
+        </div>
+
+    </div>
+
+
+    <button
+        id="nextImage"
+        class="gallery-arrow gallery-next"
+        type="button"
+    >
+        ›
+    </button>
 
 </div>
 
