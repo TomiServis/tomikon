@@ -372,6 +372,14 @@ async function loadBazar(){
 
         card.className =
             "bazar-card";
+        card.style.cursor = "pointer";
+
+card.addEventListener("click", function(){
+
+    window.location.href =
+        `bazar-detail.html?id=${listing.id}`;
+
+});
 
 
         const price =
