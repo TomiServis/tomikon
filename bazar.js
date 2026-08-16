@@ -704,11 +704,7 @@ $("bazarForm")
 
 
             const selectedFiles =
-                bazarImagesInput
-                    ? Array.from(
-                        bazarImagesInput.files
-                    )
-                    : [];
+    [...selectedImageFiles];
 
 
             // =========================
@@ -984,16 +980,15 @@ $("bazarForm")
             // ÚSPECH
             // =========================
 
-            $("bazarForm")
-                .reset();
+           $("bazarForm").reset();
 
+selectedImageFiles = [];
 
-            if(imagePreview){
+if(imagePreview){
 
-                imagePreview.innerHTML =
-                    "";
+    imagePreview.innerHTML = "";
 
-            }
+}
 
 
             message.textContent =
