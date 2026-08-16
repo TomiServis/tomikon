@@ -41,6 +41,32 @@
 <div><label>Mesto</label><input id="city" required placeholder="Bratislava"></div>
 <div><label>Kontakt</label><input id="contact" required placeholder="telefón alebo e-mail"></div>
 <div class="full"><label>Popis</label><textarea id="description" required placeholder="Stav, komponenty, príslušenstvo..."></textarea></div>
+  <div class="full">
+
+    <label>📸 Fotky inzerátu</label>
+
+    <input
+        type="file"
+        id="bazarImages"
+        accept="image/*"
+        multiple
+    >
+
+    <small style="display:block;margin-top:8px;color:#aaa;">
+        Vyber maximálne 8 fotiek. Každá môže mať do 10 MB.
+    </small>
+
+    <div
+        id="imagePreview"
+        style="
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+            margin-top:15px;
+        "
+    ></div>
+
+</div>
 <div class="full"><button class="bazar-button" type="submit">📤 Odoslať inzerát</button></div>
 </form>
 <div id="bazarMessage"></div>
