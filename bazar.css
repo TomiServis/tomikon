@@ -1238,3 +1238,526 @@
     }
 
 }
+
+/* =========================================================
+   TOMIKON BAZÁR - MODERN LOGIN / REGISTER MODAL
+========================================================= */
+
+.bazar-auth-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,140,255,.12),
+            rgba(0,0,0,.88) 55%,
+            rgba(0,0,0,.96)
+        );
+
+    backdrop-filter: blur(8px);
+
+    animation:
+        bazarModalFade .18s ease;
+}
+
+
+@keyframes bazarModalFade {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+
+/* =========================================================
+   LOGIN BOX
+========================================================= */
+
+.bazar-login-box {
+
+    position: relative;
+
+    width: min(430px, 100%);
+
+    padding: 36px 34px 30px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111,
+            #080808
+        );
+
+    border: 1px solid rgba(0,140,255,.55);
+
+    box-shadow:
+        0 0 0 1px rgba(0,140,255,.08),
+        0 20px 80px rgba(0,0,0,.8),
+        0 0 45px rgba(0,140,255,.15);
+
+    text-align: center;
+
+    animation:
+        bazarLoginOpen .22s ease;
+}
+
+
+@keyframes bazarLoginOpen {
+
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+.bazar-login-close {
+
+    position: absolute;
+
+    top: 13px;
+    right: 15px;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    border: 1px solid #333;
+
+    background: #151515;
+
+    color: #aaa;
+
+    font-size: 24px;
+
+    line-height: 30px;
+
+    cursor: pointer;
+
+    transition:
+        .18s ease;
+}
+
+
+.bazar-login-close:hover {
+
+    color: white;
+
+    border-color: #008cff;
+
+    background: #008cff;
+
+    transform: rotate(90deg);
+
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.bazar-login-icon {
+
+    width: 66px;
+    height: 66px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #008cff,
+            #0059a8
+        );
+
+    box-shadow:
+        0 0 30px rgba(0,140,255,.3);
+
+    font-size: 30px;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.bazar-login-box h2 {
+
+    margin: 0;
+
+    font-size: 27px;
+
+    color: white;
+}
+
+
+.bazar-login-subtitle {
+
+    margin: 8px 0 25px;
+
+    color: #888;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.bazar-login-field {
+
+    text-align: left;
+
+    margin-bottom: 17px;
+}
+
+
+.bazar-login-field label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #ddd;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.bazar-login-field input {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 13px 14px;
+
+    border-radius: 10px;
+
+    border: 1px solid #292929;
+
+    background: #111;
+
+    color: white;
+
+    outline: none;
+
+    font-size: 14px;
+
+    transition:
+        border-color .18s ease,
+        box-shadow .18s ease;
+}
+
+
+.bazar-login-field input::placeholder {
+
+    color: #555;
+
+}
+
+
+.bazar-login-field input:focus {
+
+    border-color: #008cff;
+
+    box-shadow:
+        0 0 0 3px rgba(0,140,255,.10),
+        0 0 20px rgba(0,140,255,.08);
+
+}
+
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.bazar-password-wrap {
+
+    position: relative;
+}
+
+
+.bazar-password-wrap input {
+
+    padding-right: 48px;
+}
+
+
+.bazar-password-toggle {
+
+    position: absolute;
+
+    right: 7px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 36px;
+    height: 36px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #888;
+
+    cursor: pointer;
+
+    font-size: 17px;
+}
+
+
+.bazar-password-toggle:hover {
+
+    background: #1b1b1b;
+
+    color: white;
+
+}
+
+
+/* =========================================================
+   MAIN BUTTON
+========================================================= */
+
+.bazar-login-submit {
+
+    width: 100%;
+
+    padding: 14px 18px;
+
+    margin-top: 4px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #008cff,
+            #006bd6
+        );
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px rgba(0,140,255,.2);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        filter .18s ease;
+}
+
+
+.bazar-login-submit:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 32px rgba(0,140,255,.3);
+
+    filter: brightness(1.08);
+
+}
+
+
+.bazar-login-submit:disabled {
+
+    opacity: .55;
+
+    cursor: wait;
+
+    transform: none;
+
+}
+
+
+/* =========================================================
+   MESSAGE
+========================================================= */
+
+.bazar-auth-message {
+
+    min-height: 22px;
+
+    margin-top: 13px;
+
+    color: #aaa;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.bazar-login-divider {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 20px 0;
+
+    color: #555;
+
+    font-size: 12px;
+}
+
+
+.bazar-login-divider::before,
+.bazar-login-divider::after {
+
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #222;
+}
+
+
+/* =========================================================
+   SWITCH LOGIN / REGISTER
+========================================================= */
+
+.bazar-login-switch {
+
+    width: 100%;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    border: 1px solid #333;
+
+    background: #101010;
+
+    color: #ddd;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .18s ease;
+}
+
+
+.bazar-login-switch:hover {
+
+    border-color: #008cff;
+
+    background:
+        rgba(0,140,255,.08);
+
+    color: white;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.bazar-login-footer {
+
+    margin: 20px 0 0;
+
+    color: #444;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 520px) {
+
+    .bazar-auth-modal {
+
+        padding: 12px;
+    }
+
+
+    .bazar-login-box {
+
+        padding: 32px 20px 24px;
+
+        border-radius: 18px;
+    }
+
+
+    .bazar-login-box h2 {
+
+        font-size: 23px;
+    }
+
+
+    .bazar-login-icon {
+
+        width: 58px;
+        height: 58px;
+
+        font-size: 26px;
+    }
+
+}
