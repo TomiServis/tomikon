@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="sk">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Obnovenie hesla | TOMIKON BAZÁR</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bazar.css">
+
+    <style>
+
+        /* =====================================================
+           RESET HESLA
+        ===================================================== */
+
+        .reset-page {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px 20px;
+
+            box-sizing: border-box;
+
+        }
+
+
+        .reset-box {
+
+            width: min(440px, 100%);
+
+            padding: 38px 35px 32px;
+
+            box-sizing: border-box;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #111,
+                    #080808
+                );
+
+            border: 1px solid rgba(0,140,255,.55);
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 0 0 1px rgba(0,140,255,.08),
+                0 20px 70px rgba(0,0,0,.8),
+                0 0 45px rgba(0,140,255,.12);
+
+            text-align: center;
+
+        }
+
+
+        .reset-logo {
+
+            font-size: 46px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .reset-box h1 {
+
+            margin: 0;
+
+            color: white;
+
+            font-size: 28px;
+
+        }
+
+
+        .reset-subtitle {
+
+            margin: 10px 0 28px;
+
+            color: #888;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .reset-field {
+
+            text-align: left;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .reset-field label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #ddd;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .reset-field input {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 14px;
+
+            background: #111;
+
+            color: white;
+
+            border: 1px solid #292929;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 14px;
+
+            transition: .18s ease;
+
+        }
+
+
+        .reset-field input:focus {
+
+            border-color: #008cff;
+
+            box-shadow:
+                0 0 0 3px rgba(0,140,255,.10);
+
+        }
+
+
+        .reset-button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 5px;
+
+            border: 0;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #008cff,
+                    #006bd6
+                );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: .18s ease;
+
+        }
+
+
+        .reset-button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 30px rgba(0,140,255,.25);
+
+        }
+
+
+        .reset-button:disabled {
+
+            opacity: .55;
+
+            cursor: wait;
+
+            transform: none;
+
+        }
+
+
+        .reset-message {
+
+            min-height: 24px;
+
+            margin-top: 16px;
+
+            color: #aaa;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .reset-back {
+
+            display: inline-block;
+
+            margin-top: 22px;
+
+            color: #008cff;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .reset-back:hover {
+
+            color: #45b5ff;
+
+            text-decoration: underline;
+
+        }
+
+
+        .reset-footer {
+
+            margin-top: 25px;
+
+            color: #444;
+
+            font-size: 11px;
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .reset-page {
+
+                padding: 15px;
+
+            }
+
+
+            .reset-box {
+
+                padding: 30px 20px 25px;
+
+                border-radius: 18px;
+
+            }
+
+
+            .reset-box h1 {
+
+                font-size: 24px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<main class="reset-page">
+
+
+    <section class="reset-box">
+
+
+        <div class="reset-logo">
+            🔐
+        </div>
+
+
+        <h1>
+            Obnovenie hesla
+        </h1>
+
+
+        <p class="reset-subtitle">
+
+            Zadaj svoje nové heslo.
+            <br>
+            Použi aspoň 6 znakov.
+
+        </p>
+
+
+        <form id="resetPasswordForm">
+
+
+            <div class="reset-field">
+
+                <label for="newPassword">
+                    🔒 Nové heslo
+                </label>
+
+                <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Zadaj nové heslo"
+                    minlength="6"
+                    autocomplete="new-password"
+                    required
+                >
+
+            </div>
+
+
+            <div class="reset-field">
+
+                <label for="confirmPassword">
+                    🔒 Potvrď nové heslo
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Zopakuj nové heslo"
+                    minlength="6"
+                    autocomplete="new-password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                id="resetPasswordButton"
+                class="reset-button">
+
+                🔐 Zmeniť heslo
+
+            </button>
+
+
+        </form>
+
+
+        <div
+            id="resetMessage"
+            class="reset-message">
+        </div>
+
+
+        <a
+            href="bazar.html"
+            class="reset-back">
+
+            ← Späť na TOMIKON BAZÁR
+
+        </a>
+
+
+        <div class="reset-footer">
+
+            TOMIKON BAZÁR · bezpečné prihlasovanie
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="reset-hesla.js"></script>
+
+
+</body>
+
+</html>
