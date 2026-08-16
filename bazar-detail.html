@@ -1,21 +1,14 @@
 <!doctype html>
 <html lang="sk">
-
 <head>
-
 <meta charset="utf-8">
-
-<meta
-    name="viewport"
-    content="width=device-width,initial-scale=1"
->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Detail inzerátu | TOMIKON BAZÁR</title>
 
 <link rel="stylesheet" href="style.css">
 
 <style>
-
 *{
     box-sizing:border-box;
 }
@@ -24,13 +17,13 @@ body{
     margin:0;
     background:#050505;
     color:#fff;
-    font-family:Arial,sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 .detail-page{
     max-width:1200px;
     margin:auto;
-    padding:40px 20px 80px;
+    padding:35px 20px 80px;
 }
 
 .detail-header{
@@ -39,52 +32,72 @@ body{
 }
 
 .detail-header h1{
-    margin-bottom:8px;
+    margin:0 0 8px;
+    font-size:32px;
 }
 
-.back-button{
+.detail-header p{
+    color:#aaa;
+    margin:0 0 18px;
+}
+
+.bazar-button{
     display:inline-block;
-    margin-top:10px;
     padding:12px 20px;
+    border:0;
+    border-radius:8px;
     background:#008cff;
     color:#fff;
-    text-decoration:none;
-    border-radius:8px;
     font-weight:bold;
+    text-decoration:none;
+    cursor:pointer;
 }
 
 .detail-box{
     background:#0b0b0b;
     border:1px solid #008cff;
     border-radius:16px;
-    padding:30px;
+    padding:25px;
     box-shadow:0 0 30px rgba(0,140,255,.12);
 }
 
 .detail-layout{
     display:grid;
-    grid-template-columns:1.3fr 1fr;
-    gap:35px;
+    grid-template-columns:1.4fr 1fr;
+    gap:30px;
 }
 
-.main-image{
+/* =========================
+   FOTKY
+========================= */
+
+.main-image-wrapper{
     width:100%;
-    max-height:600px;
-    object-fit:contain;
-    background:#050505;
-    border-radius:12px;
+    aspect-ratio:16/10;
+    background:#111;
     border:1px solid #222;
-    display:block;
+    border-radius:14px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-.image-gallery{
+#mainImage{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    cursor:pointer;
+}
+
+.thumbnails{
     display:flex;
-    gap:10px;
     flex-wrap:wrap;
+    gap:10px;
     margin-top:15px;
 }
 
-.gallery-image{
+.thumbnail{
     width:90px;
     height:70px;
     object-fit:cover;
@@ -94,49 +107,77 @@ body{
     transition:.2s;
 }
 
-.gallery-image:hover{
+.thumbnail:hover{
     border-color:#008cff;
-    transform:scale(1.04);
+    transform:scale(1.03);
+}
+
+.thumbnail.active{
+    border-color:#008cff;
+    box-shadow:0 0 10px rgba(0,140,255,.5);
+}
+
+/* =========================
+   INFORMÁCIE
+========================= */
+
+.detail-info{
+    display:flex;
+    flex-direction:column;
 }
 
 .detail-category{
-    color:#aaa;
+    color:#888;
     font-size:14px;
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .detail-title{
-    font-size:36px;
+    font-size:32px;
     margin:0 0 15px;
 }
 
 .detail-price{
+    color:#008cff;
     font-size:32px;
     font-weight:bold;
-    color:#008cff;
     margin-bottom:25px;
 }
 
-.detail-info{
-    border-top:1px solid #222;
+.info-row{
+    display:flex;
+    gap:10px;
+    padding:13px 0;
     border-bottom:1px solid #222;
-    padding:18px 0;
-    margin-bottom:25px;
 }
 
-.detail-info div{
-    margin:10px 0;
+.info-label{
+    color:#888;
+    min-width:100px;
 }
 
-.detail-description{
+.info-value{
+    color:#fff;
+    word-break:break-word;
+}
+
+.description-box{
+    margin-top:30px;
+}
+
+.description-box h2{
+    margin-bottom:12px;
+}
+
+.description{
+    color:#ccc;
     line-height:1.7;
-    color:#ddd;
     white-space:pre-wrap;
 }
 
 .contact-box{
     margin-top:30px;
-    padding:20px;
+    padding:18px;
     background:#111;
     border:1px solid #222;
     border-radius:12px;
@@ -146,90 +187,306 @@ body{
     margin-top:0;
 }
 
-.contact-value{
-    font-size:20px;
-    font-weight:bold;
+.contact{
+    font-size:18px;
     color:#008cff;
+    font-weight:bold;
     word-break:break-word;
 }
 
-.loading{
+/* =========================
+   LOADING / ERROR
+========================= */
+
+.status-box{
     text-align:center;
-    padding:60px 20px;
-    font-size:20px;
+    padding:80px 20px;
+    background:#0b0b0b;
+    border:1px solid #008cff;
+    border-radius:16px;
 }
 
 .error{
-    text-align:center;
-    padding:60px 20px;
-    color:#ff5555;
+    color:#ff4d6d;
 }
 
-@media(max-width:800px){
+/* =========================
+   IMAGE LIGHTBOX
+========================= */
+
+#imageModal{
+    display:none;
+    position:fixed;
+    z-index:9999;
+    inset:0;
+    background:rgba(0,0,0,.92);
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+}
+
+#imageModal img{
+    max-width:95vw;
+    max-height:90vh;
+    object-fit:contain;
+    border-radius:10px;
+}
+
+#closeImageModal{
+    position:absolute;
+    top:20px;
+    right:25px;
+    font-size:35px;
+    color:#fff;
+    cursor:pointer;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
 
     .detail-layout{
         grid-template-columns:1fr;
     }
 
     .detail-title{
-        font-size:28px;
+        font-size:26px;
     }
 
     .detail-price{
-        font-size:26px;
+        font-size:28px;
     }
 
 }
 
+@media(max-width:500px){
+
+    .detail-page{
+        padding:20px 12px 50px;
+    }
+
+    .detail-box{
+        padding:15px;
+    }
+
+    .detail-header h1{
+        font-size:26px;
+    }
+
+    .thumbnail{
+        width:75px;
+        height:60px;
+    }
+
+}
 </style>
-
 </head>
-
 
 <body>
 
-
 <main class="detail-page">
 
+    <header class="detail-header">
 
-<header class="detail-header">
+        <h1>🛒 TOMIKON BAZÁR</h1>
 
-    <h1>🛒 TOMIKON BAZÁR</h1>
+        <p>Detail inzerátu</p>
 
-    <p>
-        Detail inzerátu
-    </p>
+        <a
+            href="bazar.html"
+            class="bazar-button"
+        >
+            ← Späť na bazár
+        </a>
 
-    <a
-        href="bazar.html"
-        class="back-button"
+    </header>
+
+
+    <!-- =========================
+         NAČÍTAVANIE
+    ========================= -->
+
+    <div
+        id="loadingBox"
+        class="status-box"
     >
-        ← Späť na bazár
-    </a>
 
-</header>
-
-
-<div
-    id="detailContent"
-    class="detail-box"
->
-
-    <div class="loading">
         ⏳ Načítavam inzerát...
+
     </div>
 
-</div>
 
+    <!-- =========================
+         DETAIL
+    ========================= -->
+
+    <div
+        id="detailBox"
+        class="detail-box"
+        style="display:none;"
+    >
+
+        <div class="detail-layout">
+
+            <!-- FOTKY -->
+
+            <div>
+
+                <div class="main-image-wrapper">
+
+                    <img
+                        id="mainImage"
+                        src=""
+                        alt="Inzerát"
+                    >
+
+                </div>
+
+
+                <div
+                    id="thumbnails"
+                    class="thumbnails"
+                ></div>
+
+            </div>
+
+
+            <!-- INFORMÁCIE -->
+
+            <div class="detail-info">
+
+                <div
+                    id="detailCategory"
+                    class="detail-category"
+                ></div>
+
+
+                <h2
+                    id="detailTitle"
+                    class="detail-title"
+                ></h2>
+
+
+                <div
+                    id="detailPrice"
+                    class="detail-price"
+                ></div>
+
+
+                <div class="info-row">
+
+                    <div class="info-label">
+                        📍 Mesto
+                    </div>
+
+                    <div
+                        id="detailCity"
+                        class="info-value"
+                    ></div>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <div class="info-label">
+                        📅 Pridané
+                    </div>
+
+                    <div
+                        id="detailDate"
+                        class="info-value"
+                    ></div>
+
+                </div>
+
+
+                <div class="contact-box">
+
+                    <h3>
+                        📞 Kontakt na predajcu
+                    </h3>
+
+                    <div
+                        id="detailContact"
+                        class="contact"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- POPIS -->
+
+        <div class="description-box">
+
+            <h2>
+                📝 Popis inzerátu
+            </h2>
+
+            <div
+                id="detailDescription"
+                class="description"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CHYBA -->
+
+    <div
+        id="errorBox"
+        class="status-box"
+        style="display:none;"
+    >
+
+        <div class="error">
+            ❌ Inzerát sa nepodarilo nájsť.
+        </div>
+
+        <br>
+
+        <a
+            href="bazar.html"
+            class="bazar-button"
+        >
+            ← Späť na bazár
+        </a>
+
+    </div>
 
 </main>
+
+
+<!-- =========================
+     LIGHTBOX
+========================= -->
+
+<div id="imageModal">
+
+    <span id="closeImageModal">
+        ×
+    </span>
+
+    <img
+        id="modalImage"
+        src=""
+        alt="Fotka inzerátu"
+    >
+
+</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="bazar-detail.js"></script>
 
-
 </body>
-
 </html>
