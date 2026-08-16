@@ -1818,3 +1818,98 @@
 
     cursor: wait;
 }
+
+/* =========================================================
+   TOMIKON BAZÁR - TECH POZADIE
+========================================================= */
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(0, 140, 255, .10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(0, 90, 255, .08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(0, 140, 255, .06),
+            transparent 35%
+        ),
+        #05070b;
+
+    background-attachment: fixed;
+
+    position: relative;
+}
+
+
+/* jemná technologická mriežka */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -1;
+
+    pointer-events: none;
+
+    opacity: .20;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 140, 255, .035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0, 140, 255, .035) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+}
+
+
+/* jemná žiara za obsahom */
+
+body::after {
+    content: "";
+
+    position: fixed;
+
+    width: 600px;
+    height: 600px;
+
+    left: 50%;
+    top: 45%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 140, 255, .045),
+            transparent 65%
+        );
+
+    filter: blur(25px);
+}
