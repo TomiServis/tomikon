@@ -38,13 +38,36 @@ if (loginForm) {
 
         if (loginError) {
 
-            error.textContent =
-                "Nesprávny e-mail alebo heslo.";
+    error.textContent =
+        "Nesprávny e-mail alebo heslo.";
 
-            return;
-        }
+    return;
+}
 
-        showAdmin();
+
+const {
+    data: sessionData
+} =
+    await supabaseClient.auth.getSession();
+
+
+const user =
+    sessionData.session?.user;
+
+
+if (!user || user.id !== ADMIN_USER_ID) {
+
+    await supabaseClient.auth.signOut();
+
+    error.textContent =
+        "❌ Tento účet nemá oprávnenie na administráciu.";
+
+    return;
+
+}
+
+
+showAdmin();
 
     });
 
