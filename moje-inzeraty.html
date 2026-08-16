@@ -179,6 +179,258 @@
 
 }
 
+    /* =========================
+   EDIT MODAL
+========================= */
+
+.edit-modal {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
+    background: rgba(0, 0, 0, .82);
+
+    backdrop-filter: blur(8px);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.edit-modal.active {
+    display: flex;
+}
+
+.edit-box {
+    position: relative;
+
+    width: min(600px, 100%);
+
+    max-height: 90vh;
+    overflow-y: auto;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #080808
+        );
+
+    border: 1px solid #008cff;
+
+    box-shadow:
+        0 0 40px rgba(0,140,255,.25);
+}
+
+.edit-box h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    font-size: 28px;
+}
+
+.edit-close {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 36px;
+    height: 36px;
+
+    border: 1px solid #333;
+    border-radius: 50%;
+
+    background: #111;
+    color: #fff;
+
+    cursor: pointer;
+
+    font-size: 16px;
+}
+
+.edit-close:hover {
+    background: #e53935;
+    border-color: #e53935;
+}
+
+#editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+#editForm label {
+    margin-top: 8px;
+
+    font-size: 14px;
+    font-weight: 700;
+    color: #ddd;
+}
+
+#editForm input,
+#editForm select,
+#editForm textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border-radius: 9px;
+
+    border: 1px solid #303030;
+
+    background: #101010;
+    color: #fff;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+#editForm input:focus,
+#editForm select:focus,
+#editForm textarea:focus {
+    border-color: #008cff;
+
+    box-shadow:
+        0 0 0 2px rgba(0,140,255,.1);
+}
+
+#editForm textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.edit-actions {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.edit-save,
+.edit-cancel {
+    flex: 1;
+
+    padding: 13px;
+
+    border-radius: 9px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    border: 0;
+}
+
+.edit-save {
+    background: #008cff;
+    color: #fff;
+}
+
+.edit-save:hover {
+    background: #009cff;
+}
+
+.edit-cancel {
+    background: #222;
+    color: #fff;
+}
+
+.edit-cancel:hover {
+    background: #333;
+}
+
+#editMessage {
+    text-align: center;
+    font-weight: 700;
+    margin: 15px 0 0;
+}
+
+/* BUTTONS ON CARDS */
+
+.my-actions {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 12px;
+}
+
+.my-action {
+    flex: 1;
+
+    padding: 10px 8px;
+
+    border-radius: 8px;
+
+    border: 1px solid #333;
+
+    background: #111;
+
+    color: #fff;
+
+    font-weight: 700;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    transition: .15s ease;
+}
+
+.my-action:hover {
+    transform: translateY(-1px);
+}
+
+.my-action.view {
+    background: #008cff;
+    border-color: #008cff;
+}
+
+.my-action.edit:hover {
+    background: #333;
+    border-color: #008cff;
+}
+
+.my-action.delete {
+    background: rgba(220,40,40,.1);
+    border-color: rgba(220,40,40,.4);
+    color: #ff5b5b;
+}
+
+.my-action.delete:hover {
+    background: #d62828;
+    color: #fff;
+    border-color: #d62828;
+}
+
+@media (max-width: 600px) {
+
+    .edit-box {
+        padding: 22px;
+    }
+
+    .edit-actions {
+        flex-direction: column;
+    }
+
+}
+
 </style>
 
 </head>
