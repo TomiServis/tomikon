@@ -39,23 +39,159 @@ function escapeHTML(value){
 const bazarImagesInput = $("bazarImages");
 const imagePreview = $("imagePreview");
 
-// Tu držíme aktuálne vybrané fotky
-let selectedImages = [];
+// Tu držíme skutočný zoznam vybraných fotiek
+let selectedImageFiles = [];
+
+
+// =========================
+// VYKRESLENIE NÁHĽADOV
+// =========================
+
+function renderImagePreview() {
+
+    if (!imagePreview)
+        return;
+
+    imagePreview.innerHTML = "";
+
+    selectedImageFiles.forEach((file, index) => {
+
+        const wrapper = document.createElement("div");
+
+        wrapper.style.position = "relative";
+        wrapper.style.width = "120px";
+        wrapper.style.height = "90px";
+
+
+        const img = document.createElement("img");
+
+        img.src = URL.createObjectURL(file);
+
+        img.alt = file.name;
+
+        img.style.width = "120px";
+        img.style.height = "90px";
+        img.style.objectFit = "cover";
+        img.style.borderRadius = "8px";
+        img.style.border = "1px solid #008cff";
+        img.style.display = "block";
+
+
+        // =========================
+        // X TLAČIDLO
+        // =========================
+
+        const removeButton =
+            document.createElement("button");
+
+        removeButton.type = "button";
+
+        removeButton.textContent = "×";
+
+        removeButton.title = "Odstrániť fotku";
+
+        removeButton.style.position = "absolute";
+        removeButton.style.top = "4px";
+        removeButton.style.right = "4px";
+
+        removeButton.style.width = "25px";
+        removeButton.style.height = "25px";
+
+        removeButton.style.padding = "0";
+
+        removeButton.style.border = "1px solid rgba(255,255,255,.5)";
+        removeButton.style.borderRadius = "50%";
+
+        removeButton.style.background = "#e0003c";
+        removeButton.style.color = "#fff";
+
+        removeButton.style.fontSize = "18px";
+        removeButton.style.fontWeight = "bold";
+
+        removeButton.style.lineHeight = "22px";
+
+        removeButton.style.cursor = "pointer";
+
+        removeButton.style.zIndex = "5";
+
+        removeButton.addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                // odstráni fotku zo zoznamu
+                selectedImageFiles.splice(index, 1);
+
+                // prekreslí náhľady
+                renderImagePreview();
+
+                // synchronizuje input
+                syncImageInput();
+
+            }
+        );
+
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(removeButton);
+
+        imagePreview.appendChild(wrapper);
+
+    });
+
+
+    // Počet fotiek
+    const countText =
+        document.getElementById("imageCount");
+
+    if(countText){
+
+        countText.textContent =
+            `Počet súborov: ${selectedImageFiles.length}`;
+
+    }
+
+}
+
+
+// =========================
+// SYNCHRONIZÁCIA FILE INPUTU
+// =========================
+
+function syncImageInput() {
+
+    if(!bazarImagesInput)
+        return;
+
+
+    const dataTransfer =
+        new DataTransfer();
+
+
+    selectedImageFiles.forEach(file => {
+
+        dataTransfer.items.add(file);
+
+    });
+
+
+    bazarImagesInput.files =
+        dataTransfer.files;
+
+}
 
 
 // =========================
 // VÝBER FOTIEK
 // =========================
 
-if (bazarImagesInput) {
+if(bazarImagesInput){
 
     bazarImagesInput.addEventListener(
         "change",
-        function () {
-
-            if (!imagePreview) {
-                return;
-            }
+        function(){
 
             const newFiles =
                 Array.from(
@@ -63,253 +199,92 @@ if (bazarImagesInput) {
                 );
 
 
-            // Pridáme nové fotky
-            selectedImages.push(
-                ...newFiles
-            );
+            for(const file of newFiles){
 
+                // -------------------------
+                // KONTROLA TYPU
+                // -------------------------
 
-            // Maximálne 8 fotiek
-            if (selectedImages.length > 8) {
+                if(!file.type.startsWith("image/")){
 
-                selectedImages =
-                    selectedImages.slice(0, 8);
+                    alert(
+                        `"${file.name}" nie je obrázok.`
+                    );
 
-                alert(
-                    "Môžeš vybrať maximálne 8 fotiek."
-                );
-            }
+                    continue;
 
+                }
 
-            // Kontrola obrázkov
-            selectedImages =
-                selectedImages.filter(
-                    file => {
 
-                        if (
-                            !file.type.startsWith(
-                                "image/"
-                            )
-                        ) {
+                // -------------------------
+                // MAX 10 MB
+                // -------------------------
 
-                            alert(
-                                `"${file.name}" nie je obrázok.`
-                            );
+                if(
+                    file.size >
+                    10 * 1024 * 1024
+                ){
 
-                            return false;
-                        }
+                    alert(
+                        `Fotka "${file.name}" je väčšia ako 10 MB.`
+                    );
 
+                    continue;
 
-                        if (
-                            file.size >
-                            10 * 1024 * 1024
-                        ) {
+                }
 
-                            alert(
-                                `Fotka "${file.name}" je väčšia ako 10 MB.`
-                            );
 
-                            return false;
-                        }
+                // -------------------------
+                // MAX 8 FOTIEK
+                // -------------------------
 
+                if(
+                    selectedImageFiles.length >= 8
+                ){
 
-                        return true;
-                    }
-                );
+                    alert(
+                        "Môžeš mať maximálne 8 fotiek."
+                    );
 
+                    break;
 
-            updateFileInput();
+                }
 
-            renderImagePreview();
 
-        }
-    );
+                // -------------------------
+                // DUPLIKÁT
+                // -------------------------
 
-}
-
-
-// =========================
-// VYKRESLENIE NÁHĽADU
-// =========================
-
-function renderImagePreview() {
-
-    if (!imagePreview) {
-        return;
-    }
-
-
-    imagePreview.innerHTML = "";
-
-
-    selectedImages.forEach(
-        (file, index) => {
-
-            const wrapper =
-                document.createElement("div");
-
-
-            wrapper.style.position =
-                "relative";
-
-            wrapper.style.width =
-                "120px";
-
-            wrapper.style.height =
-                "90px";
-
-            wrapper.style.flexShrink =
-                "0";
-
-
-            // =========================
-            // OBRÁZOK
-            // =========================
-
-            const img =
-                document.createElement("img");
-
-
-            img.src =
-                URL.createObjectURL(file);
-
-
-            img.style.width =
-                "120px";
-
-            img.style.height =
-                "90px";
-
-            img.style.objectFit =
-                "cover";
-
-            img.style.borderRadius =
-                "8px";
-
-            img.style.border =
-                "1px solid #008cff";
-
-            img.style.display =
-                "block";
-
-
-            // =========================
-            // X TLAČIDLO
-            // =========================
-
-            const removeButton =
-                document.createElement("button");
-
-
-            removeButton.type =
-                "button";
-
-
-            removeButton.textContent =
-                "×";
-
-
-            removeButton.title =
-                "Odstrániť fotku";
-
-
-            removeButton.style.position =
-                "absolute";
-
-            removeButton.style.top =
-                "4px";
-
-            removeButton.style.right =
-                "4px";
-
-
-            removeButton.style.width =
-                "25px";
-
-            removeButton.style.height =
-                "25px";
-
-
-            removeButton.style.padding =
-                "0";
-
-            removeButton.style.margin =
-                "0";
-
-
-            removeButton.style.border =
-                "none";
-
-            removeButton.style.borderRadius =
-                "50%";
-
-
-            removeButton.style.background =
-                "#e00000";
-
-            removeButton.style.color =
-                "#fff";
-
-
-            removeButton.style.fontSize =
-                "19px";
-
-            removeButton.style.fontWeight =
-                "bold";
-
-            removeButton.style.lineHeight =
-                "25px";
-
-
-            removeButton.style.cursor =
-                "pointer";
-
-
-            removeButton.style.zIndex =
-                "10";
-
-
-            // =========================
-            // ODSTRÁNENIE FOTKY
-            // =========================
-
-            removeButton.addEventListener(
-                "click",
-                function (event) {
-
-                    event.preventDefault();
-
-                    event.stopPropagation();
-
-
-                    // odstránime fotku zo zoznamu
-                    selectedImages.splice(
-                        index,
-                        1
+                const alreadyExists =
+                    selectedImageFiles.some(
+                        existingFile =>
+                            existingFile.name === file.name &&
+                            existingFile.size === file.size &&
+                            existingFile.lastModified === file.lastModified
                     );
 
 
-                    // aktualizujeme input
-                    updateFileInput();
+                if(alreadyExists)
+                    continue;
 
 
-                    // prekreslíme náhľad
-                    renderImagePreview();
+                // -------------------------
+                // PRIDANIE
+                // -------------------------
 
-                }
-            );
+                selectedImageFiles.push(file);
 
-
-            wrapper.appendChild(img);
-
-            wrapper.appendChild(
-                removeButton
-            );
+            }
 
 
-            imagePreview.appendChild(
-                wrapper
-            );
+            // input vyčistíme, aby bolo možné
+            // znova vybrať rovnakú fotku
+            bazarImagesInput.value = "";
+
+
+            renderImagePreview();
+
+            syncImageInput();
 
         }
     );
@@ -318,35 +293,108 @@ function renderImagePreview() {
 
 
 // =========================
-// AKTUALIZÁCIA FILE INPUTU
+// NAČÍTANIE INZERÁTOV
 // =========================
 
-function updateFileInput() {
+async function loadBazar() {
 
-    if (!bazarImagesInput) {
+    const listings = $("bazarListings");
+
+    if (!listings) return;
+
+    const search = ($("search")?.value || "").trim();
+    const category = $("filterCategory")?.value || "";
+    const minPriceValue = $("minPrice")?.value || "";
+    const maxPriceValue = $("maxPrice")?.value || "";
+
+    listings.innerHTML = "<p>⏳ Načítavam...</p>";
+
+    let query = bazarClient
+        .from("bazar_listings")
+        .select(`
+            id,
+            title,
+            category,
+            price,
+            city,
+            contact,
+            description,
+            approved,
+            created_at
+        `)
+        .eq("approved", true)
+        .order("created_at", { ascending: false });
+
+    if (category) {
+        query = query.eq("category", category);
+    }
+
+    if (minPriceValue !== "") {
+        const minPrice = Number(minPriceValue);
+        if (!Number.isNaN(minPrice)) {
+            query = query.gte("price", minPrice);
+        }
+    }
+
+    if (maxPriceValue !== "") {
+        const maxPrice = Number(maxPriceValue);
+        if (!Number.isNaN(maxPrice)) {
+            query = query.lte("price", maxPrice);
+        }
+    }
+
+    if (search) {
+        const safeSearch = search.replace(/,/g, " ");
+        query = query.or(
+            `title.ilike.%${safeSearch}%,description.ilike.%${safeSearch}%,city.ilike.%${safeSearch}%`
+        );
+    }
+
+    const { data, error } = await query;
+
+    // =========================
+    // CHYBA
+    // =========================
+
+    if(error){
+
+        console.error(
+            "BAZAR ERROR:",
+            error
+        );
+
+
+        listings.innerHTML =
+            `
+            <p>
+                ❌ Nepodarilo sa načítať inzeráty.
+            </p>
+            `;
+
+
         return;
+
     }
 
 
-    const dataTransfer =
-        new DataTransfer();
+    // =========================
+    // ŽIADNE INZERÁTY
+    // =========================
 
+    if(!data || data.length === 0){
 
-    selectedImages.forEach(
-        file => {
+        listings.innerHTML =
+            `
+            <p>
+                🛒 Zatiaľ tu nie sú žiadne
+                schválené inzeráty.
+            </p>
+            `;
 
-            dataTransfer.items.add(
-                file
-            );
+        return;
 
-        }
-    );
+    }
 
-
-    bazarImagesInput.files =
-        dataTransfer.files;
-
-}
 
     // =========================
     // NAČÍTANIE FOTIEK
@@ -716,7 +764,11 @@ $("bazarForm")
 
 
             const selectedFiles =
-    [...selectedImageFiles];
+                bazarImagesInput
+                    ? Array.from(
+                        bazarImagesInput.files
+                    )
+                    : [];
 
 
             // =========================
@@ -992,15 +1044,18 @@ $("bazarForm")
             // ÚSPECH
             // =========================
 
-           $("bazarForm").reset();
+            $("bazarForm")
+                .reset();
 
-selectedImageFiles = [];
+            selectedImageFiles = [];
+            syncImageInput();
 
-if(imagePreview){
+            if(imagePreview){
 
-    imagePreview.innerHTML = "";
+                imagePreview.innerHTML =
+                    "";
 
-}
+            }
 
 
             message.textContent =
