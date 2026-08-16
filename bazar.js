@@ -568,13 +568,13 @@ if (listingImages.length > 0) {
             </div>
 
 
-            <p>
+            <p class="bazar-description-preview">
 
-                ${escapeHTML(
-                    listing.description
-                )}
+    ${escapeHTML(
+        listing.description
+    )}
 
-            </p>
+</p>
 
 
             <div class="bazar-meta">
