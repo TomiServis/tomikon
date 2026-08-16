@@ -11,6 +11,115 @@ const bazarClient =
         SUPABASE_KEY
     );
 
+// =========================
+// NÁHĽADY FOTIEK
+// =========================
+
+const bazarImagesInput =
+    document.getElementById("bazarImages");
+
+const imagePreview =
+    document.getElementById("imagePreview");
+
+
+if (bazarImagesInput) {
+
+    bazarImagesInput.addEventListener(
+        "change",
+        function () {
+
+            imagePreview.innerHTML = "";
+
+            const files =
+                Array.from(
+                    bazarImagesInput.files
+                );
+
+
+            // MAX 8 FOTIEK
+
+            if (files.length > 8) {
+
+                alert(
+                    "Môžeš vybrať maximálne 8 fotiek."
+                );
+
+                bazarImagesInput.value = "";
+
+                return;
+            }
+
+
+            files.forEach(file => {
+
+                // KONTROLA TYPU
+
+                if (!file.type.startsWith("image/")) {
+
+                    return;
+
+                }
+
+
+                // KONTROLA VEĽKOSTI
+
+                if (file.size > 10 * 1024 * 1024) {
+
+                    alert(
+                        `Fotka "${file.name}" je väčšia ako 10 MB.`
+                    );
+
+                    return;
+
+                }
+
+
+                const reader =
+                    new FileReader();
+
+
+                reader.onload =
+                    function (event) {
+
+                        const img =
+                            document.createElement("img");
+
+
+                        img.src =
+                            event.target.result;
+
+
+                        img.style.width =
+                            "120px";
+
+                        img.style.height =
+                            "90px";
+
+                        img.style.objectFit =
+                            "cover";
+
+                        img.style.borderRadius =
+                            "8px";
+
+                        img.style.border =
+                            "1px solid #008cff";
+
+
+                        imagePreview.appendChild(
+                            img
+                        );
+
+                    };
+
+
+                reader.readAsDataURL(file);
+
+            });
+
+        }
+    );
+
+}
 
 // =========================
 // POMOCNÉ FUNKCIE
