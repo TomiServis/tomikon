@@ -52,23 +52,54 @@ if (loginForm) {
 
 
 // =========================
-// KONTROLA PRIHLÁSENIA
+// KONTROLA ADMINA
 // =========================
+
+const ADMIN_USER_ID =
+    "149cd8c4-276b-4dfb-84af-e5fe15f0a8a9";
+
 
 async function checkUser() {
 
-    const { data } =
+    const { data, error } =
         await supabaseClient.auth.getSession();
 
-    if (data.session) {
 
-        showAdmin();
-
-    } else {
+    if (error || !data.session) {
 
         showLogin();
 
+        return;
+
     }
+
+
+    const user =
+        data.session.user;
+
+
+    if (user.id !== ADMIN_USER_ID) {
+
+        await supabaseClient.auth.signOut();
+
+        showLogin();
+
+        const errorElement =
+            document.getElementById("error");
+
+        if (errorElement) {
+
+            errorElement.textContent =
+                "❌ Nemáš oprávnenie na vstup do administrácie.";
+
+        }
+
+        return;
+
+    }
+
+
+    showAdmin();
 
 }
 
