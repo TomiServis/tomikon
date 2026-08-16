@@ -11,38 +11,54 @@
 </head>
 <body>
 
-  <header class="topbar">
+<header class="topbar">
 
     <div class="topbar-logo">
-        🛒 <span>TOMIKON</span>
+
+        🛒
+
+        <span>TOMIKON</span>
+
         <small>BAZÁR</small>
+
     </div>
+
 
     <div class="topbar-user">
 
-        <div id="loggedOutBox" class="auth-buttons">
+        <!-- =========================
+             ODHLÁSENÝ POUŽÍVATEĽ
+        ========================= -->
+
+        <div
+            id="loggedOutBox"
+            class="auth-buttons">
 
             <button
                 id="showLoginButton"
-                class="topbar-btn login-btn">
+                class="topbar-btn login-btn"
+                type="button">
+
                 🔐 Prihlásiť sa
+
             </button>
 
-          <button
-    type="button"
-    id="forgotPasswordButton"
-    class="bazar-forgot-password">
-    🔑 Zabudol som heslo
-</button>
 
             <button
                 id="showRegisterButton"
-                class="topbar-btn register-btn">
+                class="topbar-btn register-btn"
+                type="button">
+
                 ✨ Vytvoriť účet
+
             </button>
 
         </div>
 
+
+        <!-- =========================
+             PRIHLÁSENÝ POUŽÍVATEĽ
+        ========================= -->
 
         <div
             id="loggedInBox"
@@ -51,16 +67,24 @@
 
             <span id="userEmail"></span>
 
+
             <button
                 id="myListingsButton"
-                class="topbar-btn">
+                class="topbar-btn"
+                type="button">
+
                 📦 Moje inzeráty
+
             </button>
+
 
             <button
                 id="logoutBazarButton"
-                class="topbar-btn logout-btn">
+                class="topbar-btn logout-btn"
+                type="button">
+
                 🚪 Odhlásiť
+
             </button>
 
         </div>
@@ -68,38 +92,158 @@
     </div>
 
 </header>
-  <!-- =========================
-     PRIHLÁSENIE BAZÁR
-========================= -->
 
-    <div
-        id="loggedInBox"
-        style="display:none;">
 
-        <h2>👋 Vitaj na TOMIKON BAZÁRI</h2>
+<!-- =====================================================
+     AUTH MODAL
+===================================================== -->
 
-        <p id="userEmail"></p>
+<div
+    id="authModal"
+    class="bazar-auth-modal"
+    style="display:none;">
+
+    <div class="bazar-login-box">
 
         <button
-            id="myListingsButton"
-            class="bazar-button">
+            id="closeAuthButton"
+            class="bazar-login-close"
+            type="button"
+            aria-label="Zavrieť">
 
-            📦 Moje inzeráty
+            ×
 
         </button>
 
-        <button
-            id="logoutBazarButton"
-            class="bazar-button">
 
-            🚪 Odhlásiť
+        <div class="bazar-login-icon">
+
+            👤
+
+        </div>
+
+
+        <h2 id="authTitle">
+
+            🔐 Prihlásenie
+
+        </h2>
+
+
+        <p class="bazar-login-subtitle">
+
+            Prihlás sa do svojho TOMIKON účtu
+
+        </p>
+
+
+        <div class="bazar-login-field">
+
+            <label for="authEmail">
+
+                📧 E-mail
+
+            </label>
+
+            <input
+                type="email"
+                id="authEmail"
+                placeholder="tvoj@email.sk"
+                autocomplete="email"
+            >
+
+        </div>
+
+
+        <div class="bazar-login-field">
+
+            <label for="authPassword">
+
+                🔒 Heslo
+
+            </label>
+
+
+            <div class="bazar-password-wrap">
+
+                <input
+                    type="password"
+                    id="authPassword"
+                    placeholder="Tvoje heslo"
+                    autocomplete="current-password"
+                >
+
+
+                <button
+                    type="button"
+                    id="togglePasswordButton"
+                    class="bazar-password-toggle"
+                    aria-label="Zobraziť heslo">
+
+                    👁
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="authSubmitButton"
+            class="bazar-login-submit"
+            type="button">
+
+            🔐 Prihlásiť sa
 
         </button>
+
+
+        <!-- ZABUDNUTÉ HESLO PATRÍ SEM,
+             NIE DO TOPBARU -->
+
+        <button
+            type="button"
+            id="forgotPasswordButton"
+            class="bazar-forgot-password">
+
+            🔑 Zabudol som heslo
+
+        </button>
+
+
+        <div
+            id="authMessage"
+            class="bazar-auth-message">
+        </div>
+
+
+        <div class="bazar-login-divider">
+
+            <span>alebo</span>
+
+        </div>
+
+
+        <button
+            id="authSwitchButton"
+            class="bazar-login-switch"
+            type="button">
+
+            ✨ Chcem si vytvoriť účet
+
+        </button>
+
+
+        <p class="bazar-login-footer">
+
+            TOMIKON BAZÁR · bezpečné prihlasovanie
+
+        </p>
 
     </div>
 
 </div>
-
   <!-- =========================
      AUTH MODAL
 ========================= -->
