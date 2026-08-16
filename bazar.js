@@ -1194,6 +1194,137 @@ function openAuth(mode) {
 
 }
 
+// =========================================================
+// MODERN AUTH MODAL
+// =========================================================
+
+const authSwitchButton =
+    $("authSwitchButton");
+
+const togglePasswordButton =
+    $("togglePasswordButton");
+
+
+// LOGIN <-> REGISTRÁCIA
+if (authSwitchButton) {
+
+    authSwitchButton.addEventListener(
+        "click",
+        () => {
+
+            if (authMode === "login") {
+
+                openAuth("register");
+
+                authSwitchButton.textContent =
+                    "🔐 Už mám účet – prihlásiť sa";
+
+            } else {
+
+                openAuth("login");
+
+                authSwitchButton.textContent =
+                    "✨ Chcem si vytvoriť účet";
+
+            }
+
+            authEmail.focus();
+
+        }
+    );
+
+}
+
+
+// ZOBRAZIŤ / SKRYŤ HESLO
+if (togglePasswordButton) {
+
+    togglePasswordButton.addEventListener(
+        "click",
+        () => {
+
+            if (authPassword.type === "password") {
+
+                authPassword.type = "text";
+
+                togglePasswordButton.textContent =
+                    "🙈";
+
+            } else {
+
+                authPassword.type = "password";
+
+                togglePasswordButton.textContent =
+                    "👁";
+
+            }
+
+        }
+    );
+
+}
+
+
+// KLIKNUTIE MIMO BOXU = ZATVORIŤ
+if (authModal) {
+
+    authModal.addEventListener(
+        "click",
+        (event) => {
+
+            if (event.target === authModal) {
+
+                authModal.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+// ESC = ZATVORIŤ
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Escape" &&
+            authModal &&
+            authModal.style.display === "flex"
+        ) {
+
+            authModal.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+// ENTER V POLI HESLA
+if (authPassword) {
+
+    authPassword.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                authSubmitButton.click();
+
+            }
+
+        }
+    );
+
+}
+
 
 // =========================
 // ZATVORENIE
