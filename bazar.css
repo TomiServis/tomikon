@@ -1761,3 +1761,20 @@
     }
 
 }
+
+
+.bazar-forgot-password {
+    display: block;
+    margin: 12px auto 0;
+    border: 0;
+    background: transparent;
+    color: #008cff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.bazar-forgot-password:hover {
+    color: #45b5ff;
+    text-decoration: underline;
+}
