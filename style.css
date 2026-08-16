@@ -2144,3 +2144,71 @@ resize:vertical;
     }
 
 }
+
+/* =========================================
+   MOBIL – OPRAVA VERTIKÁLNEHO SCROLLU
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    html {
+        width: 100%;
+        min-height: 100%;
+        height: auto !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body {
+        width: 100%;
+        min-height: 100%;
+        height: auto !important;
+
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+
+        position: relative;
+
+        /* iPhone / Safari */
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Navigácia nesmie blokovať scroll */
+    nav {
+        touch-action: pan-y;
+    }
+
+    /* Hero nech môže normálne pokračovať pod seba */
+    .hero {
+        height: auto !important;
+        min-height: 100svh !important;
+        overflow: visible !important;
+    }
+
+    /* Sekcie nesmú vytvárať vlastný scroll */
+    section,
+    main,
+    footer {
+        overflow: visible !important;
+    }
+
+    /* Pred / Po stále funguje, ale neblokuje
+       normálne posúvanie stránky */
+    .before-after {
+        touch-action: pan-y;
+    }
+
+    /* Dekoratívne pozadie nikdy nezachytáva dotyk */
+    body::before,
+    .hero::before {
+        pointer-events: none !important;
+    }
+
+    /* Obrázky a odkazy */
+    img {
+        touch-action: pan-y;
+    }
+
+}
