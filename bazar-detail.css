@@ -756,3 +756,141 @@
     }
 
 }
+
+
+/* =========================================
+   TOPBAR – DETAIL INZERÁTU
+========================================= */
+
+.topbar {
+    width: 100%;
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 28px;
+
+    background: rgba(5, 5, 5, .92);
+
+    border-bottom: 1px solid rgba(0, 140, 255, .25);
+
+    box-shadow:
+        0 4px 20px rgba(0, 140, 255, .08);
+
+    position: relative;
+    z-index: 100;
+}
+
+.topbar-logo {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 7px;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    font-size: 20px;
+    font-weight: 900;
+
+    letter-spacing: .3px;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+}
+
+.topbar-logo small {
+    color: #008cff;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.topbar-logo:hover {
+    color: #008cff;
+
+    transform: translateY(-1px);
+}
+
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topbar-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 15px;
+
+    border-radius: 8px;
+
+    background: #008cff;
+
+    border: 1px solid #008cff;
+
+    color: #fff !important;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.topbar-btn:hover {
+    background: #009cff;
+
+    box-shadow:
+        0 0 15px rgba(0, 140, 255, .3);
+
+    transform: translateY(-1px);
+}
+
+.topbar-btn:active {
+    transform: scale(.97);
+}
+
+
+/* =========================================
+   MOBIL
+========================================= */
+
+@media (max-width: 600px) {
+
+    .topbar {
+        min-height: 54px;
+
+        padding: 8px 12px;
+
+        gap: 10px;
+    }
+
+    .topbar-logo {
+        font-size: 16px;
+    }
+
+    .topbar-logo small {
+        font-size: 11px;
+    }
+
+    .topbar-btn {
+        padding: 8px 10px;
+
+        font-size: 11px;
+    }
+
+}
