@@ -1913,3 +1913,530 @@ body::after {
 
     filter: blur(25px);
 }
+
+/* =========================================================
+   TOMIKON BAZÁR — PREMIUM VISUAL UPGRADE
+   ========================================================= */
+
+/* ---------- ZÁKLAD ---------- */
+
+body {
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(0, 140, 255, .12),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 10% 60%,
+            rgba(0, 90, 255, .045),
+            transparent 30%
+        ),
+        #03070d;
+
+    color: #fff;
+}
+
+/* ---------- HLAVNÝ OBSAH ---------- */
+
+.bazar {
+    position: relative;
+    max-width: 1180px;
+    padding-top: 55px;
+}
+
+/* jemná modrá žiara za obsahom */
+
+.bazar::before {
+    content: "";
+    position: fixed;
+    width: 600px;
+    height: 600px;
+
+    left: 50%;
+    top: 180px;
+
+    transform: translateX(-50%);
+
+    background: rgba(0, 140, 255, .045);
+
+    filter: blur(100px);
+
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ---------- HLAVIČKA BAZÁRU ---------- */
+
+.bazar > header {
+    position: relative;
+
+    padding: 15px 20px 35px;
+
+    text-align: center;
+}
+
+.bazar > header h1 {
+    font-size: clamp(32px, 5vw, 52px);
+
+    font-weight: 900;
+
+    letter-spacing: -1.5px;
+
+    margin: 0 0 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #8fd3ff,
+            #ffffff
+        );
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    animation: bazarTitleShine 5s linear infinite;
+}
+
+.bazar > header p {
+    color: #8d9aaa;
+
+    font-size: 15px;
+
+    margin: 0 auto 20px;
+
+    max-width: 600px;
+}
+
+@keyframes bazarTitleShine {
+
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+
+}
+
+/* ---------- BADGE NOVINKA ---------- */
+
+.bazar > header::before {
+    content: "🆕 NOVINKA";
+
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-bottom: 14px;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: .7px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,140,255,.25),
+            rgba(0,90,255,.1)
+        );
+
+    border: 1px solid rgba(0,140,255,.5);
+
+    box-shadow:
+        0 0 18px rgba(0,140,255,.16);
+}
+
+/* ---------- HLAVNÉ TLAČIDLO ---------- */
+
+.bazar-button {
+    position: relative;
+
+    border: 1px solid rgba(0,160,255,.65);
+
+    background:
+        linear-gradient(
+            135deg,
+            #008cff,
+            #006be6
+        );
+
+    box-shadow:
+        0 6px 20px rgba(0,140,255,.2);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+}
+
+.bazar-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 28px rgba(0,140,255,.32);
+
+    border-color: #49b8ff;
+}
+
+.bazar-button:active {
+    transform: translateY(0);
+}
+
+/* ---------- PANELY ---------- */
+
+.bazar-box {
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13,18,25,.96),
+            rgba(5,9,14,.96)
+        );
+
+    border: 1px solid rgba(0,140,255,.5);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.3),
+        0 0 35px rgba(0,140,255,.055);
+
+    overflow: hidden;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.bazar-box::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #008cff,
+            #5bc8ff,
+            #008cff,
+            transparent
+        );
+
+    opacity: .8;
+}
+
+.bazar-box:hover {
+    border-color: rgba(0,160,255,.7);
+
+    box-shadow:
+        0 18px 55px rgba(0,0,0,.35),
+        0 0 35px rgba(0,140,255,.09);
+}
+
+.bazar-box h2 {
+    font-size: 23px;
+
+    margin-bottom: 5px;
+
+    letter-spacing: -.3px;
+}
+
+.bazar-box > p {
+    color: #7f8b99;
+}
+
+/* ---------- FORM ---------- */
+
+.bazar-form {
+    margin-top: 22px;
+}
+
+.bazar-form label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #d8e2ed;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.bazar-form input,
+.bazar-form select,
+.bazar-form textarea {
+    background:
+        linear-gradient(
+            180deg,
+            #111820,
+            #0b1016
+        ) !important;
+
+    color: #fff !important;
+
+    border: 1px solid #263746 !important;
+
+    border-radius: 10px !important;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.bazar-form input:hover,
+.bazar-form select:hover,
+.bazar-form textarea:hover {
+    border-color: #31536d !important;
+}
+
+.bazar-form input:focus,
+.bazar-form select:focus,
+.bazar-form textarea:focus {
+    outline: none;
+
+    border-color: #008cff !important;
+
+    background: #0d151e !important;
+
+    box-shadow:
+        0 0 0 3px rgba(0,140,255,.09),
+        0 0 20px rgba(0,140,255,.08);
+}
+
+/* ---------- UPLOAD FOTIEK ---------- */
+
+#bazarImages {
+    cursor: pointer;
+}
+
+#imagePreview {
+    padding-top: 5px;
+}
+
+#imagePreview > div,
+#imagePreview img {
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+#imagePreview > div:hover,
+#imagePreview img:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 22px rgba(0,0,0,.4),
+        0 0 15px rgba(0,140,255,.12);
+}
+
+/* ---------- VYHĽADÁVANIE ---------- */
+
+#search,
+#filterCategory,
+#minPrice,
+#maxPrice {
+    background: #0b1118 !important;
+
+    color: #fff !important;
+
+    border: 1px solid #263746 !important;
+
+    border-radius: 9px;
+
+    min-height: 42px;
+
+    padding: 0 13px;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+#search:focus,
+#filterCategory:focus,
+#minPrice:focus,
+#maxPrice:focus {
+    outline: none;
+
+    border-color: #008cff !important;
+
+    box-shadow:
+        0 0 0 3px rgba(0,140,255,.08);
+}
+
+/* ---------- KARTY INZERÁTOV ---------- */
+
+.bazar-grid {
+    margin-top: 25px;
+}
+
+.bazar-card {
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            #10161d,
+            #070b10
+        );
+
+    border: 1px solid #1d2a36;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.25);
+
+    transition:
+        transform .22s cubic-bezier(.2,.8,.2,1),
+        border-color .22s ease,
+        box-shadow .22s ease;
+
+    will-change: transform;
+}
+
+/*
+   Dôležité:
+   ŽIADNE silné blur animácie pri hoveri.
+   Preto by karta nemala sekať.
+*/
+
+.bazar-card:hover {
+    transform: translateY(-6px);
+
+    border-color: rgba(0,140,255,.65);
+
+    box-shadow:
+        0 16px 35px rgba(0,0,0,.4),
+        0 0 25px rgba(0,140,255,.10);
+}
+
+.bazar-card h3 {
+    color: #f2f7fc;
+
+    font-size: 18px;
+
+    line-height: 1.25;
+}
+
+.bazar-price {
+    color: #19a0ff;
+
+    text-shadow:
+        0 0 15px rgba(0,140,255,.2);
+}
+
+.bazar-meta {
+    color: #8492a1;
+}
+
+/* ---------- OBRÁZKY INZERÁTOV ---------- */
+
+.bazar-card img {
+    transition:
+        transform .35s cubic-bezier(.2,.8,.2,1);
+}
+
+.bazar-card:hover img {
+    transform: scale(1.025);
+}
+
+/* ---------- STATUS ---------- */
+
+.bazar-card::after {
+    content: "";
+
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #00d084;
+
+    box-shadow:
+        0 0 10px rgba(0,208,132,.7);
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 800px) {
+
+    .bazar {
+        padding: 30px 15px 60px;
+    }
+
+    .bazar > header {
+        padding-bottom: 25px;
+    }
+
+    .bazar > header h1 {
+        font-size: 34px;
+    }
+
+    .bazar-grid {
+        gap: 14px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .bazar > header h1 {
+        font-size: 29px;
+        letter-spacing: -.8px;
+    }
+
+    .bazar > header p {
+        font-size: 13px;
+    }
+
+    .bazar-box {
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .bazar-box h2 {
+        font-size: 20px;
+    }
+
+    #search,
+    #filterCategory,
+    #minPrice,
+    #maxPrice {
+        min-height: 44px;
+    }
+
+}
