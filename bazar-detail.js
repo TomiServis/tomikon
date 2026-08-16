@@ -298,12 +298,16 @@ function setMainImage(url){
     mainImage.onclick =
         function(){
 
-            openImageModal(url);
+            const index =
+                galleryImages.indexOf(url);
+
+            openGallery(
+                index >= 0 ? index : 0
+            );
 
         };
 
 }
-
 
 // =========================
 // NÁHĽADY FOTIEK
