@@ -4,7 +4,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_3GLcmT1aTqaGija1nFtziA_iGUYqt7_";
 
-
 const bazarClient =
     window.supabase.createClient(
         SUPABASE_URL,
@@ -28,6 +27,10 @@ function escapeHTML(value) {
 }
 
 
+/* =========================
+   LOAD MY LISTINGS
+========================= */
+
 async function loadMyListings() {
 
     const container =
@@ -36,10 +39,6 @@ async function loadMyListings() {
     const email =
         $("myUserEmail");
 
-
-    // =========================
-    // PRIHLÁSENIE
-    // =========================
 
     const {
         data,
@@ -57,7 +56,6 @@ async function loadMyListings() {
             "bazar.html";
 
         return;
-
     }
 
 
@@ -68,10 +66,6 @@ async function loadMyListings() {
     email.textContent =
         user.email;
 
-
-    // =========================
-    // MOJE INZERÁTY
-    // =========================
 
     const {
         data: listings,
@@ -109,31 +103,26 @@ async function loadMyListings() {
             listingsError
         );
 
-        container.innerHTML =
-            `
+        container.innerHTML = `
             <div id="myMessage">
                 ❌ Nepodarilo sa načítať tvoje inzeráty.
             </div>
-            `;
+        `;
 
         return;
-
     }
 
-
-    // =========================
-    // ŽIADNE INZERÁTY
-    // =========================
 
     if (
         !listings ||
         listings.length === 0
     ) {
 
-        container.innerHTML =
-            `
+        container.innerHTML = `
             <div id="myMessage">
+
                 📦 Zatiaľ nemáš žiadne inzeráty.
+
                 <br><br>
 
                 <a
@@ -144,16 +133,11 @@ async function loadMyListings() {
                 </a>
 
             </div>
-            `;
+        `;
 
         return;
-
     }
 
-
-    // =========================
-    // VYKRESLENIE
-    // =========================
 
     container.innerHTML = "";
 
@@ -171,16 +155,12 @@ async function loadMyListings() {
             const status =
                 listing.approved
                     ? `
-                        <span
-                            class="my-status approved"
-                        >
+                        <span class="my-status approved">
                             ✅ Schválený
                         </span>
                       `
                     : `
-                        <span
-                            class="my-status pending"
-                        >
+                        <span class="my-status pending">
                             ⏳ Čaká na schválenie
                         </span>
                       `;
@@ -206,11 +186,9 @@ async function loadMyListings() {
                 );
 
 
-            card.innerHTML =
-                `
+            card.innerHTML = `
 
                 ${status}
-
 
                 <div class="my-info">
 
@@ -256,16 +234,32 @@ async function loadMyListings() {
                 </div>
 
 
-                <a
-                    class="my-open"
-                    href="bazar-detail.html?id=${listing.id}"
-                >
+                <div class="my-actions">
 
-                    👁️ Zobraziť inzerát →
+                    <a
+                        class="my-action view"
+                        href="bazar-detail.html?id=${listing.id}"
+                    >
+                        👁️ Zobraziť
+                    </a>
 
-                </a>
+                    <button
+                        class="my-action edit"
+                        data-id="${listing.id}"
+                    >
+                        ✏️ Upraviť
+                    </button>
 
-                `;
+                    <button
+                        class="my-action delete"
+                        data-id="${listing.id}"
+                    >
+                        🗑️ Zmazať
+                    </button>
+
+                </div>
+
+            `;
 
 
             container.appendChild(
@@ -275,12 +269,398 @@ async function loadMyListings() {
         }
     );
 
+
+    /* =========================
+       EDIT BUTTONS
+    ========================= */
+
+    document
+        .querySelectorAll(".my-action.edit")
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const id =
+                            Number(
+                                button.dataset.id
+                            );
+
+                        const listing =
+                            listings.find(
+                                item =>
+                                    item.id === id
+                            );
+
+                        if (
+                            listing
+                        ) {
+
+                            openEditModal(
+                                listing
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* =========================
+       DELETE BUTTONS
+    ========================= */
+
+    document
+        .querySelectorAll(".my-action.delete")
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    async () => {
+
+                        const id =
+                            Number(
+                                button.dataset.id
+                            );
+
+
+                        const confirmed =
+                            confirm(
+                                "Naozaj chceš tento inzerát zmazať?"
+                            );
+
+
+                        if (
+                            !confirmed
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        await deleteListing(
+                            id
+                        );
+
+                    }
+                );
+
+            }
+        );
+
 }
 
 
-// =========================
-// SPÄŤ NA BAZÁR
-// =========================
+/* =========================
+   OPEN EDIT MODAL
+========================= */
+
+function openEditModal(
+    listing
+) {
+
+    $("editId").value =
+        listing.id;
+
+    $("editTitle").value =
+        listing.title ?? "";
+
+    $("editCategory").value =
+        listing.category ?? "";
+
+    $("editPrice").value =
+        listing.price ?? "";
+
+    $("editCity").value =
+        listing.city ?? "";
+
+    $("editContact").value =
+        listing.contact ?? "";
+
+    $("editDescription").value =
+        listing.description ?? "";
+
+    $("editMessage").textContent =
+        "";
+
+    $("editModal")
+        .classList
+        .add("active");
+
+}
+
+
+/* =========================
+   CLOSE EDIT MODAL
+========================= */
+
+function closeEditModal() {
+
+    $("editModal")
+        .classList
+        .remove("active");
+
+}
+
+
+$("closeEditModal")
+    .addEventListener(
+        "click",
+        closeEditModal
+    );
+
+
+$("cancelEdit")
+    .addEventListener(
+        "click",
+        closeEditModal
+    );
+
+
+/* KLIKNUTIE MIMO MODALU */
+
+$("editModal")
+    .addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                $("editModal")
+            ) {
+
+                closeEditModal();
+
+            }
+
+        }
+    );
+
+
+/* ESC */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeEditModal();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   SAVE EDIT
+========================= */
+
+$("editForm")
+    .addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+
+            const message =
+                $("editMessage");
+
+
+            const id =
+                Number(
+                    $("editId").value
+                );
+
+
+            const title =
+                $("editTitle").value.trim();
+
+
+            const category =
+                $("editCategory").value;
+
+
+            const price =
+                Number(
+                    $("editPrice").value
+                );
+
+
+            const city =
+                $("editCity").value.trim();
+
+
+            const contact =
+                $("editContact").value.trim();
+
+
+            const description =
+                $("editDescription")
+                    .value
+                    .trim();
+
+
+            if (
+                !title ||
+                !category ||
+                !Number.isFinite(price) ||
+                !city ||
+                !contact ||
+                !description
+            ) {
+
+                message.textContent =
+                    "❌ Vyplň všetky údaje.";
+
+                message.style.color =
+                    "#ff5555";
+
+                return;
+
+            }
+
+
+            message.textContent =
+                "⏳ Ukladám zmeny...";
+
+            message.style.color =
+                "#aaa";
+
+
+            /*
+             * Pri úprave nastavíme approved = false.
+             *
+             * Admin teda musí zmenu znovu schváliť.
+             */
+
+            const {
+                error
+            } =
+                await bazarClient
+                .from("bazar_listings")
+                .update({
+
+                    title,
+                    category,
+                    price,
+                    city,
+                    contact,
+                    description,
+
+                    approved: false
+
+                })
+                .eq(
+                    "id",
+                    id
+                );
+
+
+            if (
+                error
+            ) {
+
+                console.error(
+                    "UPDATE ERROR:",
+                    error
+                );
+
+                message.textContent =
+                    "❌ Nepodarilo sa uložiť zmeny.";
+
+                message.style.color =
+                    "#ff5555";
+
+                return;
+
+            }
+
+
+            message.textContent =
+                "✅ Zmeny boli uložené.";
+
+            message.style.color =
+                "#00d084";
+
+
+            setTimeout(
+                () => {
+
+                    closeEditModal();
+
+                    loadMyListings();
+
+                },
+                800
+            );
+
+        }
+    );
+
+
+/* =========================
+   DELETE LISTING
+========================= */
+
+async function deleteListing(
+    id
+) {
+
+    const {
+        error
+    } =
+        await bazarClient
+        .from("bazar_listings")
+        .delete()
+        .eq(
+            "id",
+            id
+        );
+
+
+    if (
+        error
+    ) {
+
+        console.error(
+            "DELETE ERROR:",
+            error
+        );
+
+        alert(
+            "❌ Inzerát sa nepodarilo zmazať."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "✅ Inzerát bol zmazaný."
+    );
+
+
+    loadMyListings();
+
+}
+
+
+/* =========================
+   BACK TO BAZAR
+========================= */
 
 $("backBazarButton")
     .addEventListener(
@@ -294,8 +674,8 @@ $("backBazarButton")
     );
 
 
-// =========================
-// START
-// =========================
+/* =========================
+   START
+========================= */
 
 loadMyListings();
