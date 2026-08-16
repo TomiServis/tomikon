@@ -444,3 +444,263 @@ function showError(){
         "block";
 
 }
+
+// =====================================
+// GALÉRIA INZERÁTU
+// =====================================
+
+let currentImageIndex = 0;
+let galleryImages = [];
+
+const imageModal = document.getElementById("imageModal");
+const modalImage = document.getElementById("modalImage");
+
+const closeImageModal =
+    document.querySelector(".gallery-close");
+
+const prevImage =
+    document.querySelector(".gallery-prev");
+
+const nextImage =
+    document.querySelector(".gallery-next");
+
+const imageCounter =
+    document.querySelector(".image-counter");
+
+
+// =====================================
+// OTVORENIE FOTKY
+// =====================================
+
+function openGallery(index) {
+
+    if (!galleryImages.length)
+        return;
+
+    currentImageIndex = index;
+
+    updateGallery();
+
+    imageModal.style.display = "flex";
+
+    document.body.style.overflow = "hidden";
+}
+
+
+// =====================================
+// ZOBRAZENIE FOTKY
+// =====================================
+
+function updateGallery() {
+
+    if (!galleryImages.length)
+        return;
+
+    modalImage.src =
+        galleryImages[currentImageIndex];
+
+    if (imageCounter) {
+
+        imageCounter.textContent =
+            `${currentImageIndex + 1} / ${galleryImages.length}`;
+
+    }
+}
+
+
+// =====================================
+// ĎALŠIA FOTKA
+// =====================================
+
+function showNextImage() {
+
+    if (!galleryImages.length)
+        return;
+
+    currentImageIndex++;
+
+    if (
+        currentImageIndex >=
+        galleryImages.length
+    ) {
+        currentImageIndex = 0;
+    }
+
+    updateGallery();
+}
+
+
+// =====================================
+// PREDCHÁDZAJÚCA FOTKA
+// =====================================
+
+function showPreviousImage() {
+
+    if (!galleryImages.length)
+        return;
+
+    currentImageIndex--;
+
+    if (currentImageIndex < 0) {
+
+        currentImageIndex =
+            galleryImages.length - 1;
+
+    }
+
+    updateGallery();
+}
+
+
+// =====================================
+// ZATVORENIE
+// =====================================
+
+function closeGallery() {
+
+    imageModal.style.display = "none";
+
+    document.body.style.overflow = "";
+
+}
+
+
+// =====================================
+// ŠÍPKY
+// =====================================
+
+if (nextImage) {
+
+    nextImage.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+            showNextImage();
+
+        }
+    );
+
+}
+
+
+if (prevImage) {
+
+    prevImage.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+            showPreviousImage();
+
+        }
+    );
+
+}
+
+
+// =====================================
+// X
+// =====================================
+
+if (closeImageModal) {
+
+    closeImageModal.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+            closeGallery();
+
+        }
+    );
+
+}
+
+
+// =====================================
+// KLIKNUTIE MIMO FOTKY
+// =====================================
+
+if (imageModal) {
+
+    imageModal.addEventListener(
+        "click",
+        function(event) {
+
+            // klikol priamo na čierne pozadie
+            if (
+                event.target === imageModal ||
+                event.target.classList.contains("gallery-content")
+            ) {
+
+                closeGallery();
+
+            }
+
+        }
+    );
+
+}
+
+
+// =====================================
+// KLIKNUTIE NA FOTKU
+// FOTKA SA NEZAVRIE
+// =====================================
+
+if (modalImage) {
+
+    modalImage.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+        }
+    );
+
+}
+
+
+// =====================================
+// KLÁVESNICA
+// =====================================
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            !imageModal ||
+            imageModal.style.display !== "flex"
+        ) {
+            return;
+        }
+
+
+        if (event.key === "Escape") {
+
+            closeGallery();
+
+        }
+
+
+        if (event.key === "ArrowRight") {
+
+            showNextImage();
+
+        }
+
+
+        if (event.key === "ArrowLeft") {
+
+            showPreviousImage();
+
+        }
+
+    }
+);
