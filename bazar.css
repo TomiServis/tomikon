@@ -2535,3 +2535,478 @@ body {
 .bazar-logo-link:active {
     transform: scale(.98);
 }
+
+
+/* =========================================================
+   TOMIKON BAZÁR – MOBILNÁ RESPONZIVITA
+   IBA MOBIL
+========================================================= */
+
+@media (max-width: 600px) {
+
+    /* =====================================================
+       ZÁKLAD
+    ===================================================== */
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+
+    /* =====================================================
+       HORNÁ LIŠTA
+    ===================================================== */
+
+    .topbar {
+        min-height: 62px;
+
+        padding: 8px 12px;
+
+        gap: 10px;
+
+        box-sizing: border-box;
+    }
+
+
+    .topbar-logo {
+        min-width: 0;
+
+        font-size: 15px;
+
+        gap: 5px;
+
+        white-space: nowrap;
+    }
+
+
+    .topbar-logo span {
+        font-size: 15px;
+    }
+
+
+    .topbar-logo small {
+        font-size: 8px;
+    }
+
+
+    .topbar-user {
+        min-width: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: flex-end;
+
+        gap: 5px;
+    }
+
+
+    .auth-buttons,
+    .logged-user {
+        display: flex;
+
+        align-items: center;
+
+        gap: 5px;
+
+        flex-wrap: wrap;
+
+        justify-content: flex-end;
+    }
+
+
+    .topbar-btn {
+        padding: 8px 10px !important;
+
+        font-size: 11px !important;
+
+        white-space: nowrap;
+    }
+
+
+    /* naozaj malé telefóny */
+
+    @media (max-width: 380px) {
+
+        .topbar-logo small {
+            display: none;
+        }
+
+        .topbar-btn {
+            padding: 7px 8px !important;
+
+            font-size: 10px !important;
+        }
+
+    }
+
+
+    /* =====================================================
+       HLAVNÝ BAZÁR
+    ===================================================== */
+
+    .bazar {
+        width: 100%;
+
+        max-width: 100%;
+
+        padding:
+            25px 12px 60px;
+
+        box-sizing: border-box;
+    }
+
+
+    .bazar > header {
+        padding:
+            10px 5px 25px;
+    }
+
+
+    .bazar > header h1 {
+        font-size: 30px;
+
+        line-height: 1.15;
+
+        letter-spacing: -.5px;
+
+        word-break: normal;
+    }
+
+
+    .bazar > header p {
+        font-size: 13px;
+
+        line-height: 1.5;
+
+        padding: 0 5px;
+    }
+
+
+    .bazar > header::before {
+        font-size: 9px;
+
+        padding: 5px 10px;
+    }
+
+
+    /* =====================================================
+       PANELY
+    ===================================================== */
+
+    .bazar-box {
+        width: 100%;
+
+        margin:
+            16px 0;
+
+        padding: 17px;
+
+        box-sizing: border-box;
+
+        border-radius: 14px;
+    }
+
+
+    .bazar-box h2 {
+        font-size: 20px;
+
+        line-height: 1.25;
+    }
+
+
+    .bazar-box > p {
+        font-size: 13px;
+
+        line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       FORMULÁR
+    ===================================================== */
+
+    .bazar-form {
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 13px;
+    }
+
+
+    .bazar-form .full {
+        grid-column: auto;
+    }
+
+
+    .bazar-form input,
+    .bazar-form select,
+    .bazar-form textarea {
+        width: 100%;
+
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        font-size: 14px;
+    }
+
+
+    .bazar-form textarea {
+        min-height: 130px;
+    }
+
+
+    .bazar-form label {
+        font-size: 12px;
+    }
+
+
+    .bazar-button {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        text-align: center;
+
+        padding: 13px 15px;
+    }
+
+
+    /* =====================================================
+       FOTKY PRI PRIDÁVANÍ
+    ===================================================== */
+
+    #bazarImages {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        font-size: 12px;
+    }
+
+
+    #imagePreview {
+        width: 100%;
+
+        display: grid !important;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 7px !important;
+    }
+
+
+    #imagePreview > div {
+        width: 100% !important;
+
+        height: 85px !important;
+    }
+
+
+    #imagePreview img {
+        width: 100% !important;
+
+        height: 85px !important;
+    }
+
+
+    /* =====================================================
+       VYHĽADÁVANIE
+    ===================================================== */
+
+    .bazar-box:has(#search) > div {
+        display: grid !important;
+
+        grid-template-columns: 1fr !important;
+
+        gap: 9px !important;
+    }
+
+
+    #search,
+    #filterCategory,
+    #minPrice,
+    #maxPrice {
+        width: 100% !important;
+
+        min-width: 0;
+
+        min-height: 44px;
+
+        box-sizing: border-box;
+
+        font-size: 14px;
+    }
+
+
+    /* =====================================================
+       KARTY INZERÁTOV
+    ===================================================== */
+
+    .bazar-grid {
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+
+        width: 100%;
+    }
+
+
+    .bazar-card {
+        width: 100%;
+
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        padding: 15px;
+
+        border-radius: 14px;
+    }
+
+
+    /* =====================================================
+       HLAVNÁ FOTKA
+    ===================================================== */
+
+    .bazar-main-image {
+        width: 100%;
+
+        height: 210px;
+
+        margin-bottom: 13px;
+
+        border-radius: 11px;
+    }
+
+
+    .bazar-main-image img {
+        width: 100%;
+
+        height: 100%;
+
+        object-fit: cover;
+    }
+
+
+    /* =====================================================
+       TEXT KARTY
+    ===================================================== */
+
+    .bazar-card h3 {
+        font-size: 18px;
+
+        line-height: 1.3;
+
+        margin: 7px 0;
+    }
+
+
+    .bazar-price {
+        font-size: 22px;
+
+        margin: 8px 0;
+    }
+
+
+    .bazar-meta {
+        font-size: 12px;
+
+        line-height: 1.5;
+    }
+
+
+    .bazar-description-preview {
+        font-size: 13px;
+
+        line-height: 1.5;
+
+        -webkit-line-clamp: 3;
+
+        max-height:
+            calc(1.5em * 3);
+
+        margin:
+            10px 0;
+    }
+
+
+    /* =====================================================
+       AUTH MODAL
+    ===================================================== */
+
+    .bazar-auth-modal {
+        padding: 12px;
+
+        box-sizing: border-box;
+    }
+
+
+    .bazar-login-box {
+        width: 100%;
+
+        max-width: 430px;
+
+        max-height: calc(100vh - 24px);
+
+        overflow-y: auto;
+
+        box-sizing: border-box;
+
+        padding:
+            28px 19px 23px;
+
+        border-radius: 18px;
+    }
+
+
+    .bazar-login-box h2 {
+        font-size: 23px;
+    }
+
+
+    .bazar-login-subtitle {
+        font-size: 13px;
+    }
+
+
+    .bazar-login-field input {
+        min-height: 46px;
+
+        font-size: 14px;
+    }
+
+
+    .bazar-login-submit {
+        min-height: 46px;
+    }
+
+
+    .bazar-login-switch {
+        min-height: 44px;
+    }
+
+
+    /* =====================================================
+       PRIHLÁSENÝ POUŽÍVATEĽ
+    ===================================================== */
+
+    .logged-user {
+        max-width: 100%;
+    }
+
+
+    #userEmail {
+        display: none;
+    }
+
+}
