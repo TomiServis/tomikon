@@ -89,6 +89,8 @@ function showAdmin() {
 
     loadReviews();
 
+    loadBazarAdmin();
+
 }
 
 
