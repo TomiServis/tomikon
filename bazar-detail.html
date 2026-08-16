@@ -1,1 +1,235 @@
+<!doctype html>
+<html lang="sk">
 
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
+<title>Detail inzerátu | TOMIKON BAZÁR</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#050505;
+    color:#fff;
+    font-family:Arial,sans-serif;
+}
+
+.detail-page{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 20px 80px;
+}
+
+.detail-header{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.detail-header h1{
+    margin-bottom:8px;
+}
+
+.back-button{
+    display:inline-block;
+    margin-top:10px;
+    padding:12px 20px;
+    background:#008cff;
+    color:#fff;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.detail-box{
+    background:#0b0b0b;
+    border:1px solid #008cff;
+    border-radius:16px;
+    padding:30px;
+    box-shadow:0 0 30px rgba(0,140,255,.12);
+}
+
+.detail-layout{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:35px;
+}
+
+.main-image{
+    width:100%;
+    max-height:600px;
+    object-fit:contain;
+    background:#050505;
+    border-radius:12px;
+    border:1px solid #222;
+    display:block;
+}
+
+.image-gallery{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+.gallery-image{
+    width:90px;
+    height:70px;
+    object-fit:cover;
+    border-radius:8px;
+    border:2px solid #222;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.gallery-image:hover{
+    border-color:#008cff;
+    transform:scale(1.04);
+}
+
+.detail-category{
+    color:#aaa;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.detail-title{
+    font-size:36px;
+    margin:0 0 15px;
+}
+
+.detail-price{
+    font-size:32px;
+    font-weight:bold;
+    color:#008cff;
+    margin-bottom:25px;
+}
+
+.detail-info{
+    border-top:1px solid #222;
+    border-bottom:1px solid #222;
+    padding:18px 0;
+    margin-bottom:25px;
+}
+
+.detail-info div{
+    margin:10px 0;
+}
+
+.detail-description{
+    line-height:1.7;
+    color:#ddd;
+    white-space:pre-wrap;
+}
+
+.contact-box{
+    margin-top:30px;
+    padding:20px;
+    background:#111;
+    border:1px solid #222;
+    border-radius:12px;
+}
+
+.contact-box h3{
+    margin-top:0;
+}
+
+.contact-value{
+    font-size:20px;
+    font-weight:bold;
+    color:#008cff;
+    word-break:break-word;
+}
+
+.loading{
+    text-align:center;
+    padding:60px 20px;
+    font-size:20px;
+}
+
+.error{
+    text-align:center;
+    padding:60px 20px;
+    color:#ff5555;
+}
+
+@media(max-width:800px){
+
+    .detail-layout{
+        grid-template-columns:1fr;
+    }
+
+    .detail-title{
+        font-size:28px;
+    }
+
+    .detail-price{
+        font-size:26px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<main class="detail-page">
+
+
+<header class="detail-header">
+
+    <h1>🛒 TOMIKON BAZÁR</h1>
+
+    <p>
+        Detail inzerátu
+    </p>
+
+    <a
+        href="bazar.html"
+        class="back-button"
+    >
+        ← Späť na bazár
+    </a>
+
+</header>
+
+
+<div
+    id="detailContent"
+    class="detail-box"
+>
+
+    <div class="loading">
+        ⏳ Načítavam inzerát...
+    </div>
+
+</div>
+
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="bazar-detail.js"></script>
+
+
+</body>
+
+</html>
