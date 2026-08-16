@@ -97,50 +97,108 @@
      AUTH MODAL
 ========================= -->
 
-<div
-    id="authModal"
-    style="display:none;">
+<div id="authModal" class="bazar-auth-modal">
 
-    <div class="auth-box">
+    <div class="bazar-login-box">
+
+        <button
+            id="closeAuthButton"
+            class="bazar-login-close"
+            type="button"
+            aria-label="Zavrieť">
+            ×
+        </button>
+
+        <div class="bazar-login-icon">
+            👤
+        </div>
 
         <h2 id="authTitle">
             🔐 Prihlásenie
         </h2>
 
+        <p class="bazar-login-subtitle">
+            Prihlás sa do svojho TOMIKON účtu
+        </p>
 
-        <input
-            type="email"
-            id="authEmail"
-            placeholder="Tvoj e-mail"
-        >
+        <div class="bazar-login-field">
+
+            <label for="authEmail">
+                📧 E-mail
+            </label>
+
+            <input
+                type="email"
+                id="authEmail"
+                placeholder="tvoj@email.sk"
+                autocomplete="email"
+            >
+
+        </div>
 
 
-        <input
-            type="password"
-            id="authPassword"
-            placeholder="Heslo"
-        >
+        <div class="bazar-login-field">
+
+            <label for="authPassword">
+                🔒 Heslo
+            </label>
+
+            <div class="bazar-password-wrap">
+
+                <input
+                    type="password"
+                    id="authPassword"
+                    placeholder="Tvoje heslo"
+                    autocomplete="current-password"
+                >
+
+                <button
+                    type="button"
+                    id="togglePasswordButton"
+                    class="bazar-password-toggle"
+                    aria-label="Zobraziť heslo">
+                    👁
+                </button>
+
+            </div>
+
+        </div>
 
 
         <button
             id="authSubmitButton"
-            class="bazar-button">
+            class="bazar-login-submit"
+            type="button">
 
-            Prihlásiť sa
+            🔐 Prihlásiť sa
 
         </button>
+
+
+        <div
+            id="authMessage"
+            class="bazar-auth-message">
+        </div>
+
+
+        <div class="bazar-login-divider">
+            <span>alebo</span>
+        </div>
 
 
         <button
-            id="closeAuthButton"
-            class="bazar-button secondary">
+            id="authSwitchButton"
+            class="bazar-login-switch"
+            type="button">
 
-            Zavrieť
+            ✨ Chcem si vytvoriť účet
 
         </button>
 
 
-        <p id="authMessage"></p>
+        <p class="bazar-login-footer">
+            TOMIKON BAZÁR · bezpečné prihlasovanie
+        </p>
 
     </div>
 
