@@ -201,3 +201,60 @@
         bottom: 12px;
     }
 }
+
+
+/* =========================================================
+   INDEX – OPRAVA SCROLLU NA MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    html {
+        width: 100% !important;
+        min-height: 100% !important;
+
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+
+        -webkit-overflow-scrolling: touch !important;
+
+        touch-action: pan-y !important;
+    }
+
+
+    body {
+        width: 100% !important;
+        min-height: 100vh !important;
+        height: auto !important;
+
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+
+        position: relative !important;
+
+        -webkit-overflow-scrolling: touch !important;
+
+        touch-action: pan-y !important;
+    }
+
+
+    /* hlavné kontajnery nesmú vytvoriť vlastný scroll */
+
+    main,
+    section,
+    .container {
+        max-width: 100%;
+
+        box-sizing: border-box;
+    }
+
+
+    /* zabráni horizontálnemu pretečeniu */
+
+    img,
+    video,
+    iframe {
+        max-width: 100%;
+    }
+
+}
