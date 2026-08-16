@@ -194,9 +194,65 @@ async function loadDetail(){
             listing.city || "";
 
 
-        $("detailContact")
-            .textContent =
-            listing.contact || "";
+       // =========================
+// KLIKNUTEĽNÝ KONTAKT
+// =========================
+
+const contactElement =
+    $("detailContact");
+
+const contact =
+    (listing.contact || "").trim();
+
+
+if (!contact) {
+
+    contactElement.textContent =
+        "Kontakt nie je uvedený.";
+
+} else {
+
+    // =========================
+    // E-MAIL
+    // =========================
+
+    if (contact.includes("@")) {
+
+        const email =
+            contact.replace(/\s/g, "");
+
+        contactElement.innerHTML = `
+            <a
+                href="mailto:${escapeHTML(email)}"
+                class="contact-link email-link"
+            >
+                ✉️ ${escapeHTML(email)}
+            </a>
+        `;
+
+    }
+
+    // =========================
+    // TELEFÓN
+    // =========================
+
+    else {
+
+        const phone =
+            contact.replace(/[^\d+]/g, "");
+
+        contactElement.innerHTML = `
+            <a
+                href="tel:${escapeHTML(phone)}"
+                class="contact-link phone-link"
+            >
+                📞 ${escapeHTML(contact)}
+            </a>
+        `;
+
+    }
+
+}
 
 
         $("detailDescription")
