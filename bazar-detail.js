@@ -213,18 +213,16 @@ async function loadDetail(){
             );
 
 
-        // =========================
-        // FOTKY
-        // =========================
+// =========================
+// FOTKY
+// =========================
 
-       const validImages = images || [];
+const validImages = images || [];
 
-
-// Uložíme všetky fotky do galérie
+// všetky URL fotiek uložíme do galérie
 galleryImages = validImages.map(
     image => image.image_url
 );
-
 
 if(validImages.length > 0){
 
@@ -232,31 +230,39 @@ if(validImages.length > 0){
         validImages[0].image_url
     );
 
-
     renderThumbnails(
         validImages
     );
 
+}else{
+
+    $("mainImage").style.display =
+        "none";
+
+    $("thumbnails").innerHTML =
+        `
+        <div style="
+            width:100%;
+            text-align:center;
+            color:#777;
+            padding:30px;
+        ">
+            🖥️ Inzerát nemá fotografie
+        </div>
+        `;
+
 }
-        }else{
 
-            $("mainImage").style.display =
-                "none";
 
-            $("thumbnails").innerHTML =
-                `
-                <div style="
-                    width:100%;
-                    text-align:center;
-                    color:#777;
-                    padding:30px;
-                ">
-                    🖥️ Inzerát nemá fotografie
-                </div>
-                `;
+// =========================
+// ZOBRAZIŤ DETAIL
+// =========================
 
-        }
+$("loadingBox").style.display =
+    "none";
 
+$("detailBox").style.display =
+    "block";
 
         // =========================
         // ZOBRAZIŤ DETAIL
