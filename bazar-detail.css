@@ -204,57 +204,500 @@
 
 
 /* =========================================================
-   INDEX – OPRAVA SCROLLU NA MOBILE
+   TOMIKON BAZÁR – DETAIL
+   MOBILNÁ VERZIA
 ========================================================= */
 
 @media (max-width: 600px) {
 
-    html {
-        width: 100% !important;
-        min-height: 100% !important;
+    html,
+    body {
+        width: 100%;
+        min-height: 100%;
+        height: auto;
 
-        overflow-x: hidden !important;
-        overflow-y: auto !important;
+        margin: 0;
+        padding: 0;
 
-        -webkit-overflow-scrolling: touch !important;
+        overflow-x: hidden;
+        overflow-y: auto;
 
-        touch-action: pan-y !important;
+        -webkit-overflow-scrolling: touch;
     }
 
 
     body {
-        width: 100% !important;
-        min-height: 100vh !important;
-        height: auto !important;
-
-        overflow-x: hidden !important;
-        overflow-y: auto !important;
-
-        position: relative !important;
-
-        -webkit-overflow-scrolling: touch !important;
-
-        touch-action: pan-y !important;
+        position: relative;
+        touch-action: pan-y;
     }
 
 
-    /* hlavné kontajnery nesmú vytvoriť vlastný scroll */
+    /* =====================================================
+       HORNÁ LIŠTA
+    ===================================================== */
 
-    main,
-    section,
-    .container {
-        max-width: 100%;
+    .topbar {
+        width: 100%;
+
+        min-height: 58px;
+
+        padding: 8px 12px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        position: relative;
 
         box-sizing: border-box;
     }
 
 
-    /* zabráni horizontálnemu pretečeniu */
+    .topbar-logo {
+        display: flex;
 
-    img,
-    video,
-    iframe {
+        align-items: center;
+
+        gap: 5px;
+
+        min-width: 0;
+
+        color: #fff;
+
+        text-decoration: none;
+
+        white-space: nowrap;
+    }
+
+
+    .topbar-logo span {
+        font-size: 15px;
+        font-weight: 900;
+    }
+
+
+    .topbar-logo small {
+        font-size: 8px;
+        color: #008cff;
+
+        font-weight: 900;
+    }
+
+
+    .topbar-user {
+        flex-shrink: 0;
+    }
+
+
+    .topbar-btn {
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        min-height: 36px;
+
+        padding: 8px 11px;
+
+        border-radius: 8px;
+
+        font-size: 11px;
+
+        white-space: nowrap;
+
+        text-decoration: none;
+    }
+
+
+    /* =====================================================
+       HLAVIČKA
+    ===================================================== */
+
+    .detail-page {
+        width: 100%;
+
         max-width: 100%;
+
+        margin: 0;
+
+        padding: 25px 10px 60px;
+
+        box-sizing: border-box;
+    }
+
+
+    .detail-header {
+        width: 100%;
+
+        margin: 0 0 22px;
+
+        padding: 0 5px;
+
+        text-align: center;
+
+        box-sizing: border-box;
+    }
+
+
+    .detail-header h1 {
+        margin: 0 0 8px;
+
+        font-size: 28px;
+
+        line-height: 1.15;
+    }
+
+
+    .detail-header p {
+        margin: 0;
+
+        font-size: 15px;
+
+        color: #999;
+    }
+
+
+    /* =====================================================
+       HLAVNÝ BOX
+    ===================================================== */
+
+    .detail-box {
+        width: 100%;
+
+        max-width: 100%;
+
+        padding: 12px;
+
+        border-radius: 15px;
+
+        box-sizing: border-box;
+    }
+
+
+    .detail-layout {
+        display: flex;
+
+        flex-direction: column;
+
+        width: 100%;
+
+        gap: 20px;
+    }
+
+
+    /* =====================================================
+       HLAVNÁ FOTKA
+    ===================================================== */
+
+    .main-image-wrapper {
+        width: 100%;
+
+        height: auto;
+
+        aspect-ratio: 4 / 3;
+
+        max-height: 430px;
+
+        border-radius: 14px;
+
+        overflow: hidden;
+
+        background: #111;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+    }
+
+
+    #mainImage {
+        display: block;
+
+        width: 100%;
+
+        height: 100%;
+
+        object-fit: contain;
+
+        max-width: 100%;
+    }
+
+
+    /* =====================================================
+       NÁHĽADY FOTIEK
+    ===================================================== */
+
+    .thumbnails {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+
+        gap: 8px;
+
+        margin-top: 10px;
+
+        box-sizing: border-box;
+    }
+
+
+    .thumbnail {
+        width: 100%;
+
+        height: 72px;
+
+        min-width: 0;
+
+        object-fit: cover;
+
+        border-radius: 9px;
+
+        border: 2px solid #222;
+
+        box-sizing: border-box;
+
+        transform: none;
+    }
+
+
+    .thumbnail:hover {
+        transform: none;
+    }
+
+
+    .thumbnail.active {
+        border-color: #008cff;
+
+        box-shadow:
+            0 0 10px rgba(0,140,255,.45);
+    }
+
+
+    /* =====================================================
+       INFORMÁCIE
+    ===================================================== */
+
+    .detail-info {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+
+    .detail-category {
+        font-size: 14px;
+
+        margin-bottom: 7px;
+    }
+
+
+    .detail-title {
+        margin: 0 0 12px;
+
+        font-size: 27px;
+
+        line-height: 1.2;
+
+        word-break: break-word;
+    }
+
+
+    .detail-price {
+        margin-bottom: 18px;
+
+        font-size: 28px;
+
+        line-height: 1.1;
+    }
+
+
+    .info-row {
+        width: 100%;
+
+        display: flex;
+
+        gap: 8px;
+
+        padding: 11px 0;
+
+        box-sizing: border-box;
+    }
+
+
+    .info-label {
+        min-width: 82px;
+
+        font-size: 13px;
+    }
+
+
+    .info-value {
+        min-width: 0;
+
+        font-size: 14px;
+
+        word-break: break-word;
+    }
+
+
+    /* =====================================================
+       KONTAKT
+    ===================================================== */
+
+    .contact-box {
+        width: 100%;
+
+        margin-top: 20px;
+
+        padding: 15px;
+
+        box-sizing: border-box;
+    }
+
+
+    .contact-box h3 {
+        font-size: 16px;
+
+        line-height: 1.3;
+    }
+
+
+    .contact {
+        font-size: 17px;
+
+        word-break: break-word;
+    }
+
+
+    /* =====================================================
+       POPIS
+    ===================================================== */
+
+    .description-box {
+        width: 100%;
+
+        margin-top: 25px;
+    }
+
+
+    .description-box h2 {
+        font-size: 21px;
+
+        line-height: 1.3;
+    }
+
+
+    .description {
+        font-size: 14px;
+
+        line-height: 1.65;
+
+        word-break: break-word;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    /* =====================================================
+       LOADING / ERROR
+    ===================================================== */
+
+    .status-box {
+        width: 100%;
+
+        max-width: 100%;
+
+        padding: 55px 15px;
+
+        box-sizing: border-box;
+
+        border-radius: 14px;
+    }
+
+
+    /* =====================================================
+       LIGHTBOX – MOBIL
+    ===================================================== */
+
+    #imageModal {
+        position: fixed;
+
+        inset: 0;
+
+        width: 100vw;
+        height: 100vh;
+
+        z-index: 99999;
+
+        box-sizing: border-box;
+    }
+
+
+    #modalImage {
+        max-width: 94vw;
+        max-height: 82vh;
+
+        width: auto;
+        height: auto;
+
+        object-fit: contain;
+    }
+
+
+    .gallery-content {
+        width: 100%;
+
+        height: 100%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 50px 10px 40px;
+
+        box-sizing: border-box;
+    }
+
+
+    .gallery-arrow {
+        width: 40px;
+        height: 50px;
+
+        z-index: 10;
+    }
+
+
+    .gallery-prev {
+        left: 7px;
+    }
+
+
+    .gallery-next {
+        right: 7px;
+    }
+
+
+    .gallery-close {
+        top: 12px;
+        right: 12px;
+
+        width: 38px;
+        height: 38px;
+
+        z-index: 20;
+    }
+
+
+    .image-counter {
+        bottom: 15px;
     }
 
 }
