@@ -288,9 +288,21 @@ if (!contact) {
                 "sk-SK"
             );
 
-        $("detailViews")
+       $("detailDate")
     .textContent =
-    Number(listing.views || 0) + 1;
+    new Date(
+        listing.created_at
+    ).toLocaleDateString(
+        "sk-SK"
+    );
+
+const viewsElement =
+    $("detailViews");
+
+if (viewsElement) {
+    viewsElement.textContent =
+        Number(listing.views || 0) + 1;
+}
 
 
 // =========================
