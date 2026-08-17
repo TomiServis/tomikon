@@ -288,6 +288,10 @@ if (!contact) {
                 "sk-SK"
             );
 
+        $("detailViews")
+    .textContent =
+    Number(listing.views || 0) + 1;
+
 
 // =========================
 // FOTKY
