@@ -100,29 +100,22 @@ async function loadDetail(){
                 .single();
 
 
-        // =========================
-        // CHYBA INZERÁTU
-        // =========================
+       // =========================
+// CHYBA INZERÁTU
+// =========================
 
-        if(listingError){
+if(listingError){
 
-            console.error(
-                "LISTING ERROR:",
-                listingError
-            );
+    console.error(
+        "LISTING ERROR:",
+        listingError
+    );
 
-            showError();
+    showError();
 
-            return;
-        }
+    return;
+}
 
-
-        if(!listing){
-
-            showError();
-
-            return;
-        }
 
 if(!listing){
 
@@ -150,7 +143,6 @@ if (viewsError) {
         viewsError
     );
 }
-
 
         // =========================
         // NAČÍTANIE FOTIEK
