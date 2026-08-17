@@ -92,7 +92,8 @@ async function loadDetail(){
                     contact,
                     description,
                     created_at,
-                    approved
+                    approved,
+                    views
                 `)
                 .eq("id", listingId)
                 .eq("approved", true)
@@ -122,6 +123,25 @@ async function loadDetail(){
 
             return;
         }
+
+        // =========================
+// ZVÝŠENIE POČTU ZOBRAZENÍ
+// =========================
+
+const { error: viewsError } =
+    await bazarClient
+        .from("bazar_listings")
+        .update({
+            views: (listing.views || 0) + 1
+        })
+        .eq("id", listingId);
+
+if (viewsError) {
+    console.error(
+        "VIEWS ERROR:",
+        viewsError
+    );
+}
 
 
         // =========================
