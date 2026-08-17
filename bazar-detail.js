@@ -128,13 +128,20 @@ async function loadDetail(){
 // ZVÝŠENIE POČTU ZOBRAZENÍ
 // =========================
 
+if(!listing){
+
+    showError();
+
+    return;
+}
+
 const { error: viewsError } =
-    await bazarClient
-        .from("bazar_listings")
-        .update({
-            views: (listing.views || 0) + 1
-        })
-        .eq("id", listingId);
+    await bazarClient.rpc(
+        "increment_listing_views",
+        {
+            listing_id: Number(listingId)
+        }
+    );
 
 if (viewsError) {
     console.error(
