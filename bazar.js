@@ -320,7 +320,8 @@ async function loadBazar() {
             contact,
             description,
             approved,
-            created_at
+            created_at,
+            views
         `)
         .eq("approved", true)
         .order("created_at", { ascending: false });
@@ -577,29 +578,31 @@ if (listingImages.length > 0) {
 </p>
 
 
-            <div class="bazar-meta">
+           <div
+    class="bazar-meta"
+    style="margin-top:10px;"
+>
 
-                📞 ${escapeHTML(
-                    listing.contact
-                )}
+    📅
 
-            </div>
+    ${new Date(
+        listing.created_at
+    ).toLocaleDateString(
+        "sk-SK"
+    )}
 
+</div>
 
-            <div
-                class="bazar-meta"
-                style="margin-top:10px;"
-            >
+<div
+    class="bazar-meta"
+    style="margin-top:8px;"
+>
 
-                📅
+    👁️
 
-                ${new Date(
-                    listing.created_at
-                ).toLocaleDateString(
-                    "sk-SK"
-                )}
+    ${Number(listing.views || 0)} zobrazení
 
-            </div>
+</div>
 
             `;
 
