@@ -124,10 +124,6 @@ async function loadDetail(){
             return;
         }
 
-        // =========================
-// ZVÝŠENIE POČTU ZOBRAZENÍ
-// =========================
-
 if(!listing){
 
     showError();
@@ -135,11 +131,16 @@ if(!listing){
     return;
 }
 
+
+// =========================
+// ZVÝŠENIE ZOBRAZENÍ
+// =========================
+
 const { error: viewsError } =
     await bazarClient.rpc(
         "increment_listing_views",
         {
-            listing_id: Number(listingId)
+            p_listing_id: Number(listingId)
         }
     );
 
