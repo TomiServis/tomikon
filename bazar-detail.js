@@ -280,14 +280,6 @@ if (!contact) {
             listing.description || "";
 
 
-        $("detailDate")
-            .textContent =
-            new Date(
-                listing.created_at
-            ).toLocaleDateString(
-                "sk-SK"
-            );
-
        $("detailDate")
     .textContent =
     new Date(
