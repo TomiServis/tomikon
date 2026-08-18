@@ -88,6 +88,16 @@ async function loadUser(){
         data.user;
 
     return true;
+
+    const userEmail =
+    $("messagesUserEmail");
+
+if(userEmail){
+
+    userEmail.textContent =
+        currentUser.email || "Neznámy účet";
+
+}
 }
 
 
