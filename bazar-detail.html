@@ -548,6 +548,66 @@ body{
 
 </div>
 
+    <!-- =====================================================
+     SPRÁVA PRE PREDAJCU
+===================================================== -->
+
+<div
+    id="messageModal"
+    class="message-modal"
+>
+
+    <div class="message-box">
+
+        <button
+            type="button"
+            id="closeMessageModal"
+            class="message-close"
+        >
+            ×
+        </button>
+
+
+        <div class="message-icon">
+            💬
+        </div>
+
+
+        <h2>
+            Napísať predajcovi
+        </h2>
+
+
+        <p class="message-subtitle">
+            Pošli predajcovi správu k tomuto inzerátu.
+        </p>
+
+
+        <textarea
+            id="sellerMessage"
+            class="seller-message-input"
+            placeholder="Napíš svoju správu..."
+            maxlength="2000"
+        ></textarea>
+
+
+        <div
+            id="messageSendStatus"
+            class="message-send-status"
+        ></div>
+
+
+        <button
+            type="button"
+            id="sendSellerMessage"
+            class="send-message-button"
+        >
+            📤 Odoslať správu
+        </button>
+
+    </div>
+
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
