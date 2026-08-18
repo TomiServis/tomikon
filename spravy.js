@@ -11,6 +11,10 @@ const bazarClient =
     );
 
 
+/* =====================================================
+   POMOCNÁ FUNKCIA
+===================================================== */
+
 const $ = id =>
     document.getElementById(id);
 
@@ -65,44 +69,86 @@ function formatDate(date){
 
 async function loadUser(){
 
-    const {
-        data,
-        error
-    } =
-        await bazarClient.auth.getUser();
-
-
-    if(
-        error ||
-        !data.user
-    ){
-
-        window.location.href =
-            "bazar.html";
-
-        return false;
-    }
-
-
-    currentUser =
-    data.user;
-
-
-    // Zobrazenie prihlaseneho uctu
-
     const messagesUserEmail =
         $("messagesUserEmail");
 
+    try {
 
-    if(messagesUserEmail){
+        const {
+            data,
+            error
+        } =
+            await bazarClient.auth.getUser();
 
-    messagesUserEmail.textContent =
-        currentUser.email || "Neznámy účet";
 
-}
+        if(error){
 
-return true;
+            console.error(
+                "AUTH ERROR:",
+                error
+            );
 
+            if(messagesUserEmail){
+
+                messagesUserEmail.textContent =
+                    "Chyba načítania účtu";
+
+            }
+
+            return false;
+        }
+
+
+        if(!data || !data.user){
+
+            if(messagesUserEmail){
+
+                messagesUserEmail.textContent =
+                    "Nie si prihlásený";
+
+            }
+
+            window.location.href =
+                "bazar.html";
+
+            return false;
+        }
+
+
+        currentUser =
+            data.user;
+
+
+        /* Zobrazenie prihláseného účtu */
+
+        if(messagesUserEmail){
+
+            messagesUserEmail.textContent =
+                currentUser.email ||
+                "Neznámy účet";
+
+        }
+
+
+        return true;
+
+    } catch(error){
+
+        console.error(
+            "LOAD USER ERROR:",
+            error
+        );
+
+
+        if(messagesUserEmail){
+
+            messagesUserEmail.textContent =
+                "Chyba pripojenia";
+
+        }
+
+        return false;
+    }
 }
 
 
@@ -116,6 +162,16 @@ async function loadMessages(){
         $("conversationList");
 
 
+    if(!container){
+
+        console.error(
+            "TOMIKON: #conversationList sa nenašlo v HTML."
+        );
+
+        return;
+    }
+
+
     container.innerHTML = `
 
         <div class="messages-loading">
@@ -127,36 +183,100 @@ async function loadMessages(){
     `;
 
 
-    const {
-        data,
-        error
-    } =
-        await bazarClient
-            .from("bazar_messages")
-            .select(`
-                id,
-                listing_id,
-                sender_id,
-                receiver_id,
-                message,
-                created_at,
-                read_at
-            `)
-            .or(
-                `sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`
-            )
-            .order(
-                "created_at",
-                {
-                    ascending:false
-                }
+    if(!currentUser){
+
+        container.innerHTML = `
+
+            <div class="messages-loading">
+
+                ❌ Používateľ nie je prihlásený.
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await bazarClient
+                .from("bazar_messages")
+                .select(`
+                    id,
+                    listing_id,
+                    sender_id,
+                    receiver_id,
+                    message,
+                    created_at,
+                    read_at
+                `)
+                .or(
+                    `sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
+                );
+
+
+        if(error){
+
+            console.error(
+                "MESSAGES LOAD ERROR:",
+                error
             );
 
 
-    if(error){
+            container.innerHTML = `
+
+                <div class="messages-loading">
+
+                    ❌ Správy sa nepodarilo načítať.
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        allMessages =
+            data || [];
+
+
+        if(
+            allMessages.length === 0
+        ){
+
+            container.innerHTML = `
+
+                <div class="messages-loading">
+
+                    💬 Zatiaľ nemáš žiadne správy.
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        await renderConversations();
+
+    } catch(error){
 
         console.error(
-            "MESSAGES LOAD ERROR:",
+            "LOAD MESSAGES EXCEPTION:",
             error
         );
 
@@ -170,34 +290,7 @@ async function loadMessages(){
             </div>
 
         `;
-
-        return;
     }
-
-
-    allMessages =
-        data || [];
-
-
-    if(
-        allMessages.length === 0
-    ){
-
-        container.innerHTML = `
-
-            <div class="messages-loading">
-
-                💬 Zatiaľ nemáš žiadne správy.
-
-            </div>
-
-        `;
-
-        return;
-    }
-
-
-    await renderConversations();
 }
 
 
@@ -209,6 +302,10 @@ async function renderConversations(){
 
     const container =
         $("conversationList");
+
+
+    if(!container)
+        return;
 
 
     /*
@@ -617,6 +714,10 @@ function renderChatMessages(
         $("chatMessages");
 
 
+    if(!container)
+        return;
+
+
     container.innerHTML =
         "";
 
@@ -943,7 +1044,7 @@ async function getListing(
 
 
 /* =====================================================
-   ODHLÁSENIE
+   ODHLÁSENIE
 ===================================================== */
 
 if($("sidebarLogout")){
@@ -1037,10 +1138,6 @@ bazarClient
    MOBILNÉ MENU
 ===================================================== */
 
-/* =====================================================
-   TOMIKON BAZÁR – UNIVERZÁLNE MOBILNÉ MENU
-===================================================== */
-
 document.addEventListener(
     "DOMContentLoaded",
     function(){
@@ -1049,6 +1146,7 @@ document.addEventListener(
             document.getElementById(
                 "bazarMobileMenuToggle"
             );
+
 
         const sidebar =
             document.getElementById(
@@ -1075,8 +1173,10 @@ document.addEventListener(
                 "bazar-mobile-menu-open"
             );
 
+
             menuButton.textContent =
                 "☰";
+
 
             menuButton.setAttribute(
                 "aria-expanded",
@@ -1136,6 +1236,7 @@ document.addEventListener(
 
 
                 if(!item){
+
                     return;
                 }
 
@@ -1184,10 +1285,6 @@ document.addEventListener(
     }
 );
 
-
-/* Inicializácia */
-
-initMobileMenu();
 
 /* =====================================================
    START
