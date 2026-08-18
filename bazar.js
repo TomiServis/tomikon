@@ -1642,6 +1642,28 @@ if(sidebarMyListingsButton){
 
 }
 
+// =========================
+// SPRÁVY
+// =========================
+
+const sidebarMessagesButton =
+    document.getElementById(
+        "sidebarMessagesButton"
+    );
+
+if(sidebarMessagesButton){
+
+    sidebarMessagesButton.addEventListener(
+        "click",
+        function(){
+
+            window.location.href =
+                "spravy.html";
+
+        }
+    );
+
+}
 
 // =========================
 // AUTH STATE
