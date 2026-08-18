@@ -124,7 +124,8 @@ if(!listing){
 
     return;
 }
-
+// ID predajcu tohto inzerátu
+currentSellerId = listing.seller_id;
 
 // =========================
 // ZVÝŠENIE ZOBRAZENÍ
@@ -920,3 +921,210 @@ document.addEventListener(
 
     }
 );
+
+
+// =====================================================
+// ODOSLANIE SPRÁVY PREDAJCU
+// =====================================================
+
+if(sendSellerMessage){
+
+    sendSellerMessage.addEventListener(
+        "click",
+        async function(){
+
+            const message =
+                sellerMessage.value.trim();
+
+
+            // kontrola textu
+            if(!message){
+
+                messageSendStatus.textContent =
+                    "⚠️ Napíš najprv správu.";
+
+                messageSendStatus.style.color =
+                    "#ffbd00";
+
+                sellerMessage.focus();
+
+                return;
+            }
+
+
+            // kontrola predajcu
+            if(!currentSellerId){
+
+                messageSendStatus.textContent =
+                    "❌ Nepodarilo sa nájsť predajcu.";
+
+                messageSendStatus.style.color =
+                    "#ff4d6d";
+
+                return;
+            }
+
+
+            // kontrola prihlásenia
+            const {
+                data: userData,
+                error: userError
+            } =
+                await bazarClient.auth.getUser();
+
+
+            if(
+                userError ||
+                !userData.user
+            ){
+
+                messageSendStatus.textContent =
+                    "🔐 Najprv sa musíš prihlásiť.";
+
+                messageSendStatus.style.color =
+                    "#ffbd00";
+
+                return;
+            }
+
+
+            const senderId =
+                userData.user.id;
+
+
+            // nemôžeš písať sám sebe
+            if(senderId === currentSellerId){
+
+                messageSendStatus.textContent =
+                    "ℹ️ Toto je tvoj vlastný inzerát.";
+
+                messageSendStatus.style.color =
+                    "#ffbd00";
+
+                return;
+            }
+
+
+            // tlačidlo počas odosielania
+            sendSellerMessage.disabled = true;
+
+            sendSellerMessage.textContent =
+                "⏳ Odosielam...";
+
+
+            messageSendStatus.textContent =
+                "";
+
+
+            try{
+
+                const {
+                    error
+                } =
+                    await bazarClient
+                        .from("bazar_messages")
+                        .insert({
+
+                            listing_id:
+                                Number(listingId),
+
+                            sender_id:
+                                senderId,
+
+                            receiver_id:
+                                currentSellerId,
+
+                            message:
+                                message
+
+                        });
+
+
+                if(error){
+
+                    console.error(
+                        "MESSAGE INSERT ERROR:",
+                        error
+                    );
+
+                    messageSendStatus.textContent =
+                        "❌ Správu sa nepodarilo odoslať.";
+
+                    messageSendStatus.style.color =
+                        "#ff4d6d";
+
+                    return;
+                }
+
+
+                // úspech
+                messageSendStatus.textContent =
+                    "✅ Správa bola odoslaná.";
+
+                messageSendStatus.style.color =
+                    "#00d084";
+
+
+                sellerMessage.value = "";
+
+
+                sendSellerMessage.textContent =
+                    "✅ Odoslané";
+
+
+                // po chvíľke zavrieť okno
+                setTimeout(
+                    function(){
+
+                        messageModal.classList.remove(
+                            "active"
+                        );
+
+                        sendSellerMessage.disabled =
+                            false;
+
+                        sendSellerMessage.textContent =
+                            "📤 Odoslať správu";
+
+                        messageSendStatus.textContent =
+                            "";
+
+                    },
+                    1200
+                );
+
+
+            }catch(error){
+
+                console.error(
+                    "MESSAGE ERROR:",
+                    error
+                );
+
+                messageSendStatus.textContent =
+                    "❌ Nastala chyba pri odosielaní.";
+
+                messageSendStatus.style.color =
+                    "#ff4d6d";
+
+            }finally{
+
+                if(
+                    sendSellerMessage.textContent !==
+                    "✅ Odoslané"
+                ){
+
+                    sendSellerMessage.disabled =
+                        false;
+
+                    sendSellerMessage.textContent =
+                        "📤 Odoslať správu";
+
+                }
+
+            }
+
+        }
+    );
+
+}
