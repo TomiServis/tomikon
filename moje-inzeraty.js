@@ -27,9 +27,138 @@ function escapeHTML(value) {
 }
 
 
-/* =========================
+/* =====================================================
+   AUTH SIDEBAR
+===================================================== */
+
+async function updateSidebarAuth() {
+
+    const {
+        data
+    } =
+        await bazarClient.auth.getSession();
+
+    const user =
+        data.session?.user;
+
+
+    const loggedIn =
+        $("sidebarLoggedIn");
+
+    const loggedOut =
+        $("sidebarLoggedOut");
+
+    const email =
+        $("sidebarUserEmail");
+
+
+    if(user){
+
+        if(loggedIn)
+            loggedIn.style.display =
+                "block";
+
+        if(loggedOut)
+            loggedOut.style.display =
+                "none";
+
+        if(email)
+            email.textContent =
+                user.email;
+
+    }else{
+
+        if(loggedIn)
+            loggedIn.style.display =
+                "none";
+
+        if(loggedOut)
+            loggedOut.style.display =
+                "block";
+    }
+}
+
+
+/* =====================================================
+   SIDEBAR LOGIN
+===================================================== */
+
+if($("sidebarLoginButton")){
+
+    $("sidebarLoginButton")
+        .addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "bazar.html";
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   SIDEBAR REGISTER
+===================================================== */
+
+if($("sidebarRegisterButton")){
+
+    $("sidebarRegisterButton")
+        .addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "bazar.html";
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   SIDEBAR LOGOUT
+===================================================== */
+
+if($("sidebarLogoutButton")){
+
+    $("sidebarLogoutButton")
+        .addEventListener(
+            "click",
+            async () => {
+
+                const {
+                    error
+                } =
+                    await bazarClient.auth.signOut();
+
+
+                if(error){
+
+                    console.error(
+                        "LOGOUT ERROR:",
+                        error
+                    );
+
+                    return;
+                }
+
+
+                window.location.href =
+                    "bazar.html";
+
+            }
+        );
+
+}
+
+
+/* =====================================================
    LOAD MY LISTINGS
-========================= */
+===================================================== */
 
 async function loadMyListings() {
 
@@ -47,10 +176,10 @@ async function loadMyListings() {
         await bazarClient.auth.getUser();
 
 
-    if (
+    if(
         error ||
         !data.user
-    ) {
+    ){
 
         window.location.href =
             "bazar.html";
@@ -63,9 +192,18 @@ async function loadMyListings() {
         data.user;
 
 
-    email.textContent =
-        user.email;
+    if(email){
 
+        email.textContent =
+            user.email;
+
+    }
+
+
+    /*
+     * Načítame všetky údaje
+     * potrebné pre kartu.
+     */
 
     const {
         data: listings,
@@ -82,7 +220,8 @@ async function loadMyListings() {
             contact,
             description,
             approved,
-            created_at
+            created_at,
+            views
         `)
         .eq(
             "seller_id",
@@ -91,34 +230,41 @@ async function loadMyListings() {
         .order(
             "created_at",
             {
-                ascending: false
+                ascending:false
             }
         );
 
 
-    if (listingsError) {
+    if(listingsError){
 
         console.error(
             "MY LISTINGS ERROR:",
             listingsError
         );
 
+
         container.innerHTML = `
+
             <div id="myMessage">
-                ❌ Nepodarilo sa načítať tvoje inzeráty.
+
+                ❌ Nepodarilo sa načítať
+                tvoje inzeráty.
+
             </div>
+
         `;
 
         return;
     }
 
 
-    if (
+    if(
         !listings ||
         listings.length === 0
-    ) {
+    ){
 
         container.innerHTML = `
+
             <div id="myMessage">
 
                 📦 Zatiaľ nemáš žiadne inzeráty.
@@ -127,16 +273,95 @@ async function loadMyListings() {
 
                 <a
                     href="bazar.html"
-                    class="my-open"
+                    class="my-action view"
+                    style="
+                        display:inline-flex;
+                        width:auto;
+                        padding:12px 18px;
+                    "
                 >
                     ➕ Pridať prvý inzerát
                 </a>
 
             </div>
+
         `;
 
         return;
     }
+
+
+    /*
+     * Načítanie obrázkov
+     */
+
+    const listingIds =
+        listings.map(
+            listing =>
+                listing.id
+        );
+
+
+    const {
+        data: images,
+        error: imagesError
+    } =
+        await bazarClient
+        .from("bazar_images")
+        .select(`
+            id,
+            listing_id,
+            image_url,
+            sort_order
+        `)
+        .in(
+            "listing_id",
+            listingIds
+        )
+        .order(
+            "sort_order",
+            {
+                ascending:true
+            }
+        );
+
+
+    if(imagesError){
+
+        console.error(
+            "MY IMAGES ERROR:",
+            imagesError
+        );
+
+    }
+
+
+    const imagesByListing = {};
+
+
+    (images || [])
+        .forEach(
+            image => {
+
+                if(
+                    !imagesByListing[
+                        image.listing_id
+                    ]
+                ){
+
+                    imagesByListing[
+                        image.listing_id
+                    ] = [];
+
+                }
+
+
+                imagesByListing[
+                    image.listing_id
+                ].push(image);
+
+            }
+        );
 
 
     container.innerHTML = "";
@@ -146,7 +371,10 @@ async function loadMyListings() {
         listing => {
 
             const card =
-                document.createElement("article");
+                document.createElement(
+                    "article"
+                );
+
 
             card.className =
                 "my-card";
@@ -154,26 +382,36 @@ async function loadMyListings() {
 
             const status =
                 listing.approved
+
                     ? `
-                        <span class="my-status approved">
+
+                        <span
+                            class="my-status approved"
+                        >
                             ✅ Schválený
                         </span>
+
                       `
+
                     : `
-                        <span class="my-status pending">
+
+                        <span
+                            class="my-status pending"
+                        >
                             ⏳ Čaká na schválenie
                         </span>
+
                       `;
 
 
             const price =
                 Number(
-                    listing.price
+                    listing.price || 0
                 ).toLocaleString(
                     "sk-SK",
                     {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
+                        minimumFractionDigits:2,
+                        maximumFractionDigits:2
                     }
                 );
 
@@ -186,76 +424,148 @@ async function loadMyListings() {
                 );
 
 
+            const views =
+                Number(
+                    listing.views || 0
+                );
+
+
+            const listingImages =
+                imagesByListing[
+                    listing.id
+                ] || [];
+
+
+            const mainImage =
+                listingImages.length > 0
+                    ? listingImages[0].image_url
+                    : null;
+
+
             card.innerHTML = `
 
-                ${status}
+                <!-- FOTO -->
 
-                <div class="my-info">
+                <div class="my-card-image">
 
-                    ${escapeHTML(
-                        listing.category
-                    )}
+                    ${
+                        mainImage
 
-                    · 📍
+                        ? `
 
-                    ${escapeHTML(
-                        listing.city
-                    )}
+                            <img
+                                src="${escapeHTML(
+                                    mainImage
+                                )}"
+                                alt="${escapeHTML(
+                                    listing.title
+                                )}"
+                            >
 
-                </div>
+                          `
 
+                        : `
 
-                <h2>
-                    ${escapeHTML(
-                        listing.title
-                    )}
-                </h2>
+                            <div class="my-no-image">
+                                📷
+                            </div>
 
-
-                <div class="my-price">
-
-                    ${price} €
-
-                </div>
-
-
-                <div class="my-info">
-
-                    📞
-                    ${escapeHTML(
-                        listing.contact
-                    )}
-
-                    <br>
-
-                    📅
-                    ${date}
+                          `
+                    }
 
                 </div>
 
 
-                <div class="my-actions">
+                <!-- OBSAH -->
 
-                    <a
-                        class="my-action view"
-                        href="bazar-detail.html?id=${listing.id}"
-                    >
-                        👁️ Zobraziť
-                    </a>
+                <div class="my-card-content">
 
-                    <button
-                        class="my-action edit"
-                        data-id="${listing.id}"
-                    >
-                        ✏️ Upraviť
-                    </button>
+                    ${status}
 
-                    <button
-                        class="my-action delete"
-                        data-id="${listing.id}"
-                    >
-                        🗑️ Zmazať
-                    </button>
+
+                    <div class="my-card-meta">
+
+                        ${escapeHTML(
+                            listing.category
+                        )}
+
+                        · 📍
+
+                        ${escapeHTML(
+                            listing.city
+                        )}
+
+                    </div>
+
+
+                    <h2>
+
+                        ${escapeHTML(
+                            listing.title
+                        )}
+
+                    </h2>
+
+
+                    <div class="my-price">
+
+                        ${price} €
+
+                    </div>
+
+
+                    <div class="my-card-info">
+
+                        👁️
+                        <strong>
+                            ${views}
+                        </strong>
+                        zobrazení
+
+                        <br>
+
+                        📅
+                        ${date}
+
+                    </div>
+
+
+                    <div class="my-actions">
+
+
+                        <a
+                            class="my-action view"
+                            href="bazar-detail.html?id=${listing.id}"
+                        >
+
+                            👁️ Zobraziť inzerát
+
+                        </a>
+
+
+                        <button
+                            class="my-action edit"
+                            data-id="${listing.id}"
+                            type="button"
+                        >
+
+                            ✏️ Upraviť
+
+                        </button>
+
+
+                        <button
+                            class="my-action delete"
+                            data-id="${listing.id}"
+                            type="button"
+                        >
+
+                            🗑️ Zmazať
+
+                        </button>
+
+
+                    </div>
 
                 </div>
 
@@ -270,12 +580,14 @@ async function loadMyListings() {
     );
 
 
-    /* =========================
+    /* =================================================
        EDIT BUTTONS
-    ========================= */
+    ================================================= */
 
     document
-        .querySelectorAll(".my-action.edit")
+        .querySelectorAll(
+            ".my-action.edit"
+        )
         .forEach(
             button => {
 
@@ -288,15 +600,15 @@ async function loadMyListings() {
                                 button.dataset.id
                             );
 
+
                         const listing =
                             listings.find(
                                 item =>
                                     item.id === id
                             );
 
-                        if (
-                            listing
-                        ) {
+
+                        if(listing){
 
                             openEditModal(
                                 listing
@@ -311,12 +623,14 @@ async function loadMyListings() {
         );
 
 
-    /* =========================
+    /* =================================================
        DELETE BUTTONS
-    ========================= */
+    ================================================= */
 
     document
-        .querySelectorAll(".my-action.delete")
+        .querySelectorAll(
+            ".my-action.delete"
+        )
         .forEach(
             button => {
 
@@ -336,13 +650,8 @@ async function loadMyListings() {
                             );
 
 
-                        if (
-                            !confirmed
-                        ) {
-
+                        if(!confirmed)
                             return;
-
-                        }
 
 
                         await deleteListing(
@@ -358,9 +667,9 @@ async function loadMyListings() {
 }
 
 
-/* =========================
+/* =====================================================
    OPEN EDIT MODAL
-========================= */
+===================================================== */
 
 function openEditModal(
     listing
@@ -397,9 +706,9 @@ function openEditModal(
 }
 
 
-/* =========================
+/* =====================================================
    CLOSE EDIT MODAL
-========================= */
+===================================================== */
 
 function closeEditModal() {
 
@@ -410,49 +719,65 @@ function closeEditModal() {
 }
 
 
-$("closeEditModal")
-    .addEventListener(
-        "click",
-        closeEditModal
-    );
+if($("closeEditModal")){
+
+    $("closeEditModal")
+        .addEventListener(
+            "click",
+            closeEditModal
+        );
+
+}
 
 
-$("cancelEdit")
-    .addEventListener(
-        "click",
-        closeEditModal
-    );
+if($("cancelEdit")){
+
+    $("cancelEdit")
+        .addEventListener(
+            "click",
+            closeEditModal
+        );
+
+}
 
 
-/* KLIKNUTIE MIMO MODALU */
+/* =====================================================
+   CLICK OUTSIDE MODAL
+===================================================== */
 
-$("editModal")
-    .addEventListener(
-        "click",
-        event => {
+if($("editModal")){
 
-            if (
-                event.target ===
-                $("editModal")
-            ) {
+    $("editModal")
+        .addEventListener(
+            "click",
+            event => {
 
-                closeEditModal();
+                if(
+                    event.target ===
+                    $("editModal")
+                ){
+
+                    closeEditModal();
+
+                }
 
             }
+        );
 
-        }
-    );
+}
 
 
-/* ESC */
+/* =====================================================
+   ESC
+===================================================== */
 
 document.addEventListener(
     "keydown",
     event => {
 
-        if (
+        if(
             event.key === "Escape"
-        ) {
+        ){
 
             closeEditModal();
 
@@ -462,157 +787,166 @@ document.addEventListener(
 );
 
 
-/* =========================
+/* =====================================================
    SAVE EDIT
-========================= */
+===================================================== */
 
-$("editForm")
-    .addEventListener(
-        "submit",
-        async event => {
+if($("editForm")){
 
-            event.preventDefault();
+    $("editForm")
+        .addEventListener(
+            "submit",
+            async event => {
 
-
-            const message =
-                $("editMessage");
+                event.preventDefault();
 
 
-            const id =
-                Number(
-                    $("editId").value
-                );
+                const message =
+                    $("editMessage");
 
 
-            const title =
-                $("editTitle").value.trim();
+                const id =
+                    Number(
+                        $("editId").value
+                    );
 
 
-            const category =
-                $("editCategory").value;
-
-
-            const price =
-                Number(
-                    $("editPrice").value
-                );
-
-
-            const city =
-                $("editCity").value.trim();
-
-
-            const contact =
-                $("editContact").value.trim();
-
-
-            const description =
-                $("editDescription")
+                const title =
+                    $("editTitle")
                     .value
                     .trim();
 
 
-            if (
-                !title ||
-                !category ||
-                !Number.isFinite(price) ||
-                !city ||
-                !contact ||
-                !description
-            ) {
+                const category =
+                    $("editCategory")
+                    .value;
+
+
+                const price =
+                    Number(
+                        $("editPrice").value
+                    );
+
+
+                const city =
+                    $("editCity")
+                    .value
+                    .trim();
+
+
+                const contact =
+                    $("editContact")
+                    .value
+                    .trim();
+
+
+                const description =
+                    $("editDescription")
+                    .value
+                    .trim();
+
+
+                if(
+                    !title ||
+                    !category ||
+                    !Number.isFinite(price) ||
+                    !city ||
+                    !contact ||
+                    !description
+                ){
+
+                    message.textContent =
+                        "❌ Vyplň všetky údaje.";
+
+                    message.style.color =
+                        "#ff5555";
+
+                    return;
+
+                }
+
 
                 message.textContent =
-                    "❌ Vyplň všetky údaje.";
+                    "⏳ Ukladám zmeny...";
 
                 message.style.color =
-                    "#ff5555";
-
-                return;
-
-            }
+                    "#aaa";
 
 
-            message.textContent =
-                "⏳ Ukladám zmeny...";
-
-            message.style.color =
-                "#aaa";
-
-
-            /*
-             * Pri úprave nastavíme approved = false.
-             *
-             * Admin teda musí zmenu znovu schváliť.
-             */
-
-            const {
-                error
-            } =
-                await bazarClient
-                .from("bazar_listings")
-                .update({
-
-                    title,
-                    category,
-                    price,
-                    city,
-                    contact,
-                    description,
-
-                    approved: false
-
-                })
-                .eq(
-                    "id",
-                    id
-                );
-
-
-            if (
-                error
-            ) {
-
-                console.error(
-                    "UPDATE ERROR:",
+                const {
                     error
-                );
+                } =
+                    await bazarClient
+                    .from("bazar_listings")
+                    .update({
+
+                        title,
+                        category,
+                        price,
+                        city,
+                        contact,
+                        description,
+
+                        /*
+                         * Po úprave musí admin
+                         * inzerát znovu schváliť.
+                         */
+
+                        approved:false
+
+                    })
+                    .eq(
+                        "id",
+                        id
+                    );
+
+
+                if(error){
+
+                    console.error(
+                        "UPDATE ERROR:",
+                        error
+                    );
+
+
+                    message.textContent =
+                        "❌ Nepodarilo sa uložiť zmeny.";
+
+                    message.style.color =
+                        "#ff5555";
+
+                    return;
+
+                }
+
 
                 message.textContent =
-                    "❌ Nepodarilo sa uložiť zmeny.";
+                    "✅ Zmeny boli uložené.";
 
                 message.style.color =
-                    "#ff5555";
+                    "#00d084";
 
-                return;
+
+                setTimeout(
+                    () => {
+
+                        closeEditModal();
+
+                        loadMyListings();
+
+                    },
+                    800
+                );
 
             }
+        );
+
+}
 
 
-            message.textContent =
-                "✅ Zmeny boli uložené.";
-
-            message.style.color =
-                "#00d084";
-
-
-            setTimeout(
-                () => {
-
-                    closeEditModal();
-
-                    loadMyListings();
-
-                },
-                800
-            );
-
-        }
-    );
-
-
-/* =========================
+/* =====================================================
    DELETE LISTING
-========================= */
+===================================================== */
 
 async function deleteListing(
     id
@@ -630,14 +964,13 @@ async function deleteListing(
         );
 
 
-    if (
-        error
-    ) {
+    if(error){
 
         console.error(
             "DELETE ERROR:",
             error
         );
+
 
         alert(
             "❌ Inzerát sa nepodarilo zmazať."
@@ -658,24 +991,40 @@ async function deleteListing(
 }
 
 
-/* =========================
-   BACK TO BAZAR
-========================= */
+/* =====================================================
+   AUTH STATE
+===================================================== */
 
-$("backBazarButton")
-    .addEventListener(
-        "click",
-        () => {
+bazarClient.auth.onAuthStateChange(
+    async (
+        event,
+        session
+    ) => {
+
+        await updateSidebarAuth();
+
+
+        if(
+            event === "SIGNED_OUT"
+        ){
 
             window.location.href =
                 "bazar.html";
 
         }
-    );
+
+    }
+);
 
 
-/* =========================
+/* =====================================================
    START
-========================= */
+===================================================== */
 
-loadMyListings();
+(async function(){
+
+    await updateSidebarAuth();
+
+    await loadMyListings();
+
+})();
