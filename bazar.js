@@ -1748,6 +1748,22 @@ if (forgotPasswordButton) {
 
 }
 
+supabase.auth.onAuthStateChange(
+    async (event, session) => {
+
+        console.log(
+            "TOMIKON AUTH:",
+            event,
+            session?.user?.email || "odhlásený"
+        );
+
+        await updateAuthUI(
+            session?.user || null
+        );
+
+    }
+);
+
 
 // =========================
 // SPUSTENIE AUTH
