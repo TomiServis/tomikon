@@ -1257,3 +1257,45 @@ body > .bazar-layout > .messages-page .chat-panel {
 
     z-index: auto !important;
 }
+
+
+/* =====================================================
+   SPRÁVY – ODOSLANÉ BUBLINY
+===================================================== */
+
+.chat-message.sent {
+    background: #087dcc !important;
+    border: 1px solid #1295e8 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(0, 100, 200, 0.18);
+}
+
+.chat-message.sent .message-text {
+    color: #ffffff !important;
+}
+
+.chat-message.sent .message-time {
+    color: #b9dfff !important;
+    opacity: 1 !important;
+    font-size: 10px !important;
+    margin-top: 5px;
+}
+
+/* prijaté správy */
+
+.chat-message.received {
+    background: #111b27 !important;
+    border: 1px solid #26384d !important;
+    color: #ffffff !important;
+}
+
+.chat-message.received .message-text {
+    color: #ffffff !important;
+}
+
+.chat-message.received .message-time {
+    color: #8293a8 !important;
+    opacity: 1 !important;
+    font-size: 10px !important;
+    margin-top: 5px;
+}
