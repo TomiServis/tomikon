@@ -88,19 +88,24 @@ async function loadUser(){
     data.user;
 
 
-// Zobrazenie prihlaseneho uctu
-const messagesUserEmail =
-    $("messagesUserEmail");
+    // Zobrazenie prihlaseneho uctu
 
-if(messagesUserEmail){
+    const messagesUserEmail =
+        $("messagesUserEmail");
 
-    messagesUserEmail.textContent =
-        currentUser.email || "Neznámy účet";
+
+    if(messagesUserEmail){
+
+        messagesUserEmail.textContent =
+            currentUser.email ||
+            "Neznámy účet";
+
+    }
+
+
+    return true;
 
 }
-
-
-return true;
 
 
 /* =====================================================
