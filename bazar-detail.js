@@ -763,3 +763,160 @@ document.addEventListener(
 
     }
 );
+
+// =====================================================
+// SPRÁVA PREDAJCU
+// =====================================================
+
+const messageSellerButton =
+    document.getElementById(
+        "messageSellerButton"
+    );
+
+const messageModal =
+    document.getElementById(
+        "messageModal"
+    );
+
+const closeMessageModal =
+    document.getElementById(
+        "closeMessageModal"
+    );
+
+const sellerMessage =
+    document.getElementById(
+        "sellerMessage"
+    );
+
+const sendSellerMessage =
+    document.getElementById(
+        "sendSellerMessage"
+    );
+
+const messageSendStatus =
+    document.getElementById(
+        "messageSendStatus"
+    );
+
+
+// =====================================================
+// OTVORENIE
+// =====================================================
+
+if(messageSellerButton){
+
+    messageSellerButton.addEventListener(
+        "click",
+        async function(){
+
+            const {
+                data,
+                error
+            } =
+                await bazarClient.auth.getUser();
+
+
+            if(
+                error ||
+                !data.user
+            ){
+
+                alert(
+                    "🔐 Pre odoslanie správy sa musíš prihlásiť."
+                );
+
+                return;
+            }
+
+
+            /*
+             * Zatiaľ len otvoríme okno.
+             */
+
+            if(messageModal){
+
+                messageModal.classList.add(
+                    "active"
+                );
+
+            }
+
+            if(sellerMessage){
+
+                sellerMessage.focus();
+
+            }
+
+        }
+    );
+
+}
+
+
+// =====================================================
+// ZATVORENIE
+// =====================================================
+
+if(closeMessageModal){
+
+    closeMessageModal.addEventListener(
+        "click",
+        function(){
+
+            messageModal.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+}
+
+
+// klik mimo okna
+
+if(messageModal){
+
+    messageModal.addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                messageModal
+            ){
+
+                messageModal.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ESC
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape" &&
+            messageModal &&
+            messageModal.classList.contains(
+                "active"
+            )
+        ){
+
+            messageModal.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
