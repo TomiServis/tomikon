@@ -1,1655 +1,878 @@
-const SUPABASE_URL =
-    "https://sjhlzllylobreeehziae.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_3GLcmT1aTqaGija1nFtziA_iGUYqt7_";
-
-
-const bazarClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-// =========================
-// POMOCNÉ FUNKCIE
-// =========================
-
-const $ = (id) =>
-    document.getElementById(id);
-
-
-function escapeHTML(value){
-
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        value ?? "";
-
-    return div.innerHTML;
-}
-
-
-// =========================
-// NÁHĽAD FOTIEK
-// =========================
-
-const bazarImagesInput = $("bazarImages");
-const imagePreview = $("imagePreview");
-
-// Tu držíme skutočný zoznam vybraných fotiek
-let selectedImageFiles = [];
-
-
-// =========================
-// VYKRESLENIE NÁHĽADOV
-// =========================
-
-function renderImagePreview() {
-
-    if (!imagePreview)
-        return;
-
-    imagePreview.innerHTML = "";
-
-    selectedImageFiles.forEach((file, index) => {
-
-        const wrapper = document.createElement("div");
-
-        wrapper.style.position = "relative";
-        wrapper.style.width = "120px";
-        wrapper.style.height = "90px";
-
-
-        const img = document.createElement("img");
-
-        img.src = URL.createObjectURL(file);
-
-        img.alt = file.name;
-
-        img.style.width = "120px";
-        img.style.height = "90px";
-        img.style.objectFit = "cover";
-        img.style.borderRadius = "8px";
-        img.style.border = "1px solid #008cff";
-        img.style.display = "block";
-
-
-        // =========================
-        // X TLAČIDLO
-        // =========================
-
-        const removeButton =
-            document.createElement("button");
-
-        removeButton.type = "button";
-
-        removeButton.textContent = "×";
-
-        removeButton.title = "Odstrániť fotku";
-
-        removeButton.style.position = "absolute";
-        removeButton.style.top = "4px";
-        removeButton.style.right = "4px";
-
-        removeButton.style.width = "25px";
-        removeButton.style.height = "25px";
-
-        removeButton.style.padding = "0";
-
-        removeButton.style.border = "1px solid rgba(255,255,255,.5)";
-        removeButton.style.borderRadius = "50%";
-
-        removeButton.style.background = "#e0003c";
-        removeButton.style.color = "#fff";
-
-        removeButton.style.fontSize = "18px";
-        removeButton.style.fontWeight = "bold";
-
-        removeButton.style.lineHeight = "22px";
-
-        removeButton.style.cursor = "pointer";
-
-        removeButton.style.zIndex = "5";
-
-        removeButton.addEventListener(
-            "click",
-            function(event) {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                // odstráni fotku zo zoznamu
-                selectedImageFiles.splice(index, 1);
-
-                // prekreslí náhľady
-                renderImagePreview();
-
-                // synchronizuje input
-                syncImageInput();
-
-            }
-        );
-
-
-        wrapper.appendChild(img);
-        wrapper.appendChild(removeButton);
-
-        imagePreview.appendChild(wrapper);
-
-    });
-
-
-    // Počet fotiek
-    const countText =
-        document.getElementById("imageCount");
-
-    if(countText){
-
-        countText.textContent =
-            `Počet súborov: ${selectedImageFiles.length}`;
-
-    }
-
-}
-
-
-// =========================
-// SYNCHRONIZÁCIA FILE INPUTU
-// =========================
-
-function syncImageInput() {
-
-    if(!bazarImagesInput)
-        return;
-
-
-    const dataTransfer =
-        new DataTransfer();
-
-
-    selectedImageFiles.forEach(file => {
-
-        dataTransfer.items.add(file);
-
-    });
-
-
-    bazarImagesInput.files =
-        dataTransfer.files;
-
-}
-
-
-// =========================
-// VÝBER FOTIEK
-// =========================
-
-if(bazarImagesInput){
-
-    bazarImagesInput.addEventListener(
-        "change",
-        function(){
-
-            const newFiles =
-                Array.from(
-                    bazarImagesInput.files
-                );
-
-
-            for(const file of newFiles){
-
-                // -------------------------
-                // KONTROLA TYPU
-                // -------------------------
-
-                if(!file.type.startsWith("image/")){
-
-                    alert(
-                        `"${file.name}" nie je obrázok.`
-                    );
-
-                    continue;
-
-                }
-
-
-                // -------------------------
-                // MAX 10 MB
-                // -------------------------
-
-                if(
-                    file.size >
-                    10 * 1024 * 1024
-                ){
-
-                    alert(
-                        `Fotka "${file.name}" je väčšia ako 10 MB.`
-                    );
-
-                    continue;
-
-                }
-
-
-                // -------------------------
-                // MAX 8 FOTIEK
-                // -------------------------
-
-                if(
-                    selectedImageFiles.length >= 8
-                ){
-
-                    alert(
-                        "Môžeš mať maximálne 8 fotiek."
-                    );
-
-                    break;
-
-                }
-
-
-                // -------------------------
-                // DUPLIKÁT
-                // -------------------------
-
-                const alreadyExists =
-                    selectedImageFiles.some(
-                        existingFile =>
-                            existingFile.name === file.name &&
-                            existingFile.size === file.size &&
-                            existingFile.lastModified === file.lastModified
-                    );
-
-
-                if(alreadyExists)
-                    continue;
-
-
-                // -------------------------
-                // PRIDANIE
-                // -------------------------
-
-                selectedImageFiles.push(file);
-
-            }
-
-
-            // input vyčistíme, aby bolo možné
-            // znova vybrať rovnakú fotku
-            bazarImagesInput.value = "";
-
-
-            renderImagePreview();
-
-            syncImageInput();
-
-        }
-    );
-
-}
-
-
-// =========================
-// NAČÍTANIE INZERÁTOV
-// =========================
-
-async function loadBazar() {
-
-    const listings = $("bazarListings");
-
-    if (!listings) return;
-
-    const search = ($("search")?.value || "").trim();
-    const category = $("filterCategory")?.value || "";
-    const minPriceValue = $("minPrice")?.value || "";
-    const maxPriceValue = $("maxPrice")?.value || "";
-
-    listings.innerHTML = "<p>⏳ Načítavam...</p>";
-
-    let query = bazarClient
-        .from("bazar_listings")
-        .select(`
-            id,
-            title,
-            category,
-            price,
-            city,
-            contact,
-            description,
-            approved,
-            created_at,
-            views
-        `)
-        .eq("approved", true)
-        .order("created_at", { ascending: false });
-
-    if (category) {
-        query = query.eq("category", category);
-    }
-
-    if (minPriceValue !== "") {
-        const minPrice = Number(minPriceValue);
-        if (!Number.isNaN(minPrice)) {
-            query = query.gte("price", minPrice);
-        }
-    }
-
-    if (maxPriceValue !== "") {
-        const maxPrice = Number(maxPriceValue);
-        if (!Number.isNaN(maxPrice)) {
-            query = query.lte("price", maxPrice);
-        }
-    }
-
-    if (search) {
-        const safeSearch = search.replace(/,/g, " ");
-        query = query.or(
-            `title.ilike.%${safeSearch}%,description.ilike.%${safeSearch}%,city.ilike.%${safeSearch}%`
-        );
-    }
-
-    const { data, error } = await query;
-
-    // =========================
-    // CHYBA
-    // =========================
-
-    if(error){
-
-        console.error(
-            "BAZAR ERROR:",
-            error
-        );
-
-
-        listings.innerHTML =
-            `
-            <p>
-                ❌ Nepodarilo sa načítať inzeráty.
-            </p>
-            `;
-
-
-        return;
-
-    }
-
-
-    // =========================
-    // ŽIADNE INZERÁTY
-    // =========================
-
-    if(!data || data.length === 0){
-
-        listings.innerHTML =
-            `
-            <p>
-                🛒 Zatiaľ tu nie sú žiadne
-                schválené inzeráty.
-            </p>
-            `;
-
-        return;
-
-    }
-
-
-    // =========================
-    // NAČÍTANIE FOTIEK
-    // =========================
-
-    const listingIds =
-        data.map(
-            listing => listing.id
-        );
-
-
-    const {
-        data: images,
-        error: imagesError
-    } =
-        await bazarClient
-        .from("bazar_images")
-        .select(`
-            id,
-            listing_id,
-            image_url,
-            sort_order
-        `)
-        .in(
-            "listing_id",
-            listingIds
-        )
-        .order(
-            "sort_order",
-            {
-                ascending:true
-            }
-        );
-
-
-    if(imagesError){
-
-        console.error(
-            "BAZAR IMAGES ERROR:",
-            imagesError
-        );
-
-    }
-
-
-    const imagesByListing = {};
-
-
-    (images || []).forEach(image => {
-
-        if(!imagesByListing[image.listing_id]){
-
-            imagesByListing[image.listing_id] =
-                [];
-
-        }
-
-
-        imagesByListing[image.listing_id]
-            .push(image);
-
-    });
-
-
-    // =========================
-    // VYKRESLENIE
-    // =========================
-
-    listings.innerHTML = "";
-
-
-    data.forEach(listing => {
-
-        const card =
-            document.createElement("article");
-
-
-        card.className =
-            "bazar-card";
-        card.style.cursor = "pointer";
-
-card.addEventListener("click", function(){
-
-    window.location.href =
-        `bazar-detail.html?id=${listing.id}`;
-
-});
-
-
-        const price =
-            Number(
-                listing.price
-            ).toLocaleString(
-                "sk-SK",
-                {
-                    minimumFractionDigits:2,
-                    maximumFractionDigits:2
-                }
-            );
-
-
-        const listingImages =
-            imagesByListing[listing.id] ||
-            [];
-
-
-       // =========================
-// HLAVNÁ FOTKA
-// =========================
-
-let imagesHTML = "";
-
-if (listingImages.length > 0) {
-
-    const mainImage = listingImages[0];
-
-    imagesHTML = `
-        <div class="bazar-main-image">
-            <img
-                src="${escapeHTML(mainImage.image_url)}"
-                alt="${escapeHTML(listing.title)}"
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>TOMIKON BAZÁR</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="bazar.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
+
+<header class="bazar-topbar">
+
+    <a href="bazar.html" class="bazar-brand">
+        <span class="bazar-brand-icon">🛒</span>
+
+        <span class="bazar-brand-text">
+            <strong>TOMIKON</strong>
+            <small>BAZÁR</small>
+        </span>
+    </a>
+
+    <div class="bazar-topbar-right">
+
+        <span
+            id="userEmail"
+            class="bazar-user-email"
+        ></span>
+
+        <div
+            id="loggedOutBox"
+            class="bazar-auth-buttons"
+        >
+
+            <button
+                id="showLoginButton"
+                class="bazar-top-btn"
+                type="button"
             >
+                🔐 Prihlásiť
+            </button>
+
+            <button
+                id="showRegisterButton"
+                class="bazar-top-btn bazar-top-btn-primary"
+                type="button"
+            >
+                ✨ Vytvoriť účet
+            </button>
+
         </div>
-    `;
 
-} else {
 
-    imagesHTML = `
-        <div class="bazar-main-image bazar-no-image">
-            🖥️
+        <div
+            id="loggedInBox"
+            class="bazar-auth-buttons"
+            style="display:none;"
+        >
+
+            <button
+                id="myListingsButton"
+                class="bazar-top-btn"
+                type="button"
+            >
+                📦 Moje inzeráty
+            </button>
+
+            <button
+                id="logoutBazarButton"
+                class="bazar-top-btn bazar-logout-btn"
+                type="button"
+            >
+                🚪 Odhlásiť
+            </button>
+
         </div>
-    `;
 
-}
+    </div>
 
-
-        card.innerHTML =
-            `
-
-            ${imagesHTML}
+</header>
 
 
-            <div class="bazar-meta">
+<!-- =====================================================
+     LAYOUT
+===================================================== -->
 
-                ${escapeHTML(
-                    listing.category
-                )}
+<div class="bazar-dashboard">
 
-                ·
 
-                📍 ${escapeHTML(
-                    listing.city
-                )}
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="bazar-sidebar">
+
+        <div class="sidebar-mobile-title">
+            TOMIKON BAZÁR
+        </div>
+
+
+        <button
+            type="button"
+            class="sidebar-item sidebar-item-active"
+            data-scroll="listingsSection"
+        >
+            <span>▦</span>
+            <span>Inzeráty</span>
+        </button>
+
+
+        <button
+            type="button"
+            class="sidebar-item"
+            id="sidebarAddButton"
+        >
+            <span>＋</span>
+            <span>Pridať inzerát</span>
+        </button>
+
+
+        <button
+            type="button"
+            class="sidebar-item"
+            id="sidebarMyListingsButton"
+        >
+            <span>▣</span>
+            <span>Moje inzeráty</span>
+        </button>
+
+
+        <button
+            type="button"
+            class="sidebar-item"
+            id="sidebarFavoritesButton"
+        >
+            <span>♡</span>
+            <span>Obľúbené</span>
+        </button>
+
+
+        <button
+            type="button"
+            class="sidebar-item"
+            id="sidebarMessagesButton"
+        >
+            <span>✉</span>
+            <span>Správy</span>
+        </button>
+
+
+        <button
+            type="button"
+            class="sidebar-item"
+            id="sidebarProfileButton"
+        >
+            <span>♙</span>
+            <span>Profil</span>
+        </button>
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="index.html"
+            class="sidebar-item sidebar-link"
+        >
+            <span>←</span>
+            <span>Hlavná stránka</span>
+        </a>
+
+
+        <button
+            type="button"
+            class="sidebar-item sidebar-logout"
+            id="sidebarLogoutButton"
+        >
+            <span>↪</span>
+            <span>Odhlásiť sa</span>
+        </button>
+
+    </aside>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <main class="bazar-main">
+
+
+        <!-- HEADER -->
+
+        <section class="bazar-page-header">
+
+            <div>
+
+                <span class="bazar-page-kicker">
+                    TOMIKON MARKETPLACE
+                </span>
+
+                <h1>
+                    TOMIKON BAZÁR
+                </h1>
+
+                <p>
+                    PC technika, komponenty a príslušenstvo
+                    na jednom mieste.
+                </p>
 
             </div>
 
 
-            <h3>
+            <button
+                type="button"
+                id="mainAddButton"
+                class="bazar-main-add-button"
+            >
+                ＋ Pridať inzerát
+            </button>
 
-                ${escapeHTML(
-                    listing.title
-                )}
-
-            </h3>
+        </section>
 
 
-            <div class="bazar-price">
+        <!-- =================================================
+             ADD LISTING
+        ================================================== -->
 
-                ${price} €
+        <section
+            id="addListingSection"
+            class="dashboard-panel add-listing-panel"
+        >
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="panel-kicker">
+                        NOVÁ PONUKA
+                    </span>
+
+                    <h2>
+                        ＋ Pridať inzerát
+                    </h2>
+
+                    <p>
+                        Po odoslaní bude inzerát čakať
+                        na schválenie administrátorom.
+                    </p>
+
+                </div>
 
             </div>
 
 
-            <p class="bazar-description-preview">
+            <form
+                id="bazarForm"
+                class="bazar-form"
+            >
 
-    ${escapeHTML(
-        listing.description
-    )}
+                <div class="form-field">
 
-</p>
+                    <label for="title">
+                        Názov
+                    </label>
+
+                    <input
+                        id="title"
+                        required
+                        placeholder="Herný PC RTX 3060"
+                    >
+
+                </div>
 
 
-           <div
-    class="bazar-meta"
-    style="margin-top:10px;"
->
+                <div class="form-field">
 
-    📅
+                    <label for="category">
+                        Kategória
+                    </label>
 
-    ${new Date(
-        listing.created_at
-    ).toLocaleDateString(
-        "sk-SK"
-    )}
+                    <select
+                        id="category"
+                        required
+                    >
+
+                        <option value="">
+                            Vyber kategóriu
+                        </option>
+
+                        <option>Stolný PC</option>
+                        <option>Notebook</option>
+                        <option>Grafická karta</option>
+                        <option>Procesor</option>
+                        <option>RAM</option>
+                        <option>SSD / HDD</option>
+                        <option>Monitor</option>
+                        <option>Príslušenstvo</option>
+                        <option>Iné</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="price">
+                        Cena (€)
+                    </label>
+
+                    <input
+                        id="price"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        required
+                        placeholder="650"
+                    >
+
+                </div>
+
+
+                <div class="form-field">
+
+                    <label for="city">
+                        Mesto
+                    </label>
+
+                    <input
+                        id="city"
+                        required
+                        placeholder="Bratislava"
+                    >
+
+                </div>
+
+
+                <div class="form-field form-field-full">
+
+                    <label for="contact">
+                        Kontakt
+                    </label>
+
+                    <input
+                        id="contact"
+                        required
+                        placeholder="telefón alebo e-mail"
+                    >
+
+                </div>
+
+
+                <div class="form-field form-field-full">
+
+                    <label for="description">
+                        Popis
+                    </label>
+
+                    <textarea
+                        id="description"
+                        required
+                        placeholder="Stav, komponenty, príslušenstvo..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-field form-field-full">
+
+                    <label for="bazarImages">
+                        📸 Fotky inzerátu
+                    </label>
+
+                    <input
+                        type="file"
+                        id="bazarImages"
+                        accept="image/*"
+                        multiple
+                    >
+
+                    <small class="form-help">
+                        Vyber maximálne 8 fotiek.
+                        Každá môže mať do 10 MB.
+                    </small>
+
+                    <div
+                        id="imagePreview"
+                        class="image-preview"
+                    ></div>
+
+                </div>
+
+
+                <div class="form-submit-row">
+
+                    <button
+                        class="bazar-main-add-button"
+                        type="submit"
+                    >
+                        📤 Odoslať inzerát
+                    </button>
+
+                    <div
+                        id="bazarMessage"
+                        class="bazar-message"
+                    ></div>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- =================================================
+             LISTINGS
+        ================================================== -->
+
+        <section
+            id="listingsSection"
+            class="dashboard-panel"
+        >
+
+            <div class="panel-header listings-panel-header">
+
+                <div>
+
+                    <span class="panel-kicker">
+                        MARKETPLACE
+                    </span>
+
+                    <h2>
+                        🔎 Inzeráty
+                    </h2>
+
+                    <p>
+                        Pozri si aktuálne schválené ponuky.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="bazar-search-panel">
+
+                <div class="search-main">
+
+                    <span>⌕</span>
+
+                    <input
+                        id="search"
+                        placeholder="Hľadaj PC, grafiku, notebook..."
+                    >
+
+                </div>
+
+
+                <select id="filterCategory">
+
+                    <option value="">
+                        Všetky kategórie
+                    </option>
+
+                    <option>Stolný PC</option>
+                    <option>Notebook</option>
+                    <option>Grafická karta</option>
+                    <option>Procesor</option>
+                    <option>RAM</option>
+                    <option>SSD / HDD</option>
+                    <option>Monitor</option>
+                    <option>Príslušenstvo</option>
+                    <option>Iné</option>
+
+                </select>
+
+
+                <input
+                    id="minPrice"
+                    type="number"
+                    placeholder="Cena od"
+                >
+
+
+                <input
+                    id="maxPrice"
+                    type="number"
+                    placeholder="Cena do"
+                >
+
+            </div>
+
+
+            <!-- LISTINGS -->
+
+            <div
+                id="bazarListings"
+                class="bazar-grid"
+            >
+
+                <p class="bazar-loading">
+                    ⏳ Načítavam inzeráty...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             BETA PANEL
+        ================================================== -->
+
+        <section class="beta-panel">
+
+            <div class="beta-icon">
+                🧪
+            </div>
+
+            <div>
+
+                <strong>
+                    TOMIKON BAZÁR je v BETA verzii
+                </strong>
+
+                <p>
+                    Bazár je plne funkčný, no stále ho
+                    postupne vylepšujeme a pridávame nové funkcie.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
 
 </div>
+
+
+<!-- =====================================================
+     AUTH MODAL
+===================================================== -->
 
 <div
-    class="bazar-meta"
-    style="margin-top:8px;"
+    id="authModal"
+    class="bazar-auth-modal"
+    style="display:none;"
 >
 
-    👁️
+    <div class="bazar-login-box">
 
-    ${Number(listing.views || 0)} zobrazení
+        <button
+            id="closeAuthButton"
+            class="bazar-login-close"
+            type="button"
+            aria-label="Zavrieť"
+        >
+            ×
+        </button>
+
+
+        <div class="bazar-login-icon">
+            👤
+        </div>
+
+
+        <h2 id="authTitle">
+            🔐 Prihlásenie
+        </h2>
+
+
+        <p class="bazar-login-subtitle">
+            Prihlás sa do svojho TOMIKON účtu
+        </p>
+
+
+        <div class="bazar-login-field">
+
+            <label for="authEmail">
+                📧 E-mail
+            </label>
+
+            <input
+                type="email"
+                id="authEmail"
+                placeholder="tvoj@email.sk"
+                autocomplete="email"
+            >
+
+        </div>
+
+
+        <div class="bazar-login-field">
+
+            <label for="authPassword">
+                🔒 Heslo
+            </label>
+
+
+            <div class="bazar-password-wrap">
+
+                <input
+                    type="password"
+                    id="authPassword"
+                    placeholder="Tvoje heslo"
+                    autocomplete="current-password"
+                >
+
+
+                <button
+                    type="button"
+                    id="togglePasswordButton"
+                    class="bazar-password-toggle"
+                    aria-label="Zobraziť heslo"
+                >
+                    👁
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="authSubmitButton"
+            class="bazar-login-submit"
+            type="button"
+        >
+            🔐 Prihlásiť sa
+        </button>
+
+
+        <button
+            type="button"
+            id="forgotPasswordButton"
+            class="bazar-forgot-password"
+        >
+            🔑 Zabudol som heslo
+        </button>
+
+
+        <div
+            id="authMessage"
+            class="bazar-auth-message"
+        ></div>
+
+
+        <div class="bazar-login-divider">
+            <span>alebo</span>
+        </div>
+
+
+        <button
+            id="authSwitchButton"
+            class="bazar-login-switch"
+            type="button"
+        >
+            ✨ Chcem si vytvoriť účet
+        </button>
+
+
+        <p class="bazar-login-footer">
+            TOMIKON BAZÁR · bezpečné prihlasovanie
+        </p>
+
+    </div>
 
 </div>
 
-            `;
+
+<!-- =====================================================
+     SCRIPTS
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="bazar.js"></script>
 
 
-        listings.appendChild(
-            card
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const addSection =
+        document.getElementById("addListingSection");
+
+    const mainAddButton =
+        document.getElementById("mainAddButton");
+
+    const sidebarAddButton =
+        document.getElementById("sidebarAddButton");
+
+    const sidebarMyListingsButton =
+        document.getElementById("sidebarMyListingsButton");
+
+    const sidebarLogoutButton =
+        document.getElementById("sidebarLogoutButton");
+
+    const sidebarMessagesButton =
+        document.getElementById("sidebarMessagesButton");
+
+    const sidebarFavoritesButton =
+        document.getElementById("sidebarFavoritesButton");
+
+    const sidebarProfileButton =
+        document.getElementById("sidebarProfileButton");
+
+
+    function openAddListing(){
+
+        if(!addSection)
+            return;
+
+        addSection.classList.add("panel-highlight");
+
+        addSection.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+
+        setTimeout(() => {
+            addSection.classList.remove(
+                "panel-highlight"
+            );
+        },1200);
+
+    }
+
+
+    if(mainAddButton){
+
+        mainAddButton.addEventListener(
+            "click",
+            openAddListing
+        );
+
+    }
+
+
+    if(sidebarAddButton){
+
+        sidebarAddButton.addEventListener(
+            "click",
+            openAddListing
+        );
+
+    }
+
+
+    if(sidebarMyListingsButton){
+
+        sidebarMyListingsButton.addEventListener(
+            "click",
+            function(){
+
+                window.location.href =
+                    "moje-inzeraty.html";
+
+            }
+        );
+
+    }
+
+
+    if(sidebarMessagesButton){
+
+        sidebarMessagesButton.addEventListener(
+            "click",
+            function(){
+
+                alert(
+                    "💬 Správy pripravujeme. Táto funkcia bude čoskoro dostupná."
+                );
+
+            }
+        );
+
+    }
+
+
+    if(sidebarFavoritesButton){
+
+        sidebarFavoritesButton.addEventListener(
+            "click",
+            function(){
+
+                alert(
+                    "❤️ Obľúbené pripravujeme."
+                );
+
+            }
+        );
+
+    }
+
+
+    if(sidebarProfileButton){
+
+        sidebarProfileButton.addEventListener(
+            "click",
+            function(){
+
+                alert(
+                    "👤 Profil pripravujeme."
+                );
+
+            }
+        );
+
+    }
+
+
+    if(sidebarLogoutButton){
+
+        sidebarLogoutButton.addEventListener(
+            "click",
+            async function(){
+
+                const button =
+                    document.getElementById(
+                        "logoutBazarButton"
+                    );
+
+                if(button){
+
+                    button.click();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    document.querySelectorAll(
+        "[data-scroll]"
+    ).forEach(button => {
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                const target =
+                    document.getElementById(
+                        button.dataset.scroll
+                    );
+
+                if(target){
+
+                    target.scrollIntoView({
+                        behavior:"smooth",
+                        block:"start"
+                    });
+
+                }
+
+            }
         );
 
     });
 
-}
-
-
-// =========================
-// PRIDANIE INZERÁTU
-// =========================
-
-$("bazarForm")
-.addEventListener(
-    "submit",
-    async function(event){
-
-        event.preventDefault();
-
-
-        const message =
-            $("bazarMessage");
-
-
-        const submitButton =
-            event.submitter;
-
-
-        if(submitButton){
-
-            submitButton.disabled =
-                true;
-
-        }
-
-
-        try{
-
-            message.textContent =
-                "📤 Odosielam inzerát...";
-
-
-            // =========================
-            // KONTROLA PRIHLÁSENIA
-            // =========================
-
-            const {
-                data,
-                error: sessionError
-            } =
-                await bazarClient.auth.getSession();
-
-
-            if(sessionError){
-
-                console.error(
-                    sessionError
-                );
-
-
-                message.textContent =
-                    "❌ Nepodarilo sa overiť prihlásenie.";
-
-                return;
-
-            }
-
-
-            const user =
-                data.session?.user;
-
-
-            if(!user){
-
-                message.textContent =
-                    "❌ Najprv sa musíš prihlásiť.";
-
-                return;
-
-            }
-
-
-            // =========================
-            // ÚDAJE
-            // =========================
-
-            const title =
-                $("title")
-                .value
-                .trim();
-
-
-            const category =
-                $("category")
-                .value;
-
-
-            const price =
-                Number(
-                    $("price")
-                    .value
-                );
-
-
-            const city =
-                $("city")
-                .value
-                .trim();
-
-
-            const contact =
-                $("contact")
-                .value
-                .trim();
-
-
-            const description =
-                $("description")
-                .value
-                .trim();
-
-
-            const selectedFiles =
-                bazarImagesInput
-                    ? Array.from(
-                        bazarImagesInput.files
-                    )
-                    : [];
-
-
-            // =========================
-            // KONTROLA
-            // =========================
-
-            if(
-                !title ||
-                !category ||
-                !city ||
-                !contact ||
-                !description
-            ){
-
-                message.textContent =
-                    "❌ Vyplň všetky údaje.";
-
-                return;
-
-            }
-
-
-            if(
-                Number.isNaN(price) ||
-                price < 0
-            ){
-
-                message.textContent =
-                    "❌ Zadaj platnú cenu.";
-
-                return;
-
-            }
-
-
-            if(selectedFiles.length > 8){
-
-                message.textContent =
-                    "❌ Môžeš vybrať maximálne 8 fotiek.";
-
-                return;
-
-            }
-
-
-            for(const file of selectedFiles){
-
-                if(
-                    !file.type.startsWith(
-                        "image/"
-                    )
-                ){
-
-                    message.textContent =
-                        "❌ Všetky súbory musia byť obrázky.";
-
-                    return;
-
-                }
-
-
-                if(
-                    file.size >
-                    10 * 1024 * 1024
-                ){
-
-                    message.textContent =
-                        `❌ Fotka "${file.name}" je väčšia ako 10 MB.`;
-
-                    return;
-
-                }
-
-            }
-
-
-            // =========================
-            // VYTVORENIE INZERÁTU
-            // =========================
-
-            message.textContent =
-                "📝 Vytváram inzerát...";
-
-
-            const {
-                data: listingData,
-                error: listingError
-            } =
-                await bazarClient
-                .from("bazar_listings")
-                .insert({
-
-                    seller_id:
-                        user.id,
-
-                    title:
-                        title,
-
-                    category:
-                        category,
-
-                    price:
-                        price,
-
-                    city:
-                        city,
-
-                    contact:
-                        contact,
-
-                    description:
-                        description,
-
-                    approved:
-                        false
-
-                })
-                .select("id")
-                .single();
-
-
-            if(listingError){
-
-                console.error(
-                    "BAZAR INSERT ERROR:",
-                    listingError
-                );
-
-
-                message.textContent =
-                    "❌ " +
-                    listingError.message;
-
-                return;
-
-            }
-
-
-            const listingId =
-                listingData.id;
-
-
-            // =========================
-            // UPLOAD FOTIEK
-            // =========================
-
-            if(selectedFiles.length > 0){
-
-                message.textContent =
-                    "📸 Nahrávam fotky...";
-
-
-                for(
-                    let index = 0;
-                    index < selectedFiles.length;
-                    index++
-                ){
-
-                    const file =
-                        selectedFiles[index];
-
-
-                    const safeName =
-                        file.name
-                        .replace(
-                            /[^a-zA-Z0-9._-]/g,
-                            "_"
-                        );
-
-
-                    const filePath =
-                        `${user.id}/${listingId}/${crypto.randomUUID()}-${safeName}`;
-
-
-                    const {
-                        error: uploadError
-                    } =
-                        await bazarClient
-                        .storage
-                        .from("bazar-images")
-                        .upload(
-                            filePath,
-                            file,
-                            {
-                                contentType:
-                                    file.type,
-
-                                upsert:
-                                    false
-                            }
-                        );
-
-
-                    if(uploadError){
-
-                        console.error(
-                            "IMAGE UPLOAD ERROR:",
-                            uploadError
-                        );
-
-
-                        message.textContent =
-                            "❌ Nepodarilo sa nahrať jednu z fotiek.";
-
-                        return;
-
-                    }
-
-
-                    // =========================
-                    // VEREJNÁ URL
-                    // =========================
-
-                    const {
-                        data: publicUrlData
-                    } =
-                        bazarClient
-                        .storage
-                        .from("bazar-images")
-                        .getPublicUrl(
-                            filePath
-                        );
-
-
-                    const imageUrl =
-                        publicUrlData.publicUrl;
-
-
-                    // =========================
-                    // ULOŽENIE URL
-                    // =========================
-
-                    const {
-                        error: imageDbError
-                    } =
-                        await bazarClient
-                        .from("bazar_images")
-                        .insert({
-
-                            listing_id:
-                                listingId,
-
-                            image_url:
-                                imageUrl,
-
-                            sort_order:
-                                index
-
-                        });
-
-
-                    if(imageDbError){
-
-                        console.error(
-                            "IMAGE DATABASE ERROR:",
-                            imageDbError
-                        );
-
-
-                        message.textContent =
-                            "❌ Fotka bola nahraná, ale nepodarilo sa ju uložiť.";
-
-                        return;
-
-                    }
-
-                }
-
-            }
-
-
-            // =========================
-            // ÚSPECH
-            // =========================
-
-            $("bazarForm")
-                .reset();
-
-            selectedImageFiles = [];
-            syncImageInput();
-
-            if(imagePreview){
-
-                imagePreview.innerHTML =
-                    "";
-
-            }
-
-
-            message.textContent =
-                "✅ Inzerát bol odoslaný. " +
-                "Čaká na schválenie administrátorom.";
-
-
-            await loadBazar();
-
-        }
-        catch(error){
-
-            console.error(
-                "BAZAR UNEXPECTED ERROR:",
-                error
-            );
-
-
-            message.textContent =
-                "❌ Nastala neočakávaná chyba.";
-
-        }
-        finally{
-
-            if(submitButton){
-
-                submitButton.disabled =
-                    false;
-
-            }
-
-        }
-
-    }
-);
-
-
-// =========================
-// FILTRE
-// =========================
-
-[
-    "search",
-    "filterCategory",
-    "minPrice",
-    "maxPrice"
-]
-.forEach(id => {
-
-    const element =
-        $(id);
-
-
-    if(!element)
-        return;
-
-
-    element.addEventListener(
-        "input",
-        loadBazar
-    );
-
-
-    element.addEventListener(
-        "change",
-        loadBazar
-    );
-
 });
 
-// =========================
-// TOMIKON BAZÁR - AUTH
-// =========================
+</script>
 
-let authMode = "login";
-
-
-const loggedOutBox =
-    $("loggedOutBox");
-
-const loggedInBox =
-    $("loggedInBox");
-
-const authModal =
-    $("authModal");
-
-const authTitle =
-    $("authTitle");
-
-const authSubmitButton =
-    $("authSubmitButton");
-
-const authEmail =
-    $("authEmail");
-
-const authPassword =
-    $("authPassword");
-
-const authMessage =
-    $("authMessage");
-
-
-// =========================
-// ZOBRAZENIE AUTH
-// =========================
-
-function openAuth(mode) {
-
-    authMode = mode;
-
-    authModal.style.display =
-        "flex";
-
-
-    authMessage.textContent =
-        "";
-
-
-    if(mode === "login"){
-
-        authTitle.textContent =
-            "🔐 Prihlásenie";
-
-        authSubmitButton.textContent =
-            "Prihlásiť sa";
-
-    }else{
-
-        authTitle.textContent =
-            "✨ Vytvorenie účtu";
-
-        authSubmitButton.textContent =
-            "Vytvoriť účet";
-
-    }
-
-}
-
-// =========================================================
-// MODERN AUTH MODAL
-// =========================================================
-
-const authSwitchButton =
-    $("authSwitchButton");
-
-const togglePasswordButton =
-    $("togglePasswordButton");
-
-
-// LOGIN <-> REGISTRÁCIA
-if (authSwitchButton) {
-
-    authSwitchButton.addEventListener(
-        "click",
-        () => {
-
-            if (authMode === "login") {
-
-                openAuth("register");
-
-                authSwitchButton.textContent =
-                    "🔐 Už mám účet – prihlásiť sa";
-
-            } else {
-
-                openAuth("login");
-
-                authSwitchButton.textContent =
-                    "✨ Chcem si vytvoriť účet";
-
-            }
-
-            authEmail.focus();
-
-        }
-    );
-
-}
-
-
-// ZOBRAZIŤ / SKRYŤ HESLO
-if (togglePasswordButton) {
-
-    togglePasswordButton.addEventListener(
-        "click",
-        () => {
-
-            if (authPassword.type === "password") {
-
-                authPassword.type = "text";
-
-                togglePasswordButton.textContent =
-                    "🙈";
-
-            } else {
-
-                authPassword.type = "password";
-
-                togglePasswordButton.textContent =
-                    "👁";
-
-            }
-
-        }
-    );
-
-}
-
-
-// KLIKNUTIE MIMO BOXU = ZATVORIŤ
-if (authModal) {
-
-    authModal.addEventListener(
-        "click",
-        (event) => {
-
-            if (event.target === authModal) {
-
-                authModal.style.display =
-                    "none";
-
-            }
-
-        }
-    );
-
-}
-
-
-// ESC = ZATVORIŤ
-document.addEventListener(
-    "keydown",
-    (event) => {
-
-        if (
-            event.key === "Escape" &&
-            authModal &&
-            authModal.style.display === "flex"
-        ) {
-
-            authModal.style.display =
-                "none";
-
-        }
-
-    }
-);
-
-
-// ENTER V POLI HESLA
-if (authPassword) {
-
-    authPassword.addEventListener(
-        "keydown",
-        (event) => {
-
-            if (event.key === "Enter") {
-
-                event.preventDefault();
-
-                authSubmitButton.click();
-
-            }
-
-        }
-    );
-
-}
-
-
-// =========================
-// ZATVORENIE
-// =========================
-
-$("closeAuthButton")
-.addEventListener(
-    "click",
-    () => {
-
-        authModal.style.display =
-            "none";
-
-    }
-);
-
-
-// =========================
-// LOGIN
-// =========================
-
-$("showLoginButton")
-.addEventListener(
-    "click",
-    () => {
-
-        openAuth("login");
-
-    }
-);
-
-
-// =========================
-// REGISTRÁCIA
-// =========================
-
-$("showRegisterButton")
-.addEventListener(
-    "click",
-    () => {
-
-        openAuth("register");
-
-    }
-);
-
-
-// =========================
-// PRIHLÁSENIE / REGISTRÁCIA
-// =========================
-
-authSubmitButton
-.addEventListener(
-    "click",
-    async () => {
-
-        const email =
-            authEmail.value
-                .trim();
-
-        const password =
-            authPassword.value;
-
-
-        if(!email || !password){
-
-            authMessage.textContent =
-                "❌ Vyplň e-mail a heslo.";
-
-            return;
-
-        }
-
-
-        authSubmitButton.disabled =
-            true;
-
-
-        authMessage.textContent =
-            "⏳ Pracujem...";
-
-
-        // =========================
-        // REGISTRÁCIA
-        // =========================
-
-        if(authMode === "register"){
-
-           const {
-    data,
-    error
-} =
-    await bazarClient.auth.signUp({
-
-        email,
-        password,
-
-        options: {
-
-            emailRedirectTo:
-                "https://tomistore.sk/bazar.html"
-
-        }
-
-    });
-
-
-            if(error){
-
-                console.error(
-                    "REGISTER ERROR:",
-                    error
-                );
-
-
-                authMessage.textContent =
-                    "❌ " + error.message;
-
-                authSubmitButton.disabled =
-                    false;
-
-                return;
-
-            }
-
-
-            if(!data.session){
-
-                authMessage.textContent =
-                    "✅ Účet bol vytvorený. " +
-                    "Skontroluj e-mail a potvrď registráciu.";
-
-            }else{
-
-                authMessage.textContent =
-                    "✅ Účet bol vytvorený.";
-
-                authModal.style.display =
-                    "none";
-
-            }
-
-
-            authSubmitButton.disabled =
-                false;
-
-            return;
-
-        }
-
-
-        // =========================
-        // PRIHLÁSENIE
-        // =========================
-
-        const {
-            error
-        } =
-            await bazarClient.auth
-            .signInWithPassword({
-
-                email,
-                password
-
-            });
-
-
-        if(error){
-
-            console.error(
-                "LOGIN ERROR:",
-                error
-            );
-
-
-            authMessage.textContent =
-                "❌ Nesprávny e-mail alebo heslo.";
-
-            authSubmitButton.disabled =
-                false;
-
-            return;
-
-        }
-
-
-        authModal.style.display =
-            "none";
-
-
-        authEmail.value =
-            "";
-
-        authPassword.value =
-            "";
-
-
-        await updateAuthUI();
-
-    }
-);
-
-
-// =========================
-// AUTH UI
-// =========================
-
-async function updateAuthUI(){
-
-    const {
-        data
-    } =
-        await bazarClient.auth.getSession();
-
-
-    const user =
-        data.session?.user;
-
-
-    if(user){
-
-        loggedOutBox.style.display =
-            "none";
-
-
-        loggedInBox.style.display =
-            "block";
-
-
-        $("userEmail")
-            .textContent =
-            "👤 " + user.email;
-
-
-    }else{
-
-        loggedOutBox.style.display =
-            "block";
-
-
-        loggedInBox.style.display =
-            "none";
-
-    }
-
-}
-
-
-// =========================
-// ODHLÁSENIE
-// =========================
-
-$("logoutBazarButton")
-.addEventListener(
-    "click",
-    async () => {
-
-        await bazarClient.auth.signOut();
-
-        await updateAuthUI();
-
-    }
-);
-
-const myListingsButton =
-    document.getElementById(
-        "myListingsButton"
-    );
-
-
-if (myListingsButton) {
-
-    myListingsButton.addEventListener(
-        "click",
-        () => {
-
-            window.location.href =
-                "moje-inzeraty.html";
-
-        }
-    );
-
-}
-
-const forgotPasswordButton =
-    $("forgotPasswordButton");
-
-if (forgotPasswordButton) {
-
-    forgotPasswordButton.addEventListener(
-        "click",
-        async () => {
-
-            const email =
-                $("authEmail").value.trim();
-
-            if (!email) {
-
-                $("authMessage").textContent =
-                    "⚠️ Najprv zadaj svoj e-mail.";
-
-                $("authEmail").focus();
-
-                return;
-            }
-
-            forgotPasswordButton.disabled = true;
-
-            $("authMessage").textContent =
-                "📨 Odosielam odkaz na obnovenie hesla...";
-
-
-            const { error } =
-                await bazarClient.auth.resetPasswordForEmail(
-                    email,
-                    {
-                        redirectTo:
-                            "https://tomistore.sk/reset-hesla.html"
-                    }
-                );
-
-
-            if (error) {
-
-                console.error(
-                    "PASSWORD RESET ERROR:",
-                    error
-                );
-
-                $("authMessage").textContent =
-                    "❌ " + error.message;
-
-                forgotPasswordButton.disabled =
-                    false;
-
-                return;
-            }
-
-
-            $("authMessage").textContent =
-                "✅ Ak účet s týmto e-mailom existuje, poslali sme ti odkaz na obnovenie hesla.";
-
-            forgotPasswordButton.disabled =
-                false;
-
-        }
-    );
-
-}
-
-
-// =========================
-// SPUSTENIE AUTH
-// =========================
-
-updateAuthUI();
-// =========================
-// SPUSTENIE
-// =========================
-
-loadBazar();
+</body>
+</html>
