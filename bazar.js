@@ -1891,6 +1891,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+/* =====================================================
+   MOBILNÉ MENU
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const menuButton =
+        document.getElementById("bazarMobileMenuToggle");
+
+    const sidebar =
+        document.getElementById("bazarSidebar");
+
+
+    console.log("MOBILE MENU:", {
+        menuButton,
+        sidebar
+    });
+
+
+    if (!menuButton || !sidebar) {
+        console.error("Mobilné menu sa nenašlo!");
+        return;
+    }
+
+
+    menuButton.addEventListener("click", function (event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        console.log("MENU KLIK");
+
+
+        const otvorene =
+            document.body.classList.toggle(
+                "bazar-mobile-menu-open"
+            );
+
+
+        menuButton.textContent =
+            otvorene ? "✕" : "☰";
+
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            otvorene ? "true" : "false"
+        );
+
+    });
+
+
+    /* Klik na položku menu */
+
+    sidebar.addEventListener("click", function (event) {
+
+        const link =
+            event.target.closest("a, button");
+
+        if (!link) return;
+
+
+        document.body.classList.remove(
+            "bazar-mobile-menu-open"
+        );
+
+        menuButton.textContent = "☰";
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    });
+
+
+});
+
 
 // =========================
 // SPUSTENIE BAZÁRU
