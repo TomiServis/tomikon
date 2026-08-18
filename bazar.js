@@ -1448,16 +1448,14 @@ authSubmitButton
         // =========================
 
         const {
-            error
-        } =
-            await bazarClient.auth
-            .signInWithPassword({
-
-                email,
-                password
-
-            });
-
+    data,
+    error
+} =
+    await bazarClient.auth
+    .signInWithPassword({
+        email,
+        password
+    });
 
         if(error){
 
@@ -1489,7 +1487,7 @@ authSubmitButton
             "";
 
 
-        await updateAuthUI();
+        await updateAuthUI(data?.user || null);
 
     }
 );
