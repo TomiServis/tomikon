@@ -1354,3 +1354,263 @@ body > .bazar-layout > .messages-page .chat-panel {
 
     font-weight: 700;
 }
+
+/* =====================================================
+   MOBILE RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        min-width: 0;
+    }
+
+
+    /* ---------------------------------------------
+       HLAVNÝ LAYOUT
+    --------------------------------------------- */
+
+    .bazar-layout {
+        display: block;
+        width: 100%;
+        min-height: 100dvh;
+    }
+
+
+    /* ---------------------------------------------
+       SIDEBAR
+    --------------------------------------------- */
+
+    .bazar-sidebar {
+        position: relative;
+        top: auto;
+        left: auto;
+
+        width: 100%;
+        height: auto;
+
+        padding: 12px 14px;
+
+        border-right: 0;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .sidebar-title {
+        margin-bottom: 8px;
+    }
+
+    .sidebar-nav,
+    .sidebar-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .sidebar-divider {
+        display: none;
+    }
+
+    .sidebar-link {
+        width: auto;
+        flex: 0 0 auto;
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+
+    /* ---------------------------------------------
+       HLAVNÝ OBSAH
+    --------------------------------------------- */
+
+    .messages-page {
+        width: 100%;
+        max-width: none;
+
+        margin: 0;
+        padding: 18px 12px 20px;
+    }
+
+
+    /* ---------------------------------------------
+       HEADER
+    --------------------------------------------- */
+
+    .messages-header {
+        margin-bottom: 14px;
+    }
+
+    .messages-header h1 {
+        font-size: 28px;
+        line-height: 1.1;
+    }
+
+    .messages-header p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .messages-current-user {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+
+    /* ---------------------------------------------
+       MESSAGES BOX
+    --------------------------------------------- */
+
+    .messages-box {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        height: calc(100dvh - 210px);
+
+        min-height: 520px;
+
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+
+    /* ---------------------------------------------
+       ZOZNAM KONVERZÁCIÍ
+    --------------------------------------------- */
+
+    .conversation-list {
+        width: 100%;
+        min-width: 0;
+
+        flex: 0 0 auto;
+        max-height: 240px;
+
+        border-right: 0;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .conversation-header {
+        padding: 12px 14px;
+    }
+
+    .conversation-items {
+        max-height: 190px;
+        overflow-y: auto;
+    }
+
+    .conversation-item {
+        padding: 11px 12px;
+    }
+
+
+    /* ---------------------------------------------
+       CHAT
+    --------------------------------------------- */
+
+    .chat-panel {
+        width: 100%;
+        min-width: 0;
+        flex: 1 1 auto;
+
+        min-height: 0;
+    }
+
+    .chat-header {
+        padding: 11px 14px;
+    }
+
+    .chat-header strong {
+        font-size: 14px;
+    }
+
+    .chat-header span {
+        font-size: 11px;
+    }
+
+
+    /* ---------------------------------------------
+       SPRÁVY
+    --------------------------------------------- */
+
+    .chat-messages {
+        min-height: 0;
+        padding: 14px 10px;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .message {
+        max-width: 82%;
+        margin-bottom: 8px;
+    }
+
+    .message-content {
+        font-size: 13px;
+        line-height: 1.4;
+        word-break: break-word;
+    }
+
+    .message-time {
+        font-size: 10px;
+    }
+
+
+    /* ---------------------------------------------
+       INPUT
+    --------------------------------------------- */
+
+    .reply-form {
+        display: flex;
+        gap: 8px;
+
+        padding: 9px;
+    }
+
+    .reply-form textarea {
+        min-width: 0;
+        flex: 1;
+
+        min-height: 44px;
+        max-height: 110px;
+
+        font-size: 14px;
+    }
+
+    .reply-button {
+        flex: 0 0 auto;
+
+        min-height: 44px;
+        padding: 0 13px;
+
+        font-size: 13px;
+    }
+
+
+    /* ---------------------------------------------
+       EMPTY CHAT
+    --------------------------------------------- */
+
+    .empty-chat {
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    .empty-chat h2 {
+        font-size: 20px;
+    }
+
+    .empty-chat p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+}
