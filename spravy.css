@@ -1,0 +1,799 @@
+/* =====================================================
+   TOMIKON BAZÁR – SPRÁVY
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #05080d;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =====================================================
+   HLAVNÝ LAYOUT
+===================================================== */
+
+.bazar-layout {
+    display: flex;
+    min-height: calc(100vh - 38px);
+}
+
+
+/* =====================================================
+   BOČNÝ PANEL
+===================================================== */
+
+.bazar-sidebar {
+    width: 120px;
+    flex-shrink: 0;
+
+    min-height: calc(100vh - 38px);
+
+    background: #070b11;
+
+    border-right: 1px solid #182535;
+
+    padding: 14px 8px;
+
+    position: fixed;
+    left: 0;
+    top: 38px;
+    bottom: 0;
+}
+
+.sidebar-title {
+    color: #6e7d90;
+
+    font-size: 7px;
+
+    letter-spacing: 1.5px;
+
+    margin: 4px 7px 12px;
+
+    text-transform: uppercase;
+}
+
+.sidebar-nav,
+.sidebar-bottom {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.sidebar-link {
+    width: 100%;
+
+    min-height: 27px;
+
+    padding: 7px 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    border: 0;
+
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: #aeb8c5;
+
+    font-size: 8px;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition: .15s ease;
+}
+
+.sidebar-link:hover {
+    background: #0d1b2b;
+
+    color: #fff;
+}
+
+.sidebar-link.active {
+    background: #082849;
+
+    color: #fff;
+
+    box-shadow:
+        inset 2px 0 0 #008cff;
+}
+
+.sidebar-divider {
+    height: 1px;
+
+    background: #182535;
+
+    margin: 15px 4px;
+}
+
+.sidebar-bottom {
+    gap: 4px;
+}
+
+.sidebar-logout {
+    color: #ff7272;
+}
+
+
+/* =====================================================
+   HLAVNÝ OBSAH
+===================================================== */
+
+.messages-page {
+    width: min(1100px, calc(100% - 120px));
+
+    margin-left: 120px;
+
+    padding: 35px 35px 70px;
+
+    margin-right: auto;
+}
+
+.messages-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-bottom: 20px;
+}
+
+.messages-kicker {
+    color: #008cff;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 5px;
+}
+
+.messages-header h1 {
+    margin: 0;
+
+    font-size: 27px;
+}
+
+.messages-header p {
+    margin: 7px 0 0;
+
+    color: #748093;
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   HLAVNÝ BOX SPRÁV
+===================================================== */
+
+.messages-box {
+    width: 100%;
+
+    height: 650px;
+
+    display: grid;
+
+    grid-template-columns: 300px 1fr;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0a1018,
+            #070b11
+        );
+
+    border: 1px solid #1b2b3d;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.35);
+}
+
+
+/* =====================================================
+   ZOZNAM KONVERZÁCIÍ
+===================================================== */
+
+.conversation-list {
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+
+    border-right: 1px solid #1b2b3d;
+
+    background: #080d14;
+}
+
+.conversation-header {
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 18px;
+
+    border-bottom: 1px solid #1b2b3d;
+
+    color: #fff;
+
+    font-size: 13px;
+}
+
+.conversation-items {
+    flex: 1;
+
+    overflow-y: auto;
+}
+
+
+/* =====================================================
+   KONVERZÁCIA V ZOZNAME
+===================================================== */
+
+.conversation-item {
+    display: flex;
+
+    gap: 11px;
+
+    padding: 14px;
+
+    border-bottom: 1px solid #121d29;
+
+    cursor: pointer;
+
+    transition: .15s ease;
+}
+
+.conversation-item:hover {
+    background: #0d1621;
+}
+
+.conversation-item.active {
+    background: #0b2035;
+
+    box-shadow:
+        inset 3px 0 0 #008cff;
+}
+
+.conversation-avatar {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #18304a,
+            #0b1826
+        );
+
+    border: 1px solid #28435d;
+
+    color: #8ecfff;
+
+    font-size: 15px;
+}
+
+.conversation-body {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.conversation-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 8px;
+
+    margin-bottom: 4px;
+}
+
+.conversation-name {
+    font-size: 11px;
+
+    font-weight: 700;
+
+    color: #fff;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.conversation-date {
+    color: #59697a;
+
+    font-size: 8px;
+
+    white-space: nowrap;
+}
+
+.conversation-listing {
+    color: #008cff;
+
+    font-size: 8px;
+
+    margin-bottom: 5px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.conversation-preview {
+    color: #7e8b9b;
+
+    font-size: 9px;
+
+    line-height: 1.4;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.messages-loading {
+    padding: 35px 15px;
+
+    text-align: center;
+
+    color: #687789;
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   PRÁZDNY CHAT
+===================================================== */
+
+.empty-chat {
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #667587;
+}
+
+.empty-chat-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 15px;
+
+    border-radius: 50%;
+
+    background: #0b1827;
+
+    border: 1px solid #173451;
+
+    font-size: 25px;
+}
+
+.empty-chat h2 {
+    margin: 0 0 7px;
+
+    color: #dbe4ed;
+
+    font-size: 17px;
+}
+
+.empty-chat p {
+    max-width: 300px;
+
+    margin: 0;
+
+    color: #687789;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   CHAT PANEL
+===================================================== */
+
+.chat-panel {
+    min-width: 0;
+
+    background:
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(0,140,255,.06),
+            transparent 35%
+        ),
+        #070c13;
+}
+
+.chat-content {
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =====================================================
+   CHAT HEADER
+===================================================== */
+
+.chat-header {
+    min-height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 10px 20px;
+
+    border-bottom: 1px solid #1b2b3d;
+
+    background: rgba(8,14,22,.8);
+}
+
+.chat-header strong {
+    display: block;
+
+    color: #fff;
+
+    font-size: 13px;
+}
+
+.chat-header span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #008cff;
+
+    font-size: 8px;
+}
+
+
+/* =====================================================
+   SPRÁVY
+===================================================== */
+
+.chat-messages {
+    flex: 1;
+
+    overflow-y: auto;
+
+    padding: 22px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.message-row {
+    display: flex;
+
+    width: 100%;
+}
+
+.message-row.sent {
+    justify-content: flex-end;
+}
+
+.message-row.received {
+    justify-content: flex-start;
+}
+
+.message-bubble {
+    max-width: min(70%, 480px);
+
+    padding: 10px 13px;
+
+    border-radius: 12px;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+.message-row.received .message-bubble {
+    background: #111a24;
+
+    border: 1px solid #223447;
+
+    color: #d6dee7;
+
+    border-bottom-left-radius: 4px;
+}
+
+.message-row.sent .message-bubble {
+    background: #087fdf;
+
+    border: 1px solid #1596ff;
+
+    color: #fff;
+
+    border-bottom-right-radius: 4px;
+}
+
+.message-time {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 7px;
+
+    opacity: .55;
+
+    text-align: right;
+}
+
+
+/* =====================================================
+   ODPoveĎ
+===================================================== */
+
+.reply-form {
+    display: flex;
+
+    gap: 10px;
+
+    padding: 14px;
+
+    border-top: 1px solid #1b2b3d;
+
+    background: #080e15;
+}
+
+.reply-form textarea {
+    flex: 1;
+
+    min-height: 43px;
+
+    max-height: 100px;
+
+    resize: vertical;
+
+    padding: 11px 13px;
+
+    border: 1px solid #233548;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #050a10;
+
+    color: #fff;
+
+    font-family: inherit;
+
+    font-size: 10px;
+}
+
+.reply-form textarea::placeholder {
+    color: #526274;
+}
+
+.reply-form textarea:focus {
+    border-color: #008cff;
+
+    box-shadow:
+        0 0 0 2px rgba(0,140,255,.08);
+}
+
+.reply-button {
+    align-self: flex-end;
+
+    min-width: 100px;
+
+    height: 43px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: #008cff;
+
+    color: #fff;
+
+    font-weight: 700;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+    transition: .15s ease;
+}
+
+.reply-button:hover {
+    background: #009cff;
+
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+.conversation-items::-webkit-scrollbar,
+.chat-messages::-webkit-scrollbar {
+    width: 5px;
+}
+
+.conversation-items::-webkit-scrollbar-track,
+.chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.conversation-items::-webkit-scrollbar-thumb,
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #243547;
+
+    border-radius: 10px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .messages-page {
+        width: calc(100% - 120px);
+
+        padding: 25px 18px 50px;
+    }
+
+    .messages-box {
+        grid-template-columns: 240px 1fr;
+
+        height: 600px;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .bazar-sidebar {
+        width: 100px;
+    }
+
+    .messages-page {
+        width: calc(100% - 100px);
+
+        margin-left: 100px;
+
+        padding: 20px 12px 40px;
+    }
+
+    .messages-box {
+        grid-template-columns: 1fr;
+
+        height: auto;
+
+        min-height: 600px;
+    }
+
+    .conversation-list {
+        max-height: 260px;
+
+        border-right: 0;
+
+        border-bottom: 1px solid #1b2b3d;
+    }
+
+    .chat-panel {
+        min-height: 450px;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .bazar-sidebar {
+        display: none;
+    }
+
+    .messages-page {
+        width: 100%;
+
+        margin-left: 0;
+
+        padding: 20px 10px 30px;
+    }
+
+    .messages-header h1 {
+        font-size: 23px;
+    }
+
+    .messages-header p {
+        font-size: 9px;
+    }
+
+    .messages-box {
+        border-radius: 9px;
+    }
+
+    .message-bubble {
+        max-width: 85%;
+    }
+
+    .reply-form {
+        flex-direction: column;
+    }
+
+    .reply-button {
+        width: 100%;
+    }
+
+}
