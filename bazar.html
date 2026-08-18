@@ -691,6 +691,10 @@
 
 document.addEventListener("DOMContentLoaded", function(){
 
+    /* =========================================
+       ELEMENTY
+    ========================================= */
+
     const addSection =
         document.getElementById("addListingSection");
 
@@ -715,23 +719,38 @@ document.addEventListener("DOMContentLoaded", function(){
     const sidebarProfileButton =
         document.getElementById("sidebarProfileButton");
 
+    const existingMyListingsButton =
+        document.getElementById("myListingsButton");
+
+    const existingLogoutButton =
+        document.getElementById("logoutBazarButton");
+
+
+    /* =========================================
+       PRIDAŤ INZERÁT
+    ========================================= */
 
     function openAddListing(){
 
-        if(!addSection)
+        if(!addSection){
             return;
+        }
 
-        addSection.classList.add("panel-highlight");
+        addSection.classList.add(
+            "panel-highlight"
+        );
 
         addSection.scrollIntoView({
             behavior:"smooth",
             block:"start"
         });
 
-        setTimeout(() => {
+        setTimeout(function(){
+
             addSection.classList.remove(
                 "panel-highlight"
             );
+
         },1200);
 
     }
@@ -757,20 +776,73 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
+    /* =========================================
+       MOJE INZERÁTY
+       
+       Použijeme EXISTUJÚCE tlačidlo,
+       ktoré už pozná bazar.js
+    ========================================= */
+
     if(sidebarMyListingsButton){
 
         sidebarMyListingsButton.addEventListener(
             "click",
             function(){
 
-                window.location.href =
-                    "moje-inzeraty.html";
+                if(existingMyListingsButton){
+
+                    existingMyListingsButton.click();
+
+                }else{
+
+                    console.error(
+                        "TOMIKON: myListingsButton sa nenašiel."
+                    );
+
+                }
 
             }
         );
 
     }
 
+
+    /* =========================================
+       ODHLÁSENIE
+       
+       Použijeme EXISTUJÚCE tlačidlo,
+       ktoré už pozná bazar.js
+    ========================================= */
+
+    if(sidebarLogoutButton){
+
+        sidebarLogoutButton.addEventListener(
+            "click",
+            function(){
+
+                if(existingLogoutButton){
+
+                    existingLogoutButton.click();
+
+                }else{
+
+                    console.error(
+                        "TOMIKON: logoutBazarButton sa nenašiel."
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       SPRÁVY
+       
+       Zatiaľ pripravujeme.
+    ========================================= */
 
     if(sidebarMessagesButton){
 
@@ -779,7 +851,7 @@ document.addEventListener("DOMContentLoaded", function(){
             function(){
 
                 alert(
-                    "💬 Správy pripravujeme. Táto funkcia bude čoskoro dostupná."
+                    "💬 Správy medzi používateľmi pripravujeme."
                 );
 
             }
@@ -787,6 +859,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
     }
 
+
+    /* =========================================
+       OBĽÚBENÉ
+    ========================================= */
 
     if(sidebarFavoritesButton){
 
@@ -804,6 +880,10 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
+    /* =========================================
+       PROFIL
+    ========================================= */
+
     if(sidebarProfileButton){
 
         sidebarProfileButton.addEventListener(
@@ -820,40 +900,24 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
-    if(sidebarLogoutButton){
-
-        sidebarLogoutButton.addEventListener(
-            "click",
-            async function(){
-
-                const button =
-                    document.getElementById(
-                        "logoutBazarButton"
-                    );
-
-                if(button){
-
-                    button.click();
-
-                }
-
-            }
-        );
-
-    }
-
+    /* =========================================
+       SCROLL MENU
+    ========================================= */
 
     document.querySelectorAll(
         "[data-scroll]"
-    ).forEach(button => {
+    ).forEach(function(button){
 
         button.addEventListener(
             "click",
             function(){
 
+                const targetId =
+                    button.dataset.scroll;
+
                 const target =
                     document.getElementById(
-                        button.dataset.scroll
+                        targetId
                     );
 
                 if(target){
