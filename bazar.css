@@ -405,16 +405,15 @@ body{
 ===================================================== */
 
 .bazar-main{
-
     width:100%;
-
     max-width:1500px;
 
-    padding:
-        32px
-        36px
-        70px;
+    margin:0 auto;
 
+    padding:
+        38px
+        50px
+        80px;
 }
 
 
@@ -842,7 +841,7 @@ body{
             minmax(250px,1fr)
         );
 
-    gap:16px;
+    gap:20px;
 
 }
 
@@ -1625,10 +1624,11 @@ body{
 
 
     .dashboard-panel{
-
-        padding:17px;
-
-    }
+    width:100%;
+    max-width:1400px;
+    margin-left:auto;
+    margin-right:auto;
+}
 
 
     .bazar-search-panel{
