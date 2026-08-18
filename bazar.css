@@ -1652,3 +1652,153 @@ body{
     }
 
 }
+
+/* =====================================================
+   SIDEBAR AUTH
+===================================================== */
+
+.sidebar-auth-box{
+    width:100%;
+}
+
+
+.sidebar-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:
+        10px
+        10px
+        12px;
+
+    margin-bottom:4px;
+
+    border-radius:10px;
+
+    background:
+        rgba(22,136,255,.06);
+
+    border:
+        1px solid
+        rgba(22,136,255,.12);
+
+}
+
+
+.sidebar-user-icon{
+
+    width:32px;
+    height:32px;
+
+    flex:0 0 32px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:8px;
+
+    background:
+        rgba(22,136,255,.12);
+
+    font-size:15px;
+
+}
+
+
+.sidebar-user-info{
+
+    min-width:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:3px;
+
+}
+
+
+.sidebar-user-label{
+
+    color:
+        var(--bazar-blue);
+
+    font-size:8px;
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+
+}
+
+
+.sidebar-user-email{
+
+    color:#d8e1eb;
+
+    font-size:10px;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+}
+
+
+.sidebar-login{
+
+    color:#c8d8e8;
+
+}
+
+
+.sidebar-login:hover{
+
+    color:#fff;
+
+    background:
+        rgba(22,136,255,.10);
+
+}
+
+
+.sidebar-register{
+
+    color:#d8e4ef;
+
+}
+
+
+.sidebar-register:hover{
+
+    color:#fff;
+
+    background:
+        rgba(22,136,255,.10);
+
+}
+
+
+.sidebar-logout{
+
+    color:#e1818d;
+
+}
+
+
+.sidebar-logout:hover{
+
+    color:#ff8e9b;
+
+    background:
+        rgba(255,70,90,.07);
+
+}
