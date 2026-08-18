@@ -84,17 +84,18 @@ async function loadDetail(){
             await bazarClient
                 .from("bazar_listings")
                 .select(`
-                    id,
-                    title,
-                    category,
-                    price,
-                    city,
-                    contact,
-                    description,
-                    created_at,
-                    approved,
-                    views
-                `)
+    id,
+    seller_id,
+    title,
+    category,
+    price,
+    city,
+    contact,
+    description,
+    created_at,
+    approved,
+    views
+`)
                 .eq("id", listingId)
                 .eq("approved", true)
                 .single();
