@@ -23,21 +23,7 @@
      TOPBAR
 ===================================================== -->
 
-<header class="topbar">
-
-    <a
-        href="bazar.html"
-        class="topbar-logo bazar-logo-link"
-    >
-        🛒
-
-        <span>TOMIKON</span>
-
-        <small>BAZÁR</small>
-    </a>
-
-
-    <!-- MOBILNÉ MENU -->
+<header class="bazar-topbar">
 
     <button
         id="bazarMobileMenuToggle"
@@ -48,6 +34,22 @@
     >
         ☰
     </button>
+
+    <a
+        href="bazar.html"
+        class="bazar-brand"
+    >
+
+        <span class="bazar-brand-icon">
+            🛒
+        </span>
+
+        <span class="bazar-brand-text">
+            <strong>TOMIKON</strong>
+            <small>BAZÁR</small>
+        </span>
+
+    </a>
 
 </header>
 
@@ -63,98 +65,92 @@
          BOČNÝ PANEL
     ================================================== -->
 
-    </aside>
-
-<div
-    id="bazarMobileOverlay"
-    class="bazar-mobile-overlay"
+   <aside
+    class="bazar-sidebar"
+    id="bazarSidebar"
 >
-</div>
 
-<main class="messages-page">
-
-        <div class="sidebar-title">
-            TOMIKON BAZÁR
-        </div>
+    <div class="sidebar-mobile-title">
+        TOMIKON BAZÁR
+    </div>
 
 
-        <nav class="sidebar-nav">
-
-            <a
-                href="bazar.html"
-                class="sidebar-link"
-            >
-                🏠 Bazár
-            </a>
-
-
-            <a
-                href="bazar.html"
-                class="sidebar-link"
-            >
-                ➕ Pridať inzerát
-            </a>
+    <a
+        href="bazar.html"
+        class="sidebar-item"
+    >
+        <span>🏠</span>
+        <span>Bazár</span>
+    </a>
 
 
-            <a
-                href="moje-inzeraty.html"
-                class="sidebar-link"
-            >
-                📦 Moje inzeráty
-            </a>
+    <a
+        href="bazar.html"
+        class="sidebar-item"
+    >
+        <span>＋</span>
+        <span>Pridať inzerát</span>
+    </a>
 
 
-            <a
-                href="#"
-                class="sidebar-link"
-            >
-                ♡ Obľúbené
-            </a>
+    <a
+        href="moje-inzeraty.html"
+        class="sidebar-item"
+    >
+        <span>📦</span>
+        <span>Moje inzeráty</span>
+    </a>
 
 
-            <a
-                href="spravy.html"
-                class="sidebar-link active"
-            >
-                💬 Správy
-            </a>
+    <a
+        href="#"
+        class="sidebar-item"
+    >
+        <span>♡</span>
+        <span>Obľúbené</span>
+    </a>
 
 
-            <a
-                href="#"
-                class="sidebar-link"
-            >
-                👤 Profil
-            </a>
-
-        </nav>
-
-
-        <div class="sidebar-divider"></div>
+    <a
+        href="spravy.html"
+        class="sidebar-item sidebar-item-active"
+    >
+        <span>💬</span>
+        <span>Správy</span>
+    </a>
 
 
-        <nav class="sidebar-bottom">
+    <a
+        href="#"
+        class="sidebar-item"
+    >
+        <span>👤</span>
+        <span>Profil</span>
+    </a>
 
-            <a
-                href="index.html"
-                class="sidebar-link"
-            >
-                ← Hlavná stránka
-            </a>
+
+    <div class="sidebar-divider"></div>
 
 
-            <button
-                id="sidebarLogout"
-                class="sidebar-link sidebar-logout"
-                type="button"
-            >
-                🚪 Odhlásiť sa
-            </button>
+    <a
+        href="index.html"
+        class="sidebar-item sidebar-link"
+    >
+        <span>←</span>
+        <span>Hlavná stránka</span>
+    </a>
 
-        </nav>
 
-    </aside>
+    <button
+        id="sidebarLogout"
+        class="sidebar-item sidebar-logout"
+        type="button"
+    >
+        <span>🚪</span>
+        <span>Odhlásiť sa</span>
+    </button>
 
+</aside>
 
 
     <!-- =================================================
