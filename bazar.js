@@ -1499,42 +1499,148 @@ authSubmitButton
 // AUTH UI
 // =========================
 
-async function updateAuthUI(){
+async function updateAuthUI(user = null){
 
-    const {
-        data
-    } =
-        await bazarClient.auth.getSession();
+    const loggedOutBox =
+        document.getElementById("loggedOutBox");
+
+    const loggedInBox =
+        document.getElementById("loggedInBox");
+
+    const userEmail =
+        document.getElementById("userEmail");
+
+    const sidebarLogoutButton =
+        document.getElementById("sidebarLogoutButton");
+
+    const sidebarMyListingsButton =
+        document.getElementById("sidebarMyListingsButton");
+
+    const sidebarMessagesButton =
+        document.getElementById("sidebarMessagesButton");
+
+    const sidebarFavoritesButton =
+        document.getElementById("sidebarFavoritesButton");
+
+    const sidebarProfileButton =
+        document.getElementById("sidebarProfileButton");
 
 
-    const user =
-        data.session?.user;
-
+    /*
+     * =========================================
+     * PRIHLÁSENÝ
+     * =========================================
+     */
 
     if(user){
 
-        loggedOutBox.style.display =
+        if(loggedOutBox){
+            loggedOutBox.style.display = "none";
+        }
+
+        if(loggedInBox){
+            loggedInBox.style.display = "flex";
+        }
+
+        if(userEmail){
+
+            userEmail.textContent =
+                user.email || "";
+
+            userEmail.style.display =
+                "inline-block";
+
+        }
+
+        /*
+         * Sidebar
+         */
+
+        if(sidebarLogoutButton){
+            sidebarLogoutButton.style.display =
+                "flex";
+        }
+
+        if(sidebarMyListingsButton){
+            sidebarMyListingsButton.style.display =
+                "flex";
+        }
+
+        if(sidebarMessagesButton){
+            sidebarMessagesButton.style.display =
+                "flex";
+        }
+
+        if(sidebarFavoritesButton){
+            sidebarFavoritesButton.style.display =
+                "flex";
+        }
+
+        if(sidebarProfileButton){
+            sidebarProfileButton.style.display =
+                "flex";
+        }
+
+        return;
+    }
+
+
+    /*
+     * =========================================
+     * ODHLÁSENÝ
+     * =========================================
+     */
+
+    if(loggedOutBox){
+        loggedOutBox.style.display = "flex";
+    }
+
+    if(loggedInBox){
+        loggedInBox.style.display = "none";
+    }
+
+    /*
+     * DÔLEŽITÉ:
+     * vymažeme starý email okamžite
+     */
+
+    if(userEmail){
+
+        userEmail.textContent = "";
+
+        userEmail.style.display =
             "none";
 
-
-        loggedInBox.style.display =
-            "block";
+    }
 
 
-        $("userEmail")
-            .textContent =
-            "👤 " + user.email;
+    /*
+     * Sidebar
+     */
 
-
-    }else{
-
-        loggedOutBox.style.display =
-            "block";
-
-
-        loggedInBox.style.display =
+    if(sidebarLogoutButton){
+        sidebarLogoutButton.style.display =
             "none";
+    }
 
+    if(sidebarMyListingsButton){
+        sidebarMyListingsButton.style.display =
+            "none";
+    }
+
+    if(sidebarMessagesButton){
+        sidebarMessagesButton.style.display =
+            "none";
+    }
+
+    if(sidebarFavoritesButton){
+        sidebarFavoritesButton.style.display =
+            "none";
+    }
+
+    if(sidebarProfileButton){
+        sidebarProfileButton.style.display =
+            "none";
     }
 
 }
