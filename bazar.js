@@ -1798,6 +1798,99 @@ if (mobileMenuToggle && bazarSidebar) {
 
 }
 
+/* =====================================================
+   MOBILNÉ MENU
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const menuButton =
+        document.getElementById("bazarMobileMenuToggle");
+
+    const sidebar =
+        document.getElementById("bazarSidebar");
+
+
+    if (!menuButton || !sidebar) {
+        console.warn("Mobilné menu: element sa nenašiel.");
+        return;
+    }
+
+
+    menuButton.addEventListener("click", () => {
+
+        const otvorene =
+            document.body.classList.toggle(
+                "bazar-mobile-menu-open"
+            );
+
+
+        menuButton.textContent =
+            otvorene ? "✕" : "☰";
+
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            otvorene ? "true" : "false"
+        );
+
+    });
+
+
+    /* Kliknutie na položku menu = zavrie menu */
+
+    sidebar.addEventListener("click", (event) => {
+
+        const link =
+            event.target.closest("a, button");
+
+
+        if (!link) {
+            return;
+        }
+
+
+        document.body.classList.remove(
+            "bazar-mobile-menu-open"
+        );
+
+
+        menuButton.textContent = "☰";
+
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    });
+
+
+    /* Po otočení / zväčšení displeja */
+
+    window.addEventListener("resize", () => {
+
+        if (window.innerWidth > 700) {
+
+            document.body.classList.remove(
+                "bazar-mobile-menu-open"
+            );
+
+
+            menuButton.textContent = "☰";
+
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    });
+
+});
+
 
 // =========================
 // SPUSTENIE BAZÁRU
