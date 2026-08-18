@@ -1,3012 +1,1654 @@
-/* =========================================
+/* =====================================================
    TOMIKON BAZÁR
-   MODERN MARKETPLACE DESIGN
-========================================= */
+   MODERN DASHBOARD
+===================================================== */
 
-:root {
-    --bazar-blue: #008cff;
-    --bazar-blue-light: #35aaff;
-    --bazar-purple: #8b5cf6;
-    --bazar-green: #22c55e;
-    --bazar-orange: #f59e0b;
+:root{
+    --bazar-bg:#05080d;
+    --bazar-panel:#0a1018;
+    --bazar-panel-2:#0d141e;
+    --bazar-border:#1b2a3a;
+    --bazar-border-light:#26394d;
 
-    --bazar-bg: #050505;
-    --bazar-card: #0c0c0c;
-    --bazar-card-light: #111;
-    --bazar-border: #202020;
+    --bazar-blue:#1688ff;
+    --bazar-blue-2:#006eff;
+    --bazar-blue-soft:rgba(22,136,255,.12);
 
-    --bazar-text: #fff;
-    --bazar-muted: #999;
+    --bazar-text:#f5f8fc;
+    --bazar-muted:#8b98a8;
+    --bazar-muted-2:#637184;
+
+    --bazar-green:#35d47c;
+    --bazar-orange:#ffb13b;
+    --bazar-red:#ff5268;
+
+    --bazar-radius:14px;
 }
 
 
-/* =========================================
-   ZÁKLAD
-========================================= */
+/* =====================================================
+   RESET
+===================================================== */
 
-.bazar {
-    max-width: 1200px;
-    margin: auto;
-    padding: 40px 20px 80px;
+*{
+    box-sizing:border-box;
 }
 
 
-/* =========================================
-   HLAVIČKA
-========================================= */
-
-.bazar header {
-    text-align: center;
-    margin-bottom: 35px;
-}
-
-.bazar header h1 {
-    font-size: 42px;
-    margin-bottom: 8px;
-    font-weight: 800;
-    letter-spacing: -1px;
-}
-
-.bazar header p {
-    color: #aaa;
-    margin-bottom: 22px;
+html{
+    scroll-behavior:smooth;
 }
 
 
-/* =========================================
-   BOX
-========================================= */
+body{
+    margin:0;
+    background:
+        radial-gradient(
+            circle at 70% 0%,
+            rgba(0,110,255,.08),
+            transparent 35%
+        ),
+        var(--bazar-bg);
 
-.bazar-box {
+    color:var(--bazar-text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* =====================================================
+   TOPBAR
+===================================================== */
+
+.bazar-topbar{
+
+    height:76px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 28px;
+
+    background:
+        rgba(5,8,13,.94);
+
+    border-bottom:
+        1px solid var(--bazar-border);
+
+    position:sticky;
+    top:0;
+    z-index:100;
+
+    backdrop-filter:blur(15px);
+
+}
+
+
+.bazar-brand{
+
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    color:#fff;
+
+    text-decoration:none;
+
+}
+
+
+.bazar-brand-icon{
+
+    width:40px;
+    height:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #10243b,
+            #07101c
+        );
+
+    border:
+        1px solid #29435e;
+
+    font-size:21px;
+
+}
+
+
+.bazar-brand-text{
+
+    display:flex;
+    align-items:baseline;
+    gap:5px;
+
+}
+
+
+.bazar-brand-text strong{
+
+    font-size:18px;
+    letter-spacing:.4px;
+
+}
+
+
+.bazar-brand-text small{
+
+    color:var(--bazar-blue);
+
+    font-size:14px;
+
+    font-weight:bold;
+
+}
+
+
+.bazar-topbar-right{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+}
+
+
+.bazar-user-email{
+
+    color:#b8c3d0;
+
+    font-size:14px;
+
+}
+
+
+.bazar-auth-buttons{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+}
+
+
+.bazar-top-btn{
+
+    border:
+        1px solid var(--bazar-border-light);
+
+    background:#0d151f;
+
+    color:#eaf2fb;
+
+    padding:
+        10px
+        15px;
+
+    border-radius:9px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.bazar-top-btn:hover{
+
+    border-color:var(--bazar-blue);
+
+    background:
+        rgba(22,136,255,.10);
+
+}
+
+
+.bazar-top-btn-primary{
+
+    background:
+        linear-gradient(
+            135deg,
+            #1688ff,
+            #006eff
+        );
+
+    border-color:#1688ff;
+
+    color:#fff;
+
+}
+
+
+.bazar-logout-btn{
+
+    color:#ff8291;
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.bazar-dashboard{
+
+    display:grid;
+
+    grid-template-columns:230px minmax(0,1fr);
+
+    min-height:calc(100vh - 76px);
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.bazar-sidebar{
+
+    border-right:
+        1px solid var(--bazar-border);
+
+    background:
+        rgba(7,12,18,.82);
+
+    padding:
+        25px 15px;
+
+    position:sticky;
+    top:76px;
+
+    height:
+        calc(100vh - 76px);
+
+    overflow-y:auto;
+
+}
+
+
+.sidebar-mobile-title{
+
+    color:#647487;
+
+    font-size:11px;
+
+    font-weight:bold;
+
+    letter-spacing:1.4px;
+
+    padding:
+        0 12px
+        12px;
+
+}
+
+
+.sidebar-item{
+
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    padding:
+        12px
+        13px;
+
+    margin-bottom:5px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:transparent;
+
+    color:#8997a8;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.sidebar-item span:first-child{
+
+    width:20px;
+
+    text-align:center;
+
+    font-size:16px;
+
+}
+
+
+.sidebar-item:hover{
+
+    color:#fff;
+
+    background:
+        rgba(255,255,255,.045);
+
+}
+
+
+.sidebar-item-active{
+
+    color:#fff;
+
+    background:
+        rgba(22,136,255,.12);
+
+    box-shadow:
+        inset 3px 0 0 var(--bazar-blue);
+
+}
+
+
+.sidebar-item-active span:first-child{
+
+    color:var(--bazar-blue);
+
+}
+
+
+.sidebar-divider{
+
+    height:1px;
+
+    background:var(--bazar-border);
+
+    margin:
+        18px 5px;
+
+}
+
+
+.sidebar-link{
+
+    display:flex;
+
+}
+
+
+.sidebar-logout{
+
+    color:#a97880;
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.bazar-main{
+
+    width:100%;
+
+    max-width:1500px;
+
+    padding:
+        32px
+        36px
+        70px;
+
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.bazar-page-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:25px;
+
+    margin-bottom:25px;
+
+}
+
+
+.bazar-page-kicker{
+
+    color:var(--bazar-blue);
+
+    font-size:11px;
+
+    font-weight:bold;
+
+    letter-spacing:1.5px;
+
+}
+
+
+.bazar-page-header h1{
+
+    margin:
+        5px
+        0
+        5px;
+
+    font-size:32px;
+
+    letter-spacing:-.5px;
+
+}
+
+
+.bazar-page-header p{
+
+    margin:0;
+
+    color:var(--bazar-muted);
+
+}
+
+
+.bazar-main-add-button{
+
+    border:1px solid #1688ff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1688ff,
+            #006eff
+        );
+
+    color:#fff;
+
+    padding:
+        12px
+        19px;
+
+    border-radius:9px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 25px rgba(0,110,255,.15);
+
+    transition:.2s;
+
+}
+
+
+.bazar-main-add-button:hover{
+
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 12px 30px rgba(0,110,255,.25);
+
+}
+
+
+/* =====================================================
+   PANELS
+===================================================== */
+
+.dashboard-panel{
+
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,.025),
-            rgba(255,255,255,.01)
+            rgba(13,20,30,.96),
+            rgba(7,12,18,.96)
         );
 
-    border: 1px solid rgba(0,140,255,.55);
+    border:
+        1px solid var(--bazar-border);
 
-    border-radius: 18px;
+    border-radius:
+        var(--bazar-radius);
 
-    padding: 28px;
+    padding:24px;
 
-    margin: 25px 0;
+    margin-bottom:22px;
 
     box-shadow:
-        0 0 30px rgba(0,140,255,.08);
+        0 12px 40px rgba(0,0,0,.16);
 
-    backdrop-filter: blur(8px);
 }
 
 
-/* =========================================
-   NADPIS
-========================================= */
+.panel-header{
 
-.bazar-box h2 {
-    margin-top: 0;
+    margin-bottom:20px;
 
-    font-size: 24px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
 }
 
 
-/* =========================================
-   FORMULÁR
-========================================= */
+.panel-kicker{
 
-.bazar-form {
-    display: grid;
+    color:
+        var(--bazar-blue);
+
+    font-size:10px;
+
+    letter-spacing:1.4px;
+
+    font-weight:bold;
+
+}
+
+
+.panel-header h2{
+
+    margin:
+        5px
+        0
+        5px;
+
+    font-size:21px;
+
+}
+
+
+.panel-header p{
+
+    margin:0;
+
+    color:var(--bazar-muted);
+
+    font-size:14px;
+
+}
+
+
+/* =====================================================
+   ADD FORM
+===================================================== */
+
+.bazar-form{
+
+    display:grid;
 
     grid-template-columns:
-        1fr 1fr;
+        repeat(2,minmax(0,1fr));
 
-    gap: 16px;
-}
+    gap:17px;
 
-.bazar-form .full {
-    grid-column: 1 / -1;
 }
 
 
-.bazar-form label {
-    display: block;
+.form-field{
 
-    margin-bottom: 6px;
+    display:flex;
 
-    font-weight: 600;
+    flex-direction:column;
 
-    font-size: 14px;
+    gap:7px;
+
 }
 
 
-.bazar-form input,
-.bazar-form select,
-.bazar-form textarea {
+.form-field-full{
 
-    width: 100%;
+    grid-column:1 / -1;
 
-    box-sizing: border-box;
-
-    padding: 13px 14px;
-
-    background: #0d0d0d;
-
-    color: white;
-
-    border: 1px solid #222;
-
-    border-radius: 10px;
-
-    outline: none;
-
-    transition: .2s;
 }
 
 
-.bazar-form input:focus,
-.bazar-form select:focus,
-.bazar-form textarea:focus {
+.form-field label{
+
+    color:#b7c3d0;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
+
+.form-field input,
+.form-field select,
+.form-field textarea{
+
+    width:100%;
+
+    border:
+        1px solid var(--bazar-border-light);
+
+    border-radius:9px;
+
+    background:#070d14;
+
+    color:#fff;
+
+    padding:
+        12px
+        13px;
+
+    outline:none;
+
+    font-size:14px;
+
+    transition:.2s;
+
+}
+
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus{
+
+    border-color:var(--bazar-blue);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(22,136,255,.08);
+
+}
+
+
+.form-field textarea{
+
+    min-height:130px;
+
+    resize:vertical;
+
+}
+
+
+.form-help{
+
+    color:var(--bazar-muted-2);
+
+    font-size:12px;
+
+}
+
+
+.form-submit-row{
+
+    grid-column:1 / -1;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding-top:5px;
+
+}
+
+
+.bazar-message{
+
+    color:#b7c5d4;
+
+    font-size:13px;
+
+}
+
+
+.image-preview{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:10px;
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.bazar-search-panel{
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(240px,2fr)
+        1.2fr
+        .8fr
+        .8fr;
+
+    gap:10px;
+
+    margin-bottom:22px;
+
+}
+
+
+.search-main{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+        0
+        12px;
+
+    border:
+        1px solid var(--bazar-border-light);
+
+    background:#070d14;
+
+    border-radius:9px;
+
+}
+
+
+.search-main span{
+
+    color:var(--bazar-muted);
+
+    font-size:20px;
+
+}
+
+
+.search-main input{
+
+    flex:1;
+
+    border:0;
+
+    outline:0;
+
+    background:transparent;
+
+    color:#fff;
+
+    padding:
+        12px
+        0;
+
+}
+
+
+.bazar-search-panel select,
+.bazar-search-panel > input{
+
+    border:
+        1px solid var(--bazar-border-light);
+
+    background:#070d14;
+
+    color:#dfe8f2;
+
+    border-radius:9px;
+
+    padding:
+        0
+        12px;
+
+    outline:none;
+
+}
+
+
+.bazar-search-panel select:focus,
+.bazar-search-panel > input:focus{
+
+    border-color:var(--bazar-blue);
+
+}
+
+
+/* =====================================================
+   LISTING GRID
+===================================================== */
+
+.bazar-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(250px,1fr)
+        );
+
+    gap:16px;
+
+}
+
+
+.bazar-loading{
+
+    color:var(--bazar-muted);
+
+}
+
+
+/* =====================================================
+   EXISTING BAZAR CARDS
+===================================================== */
+
+.bazar-card{
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0c141e,
+            #080d14
+        );
+
+    border:
+        1px solid var(--bazar-border);
+
+    border-radius:12px;
+
+    padding:0 0 17px;
+
+    transition:
+        transform .2s,
+        border-color .2s,
+        box-shadow .2s;
+
+}
+
+
+.bazar-card:hover{
+
+    transform:translateY(-3px);
+
+    border-color:
+        rgba(22,136,255,.55);
+
+    box-shadow:
+        0 15px 35px
+        rgba(0,0,0,.25);
+
+}
+
+
+.bazar-main-image{
+
+    width:100%;
+
+    height:190px;
+
+    background:#05090e;
+
+    border-bottom:
+        1px solid var(--bazar-border);
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+
+}
+
+
+.bazar-main-image img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+.bazar-no-image{
+
+    color:#425366;
+
+    font-size:42px;
+
+}
+
+
+.bazar-card .bazar-meta,
+.bazar-card h3,
+.bazar-card .bazar-price,
+.bazar-card .bazar-description-preview{
+
+    margin-left:17px;
+    margin-right:17px;
+
+}
+
+
+.bazar-card .bazar-meta{
+
+    color:#728196;
+
+    font-size:12px;
+
+}
+
+
+.bazar-card h3{
+
+    margin-top:9px;
+    margin-bottom:7px;
+
+    color:#f5f8fc;
+
+    font-size:17px;
+
+}
+
+
+.bazar-price{
+
+    color:var(--bazar-blue);
+
+    font-size:21px;
+
+    font-weight:bold;
+
+}
+
+
+.bazar-description-preview{
+
+    color:#8d9aaa;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+    display:-webkit-box;
+
+    -webkit-line-clamp:2;
+
+    -webkit-box-orient:vertical;
+
+    overflow:hidden;
+
+}
+
+
+/* =====================================================
+   BETA
+===================================================== */
+
+.beta-panel{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:17px;
+
+    padding:
+        18px
+        20px;
+
+    border:
+        1px solid
+        rgba(22,136,255,.25);
+
+    background:
+        linear-gradient(
+            100deg,
+            rgba(22,136,255,.08),
+            rgba(100,40,255,.06)
+        );
+
+    border-radius:12px;
+
+}
+
+
+.beta-icon{
+
+    width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    background:
+        rgba(22,136,255,.10);
+
+    font-size:23px;
+
+}
+
+
+.beta-panel strong{
+
+    display:block;
+
+    margin-bottom:4px;
+
+}
+
+
+.beta-panel p{
+
+    margin:0;
+
+    color:var(--bazar-muted);
+
+    font-size:13px;
+
+}
+
+
+/* =====================================================
+   HIGHLIGHT
+===================================================== */
+
+.panel-highlight{
 
     border-color:
         var(--bazar-blue);
 
     box-shadow:
         0 0 0 3px
-        rgba(0,140,255,.12);
-}
-
-
-.bazar-form textarea {
-
-    min-height: 140px;
-
-    resize: vertical;
-}
-
-
-/* =========================================
-   TLAČIDLÁ
-========================================= */
-
-.bazar-button {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 7px;
-
-    padding: 12px 20px;
-
-    border: 0;
-
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--bazar-blue),
-            #006ee6
-        );
-
-    color: white;
-
-    font-weight: 700;
-
-    text-decoration: none;
-
-    cursor: pointer;
-
-    transition:
-        transform .2s,
-        box-shadow .2s,
-        filter .2s;
-}
-
-
-.bazar-button:hover {
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 8px 25px
-        rgba(0,140,255,.3);
-
-    filter: brightness(1.08);
-}
-
-
-.bazar-button.secondary {
-
-    background: #222;
-
-    border: 1px solid #333;
-}
-
-
-/* =========================================
-   FILTRE
-========================================= */
-
-#search,
-#filterCategory,
-#minPrice,
-#maxPrice {
-
-    padding: 11px 12px;
-
-    border-radius: 8px;
-
-    border: 1px solid #333;
-
-    background: #0d0d0d;
-
-    color: white;
-
-    outline: none;
-}
-
-
-#search:focus,
-#filterCategory:focus,
-#minPrice:focus,
-#maxPrice:focus {
-
-    border-color:
-        var(--bazar-blue);
-}
-
-
-/* =========================================
-   KARTY INZERÁTOV
-========================================= */
-
-.bazar-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 22px;
-}
-
-
-.bazar-card {
-
-    position: relative;
-
-    overflow: hidden;
-
-    background:
-        linear-gradient(
-            160deg,
-            #101010,
-            #080808
-        );
-
-    border: 1px solid #222;
-
-    border-radius: 16px;
-
-    padding: 18px;
-
-    cursor: pointer;
-
-    transition:
-        transform .25s,
-        border-color .25s,
-        box-shadow .25s;
-}
-
-
-.bazar-card:hover {
-
-    transform:
-        translateY(-6px);
-
-    border-color:
-        rgba(0,140,255,.8);
-
-    box-shadow:
-        0 15px 40px
-        rgba(0,140,255,.12);
-}
-
-
-/* =========================================
-   OBRÁZOK V KARTE
-========================================= */
-
-.bazar-card img {
-
-    width: 100%;
-
-    height: 230px;
-
-    object-fit: cover;
-
-    border-radius: 12px;
-
-    margin-bottom: 14px;
-
-    display: block;
-}
-
-
-/* =========================================
-   META
-========================================= */
-
-.bazar-meta {
-
-    color: #999;
-
-    font-size: 13px;
-
-    margin-bottom: 7px;
-}
-
-
-.bazar-card h3 {
-
-    font-size: 19px;
-
-    margin: 8px 0;
-
-    color: white;
-}
-
-
-.bazar-card p {
-
-    color: #aaa;
-
-    line-height: 1.5;
-
-    font-size: 14px;
-}
-
-
-/* =========================================
-   CENA
-========================================= */
-
-.bazar-price {
-
-    font-size: 25px;
-
-    font-weight: 800;
-
-    color:
-        var(--bazar-blue-light);
-
-    margin: 10px 0;
-}
-
-
-/* =========================================
-   NOVINKA BADGE
-========================================= */
-
-.bazar-new {
-
-    position: absolute;
-
-    top: 14px;
-
-    left: 14px;
-
-    z-index: 5;
-
-    padding: 6px 10px;
-
-    border-radius: 999px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--bazar-purple),
-            #ec4899
-        );
-
-    color: white;
-
-    font-size: 11px;
-
-    font-weight: 800;
-
-    letter-spacing: .5px;
-
-    box-shadow:
-        0 5px 18px
-        rgba(139,92,246,.4);
-}
-
-
-/* =========================================
-   CENA BADGE
-========================================= */
-
-.bazar-price-badge {
-
-    display: inline-block;
-
-    padding: 5px 9px;
-
-    border-radius: 7px;
-
-    background:
-        rgba(0,140,255,.1);
-
-    border:
-        1px solid
-        rgba(0,140,255,.25);
-}
-
-
-/* =========================================
-   AUTH
-========================================= */
-
-.bazar-auth {
-
-    max-width: 1200px;
-
-    margin: 15px auto;
-
-    padding: 12px 20px;
-
-    display: flex;
-
-    justify-content: flex-end;
-
-    align-items: center;
-
-    gap: 10px;
-}
-
-
-.bazar-auth h2 {
-
-    margin: 0;
-
-    font-size: 16px;
-}
-
-
-.bazar-auth p {
-
-    margin: 2px 0 8px;
-
-    color: #aaa;
-
-    font-size: 13px;
-}
-
-
-/* =========================================
-   GALÉRIA
-========================================= */
-
-#imageModal {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 99999;
-
-    background:
-        rgba(0,0,0,.94);
-
-    display: none;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 30px;
-
-}
-
-
-.gallery-content {
-
-    position: relative;
-
-    max-width: 95vw;
-
-    max-height: 95vh;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-}
-
-
-#modalImage {
-
-    max-width: 85vw;
-
-    max-height: 90vh;
-
-    object-fit: contain;
-
-    border-radius: 12px;
-
-    box-shadow:
-        0 0 50px
-        rgba(0,0,0,.7);
-}
-
-
-/* =========================================
-   GALÉRIA TLAČIDLÁ
-========================================= */
-
-.gallery-close {
-
-    position: fixed;
-
-    top: 18px;
-
-    right: 20px;
-
-    width: 42px;
-
-    height: 42px;
-
-    border-radius: 50%;
-
-    border: 1px solid #333;
-
-    background: #151515;
-
-    color: white;
-
-    font-size: 24px;
-
-    cursor: pointer;
-
-    z-index: 100000;
-}
-
-
-.gallery-close:hover {
-
-    background: #e11d48;
-
-}
-
-
-.gallery-arrow {
-
-    position: fixed;
-
-    top: 50%;
-
-    transform:
-        translateY(-50%);
-
-    width: 48px;
-
-    height: 65px;
-
-    border-radius: 10px;
-
-    border: 1px solid #333;
-
-    background:
-        rgba(20,20,20,.85);
-
-    color: white;
-
-    font-size: 35px;
-
-    cursor: pointer;
-
-    z-index: 100000;
-
-}
-
-
-.gallery-prev {
-    left: 20px;
-}
-
-
-.gallery-next {
-    right: 20px;
-}
-
-
-.gallery-arrow:hover {
-
-    background:
-        var(--bazar-blue);
-
-    border-color:
-        var(--bazar-blue);
-}
-
-
-.image-counter {
-
-    position: fixed;
-
-    bottom: 18px;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    padding: 7px 13px;
-
-    background: #111;
-
-    border: 1px solid #333;
-
-    border-radius: 999px;
-
-    color: white;
-
-    font-size: 13px;
-}
-
-
-/* =========================================
-   RESPONSIVE
-========================================= */
-
-@media(max-width:900px){
-
-    .bazar-grid {
-
-        grid-template-columns:
-            repeat(2,1fr);
-    }
-
-}
-
-
-@media(max-width:650px){
-
-    .bazar {
-
-        padding:
-            25px 12px 50px;
-    }
-
-
-    .bazar-form {
-
-        grid-template-columns: 1fr;
-    }
-
-
-    .bazar-form .full {
-
-        grid-column: auto;
-    }
-
-
-    .bazar-grid {
-
-        grid-template-columns: 1fr;
-    }
-
-
-    .bazar-box {
-
-        padding: 18px;
-    }
-
-
-    .bazar header h1 {
-
-        font-size: 30px;
-    }
-
-
-    .gallery-arrow {
-
-        width: 40px;
-
-        height: 55px;
-
-        font-size: 28px;
-    }
-
-}
-
-
-/* =========================================
-   TOMIKON BAZÁR - TOP LIŠTA
-========================================= */
-
-.topbar {
-    position: sticky;
-    top: 0;
-    z-index: 9999;
-
-    width: 100%;
-    min-height: 76px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 45px;
-    box-sizing: border-box;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(12,12,12,.98),
-            rgba(5,5,5,.96)
-        );
-
-    border-bottom: 1px solid #202020;
-
-    box-shadow:
-        0 5px 25px rgba(0,140,255,.12);
-
-    backdrop-filter: blur(15px);
-}
-
-
-/* =========================================
-   LOGO
-========================================= */
-
-.topbar-logo {
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-
-    color: white;
-
-    font-size: 27px;
-    font-weight: 900;
-
-    letter-spacing: .5px;
-}
-
-.topbar-logo span {
-    color: #fff;
-}
-
-.topbar-logo small {
-    color: #008cff;
-
-    font-size: 17px;
-    font-weight: 900;
-
-    margin-left: -4px;
-}
-
-
-/* =========================================
-   USER ČASŤ
-========================================= */
-
-.topbar-user {
-    display: flex;
-    align-items: center;
-}
-
-.auth-buttons,
-.logged-user {
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-}
-
-
-/* =========================================
-   TLAČIDLÁ
-========================================= */
-
-.topbar-btn {
-    min-height: 42px;
-
-    padding: 0 18px;
-
-    border-radius: 9px;
-
-    border: 1px solid #008cff;
-
-    background: #008cff;
-    color: white;
-
-    font-size: 14px;
-    font-weight: 800;
-
-    cursor: pointer;
-
-    transition:
-        .2s ease;
-
-    box-shadow:
-        0 3px 12px rgba(0,140,255,.15);
-}
-
-.topbar-btn:hover {
-    transform: translateY(-2px);
-
-    background: #009cff;
-
-    box-shadow:
-        0 6px 20px rgba(0,140,255,.35);
-}
-
-
-/* PRIHLÁSENIE */
-
-.login-btn {
-    background:
-        linear-gradient(
-            135deg,
-            #008cff,
-            #006eff
-        );
-}
-
-
-/* REGISTRÁCIA */
-
-.register-btn {
-    background:
-        linear-gradient(
-            135deg,
-            #008cff,
-            #005eff
-        );
-}
-
-
-/* ODHLÁSENIE */
-
-.logout-btn {
-    background: #181818;
-    border-color: #444;
-}
-
-.logout-btn:hover {
-    background: #252525;
-    border-color: #666;
-}
-
-
-/* =========================================
-   E-MAIL PRIHLÁSENÉHO
-========================================= */
-
-.logged-user span {
-    color: #ddd;
-
-    font-size: 14px;
-    font-weight: 700;
-}
-
-
-/* =========================================
-   HLAVNÝ BAZÁR
-========================================= */
-
-.bazar {
-    max-width: 1250px;
-
-    margin: 0 auto;
-
-    padding:
-        45px 25px 90px;
-}
-
-
-/* =========================================
-   NADPIS BAZÁRU
-========================================= */
-
-.bazar > header h1 {
-    font-size: 42px;
-
-    margin-bottom: 8px;
-
-    text-shadow:
-        0 0 20px rgba(0,140,255,.18);
-}
-
-.bazar > header p {
-    font-size: 16px;
-
-    color: #aaa;
-
-    margin-bottom: 20px;
-}
-
-
-/* =========================================
-   KARTY
-========================================= */
-
-.bazar-box {
-    background:
-        linear-gradient(
-            145deg,
-            #0d0d0d,
-            #080808
-        );
-
-    border: 1px solid #008cff;
-
-    border-radius: 16px;
-
-    padding: 30px;
-
-    margin: 28px 0;
-
-    box-shadow:
-        0 0 30px rgba(0,140,255,.10);
-}
-
-
-/* =========================================
-   PRIDAŤ INZERÁT
-========================================= */
-
-.bazar-box h2 {
-    font-size: 25px;
-
-    margin-top: 0;
-
-    margin-bottom: 6px;
-}
-
-.bazar-box > p {
-    color: #aaa;
-
-    font-size: 14px;
-
-    margin-top: 0;
-}
-
-
-/* =========================================
-   FORMULÁR
-========================================= */
-
-.bazar-form {
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 18px;
-}
-
-.bazar-form label {
-    display: block;
-
-    margin-bottom: 7px;
-
-    font-size: 14px;
-
-    font-weight: 700;
-
-    color: #eee;
-}
-
-.bazar-form input,
-.bazar-form select,
-.bazar-form textarea {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding: 13px 14px;
-
-    background: #111;
-
-    color: #fff;
-
-    border: 1px solid #168ed8;
-
-    border-radius: 9px;
-
-    font-size: 14px;
-
-    outline: none;
-
-    transition:
-        border-color .2s,
-        box-shadow .2s;
-}
-
-.bazar-form input:focus,
-.bazar-form select:focus,
-.bazar-form textarea:focus {
-    border-color: #00a2ff;
-
-    box-shadow:
-        0 0 0 3px rgba(0,140,255,.10);
-}
-
-.bazar-form textarea {
-    min-height: 150px;
-
-    resize: vertical;
-}
-
-.bazar-form .full {
-    grid-column: 1 / -1;
-}
-
-
-/* =========================================
-   ODOSLAŤ
-========================================= */
-
-.bazar-form .bazar-button {
-    min-height: 44px;
-
-    padding: 0 22px;
-
-    font-size: 14px;
-}
-
-
-/* =========================================
-   FILTRE
-========================================= */
-
-#search,
-#filterCategory,
-#minPrice,
-#maxPrice {
-    min-height: 40px;
-
-    box-sizing: border-box;
-
-    padding: 9px 12px;
-
-    background: #111;
-
-    color: #fff;
-
-    border: 1px solid #333;
-
-    border-radius: 8px;
-}
-
-
-/* =========================================
-   INZERÁTY
-========================================= */
-
-.bazar-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 22px;
-}
-
-.bazar-card {
-    background:
-        linear-gradient(
-            145deg,
-            #101010,
-            #080808
-        );
-
-    border: 1px solid #292929;
-    border-radius: 15px;
-
-    padding: 18px;
-
-    cursor: pointer;
-
-    transition:
-        border-color 0.15s ease,
-        box-shadow 0.15s ease;
-}
-
-.bazar-card:hover {
-    border-color: #008cff;
-
-    box-shadow:
-        0 0 18px rgba(0,140,255,.16);
-}
-
-.bazar-card:hover {
-    transform: translateY(-5px);
-
-    border-color: #008cff;
-
-    box-shadow:
-        0 10px 30px rgba(0,140,255,.18);
-}
-
-.bazar-price {
-    font-size: 25px;
-
-    font-weight: 900;
-
-    color: #009cff;
-
-    margin: 8px 0;
-}
-
-.bazar-meta {
-    color: #999;
-
-    font-size: 13px;
-}
-
-
-/* =========================================
-   MOBIL
-========================================= */
-
-@media (max-width: 800px) {
-
-    .topbar {
-        min-height: auto;
-
-        padding: 14px 18px;
-
-        flex-direction: column;
-
-        gap: 12px;
-    }
-
-    .topbar-logo {
-        font-size: 23px;
-    }
-
-    .topbar-user {
-        width: 100%;
-
-        justify-content: center;
-    }
-
-    .auth-buttons,
-    .logged-user {
-        justify-content: center;
-
-        flex-wrap: wrap;
-    }
-
-    .bazar {
-        padding:
-            25px 15px 60px;
-    }
-
-    .bazar > header h1 {
-        font-size: 30px;
-    }
-
-    .bazar-box {
-        padding: 20px;
-    }
-
-    .bazar-form {
-        grid-template-columns: 1fr;
-    }
-
-    .bazar-form .full {
-        grid-column: auto;
-    }
-
-    .bazar-grid {
-        grid-template-columns:
-            1fr 1fr;
-    }
-}
-
-
-@media (max-width: 550px) {
-
-    .bazar-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .topbar-btn {
-        min-height: 40px;
-
-        padding: 0 13px;
-
-        font-size: 12px;
-    }
-
-}
-
-/* =========================================================
-   TOMIKON BAZÁR - MODERN LOGIN / REGISTER MODAL
-========================================================= */
-
-.bazar-auth-modal {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 99999;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(0,140,255,.12),
-            rgba(0,0,0,.88) 55%,
-            rgba(0,0,0,.96)
-        );
-
-    backdrop-filter: blur(8px);
-
-    animation:
-        bazarModalFade .18s ease;
-}
-
-
-@keyframes bazarModalFade {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-
-}
-
-
-/* =========================================================
-   LOGIN BOX
-========================================================= */
-
-.bazar-login-box {
-
-    position: relative;
-
-    width: min(430px, 100%);
-
-    padding: 36px 34px 30px;
-
-    border-radius: 22px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #111,
-            #080808
-        );
-
-    border: 1px solid rgba(0,140,255,.55);
-
-    box-shadow:
-        0 0 0 1px rgba(0,140,255,.08),
-        0 20px 80px rgba(0,0,0,.8),
-        0 0 45px rgba(0,140,255,.15);
-
-    text-align: center;
-
-    animation:
-        bazarLoginOpen .22s ease;
-}
-
-
-@keyframes bazarLoginOpen {
-
-    from {
-        opacity: 0;
-        transform: translateY(15px) scale(.97);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-}
-
-
-/* =========================================================
-   CLOSE
-========================================================= */
-
-.bazar-login-close {
-
-    position: absolute;
-
-    top: 13px;
-    right: 15px;
-
-    width: 34px;
-    height: 34px;
-
-    border-radius: 50%;
-
-    border: 1px solid #333;
-
-    background: #151515;
-
-    color: #aaa;
-
-    font-size: 24px;
-
-    line-height: 30px;
-
-    cursor: pointer;
-
-    transition:
-        .18s ease;
-}
-
-
-.bazar-login-close:hover {
-
-    color: white;
-
-    border-color: #008cff;
-
-    background: #008cff;
-
-    transform: rotate(90deg);
-
-}
-
-
-/* =========================================================
-   ICON
-========================================================= */
-
-.bazar-login-icon {
-
-    width: 66px;
-    height: 66px;
-
-    margin: 0 auto 15px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #008cff,
-            #0059a8
-        );
-
-    box-shadow:
-        0 0 30px rgba(0,140,255,.3);
-
-    font-size: 30px;
-}
-
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.bazar-login-box h2 {
-
-    margin: 0;
-
-    font-size: 27px;
-
-    color: white;
-}
-
-
-.bazar-login-subtitle {
-
-    margin: 8px 0 25px;
-
-    color: #888;
-
-    font-size: 14px;
-}
-
-
-/* =========================================================
-   INPUTS
-========================================================= */
-
-.bazar-login-field {
-
-    text-align: left;
-
-    margin-bottom: 17px;
-}
-
-
-.bazar-login-field label {
-
-    display: block;
-
-    margin-bottom: 7px;
-
-    color: #ddd;
-
-    font-size: 13px;
-
-    font-weight: 700;
-}
-
-
-.bazar-login-field input {
-
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding: 13px 14px;
-
-    border-radius: 10px;
-
-    border: 1px solid #292929;
-
-    background: #111;
-
-    color: white;
-
-    outline: none;
-
-    font-size: 14px;
-
-    transition:
-        border-color .18s ease,
-        box-shadow .18s ease;
-}
-
-
-.bazar-login-field input::placeholder {
-
-    color: #555;
-
-}
-
-
-.bazar-login-field input:focus {
-
-    border-color: #008cff;
-
-    box-shadow:
-        0 0 0 3px rgba(0,140,255,.10),
-        0 0 20px rgba(0,140,255,.08);
-
-}
-
-
-/* =========================================================
-   PASSWORD
-========================================================= */
-
-.bazar-password-wrap {
-
-    position: relative;
-}
-
-
-.bazar-password-wrap input {
-
-    padding-right: 48px;
-}
-
-
-.bazar-password-toggle {
-
-    position: absolute;
-
-    right: 7px;
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    width: 36px;
-    height: 36px;
-
-    border: 0;
-
-    border-radius: 8px;
-
-    background: transparent;
-
-    color: #888;
-
-    cursor: pointer;
-
-    font-size: 17px;
-}
-
-
-.bazar-password-toggle:hover {
-
-    background: #1b1b1b;
-
-    color: white;
-
-}
-
-
-/* =========================================================
-   MAIN BUTTON
-========================================================= */
-
-.bazar-login-submit {
-
-    width: 100%;
-
-    padding: 14px 18px;
-
-    margin-top: 4px;
-
-    border: 0;
-
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #008cff,
-            #006bd6
-        );
-
-    color: white;
-
-    font-size: 15px;
-
-    font-weight: 800;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 8px 25px rgba(0,140,255,.2);
-
-    transition:
-        transform .18s ease,
-        box-shadow .18s ease,
-        filter .18s ease;
-}
-
-
-.bazar-login-submit:hover {
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 32px rgba(0,140,255,.3);
-
-    filter: brightness(1.08);
-
-}
-
-
-.bazar-login-submit:disabled {
-
-    opacity: .55;
-
-    cursor: wait;
-
-    transform: none;
-
-}
-
-
-/* =========================================================
-   MESSAGE
-========================================================= */
-
-.bazar-auth-message {
-
-    min-height: 22px;
-
-    margin-top: 13px;
-
-    color: #aaa;
-
-    font-size: 13px;
-
-    line-height: 1.5;
-}
-
-
-/* =========================================================
-   DIVIDER
-========================================================= */
-
-.bazar-login-divider {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    margin: 20px 0;
-
-    color: #555;
-
-    font-size: 12px;
-}
-
-
-.bazar-login-divider::before,
-.bazar-login-divider::after {
-
-    content: "";
-
-    flex: 1;
-
-    height: 1px;
-
-    background: #222;
-}
-
-
-/* =========================================================
-   SWITCH LOGIN / REGISTER
-========================================================= */
-
-.bazar-login-switch {
-
-    width: 100%;
-
-    padding: 12px;
-
-    border-radius: 10px;
-
-    border: 1px solid #333;
-
-    background: #101010;
-
-    color: #ddd;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: .18s ease;
-}
-
-
-.bazar-login-switch:hover {
-
-    border-color: #008cff;
-
-    background:
-        rgba(0,140,255,.08);
-
-    color: white;
-
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.bazar-login-footer {
-
-    margin: 20px 0 0;
-
-    color: #444;
-
-    font-size: 11px;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 520px) {
-
-    .bazar-auth-modal {
-
-        padding: 12px;
-    }
-
-
-    .bazar-login-box {
-
-        padding: 32px 20px 24px;
-
-        border-radius: 18px;
-    }
-
-
-    .bazar-login-box h2 {
-
-        font-size: 23px;
-    }
-
-
-    .bazar-login-icon {
-
-        width: 58px;
-        height: 58px;
-
-        font-size: 26px;
-    }
+        rgba(22,136,255,.08),
+        0 15px 45px
+        rgba(0,110,255,.12);
 
 }
 
 
 /* =====================================================
-   ZABUDNUTÉ HESLO
+   AUTH MODAL
 ===================================================== */
 
-.bazar-forgot-password {
-    display: block !important;
+.bazar-auth-modal{
 
-    width: auto !important;
+    position:fixed;
 
-    margin: 12px auto 0 !important;
-    padding: 0 !important;
+    inset:0;
 
-    border: 0 !important;
+    z-index:1000;
 
-    background: transparent !important;
+    display:flex;
 
-    color: #008cff !important;
+    align-items:center;
 
-    font-family: inherit;
+    justify-content:center;
 
-    font-size: 13px !important;
-    font-weight: 600;
-
-    line-height: 1.4;
-
-    cursor: pointer;
-
-    box-shadow: none !important;
-
-    transition:
-        color .18s ease,
-        transform .18s ease;
-}
-
-.bazar-forgot-password:hover {
-    color: #55bdff !important;
-
-    background: transparent !important;
-
-    transform: none;
-
-    text-decoration: underline;
-}
-
-.bazar-forgot-password:focus {
-    outline: none;
-
-    color: #55bdff !important;
-}
-
-.bazar-forgot-password:disabled {
-    opacity: .5;
-
-    cursor: wait;
-}
-
-/* =========================================================
-   TOMIKON BAZÁR - TECH POZADIE
-========================================================= */
-
-html,
-body {
-    min-height: 100%;
-}
-
-body {
-    background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(0, 140, 255, .10),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 90% 20%,
-            rgba(0, 90, 255, .08),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(0, 140, 255, .06),
-            transparent 35%
-        ),
-        #05070b;
-
-    background-attachment: fixed;
-
-    position: relative;
-}
-
-
-/* jemná technologická mriežka */
-
-body::before {
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: -1;
-
-    pointer-events: none;
-
-    opacity: .20;
-
-    background-image:
-        linear-gradient(
-            rgba(0, 140, 255, .035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(0, 140, 255, .035) 1px,
-            transparent 1px
-        );
-
-    background-size: 45px 45px;
-}
-
-
-/* jemná žiara za obsahom */
-
-body::after {
-    content: "";
-
-    position: fixed;
-
-    width: 600px;
-    height: 600px;
-
-    left: 50%;
-    top: 45%;
-
-    transform: translate(-50%, -50%);
-
-    border-radius: 50%;
-
-    pointer-events: none;
-
-    z-index: -1;
+    padding:20px;
 
     background:
-        radial-gradient(
-            circle,
-            rgba(0, 140, 255, .045),
-            transparent 65%
-        );
+        rgba(0,0,0,.78);
 
-    filter: blur(25px);
-}
-
-/* =========================================================
-   TOMIKON BAZÁR — PREMIUM VISUAL UPGRADE
-   ========================================================= */
-
-/* ---------- ZÁKLAD ---------- */
-
-body {
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            rgba(0, 140, 255, .12),
-            transparent 38%
-        ),
-        radial-gradient(
-            circle at 10% 60%,
-            rgba(0, 90, 255, .045),
-            transparent 30%
-        ),
-        #03070d;
-
-    color: #fff;
-}
-
-/* ---------- HLAVNÝ OBSAH ---------- */
-
-.bazar {
-    position: relative;
-    max-width: 1180px;
-    padding-top: 55px;
-}
-
-/* jemná modrá žiara za obsahom */
-
-.bazar::before {
-    content: "";
-    position: fixed;
-    width: 600px;
-    height: 600px;
-
-    left: 50%;
-    top: 180px;
-
-    transform: translateX(-50%);
-
-    background: rgba(0, 140, 255, .045);
-
-    filter: blur(100px);
-
-    pointer-events: none;
-    z-index: -1;
-}
-
-/* ---------- HLAVIČKA BAZÁRU ---------- */
-
-.bazar > header {
-    position: relative;
-
-    padding: 15px 20px 35px;
-
-    text-align: center;
-}
-
-.bazar > header h1 {
-    font-size: clamp(32px, 5vw, 52px);
-
-    font-weight: 900;
-
-    letter-spacing: -1.5px;
-
-    margin: 0 0 10px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #8fd3ff,
-            #ffffff
-        );
-
-    background-size: 200% auto;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-
-    animation: bazarTitleShine 5s linear infinite;
-}
-
-.bazar > header p {
-    color: #8d9aaa;
-
-    font-size: 15px;
-
-    margin: 0 auto 20px;
-
-    max-width: 600px;
-}
-
-@keyframes bazarTitleShine {
-
-    0% {
-        background-position: 0% center;
-    }
-
-    100% {
-        background-position: 200% center;
-    }
+    backdrop-filter:blur(8px);
 
 }
 
-/* ---------- BADGE NOVINKA ---------- */
 
-.bazar > header::before {
-    content: "🆕 NOVINKA";
+.bazar-login-box{
 
-    display: inline-flex;
+    position:relative;
 
-    align-items: center;
+    width:100%;
 
-    margin-bottom: 14px;
-
-    padding: 6px 12px;
-
-    border-radius: 999px;
-
-    font-size: 11px;
-
-    font-weight: 900;
-
-    letter-spacing: .7px;
-
-    color: #fff;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(0,140,255,.25),
-            rgba(0,90,255,.1)
-        );
-
-    border: 1px solid rgba(0,140,255,.5);
-
-    box-shadow:
-        0 0 18px rgba(0,140,255,.16);
-}
-
-/* ---------- HLAVNÉ TLAČIDLO ---------- */
-
-.bazar-button {
-    position: relative;
-
-    border: 1px solid rgba(0,160,255,.65);
-
-    background:
-        linear-gradient(
-            135deg,
-            #008cff,
-            #006be6
-        );
-
-    box-shadow:
-        0 6px 20px rgba(0,140,255,.2);
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease,
-        border-color .2s ease;
-}
-
-.bazar-button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 10px 28px rgba(0,140,255,.32);
-
-    border-color: #49b8ff;
-}
-
-.bazar-button:active {
-    transform: translateY(0);
-}
-
-/* ---------- PANELY ---------- */
-
-.bazar-box {
-    position: relative;
+    max-width:430px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(13,18,25,.96),
-            rgba(5,9,14,.96)
+            #101923,
+            #080d14
         );
 
-    border: 1px solid rgba(0,140,255,.5);
+    border:
+        1px solid
+        var(--bazar-border-light);
 
-    border-radius: 18px;
+    border-radius:18px;
+
+    padding:30px;
 
     box-shadow:
-        0 15px 45px rgba(0,0,0,.3),
-        0 0 35px rgba(0,140,255,.055);
+        0 25px 80px
+        rgba(0,0,0,.55);
 
-    overflow: hidden;
-
-    transition:
-        border-color .2s ease,
-        box-shadow .2s ease;
 }
 
-.bazar-box::before {
-    content: "";
 
-    position: absolute;
+.bazar-login-close{
 
-    left: 0;
-    right: 0;
-    top: 0;
+    position:absolute;
 
-    height: 2px;
+    top:12px;
+    right:14px;
+
+    width:34px;
+    height:34px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#111a25;
+
+    color:#aab8c8;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+}
+
+
+.bazar-login-icon{
+
+    width:55px;
+    height:55px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:15px;
+
+    background:
+        rgba(22,136,255,.12);
+
+    font-size:27px;
+
+    margin-bottom:15px;
+
+}
+
+
+.bazar-login-box h2{
+
+    margin:
+        0 0 7px;
+
+}
+
+
+.bazar-login-subtitle{
+
+    color:var(--bazar-muted);
+
+    font-size:14px;
+
+    margin:
+        0 0 23px;
+
+}
+
+
+.bazar-login-field{
+
+    margin-bottom:15px;
+
+}
+
+
+.bazar-login-field label{
+
+    display:block;
+
+    color:#b8c4d0;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    margin-bottom:7px;
+
+}
+
+
+.bazar-login-field input{
+
+    width:100%;
+
+    border:
+        1px solid var(--bazar-border-light);
+
+    background:#070d14;
+
+    color:#fff;
+
+    border-radius:9px;
+
+    padding:12px;
+
+    outline:none;
+
+}
+
+
+.bazar-password-wrap{
+
+    display:flex;
+
+    align-items:center;
+
+    border:
+        1px solid var(--bazar-border-light);
+
+    border-radius:9px;
+
+    background:#070d14;
+
+}
+
+
+.bazar-password-wrap input{
+
+    border:0;
+
+    background:transparent;
+
+}
+
+
+.bazar-password-toggle{
+
+    border:0;
+
+    background:transparent;
+
+    color:#94a4b5;
+
+    cursor:pointer;
+
+    padding:10px;
+
+}
+
+
+.bazar-login-submit{
+
+    width:100%;
+
+    border:0;
+
+    border-radius:9px;
+
+    padding:13px;
 
     background:
         linear-gradient(
-            90deg,
-            transparent,
-            #008cff,
-            #5bc8ff,
-            #008cff,
-            transparent
+            135deg,
+            #1688ff,
+            #006eff
         );
 
-    opacity: .8;
-}
+    color:#fff;
 
-.bazar-box:hover {
-    border-color: rgba(0,160,255,.7);
+    font-weight:bold;
 
-    box-shadow:
-        0 18px 55px rgba(0,0,0,.35),
-        0 0 35px rgba(0,140,255,.09);
-}
-
-.bazar-box h2 {
-    font-size: 23px;
-
-    margin-bottom: 5px;
-
-    letter-spacing: -.3px;
-}
-
-.bazar-box > p {
-    color: #7f8b99;
-}
-
-/* ---------- FORM ---------- */
-
-.bazar-form {
-    margin-top: 22px;
-}
-
-.bazar-form label {
-    display: block;
-
-    margin-bottom: 7px;
-
-    color: #d8e2ed;
-
-    font-size: 13px;
-
-    font-weight: 700;
-}
-
-.bazar-form input,
-.bazar-form select,
-.bazar-form textarea {
-    background:
-        linear-gradient(
-            180deg,
-            #111820,
-            #0b1016
-        ) !important;
-
-    color: #fff !important;
-
-    border: 1px solid #263746 !important;
-
-    border-radius: 10px !important;
-
-    transition:
-        border-color .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
-}
-
-.bazar-form input:hover,
-.bazar-form select:hover,
-.bazar-form textarea:hover {
-    border-color: #31536d !important;
-}
-
-.bazar-form input:focus,
-.bazar-form select:focus,
-.bazar-form textarea:focus {
-    outline: none;
-
-    border-color: #008cff !important;
-
-    background: #0d151e !important;
-
-    box-shadow:
-        0 0 0 3px rgba(0,140,255,.09),
-        0 0 20px rgba(0,140,255,.08);
-}
-
-/* ---------- UPLOAD FOTIEK ---------- */
-
-#bazarImages {
-    cursor: pointer;
-}
-
-#imagePreview {
-    padding-top: 5px;
-}
-
-#imagePreview > div,
-#imagePreview img {
-    transition:
-        transform .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease;
-}
-
-#imagePreview > div:hover,
-#imagePreview img:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 8px 22px rgba(0,0,0,.4),
-        0 0 15px rgba(0,140,255,.12);
-}
-
-/* ---------- VYHĽADÁVANIE ---------- */
-
-#search,
-#filterCategory,
-#minPrice,
-#maxPrice {
-    background: #0b1118 !important;
-
-    color: #fff !important;
-
-    border: 1px solid #263746 !important;
-
-    border-radius: 9px;
-
-    min-height: 42px;
-
-    padding: 0 13px;
-
-    transition:
-        border-color .2s ease,
-        box-shadow .2s ease;
-}
-
-#search:focus,
-#filterCategory:focus,
-#minPrice:focus,
-#maxPrice:focus {
-    outline: none;
-
-    border-color: #008cff !important;
-
-    box-shadow:
-        0 0 0 3px rgba(0,140,255,.08);
-}
-
-/* ---------- KARTY INZERÁTOV ---------- */
-
-.bazar-grid {
-    margin-top: 25px;
-}
-
-.bazar-card {
-    position: relative;
-
-    background:
-        linear-gradient(
-            145deg,
-            #10161d,
-            #070b10
-        );
-
-    border: 1px solid #1d2a36;
-
-    border-radius: 16px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,.25);
-
-    transition:
-        transform .22s cubic-bezier(.2,.8,.2,1),
-        border-color .22s ease,
-        box-shadow .22s ease;
-
-    will-change: transform;
-}
-
-/*
-   Dôležité:
-   ŽIADNE silné blur animácie pri hoveri.
-   Preto by karta nemala sekať.
-*/
-
-.bazar-card:hover {
-    transform: translateY(-6px);
-
-    border-color: rgba(0,140,255,.65);
-
-    box-shadow:
-        0 16px 35px rgba(0,0,0,.4),
-        0 0 25px rgba(0,140,255,.10);
-}
-
-.bazar-card h3 {
-    color: #f2f7fc;
-
-    font-size: 18px;
-
-    line-height: 1.25;
-}
-
-.bazar-price {
-    color: #19a0ff;
-
-    text-shadow:
-        0 0 15px rgba(0,140,255,.2);
-}
-
-.bazar-meta {
-    color: #8492a1;
-}
-
-/* ---------- OBRÁZKY INZERÁTOV ---------- */
-
-.bazar-card img {
-    transition:
-        transform .35s cubic-bezier(.2,.8,.2,1);
-}
-
-.bazar-card:hover img {
-    transform: scale(1.025);
-}
-
-/* ---------- STATUS ---------- */
-
-.bazar-card::after {
-    content: "";
-
-    position: absolute;
-
-    top: 12px;
-    right: 12px;
-
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: #00d084;
-
-    box-shadow:
-        0 0 10px rgba(0,208,132,.7);
-}
-
-/* ---------- RESPONSIVE ---------- */
-
-@media (max-width: 800px) {
-
-    .bazar {
-        padding: 30px 15px 60px;
-    }
-
-    .bazar > header {
-        padding-bottom: 25px;
-    }
-
-    .bazar > header h1 {
-        font-size: 34px;
-    }
-
-    .bazar-grid {
-        gap: 14px;
-    }
+    cursor:pointer;
 
 }
 
-@media (max-width: 600px) {
 
-    .bazar > header h1 {
-        font-size: 29px;
-        letter-spacing: -.8px;
-    }
+.bazar-forgot-password{
 
-    .bazar > header p {
-        font-size: 13px;
-    }
+    width:100%;
 
-    .bazar-box {
-        padding: 18px;
-        border-radius: 14px;
-    }
+    margin-top:12px;
 
-    .bazar-box h2 {
-        font-size: 20px;
-    }
+    border:0;
 
-    #search,
-    #filterCategory,
-    #minPrice,
-    #maxPrice {
-        min-height: 44px;
-    }
+    background:transparent;
+
+    color:#7ea8d8;
+
+    cursor:pointer;
 
 }
 
-.bazar-main-image {
-    width: 100%;
-    height: 210px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    border-radius: 12px;
-    background: #080d13;
-    border: 1px solid #1e3b52;
-}
 
-.bazar-main-image img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    transition: transform .25s ease;
-}
+.bazar-auth-message{
 
-.bazar-card:hover .bazar-main-image img {
-    transform: scale(1.025);
-}
+    min-height:20px;
 
-.bazar-no-image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 42px;
-    color: #687887;
-}
+    margin-top:12px;
 
-/* =========================================================
-   KRÁTKY POPIS NA HLAVNEJ STRÁNKE
-   ========================================================= */
+    color:#c0ccd8;
 
-.bazar-description-preview {
-    color: #9aa6b2;
+    font-size:13px;
 
-    font-size: 14px;
-
-    line-height: 1.55;
-
-    margin: 12px 0;
-
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-
-    overflow: hidden;
-
-    max-height: calc(1.55em * 4);
-
-    position: relative;
-}
-
-/* jemné "..." na konci */
-
-.bazar-description-preview::after {
-    content: "";
-}
-
-/* Na mobile ešte kratší popis */
-
-@media (max-width: 600px) {
-
-    .bazar-description-preview {
-        -webkit-line-clamp: 3;
-        max-height: calc(1.55em * 3);
-    }
+    text-align:center;
 
 }
 
-/* =========================================================
-   KLIKNUTEĽNÉ LOGO BAZÁRU
-   ========================================================= */
 
-.bazar-logo-link {
-    text-decoration: none;
-    color: inherit;
+.bazar-login-divider{
 
-    cursor: pointer;
+    display:flex;
 
-    transition:
-        transform .2s ease,
-        opacity .2s ease;
-}
+    align-items:center;
 
-.bazar-logo-link:hover {
-    transform: translateY(-1px);
-    opacity: .9;
-}
+    gap:12px;
 
-.bazar-logo-link:active {
-    transform: scale(.98);
+    margin:
+        20px 0;
+
+    color:#566575;
+
+    font-size:12px;
+
 }
 
 
-/* =========================================================
-   TOMIKON BAZÁR – MOBILNÁ RESPONZIVITA
-   IBA MOBIL
-========================================================= */
+.bazar-login-divider::before,
+.bazar-login-divider::after{
 
-@media (max-width: 600px) {
+    content:"";
 
-    /* =====================================================
-       ZÁKLAD
-    ===================================================== */
+    flex:1;
 
-    html,
-    body {
-        width: 100%;
-        max-width: 100%;
-        overflow-x: hidden;
-    }
+    height:1px;
+
+    background:var(--bazar-border);
+
+}
 
 
-    /* =====================================================
-       HORNÁ LIŠTA
-    ===================================================== */
+.bazar-login-switch{
 
-    .topbar {
-        min-height: 62px;
+    width:100%;
 
-        padding: 8px 12px;
+    padding:12px;
 
-        gap: 10px;
+    border:
+        1px solid var(--bazar-border-light);
 
-        box-sizing: border-box;
-    }
+    border-radius:9px;
 
+    background:#0c141e;
 
-    .topbar-logo {
-        min-width: 0;
+    color:#dbe5ef;
 
-        font-size: 15px;
+    cursor:pointer;
 
-        gap: 5px;
-
-        white-space: nowrap;
-    }
+}
 
 
-    .topbar-logo span {
-        font-size: 15px;
-    }
+.bazar-login-footer{
+
+    text-align:center;
+
+    color:#526274;
+
+    font-size:11px;
+
+    margin:
+        20px 0 0;
+
+}
 
 
-    .topbar-logo small {
-        font-size: 8px;
-    }
+/* =====================================================
+   MOBILE
+===================================================== */
 
+@media(max-width:1000px){
 
-    .topbar-user {
-        min-width: 0;
+    .bazar-dashboard{
 
-        display: flex;
-
-        align-items: center;
-
-        justify-content: flex-end;
-
-        gap: 5px;
-    }
-
-
-    .auth-buttons,
-    .logged-user {
-        display: flex;
-
-        align-items: center;
-
-        gap: 5px;
-
-        flex-wrap: wrap;
-
-        justify-content: flex-end;
-    }
-
-
-    .topbar-btn {
-        padding: 8px 10px !important;
-
-        font-size: 11px !important;
-
-        white-space: nowrap;
-    }
-
-
-    /* naozaj malé telefóny */
-
-    @media (max-width: 380px) {
-
-        .topbar-logo small {
-            display: none;
-        }
-
-        .topbar-btn {
-            padding: 7px 8px !important;
-
-            font-size: 10px !important;
-        }
+        grid-template-columns:1fr;
 
     }
 
 
-    /* =====================================================
-       HLAVNÝ BAZÁR
-    ===================================================== */
+    .bazar-sidebar{
 
-    .bazar {
-        width: 100%;
+        position:sticky;
 
-        max-width: 100%;
+        top:76px;
+
+        height:auto;
+
+        z-index:50;
+
+        display:flex;
+
+        overflow-x:auto;
+
+        padding:8px;
+
+        border-right:0;
+
+        border-bottom:
+            1px solid var(--bazar-border);
+
+        gap:5px;
+
+    }
+
+
+    .sidebar-mobile-title,
+    .sidebar-divider{
+
+        display:none;
+
+    }
+
+
+    .sidebar-item{
+
+        width:auto;
+
+        flex:0 0 auto;
+
+        margin:0;
+
+        white-space:nowrap;
+
+    }
+
+
+    .bazar-main{
 
         padding:
-            25px 12px 60px;
+            25px
+            20px
+            60px;
 
-        box-sizing: border-box;
     }
 
+}
 
-    .bazar > header {
-        padding:
-            10px 5px 25px;
-    }
 
+@media(max-width:750px){
 
-    .bazar > header h1 {
-        font-size: 30px;
-
-        line-height: 1.15;
-
-        letter-spacing: -.5px;
-
-        word-break: normal;
-    }
-
-
-    .bazar > header p {
-        font-size: 13px;
-
-        line-height: 1.5;
-
-        padding: 0 5px;
-    }
-
-
-    .bazar > header::before {
-        font-size: 9px;
-
-        padding: 5px 10px;
-    }
-
-
-    /* =====================================================
-       PANELY
-    ===================================================== */
-
-    .bazar-box {
-        width: 100%;
-
-        margin:
-            16px 0;
-
-        padding: 17px;
-
-        box-sizing: border-box;
-
-        border-radius: 14px;
-    }
-
-
-    .bazar-box h2 {
-        font-size: 20px;
-
-        line-height: 1.25;
-    }
-
-
-    .bazar-box > p {
-        font-size: 13px;
-
-        line-height: 1.5;
-    }
-
-
-    /* =====================================================
-       FORMULÁR
-    ===================================================== */
-
-    .bazar-form {
-        display: grid;
-
-        grid-template-columns: 1fr;
-
-        gap: 13px;
-    }
-
-
-    .bazar-form .full {
-        grid-column: auto;
-    }
-
-
-    .bazar-form input,
-    .bazar-form select,
-    .bazar-form textarea {
-        width: 100%;
-
-        min-width: 0;
-
-        box-sizing: border-box;
-
-        font-size: 14px;
-    }
-
-
-    .bazar-form textarea {
-        min-height: 130px;
-    }
-
-
-    .bazar-form label {
-        font-size: 12px;
-    }
-
-
-    .bazar-button {
-        width: 100%;
-
-        box-sizing: border-box;
-
-        text-align: center;
-
-        padding: 13px 15px;
-    }
-
-
-    /* =====================================================
-       FOTKY PRI PRIDÁVANÍ
-    ===================================================== */
-
-    #bazarImages {
-        width: 100%;
-
-        box-sizing: border-box;
-
-        font-size: 12px;
-    }
-
-
-    #imagePreview {
-        width: 100%;
-
-        display: grid !important;
-
-        grid-template-columns:
-            repeat(3, 1fr);
-
-        gap: 7px !important;
-    }
-
-
-    #imagePreview > div {
-        width: 100% !important;
-
-        height: 85px !important;
-    }
-
-
-    #imagePreview img {
-        width: 100% !important;
-
-        height: 85px !important;
-    }
-
-
-    /* =====================================================
-       VYHĽADÁVANIE
-    ===================================================== */
-
-    .bazar-box:has(#search) > div {
-        display: grid !important;
-
-        grid-template-columns: 1fr !important;
-
-        gap: 9px !important;
-    }
-
-
-    #search,
-    #filterCategory,
-    #minPrice,
-    #maxPrice {
-        width: 100% !important;
-
-        min-width: 0;
-
-        min-height: 44px;
-
-        box-sizing: border-box;
-
-        font-size: 14px;
-    }
-
-
-    /* =====================================================
-       KARTY INZERÁTOV
-    ===================================================== */
-
-    .bazar-grid {
-        display: grid;
-
-        grid-template-columns: 1fr;
-
-        gap: 15px;
-
-        width: 100%;
-    }
-
-
-    .bazar-card {
-        width: 100%;
-
-        min-width: 0;
-
-        box-sizing: border-box;
-
-        padding: 15px;
-
-        border-radius: 14px;
-    }
-
-
-    /* =====================================================
-       HLAVNÁ FOTKA
-    ===================================================== */
-
-    .bazar-main-image {
-        width: 100%;
-
-        height: 210px;
-
-        margin-bottom: 13px;
-
-        border-radius: 11px;
-    }
-
-
-    .bazar-main-image img {
-        width: 100%;
-
-        height: 100%;
-
-        object-fit: cover;
-    }
-
-
-    /* =====================================================
-       TEXT KARTY
-    ===================================================== */
-
-    .bazar-card h3 {
-        font-size: 18px;
-
-        line-height: 1.3;
-
-        margin: 7px 0;
-    }
-
-
-    .bazar-price {
-        font-size: 22px;
-
-        margin: 8px 0;
-    }
-
-
-    .bazar-meta {
-        font-size: 12px;
-
-        line-height: 1.5;
-    }
-
-
-    .bazar-description-preview {
-        font-size: 13px;
-
-        line-height: 1.5;
-
-        -webkit-line-clamp: 3;
-
-        max-height:
-            calc(1.5em * 3);
-
-        margin:
-            10px 0;
-    }
-
-
-    /* =====================================================
-       AUTH MODAL
-    ===================================================== */
-
-    .bazar-auth-modal {
-        padding: 12px;
-
-        box-sizing: border-box;
-    }
-
-
-    .bazar-login-box {
-        width: 100%;
-
-        max-width: 430px;
-
-        max-height: calc(100vh - 24px);
-
-        overflow-y: auto;
-
-        box-sizing: border-box;
+    .bazar-topbar{
 
         padding:
-            28px 19px 23px;
+            0
+            15px;
 
-        border-radius: 18px;
     }
 
 
-    .bazar-login-box h2 {
-        font-size: 23px;
+    .bazar-user-email{
+
+        display:none;
+
     }
 
 
-    .bazar-login-subtitle {
-        font-size: 13px;
+    .bazar-top-btn{
+
+        padding:
+            9px
+            10px;
+
+        font-size:12px;
+
     }
 
 
-    .bazar-login-field input {
-        min-height: 46px;
+    .bazar-page-header{
 
-        font-size: 14px;
+        align-items:flex-start;
+
+        flex-direction:column;
+
     }
 
 
-    .bazar-login-submit {
-        min-height: 46px;
+    .bazar-page-header h1{
+
+        font-size:27px;
+
     }
 
 
-    .bazar-login-switch {
-        min-height: 44px;
+    .bazar-main-add-button{
+
+        width:100%;
+
     }
 
 
-    /* =====================================================
-       PRIHLÁSENÝ POUŽÍVATEĽ
-    ===================================================== */
+    .bazar-form{
 
-    .logged-user {
-        max-width: 100%;
+        grid-template-columns:1fr;
+
     }
 
 
-    #userEmail {
-        display: none;
+    .form-field-full{
+
+        grid-column:auto;
+
+    }
+
+
+    .form-submit-row{
+
+        grid-column:auto;
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+
+    .bazar-search-panel{
+
+        grid-template-columns:1fr 1fr;
+
+    }
+
+
+    .search-main{
+
+        grid-column:1 / -1;
+
+    }
+
+
+    .bazar-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
+@media(max-width:500px){
+
+    .bazar-brand-text{
+
+        display:none;
+
+    }
+
+
+    .bazar-topbar{
+
+        height:65px;
+
+    }
+
+
+    .bazar-sidebar{
+
+        top:65px;
+
+    }
+
+
+    .bazar-main{
+
+        padding:
+            20px
+            12px
+            45px;
+
+    }
+
+
+    .dashboard-panel{
+
+        padding:17px;
+
+    }
+
+
+    .bazar-search-panel{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .search-main{
+
+        grid-column:auto;
+
+    }
+
+
+    .beta-panel{
+
+        align-items:flex-start;
+
     }
 
 }
