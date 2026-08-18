@@ -422,17 +422,17 @@ body{
 ===================================================== */
 
 .bazar-page-header{
-
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
+    gap:30px;
 
-    gap:25px;
+    width:100%;
+    max-width:1400px;
 
-    margin-bottom:25px;
-
+    margin:
+        0 auto
+        28px;
 }
 
 
