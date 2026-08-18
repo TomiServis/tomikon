@@ -96,14 +96,12 @@ async function loadUser(){
 
     if(messagesUserEmail){
 
-        messagesUserEmail.textContent =
-            currentUser.email ||
-            "Neznámy účet";
+    messagesUserEmail.textContent =
+        currentUser.email || "Neznámy účet";
 
-    }
+}
 
-
-    return true;
+return true;
 
 }
 
