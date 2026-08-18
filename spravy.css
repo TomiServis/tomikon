@@ -3032,3 +3032,258 @@ body > .bazar-layout > .messages-page .chat-panel {
     }
 
 }
+
+/* =====================================================
+   TOMIKON SPRÁVY – DESKTOP OPRAVA
+   MUSÍ BYŤ ÚPLNE NA KONCI spravy.css
+===================================================== */
+
+@media (min-width: 701px) {
+
+    html,
+    body {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    /* TOPBAR */
+
+    body > .bazar-topbar {
+        width: 100%;
+        height: 65px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 30px;
+
+        background: #050a11;
+        border-bottom: 1px solid #172332;
+
+        position: relative;
+        z-index: 100;
+    }
+
+    .bazar-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .bazar-brand-icon {
+        font-size: 28px;
+    }
+
+    .bazar-brand-text {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .bazar-brand-text strong {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .bazar-brand-text small {
+        color: #008cff;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    /* HAMBURGER NA PC NEZOBRAZOVAŤ */
+
+    #bazarMobileMenuToggle {
+        display: none !important;
+    }
+
+    /* HLAVNÝ LAYOUT */
+
+    body > .bazar-layout {
+        width: 100%;
+        min-height: calc(100vh - 65px);
+
+        display: grid !important;
+        grid-template-columns: 220px minmax(0, 1fr) !important;
+
+        margin: 0;
+        padding: 0;
+    }
+
+    /* SIDEBAR */
+
+    body > .bazar-layout > #bazarSidebar {
+        position: relative !important;
+
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+
+        width: 220px !important;
+        min-width: 220px !important;
+        max-width: 220px !important;
+
+        height: auto !important;
+        min-height: calc(100vh - 65px) !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+
+        padding: 22px 12px !important;
+        margin: 0 !important;
+
+        background: #060c13 !important;
+        border-right: 1px solid #172332 !important;
+
+        overflow: hidden !important;
+
+        transform: none !important;
+        box-shadow: none !important;
+
+        z-index: 10 !important;
+    }
+
+    /* TITULOK SIDEBARU */
+
+    #bazarSidebar .sidebar-mobile-title {
+        display: block !important;
+
+        padding: 4px 10px 18px !important;
+
+        color: #008cff !important;
+
+        font-size: 11px !important;
+        font-weight: 800 !important;
+
+        letter-spacing: 1.5px !important;
+    }
+
+    /* MENU */
+
+    #bazarSidebar .sidebar-item {
+        width: 100% !important;
+        min-width: 0 !important;
+
+        min-height: 42px !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+
+        gap: 10px !important;
+
+        padding: 9px 12px !important;
+        margin: 0 !important;
+
+        border: 0 !important;
+        border-radius: 8px !important;
+
+        background: transparent !important;
+
+        color: #8f9aaa !important;
+
+        font-size: 13px !important;
+        font-weight: 600 !important;
+
+        text-decoration: none !important;
+        white-space: nowrap !important;
+
+        cursor: pointer !important;
+    }
+
+    #bazarSidebar .sidebar-item:hover {
+        background: #0b1d30 !important;
+        color: #fff !important;
+    }
+
+    #bazarSidebar .sidebar-item-active {
+        background: #062747 !important;
+        color: #fff !important;
+
+        border-left: 3px solid #008cff !important;
+
+        padding-left: 9px !important;
+    }
+
+    #bazarSidebar .sidebar-divider {
+        display: block !important;
+
+        width: calc(100% - 10px) !important;
+        height: 1px !important;
+
+        margin: 15px 5px !important;
+
+        background: #172332 !important;
+    }
+
+    #bazarSidebar .sidebar-logout {
+        color: #ff6969 !important;
+    }
+
+    /* HLAVNÝ OBSAH */
+
+    body > .bazar-layout > .messages-page {
+        grid-column: 2 !important;
+
+        width: 100% !important;
+        max-width: 1250px !important;
+        min-width: 0 !important;
+
+        margin: 0 auto !important;
+
+        padding: 38px 35px 70px !important;
+    }
+
+    /* SPRÁVY BOX */
+
+    body > .bazar-layout > .messages-page .messages-box {
+        width: 100% !important;
+
+        display: grid !important;
+
+        grid-template-columns: 290px minmax(0, 1fr) !important;
+
+        min-height: 620px !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        overflow: hidden !important;
+    }
+
+    /* KONVERZÁCIE */
+
+    body > .bazar-layout > .messages-page .conversation-list {
+        width: auto !important;
+        min-width: 0 !important;
+
+        display: block !important;
+
+        border-right: 1px solid #1b2b3c !important;
+        border-bottom: 0 !important;
+    }
+
+    /* CHAT */
+
+    body > .bazar-layout > .messages-page .chat-panel {
+        width: auto !important;
+        min-width: 0 !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .chat-content {
+        min-width: 0 !important;
+    }
+
+}
