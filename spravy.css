@@ -2546,3 +2546,489 @@ body > .bazar-layout > .messages-page .chat-panel {
     }
 
 }
+
+/* =====================================================
+   TOMIKON – UNIVERZÁLNE MOBILNÉ MENU
+===================================================== */
+
+@media (max-width: 700px){
+
+    html,
+    body{
+        width:100% !important;
+        min-width:0 !important;
+        overflow-x:hidden !important;
+    }
+
+
+    /* =========================================
+       TOPBAR
+    ========================================= */
+
+    body > .bazar-topbar{
+
+        position:sticky !important;
+
+        top:0 !important;
+
+        width:100% !important;
+
+        height:65px !important;
+
+        min-height:65px !important;
+
+        display:flex !important;
+
+        align-items:center !important;
+
+        justify-content:space-between !important;
+
+        padding:
+            0 15px !important;
+
+        background:#050a11 !important;
+
+        border-bottom:
+            1px solid #172332 !important;
+
+        z-index:10000 !important;
+    }
+
+
+    .bazar-brand{
+
+        display:flex !important;
+
+        align-items:center !important;
+
+        gap:8px !important;
+
+        color:#fff !important;
+
+        text-decoration:none !important;
+    }
+
+
+    .bazar-brand-icon{
+
+        font-size:28px !important;
+    }
+
+
+    .bazar-brand-text{
+
+        display:flex !important;
+
+        align-items:center !important;
+
+        gap:7px !important;
+    }
+
+
+    .bazar-brand-text strong{
+
+        color:#fff !important;
+
+        font-size:18px !important;
+    }
+
+
+    .bazar-brand-text small{
+
+        color:#008cff !important;
+
+        font-size:13px !important;
+
+        font-weight:800 !important;
+    }
+
+
+    /* =========================================
+       HAMBURGER
+    ========================================= */
+
+    #bazarMobileMenuToggle{
+
+        display:flex !important;
+
+        align-items:center !important;
+
+        justify-content:center !important;
+
+        order:2 !important;
+
+        width:58px !important;
+
+        height:58px !important;
+
+        margin:0 !important;
+
+        padding:0 !important;
+
+        border:
+            2px solid #234765 !important;
+
+        border-radius:16px !important;
+
+        background:#071522 !important;
+
+        color:#fff !important;
+
+        font-size:29px !important;
+
+        line-height:1 !important;
+
+        cursor:pointer !important;
+
+        z-index:10002 !important;
+
+        -webkit-tap-highlight-color:transparent !important;
+    }
+
+
+    #bazarMobileMenuToggle:active{
+
+        transform:scale(.96);
+    }
+
+
+    /* =========================================
+       LAYOUT
+    ========================================= */
+
+    body > .bazar-layout{
+
+        display:block !important;
+
+        width:100% !important;
+
+        min-height:
+            calc(100dvh - 65px) !important;
+
+        margin:0 !important;
+
+        padding:0 !important;
+    }
+
+
+    /* =========================================
+       SIDEBAR – ZATVORENÝ
+    ========================================= */
+
+    body > .bazar-layout
+    > #bazarSidebar{
+
+        position:fixed !important;
+
+        top:65px !important;
+
+        left:0 !important;
+
+        bottom:0 !important;
+
+        width:min(320px, 86vw) !important;
+
+        height:
+            calc(100dvh - 65px) !important;
+
+        min-height:0 !important;
+
+        display:flex !important;
+
+        flex-direction:column !important;
+
+        flex-wrap:nowrap !important;
+
+        align-items:stretch !important;
+
+        gap:5px !important;
+
+        padding:
+            18px 12px 25px !important;
+
+        margin:0 !important;
+
+        background:#060c13 !important;
+
+        border-right:
+            1px solid #20364c !important;
+
+        border-bottom:0 !important;
+
+        overflow-y:auto !important;
+
+        overflow-x:hidden !important;
+
+        transform:
+            translateX(-105%) !important;
+
+        transition:
+            transform .22s ease !important;
+
+        z-index:10001 !important;
+
+        box-shadow:
+            15px 0 45px rgba(0,0,0,.45) !important;
+    }
+
+
+    /* =========================================
+       SIDEBAR – OTVORENÝ
+    ========================================= */
+
+    body.bazar-mobile-menu-open
+    > .bazar-layout
+    > #bazarSidebar{
+
+        transform:
+            translateX(0) !important;
+    }
+
+
+    /* =========================================
+       TITLE
+    ========================================= */
+
+    #bazarSidebar .sidebar-mobile-title{
+
+        display:block !important;
+
+        padding:
+            5px 10px 18px !important;
+
+        color:#008cff !important;
+
+        font-size:10px !important;
+
+        font-weight:800 !important;
+
+        letter-spacing:1.5px !important;
+    }
+
+
+    /* =========================================
+       MENU ITEMS
+    ========================================= */
+
+    #bazarSidebar .sidebar-item{
+
+        width:100% !important;
+
+        min-width:0 !important;
+
+        min-height:46px !important;
+
+        flex:0 0 auto !important;
+
+        display:flex !important;
+
+        align-items:center !important;
+
+        justify-content:flex-start !important;
+
+        gap:10px !important;
+
+        padding:
+            10px 13px !important;
+
+        margin:0 !important;
+
+        border:0 !important;
+
+        border-radius:9px !important;
+
+        background:transparent !important;
+
+        color:#8f9aaa !important;
+
+        font-size:14px !important;
+
+        font-weight:600 !important;
+
+        text-decoration:none !important;
+
+        white-space:nowrap !important;
+
+        cursor:pointer !important;
+
+        box-sizing:border-box !important;
+    }
+
+
+    #bazarSidebar .sidebar-item:hover{
+
+        background:#0b1d30 !important;
+
+        color:#fff !important;
+    }
+
+
+    #bazarSidebar
+    .sidebar-item-active{
+
+        background:#062747 !important;
+
+        color:#fff !important;
+
+        border-left:
+            3px solid #008cff !important;
+
+        padding-left:
+            10px !important;
+    }
+
+
+    #bazarSidebar .sidebar-divider{
+
+        display:block !important;
+
+        width:
+            calc(100% - 10px) !important;
+
+        height:1px !important;
+
+        flex:0 0 1px !important;
+
+        margin:
+            12px 5px !important;
+
+        background:#172332 !important;
+    }
+
+
+    /* =========================================
+       CONTENT
+    ========================================= */
+
+    body > .bazar-layout
+    > .messages-page{
+
+        width:100% !important;
+
+        max-width:none !important;
+
+        min-width:0 !important;
+
+        margin:0 !important;
+
+        padding:
+            22px 12px 30px !important;
+    }
+
+
+    /* =========================================
+       SPRÁVY BOX
+    ========================================= */
+
+    .messages-box{
+
+        width:100% !important;
+
+        height:
+            calc(100dvh - 300px) !important;
+
+        min-height:480px !important;
+
+        display:flex !important;
+
+        flex-direction:column !important;
+
+        overflow:hidden !important;
+    }
+
+
+    .conversation-list{
+
+        width:100% !important;
+
+        max-height:220px !important;
+
+        flex:0 0 auto !important;
+
+        border-right:0 !important;
+
+        border-bottom:
+            1px solid #1b2b3c !important;
+
+        overflow:hidden !important;
+    }
+
+
+    .conversation-items{
+
+        max-height:170px !important;
+
+        overflow-y:auto !important;
+
+        overflow-x:hidden !important;
+    }
+
+
+    .chat-panel{
+
+        width:100% !important;
+
+        min-width:0 !important;
+
+        min-height:0 !important;
+
+        flex:1 1 auto !important;
+    }
+
+
+    .chat-content{
+
+        min-width:0 !important;
+
+        min-height:0 !important;
+
+        height:100% !important;
+    }
+
+
+    .chat-messages{
+
+        min-width:0 !important;
+
+        overflow-x:hidden !important;
+
+        overflow-y:auto !important;
+    }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media(max-width:500px){
+
+    .bazar-brand-text{
+
+        display:flex !important;
+    }
+
+
+    .bazar-brand-text strong{
+
+        font-size:17px !important;
+    }
+
+
+    .bazar-brand-text small{
+
+        font-size:12px !important;
+    }
+
+
+    #bazarMobileMenuToggle{
+
+        width:56px !important;
+
+        height:56px !important;
+
+        border-radius:15px !important;
+    }
+
+}
