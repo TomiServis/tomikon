@@ -1036,6 +1036,197 @@ bazarClient
 
 
 /* =====================================================
+   MOBILNÉ MENU
+===================================================== */
+
+function initMobileMenu(){
+
+    const toggle =
+        $("bazarMobileMenuToggle");
+
+    const sidebar =
+        $("bazarSidebar");
+
+    const overlay =
+        $("bazarMobileOverlay");
+
+
+    if(
+        !toggle ||
+        !sidebar
+    ){
+        return;
+    }
+
+
+    function openMenu(){
+
+        sidebar.classList.add(
+            "mobile-open"
+        );
+
+        if(overlay){
+
+            overlay.classList.add(
+                "mobile-open"
+            );
+
+        }
+
+        toggle.classList.add(
+            "menu-open"
+        );
+
+        toggle.textContent = "✕";
+
+        toggle.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+        document.body.classList.add(
+            "mobile-menu-active"
+        );
+    }
+
+
+    function closeMenu(){
+
+        sidebar.classList.remove(
+            "mobile-open"
+        );
+
+        if(overlay){
+
+            overlay.classList.remove(
+                "mobile-open"
+            );
+
+        }
+
+        toggle.classList.remove(
+            "menu-open"
+        );
+
+        toggle.textContent = "☰";
+
+        toggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        document.body.classList.remove(
+            "mobile-menu-active"
+        );
+    }
+
+
+    toggle.addEventListener(
+        "click",
+        () => {
+
+            if(
+                sidebar.classList.contains(
+                    "mobile-open"
+                )
+            ){
+
+                closeMenu();
+
+            }else{
+
+                openMenu();
+
+            }
+
+        }
+    );
+
+
+    if(overlay){
+
+        overlay.addEventListener(
+            "click",
+            closeMenu
+        );
+
+    }
+
+
+    /* Klik na odkaz → zavrie menu */
+
+    sidebar
+        .querySelectorAll(
+            ".sidebar-link"
+        )
+        .forEach(
+            link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        if(
+                            window.innerWidth <= 700
+                        ){
+
+                            closeMenu();
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* ESC */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if(
+                event.key === "Escape" &&
+                sidebar.classList.contains(
+                    "mobile-open"
+                )
+            ){
+
+                closeMenu();
+
+            }
+
+        }
+    );
+
+
+    /* Ak sa otočí telefón / zmení šírka */
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            if(
+                window.innerWidth > 700
+            ){
+
+                closeMenu();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* Inicializácia */
+
+initMobileMenu();
+
+/* =====================================================
    START
 ===================================================== */
 
