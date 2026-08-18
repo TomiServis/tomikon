@@ -1522,85 +1522,57 @@ async function updateAuthUI(user = null){
         );
 
 
-    /* =========================================
-       PRIHLÁSENÝ
-    ========================================= */
+    // =========================================
+    // PRIHLÁSENÝ
+    // =========================================
 
     if(user){
 
         if(sidebarLoggedInMenu){
-
             sidebarLoggedInMenu.style.display =
                 "block";
-
         }
-
 
         if(sidebarLoggedInAuth){
-
             sidebarLoggedInAuth.style.display =
                 "block";
-
         }
-
 
         if(sidebarLoggedOutAuth){
-
             sidebarLoggedOutAuth.style.display =
                 "none";
-
         }
-
 
         if(sidebarUserEmail){
-
             sidebarUserEmail.textContent =
                 user.email || "";
-
         }
 
-
         return;
-
     }
 
 
-    /* =========================================
-       ODHLÁSENÝ
-    ========================================= */
+    // =========================================
+    // ODHLÁSENÝ
+    // =========================================
 
     if(sidebarLoggedInMenu){
-
         sidebarLoggedInMenu.style.display =
             "none";
-
     }
-
 
     if(sidebarLoggedInAuth){
-
         sidebarLoggedInAuth.style.display =
             "none";
-
     }
-
 
     if(sidebarLoggedOutAuth){
-
         sidebarLoggedOutAuth.style.display =
             "block";
-
     }
 
-
-    /*
-     * VŽDY VYMAŽ STARÝ EMAIL
-     */
-
     if(sidebarUserEmail){
-
         sidebarUserEmail.textContent = "";
-
     }
 
 }
@@ -1610,29 +1582,59 @@ async function updateAuthUI(user = null){
 // ODHLÁSENIE
 // =========================
 
-$("logoutBazarButton")
-.addEventListener(
-    "click",
-    async () => {
-
-        await bazarClient.auth.signOut();
-
-        await updateAuthUI();
-
-    }
-);
-
-const myListingsButton =
+const sidebarLogoutButton =
     document.getElementById(
-        "myListingsButton"
+        "sidebarLogoutButton"
     );
 
 
-if (myListingsButton) {
+if(sidebarLogoutButton){
 
-    myListingsButton.addEventListener(
+    sidebarLogoutButton.addEventListener(
         "click",
-        () => {
+        async function(){
+
+            const {
+                error
+            } =
+                await bazarClient.auth.signOut();
+
+
+            if(error){
+
+                console.error(
+                    "LOGOUT ERROR:",
+                    error
+                );
+
+                return;
+            }
+
+
+            // UI okamžite prepneme
+            await updateAuthUI(null);
+
+        }
+    );
+
+}
+
+
+// =========================
+// MOJE INZERÁTY
+// =========================
+
+const sidebarMyListingsButton =
+    document.getElementById(
+        "sidebarMyListingsButton"
+    );
+
+
+if(sidebarMyListingsButton){
+
+    sidebarMyListingsButton.addEventListener(
+        "click",
+        function(){
 
             window.location.href =
                 "moje-inzeraty.html";
@@ -1642,82 +1644,23 @@ if (myListingsButton) {
 
 }
 
-const forgotPasswordButton =
-    $("forgotPasswordButton");
 
-if (forgotPasswordButton) {
+// =========================
+// AUTH STATE
+// =========================
 
-    forgotPasswordButton.addEventListener(
-        "click",
-        async () => {
-
-            const email =
-                $("authEmail").value.trim();
-
-            if (!email) {
-
-                $("authMessage").textContent =
-                    "⚠️ Najprv zadaj svoj e-mail.";
-
-                $("authEmail").focus();
-
-                return;
-            }
-
-            forgotPasswordButton.disabled = true;
-
-            $("authMessage").textContent =
-                "📨 Odosielam odkaz na obnovenie hesla...";
-
-
-            const { error } =
-                await bazarClient.auth.resetPasswordForEmail(
-                    email,
-                    {
-                        redirectTo:
-                            "https://tomistore.sk/reset-hesla.html"
-                    }
-                );
-
-
-            if (error) {
-
-                console.error(
-                    "PASSWORD RESET ERROR:",
-                    error
-                );
-
-                $("authMessage").textContent =
-                    "❌ " + error.message;
-
-                forgotPasswordButton.disabled =
-                    false;
-
-                return;
-            }
-
-
-            $("authMessage").textContent =
-                "✅ Ak účet s týmto e-mailom existuje, poslali sme ti odkaz na obnovenie hesla.";
-
-            forgotPasswordButton.disabled =
-                false;
-
-        }
-    );
-
-}
-
-supabase.auth.onAuthStateChange(
-    async (event, session) => {
+bazarClient.auth.onAuthStateChange(
+    function(event, session){
 
         console.log(
             "TOMIKON AUTH:",
             event,
-            session?.user?.email || "odhlásený"
+            session?.user?.email ||
+                "odhlásený"
         );
 
-        await updateAuthUI(
+
+        updateAuthUI(
             session?.user || null
         );
 
@@ -1727,6 +1670,39 @@ supabase.auth.onAuthStateChange(
 
 // =========================
 // SPUSTENIE AUTH
+// =========================
+
+(async function(){
+
+    const {
+        data,
+        error
+    } =
+        await bazarClient.auth.getSession();
+
+
+    if(error){
+
+        console.error(
+            "SESSION ERROR:",
+            error
+        );
+
+        await updateAuthUI(null);
+
+        return;
+    }
+
+
+    await updateAuthUI(
+        data.session?.user || null
+    );
+
+})();
+
+
+// =========================
+// SPUSTENIE BAZÁRU
 // =========================
 
 updateAuthUI();
