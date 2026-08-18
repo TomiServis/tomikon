@@ -18,74 +18,23 @@
 
 <header class="bazar-topbar">
 
-    <a href="bazar.html" class="bazar-brand">
-        <span class="bazar-brand-icon">🛒</span>
+    <a
+        href="bazar.html"
+        class="bazar-brand"
+    >
+
+        <span class="bazar-brand-icon">
+            🛒
+        </span>
 
         <span class="bazar-brand-text">
             <strong>TOMIKON</strong>
             <small>BAZÁR</small>
         </span>
+
     </a>
 
-    <div class="bazar-topbar-right">
-
-        <span
-            id="userEmail"
-            class="bazar-user-email"
-        ></span>
-
-        <div
-            id="loggedOutBox"
-            class="bazar-auth-buttons"
-        >
-
-            <button
-                id="showLoginButton"
-                class="bazar-top-btn"
-                type="button"
-            >
-                🔐 Prihlásiť
-            </button>
-
-            <button
-                id="showRegisterButton"
-                class="bazar-top-btn bazar-top-btn-primary"
-                type="button"
-            >
-                ✨ Vytvoriť účet
-            </button>
-
-        </div>
-
-
-        <div
-            id="loggedInBox"
-            class="bazar-auth-buttons"
-            style="display:none;"
-        >
-
-            <button
-                id="myListingsButton"
-                class="bazar-top-btn"
-                type="button"
-            >
-                📦 Moje inzeráty
-            </button>
-
-            <button
-                id="logoutBazarButton"
-                class="bazar-top-btn bazar-logout-btn"
-                type="button"
-            >
-                🚪 Odhlásiť
-            </button>
-
-        </div>
-
-    </div>
-
 </header>
-
 
 <!-- =====================================================
      LAYOUT
@@ -98,32 +47,45 @@
          SIDEBAR
     ================================================== -->
 
-    <aside class="bazar-sidebar">
+   <aside class="bazar-sidebar">
 
-        <div class="sidebar-mobile-title">
-            TOMIKON BAZÁR
-        </div>
-
-
-        <button
-            type="button"
-            class="sidebar-item sidebar-item-active"
-            data-scroll="listingsSection"
-        >
-            <span>▦</span>
-            <span>Inzeráty</span>
-        </button>
+    <div class="sidebar-mobile-title">
+        TOMIKON BAZÁR
+    </div>
 
 
-        <button
-            type="button"
-            class="sidebar-item"
-            id="sidebarAddButton"
-        >
-            <span>＋</span>
-            <span>Pridať inzerát</span>
-        </button>
+    <!-- =========================
+         HLAVNÉ MENU
+    ========================= -->
 
+    <button
+        type="button"
+        class="sidebar-item sidebar-item-active"
+        data-scroll="listingsSection"
+    >
+        <span>▦</span>
+        <span>Inzeráty</span>
+    </button>
+
+
+    <button
+        type="button"
+        class="sidebar-item"
+        id="sidebarAddButton"
+    >
+        <span>＋</span>
+        <span>Pridať inzerát</span>
+    </button>
+
+
+    <!-- =========================
+         PRIHLÁSENÝ POUŽÍVATEĽ
+    ========================= -->
+
+    <div
+        id="sidebarLoggedInMenu"
+        style="display:none;"
+    >
 
         <button
             type="button"
@@ -164,17 +126,42 @@
             <span>Profil</span>
         </button>
 
+    </div>
 
-        <div class="sidebar-divider"></div>
+
+    <div class="sidebar-divider"></div>
 
 
-        <a
-            href="index.html"
-            class="sidebar-item sidebar-link"
-        >
-            <span>←</span>
-            <span>Hlavná stránka</span>
-        </a>
+    <!-- =========================
+         PRIHLÁSENÝ
+    ========================= -->
+
+    <div
+        id="sidebarLoggedInAuth"
+        class="sidebar-auth-box"
+        style="display:none;"
+    >
+
+        <div class="sidebar-user">
+
+            <div class="sidebar-user-icon">
+                👤
+            </div>
+
+            <div class="sidebar-user-info">
+
+                <span class="sidebar-user-label">
+                    PRIHLÁSENÝ
+                </span>
+
+                <span
+                    id="sidebarUserEmail"
+                    class="sidebar-user-email"
+                ></span>
+
+            </div>
+
+        </div>
 
 
         <button
@@ -186,7 +173,56 @@
             <span>Odhlásiť sa</span>
         </button>
 
-    </aside>
+    </div>
+
+
+    <!-- =========================
+         ODHLÁSENÝ
+    ========================= -->
+
+    <div
+        id="sidebarLoggedOutAuth"
+        class="sidebar-auth-box"
+    >
+
+        <button
+            type="button"
+            class="sidebar-item sidebar-login"
+            id="showLoginButton"
+        >
+            <span>🔐</span>
+            <span>Prihlásiť sa</span>
+        </button>
+
+
+        <button
+            type="button"
+            class="sidebar-item sidebar-register"
+            id="showRegisterButton"
+        >
+            <span>✨</span>
+            <span>Vytvoriť účet</span>
+        </button>
+
+    </div>
+
+
+    <div class="sidebar-divider"></div>
+
+
+    <!-- =========================
+         HLAVNÁ STRÁNKA
+    ========================= -->
+
+    <a
+        href="index.html"
+        class="sidebar-item sidebar-link"
+    >
+        <span>←</span>
+        <span>Hlavná stránka</span>
+    </a>
+
+</aside>
 
 
     <!-- =================================================
