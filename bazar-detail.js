@@ -29,7 +29,7 @@ function escapeHTML(value){
 
     return div.innerHTML;
 }
-
+let currentSellerId = null;
 
 // =========================
 // ID INZERÁTU Z URL
