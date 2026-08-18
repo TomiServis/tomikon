@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="sk">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
+<title>Správy | TOMIKON BAZÁR</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="bazar.css">
+<link rel="stylesheet" href="spravy.css">
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
+
+<header class="topbar">
+
+    <a
+        href="bazar.html"
+        class="topbar-logo bazar-logo-link"
+    >
+
+        🛒
+
+        <span>TOMIKON</span>
+
+        <small>BAZÁR</small>
+
+    </a>
+
+</header>
+
+
+<!-- =====================================================
+     HLAVNÁ ŠTRUKTÚRA
+===================================================== -->
+
+<div class="bazar-layout">
+
+
+    <!-- =================================================
+         BOČNÝ PANEL
+    ================================================== -->
+
+    <aside class="bazar-sidebar">
+
+        <div class="sidebar-title">
+            TOMIKON BAZÁR
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="bazar.html"
+                class="sidebar-link"
+            >
+                🏠 Bazár
+            </a>
+
+
+            <a
+                href="bazar.html"
+                class="sidebar-link"
+            >
+                ➕ Pridať inzerát
+            </a>
+
+
+            <a
+                href="moje-inzeraty.html"
+                class="sidebar-link"
+            >
+                📦 Moje inzeráty
+            </a>
+
+
+            <a
+                href="#"
+                class="sidebar-link"
+            >
+                ♡ Obľúbené
+            </a>
+
+
+            <a
+                href="spravy.html"
+                class="sidebar-link active"
+            >
+                💬 Správy
+            </a>
+
+
+            <a
+                href="#"
+                class="sidebar-link"
+            >
+                👤 Profil
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <nav class="sidebar-bottom">
+
+            <a
+                href="index.html"
+                class="sidebar-link"
+            >
+                ← Hlavná stránka
+            </a>
+
+
+            <button
+                id="sidebarLogout"
+                class="sidebar-link sidebar-logout"
+                type="button"
+            >
+                🚪 Odhlásiť sa
+            </button>
+
+        </nav>
+
+    </aside>
+
+
+
+    <!-- =================================================
+         OBSAH
+    ================================================== -->
+
+    <main class="messages-page">
+
+
+        <div class="messages-header">
+
+            <div>
+
+                <div class="messages-kicker">
+                    TOMIKON BAZÁR
+                </div>
+
+                <h1>
+                    💬 Správy
+                </h1>
+
+                <p>
+                    Komunikuj s predajcami a záujemcami
+                    priamo cez TOMIKON BAZÁR.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             MESSAGES APP
+        ================================================== -->
+
+        <section class="messages-box">
+
+
+            <!-- ZOZNAM KONVERZÁCIÍ -->
+
+            <div class="conversation-list">
+
+                <div class="conversation-header">
+
+                    <strong>
+                        Konverzácie
+                    </strong>
+
+                </div>
+
+
+                <div
+                    id="conversationList"
+                    class="conversation-items"
+                >
+
+                    <div class="messages-loading">
+
+                        ⏳ Načítavam správy...
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- KONVERZÁCIA -->
+
+            <div class="chat-panel">
+
+
+                <div
+                    id="emptyChat"
+                    class="empty-chat"
+                >
+
+                    <div class="empty-chat-icon">
+                        💬
+                    </div>
+
+                    <h2>
+                        Vyber konverzáciu
+                    </h2>
+
+                    <p>
+                        Vyber správu zo zoznamu
+                        a zobrazí sa ti celá konverzácia.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="chatContent"
+                    class="chat-content"
+                    style="display:none;"
+                >
+
+
+                    <!-- HLAVIČKA KONVERZÁCIE -->
+
+                    <div class="chat-header">
+
+                        <div>
+
+                            <strong id="chatUser">
+                                Používateľ
+                            </strong>
+
+                            <span id="chatListing">
+                                Inzerát
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SPRÁVY -->
+
+                    <div
+                        id="chatMessages"
+                        class="chat-messages"
+                    ></div>
+
+
+                    <!-- ODPOVEĎ -->
+
+                    <form
+                        id="replyForm"
+                        class="reply-form"
+                    >
+
+                        <textarea
+                            id="replyInput"
+                            placeholder="Napíš správu..."
+                            rows="2"
+                            required
+                        ></textarea>
+
+
+                        <button
+                            type="submit"
+                            class="reply-button"
+                        >
+                            📤 Odoslať
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="spravy.js"></script>
+
+</body>
+
+</html>
