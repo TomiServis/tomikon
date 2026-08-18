@@ -17,416 +17,604 @@
 
 <style>
 
-.my-page {
-    max-width: 1250px;
-    margin: 0 auto;
-    padding: 45px 25px 90px;
+/* =====================================================
+   MOJE INZERÁTY
+===================================================== */
+
+.my-page{
+    width:100%;
 }
 
-.my-header {
-    text-align: center;
-    margin-bottom: 30px;
+.my-page-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:25px;
 }
 
-.my-header h1 {
-    font-size: 38px;
-    margin-bottom: 8px;
+.my-page-header h1{
+    margin:5px 0;
+    font-size:32px;
 }
 
-.my-header p {
-    color: #999;
+.my-page-header p{
+    margin:0;
+    color:var(--bazar-muted);
 }
 
-.my-back {
-    display: inline-block;
-    margin-top: 15px;
+.my-page-kicker{
+    color:var(--bazar-blue);
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1.5px;
 }
 
-.my-listings-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
+
+/* =====================================================
+   MY LISTINGS GRID
+===================================================== */
+
+.my-listings-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(260px,1fr)
+        );
+
+    gap:20px;
 }
 
-.my-card {
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.my-card{
+
+    overflow:hidden;
+
     background:
         linear-gradient(
             145deg,
-            #101010,
-            #080808
+            #0c141e,
+            #080d14
         );
 
-    border: 1px solid #292929;
+    border:
+        1px solid
+        var(--bazar-border);
 
-    border-radius: 15px;
+    border-radius:12px;
 
-    padding: 20px;
+    padding:0 0 17px;
 
     transition:
-        border-color .15s ease,
-        box-shadow .15s ease;
+        transform .2s,
+        border-color .2s,
+        box-shadow .2s;
 }
 
-.my-card:hover {
-    border-color: #008cff;
+.my-card:hover{
+
+    transform:translateY(-3px);
+
+    border-color:
+        rgba(22,136,255,.55);
 
     box-shadow:
-        0 0 18px rgba(0,140,255,.16);
+        0 15px 35px
+        rgba(0,0,0,.25);
 }
 
-.my-status {
-    display: inline-block;
 
-    padding: 5px 9px;
+/* =====================================================
+   IMAGE
+===================================================== */
 
-    border-radius: 20px;
+.my-card-image{
 
-    font-size: 12px;
-    font-weight: 800;
+    width:100%;
+    height:190px;
 
-    margin-bottom: 12px;
+    background:#05090e;
+
+    border-bottom:
+        1px solid
+        var(--bazar-border);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
 }
 
-.my-status.approved {
-    background: rgba(0,200,100,.12);
-    color: #00d084;
-    border: 1px solid rgba(0,200,100,.3);
+.my-card-image img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
 }
 
-.my-status.pending {
-    background: rgba(255,180,0,.12);
-    color: #ffbd00;
-    border: 1px solid rgba(255,180,0,.3);
+.my-no-image{
+
+    color:#425366;
+    font-size:42px;
 }
 
-.my-card h2 {
-    margin: 8px 0;
 
-    font-size: 21px;
+/* =====================================================
+   CARD CONTENT
+===================================================== */
+
+.my-card-content{
+    padding:17px;
 }
 
-.my-price {
-    color: #008cff;
+.my-status{
 
-    font-size: 25px;
+    display:inline-flex;
 
-    font-weight: 900;
+    align-items:center;
 
-    margin: 10px 0;
+    padding:5px 9px;
+
+    border-radius:20px;
+
+    font-size:11px;
+    font-weight:800;
+
+    margin-bottom:10px;
 }
 
-.my-info {
-    color: #999;
+.my-status.approved{
 
-    font-size: 14px;
+    background:
+        rgba(53,212,124,.10);
 
-    line-height: 1.7;
+    color:#35d47c;
+
+    border:
+        1px solid
+        rgba(53,212,124,.25);
 }
 
-.my-open {
-    display: inline-block;
+.my-status.pending{
 
-    margin-top: 15px;
+    background:
+        rgba(255,177,59,.10);
 
-    padding: 10px 15px;
+    color:#ffb13b;
 
-    border-radius: 8px;
-
-    background: #008cff;
-
-    color: white;
-
-    text-decoration: none;
-
-    font-weight: 700;
-
-    font-size: 13px;
+    border:
+        1px solid
+        rgba(255,177,59,.25);
 }
 
-.my-open:hover {
-    background: #009cff;
+
+.my-card-meta{
+
+    color:#728196;
+
+    font-size:12px;
+
+    margin-bottom:7px;
 }
 
-#myMessage {
-    text-align: center;
 
-    padding: 50px 20px;
+.my-card h2{
 
-    color: #aaa;
+    margin:
+        0 0 8px;
+
+    color:#f5f8fc;
+
+    font-size:18px;
+
+    line-height:1.35;
 }
 
-@media (max-width: 850px) {
 
-    .my-listings-grid {
-        grid-template-columns: 1fr 1fr;
-    }
+.my-price{
+
+    color:
+        var(--bazar-blue);
+
+    font-size:22px;
+
+    font-weight:bold;
+
+    margin-bottom:12px;
+}
+
+
+.my-card-info{
+
+    color:#8d9aaa;
+
+    font-size:13px;
+
+    line-height:1.8;
+
+    padding-bottom:12px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.my-actions{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:8px;
+
+    margin-top:13px;
+}
+
+.my-action{
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    min-height:38px;
+
+    border-radius:8px;
+
+    border:
+        1px solid
+        var(--bazar-border-light);
+
+    background:#101820;
+
+    color:#fff;
+
+    font-weight:bold;
+
+    font-size:12px;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    transition:.15s;
+}
+
+.my-action:hover{
+
+    transform:translateY(-1px);
+
+    border-color:
+        var(--bazar-blue);
+}
+
+.my-action.view{
+
+    grid-column:
+        1 / -1;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1688ff,
+            #006eff
+        );
+
+    border-color:
+        #1688ff;
+}
+
+.my-action.edit:hover{
+
+    background:
+        rgba(22,136,255,.10);
+}
+
+.my-action.delete{
+
+    color:#ff7d8b;
+
+    border-color:
+        rgba(255,82,104,.30);
+
+    background:
+        rgba(255,82,104,.06);
+}
+
+.my-action.delete:hover{
+
+    color:#fff;
+
+    background:#d62828;
+
+    border-color:#d62828;
+}
+
+
+/* =====================================================
+   EMPTY / MESSAGE
+===================================================== */
+
+#myMessage{
+
+    grid-column:
+        1 / -1;
+
+    text-align:center;
+
+    padding:70px 20px;
+
+    color:var(--bazar-muted);
 
 }
 
-@media (max-width: 550px) {
 
-    .my-page {
-        padding: 30px 15px 60px;
-    }
-
-    .my-header h1 {
-        font-size: 30px;
-    }
-
-    .my-listings-grid {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-    /* =========================
+/* =====================================================
    EDIT MODAL
-========================= */
+===================================================== */
 
-.edit-modal {
-    display: none;
+.edit-modal{
 
-    position: fixed;
-    inset: 0;
+    display:none;
 
-    z-index: 9999;
+    position:fixed;
 
-    background: rgba(0, 0, 0, .82);
+    inset:0;
 
-    backdrop-filter: blur(8px);
+    z-index:9999;
 
-    align-items: center;
-    justify-content: center;
+    align-items:center;
+    justify-content:center;
 
-    padding: 20px;
+    padding:20px;
+
+    background:
+        rgba(0,0,0,.82);
+
+    backdrop-filter:blur(8px);
 }
 
-.edit-modal.active {
-    display: flex;
+.edit-modal.active{
+    display:flex;
 }
 
-.edit-box {
-    position: relative;
+.edit-box{
 
-    width: min(600px, 100%);
+    position:relative;
 
-    max-height: 90vh;
-    overflow-y: auto;
+    width:
+        min(600px,100%);
 
-    padding: 30px;
+    max-height:90vh;
 
-    border-radius: 18px;
+    overflow-y:auto;
+
+    padding:30px;
+
+    border-radius:18px;
 
     background:
         linear-gradient(
             145deg,
-            #151515,
-            #080808
+            #101923,
+            #080d14
         );
 
-    border: 1px solid #008cff;
+    border:
+        1px solid
+        var(--bazar-blue);
 
     box-shadow:
-        0 0 40px rgba(0,140,255,.25);
+        0 0 40px
+        rgba(0,140,255,.25);
 }
 
-.edit-box h2 {
-    margin-top: 0;
-    margin-bottom: 25px;
+.edit-box h2{
 
-    font-size: 28px;
+    margin:
+        0 0 25px;
+
+    font-size:27px;
 }
 
-.edit-close {
-    position: absolute;
+.edit-close{
 
-    top: 15px;
-    right: 15px;
+    position:absolute;
 
-    width: 36px;
-    height: 36px;
+    top:14px;
+    right:14px;
 
-    border: 1px solid #333;
-    border-radius: 50%;
+    width:36px;
+    height:36px;
 
-    background: #111;
-    color: #fff;
+    border:
+        1px solid
+        #333;
 
-    cursor: pointer;
+    border-radius:50%;
 
-    font-size: 16px;
+    background:#111;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    font-size:16px;
 }
 
-.edit-close:hover {
-    background: #e53935;
-    border-color: #e53935;
+.edit-close:hover{
+
+    background:#e53935;
+
+    border-color:#e53935;
 }
 
-#editForm {
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
+#editForm{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:9px;
 }
 
-#editForm label {
-    margin-top: 8px;
+#editForm label{
 
-    font-size: 14px;
-    font-weight: 700;
-    color: #ddd;
+    margin-top:8px;
+
+    color:#ddd;
+
+    font-size:13px;
+
+    font-weight:bold;
 }
 
 #editForm input,
 #editForm select,
-#editForm textarea {
-    width: 100%;
-    box-sizing: border-box;
+#editForm textarea{
 
-    padding: 12px 14px;
+    width:100%;
 
-    border-radius: 9px;
+    padding:12px 14px;
 
-    border: 1px solid #303030;
+    border:
+        1px solid
+        var(--bazar-border-light);
 
-    background: #101010;
-    color: #fff;
+    border-radius:9px;
 
-    outline: none;
+    background:#070d14;
 
-    font-size: 14px;
+    color:#fff;
+
+    outline:none;
+
+    font-size:14px;
 }
 
 #editForm input:focus,
 #editForm select:focus,
-#editForm textarea:focus {
-    border-color: #008cff;
+#editForm textarea:focus{
+
+    border-color:
+        var(--bazar-blue);
 
     box-shadow:
-        0 0 0 2px rgba(0,140,255,.1);
+        0 0 0 3px
+        rgba(22,136,255,.08);
 }
 
-#editForm textarea {
-    min-height: 140px;
-    resize: vertical;
+#editForm textarea{
+
+    min-height:140px;
+
+    resize:vertical;
 }
 
-.edit-actions {
-    display: flex;
+.edit-actions{
 
-    gap: 10px;
+    display:flex;
 
-    margin-top: 20px;
+    gap:10px;
+
+    margin-top:20px;
 }
 
 .edit-save,
-.edit-cancel {
-    flex: 1;
+.edit-cancel{
 
-    padding: 13px;
+    flex:1;
 
-    border-radius: 9px;
+    padding:13px;
 
-    font-weight: 800;
+    border-radius:9px;
 
-    cursor: pointer;
+    border:0;
 
-    border: 0;
+    font-weight:800;
+
+    cursor:pointer;
 }
 
-.edit-save {
-    background: #008cff;
-    color: #fff;
+.edit-save{
+
+    background:
+        linear-gradient(
+            135deg,
+            #1688ff,
+            #006eff
+        );
+
+    color:#fff;
 }
 
-.edit-save:hover {
-    background: #009cff;
+.edit-cancel{
+
+    background:#222;
+
+    color:#fff;
 }
 
-.edit-cancel {
-    background: #222;
-    color: #fff;
+.edit-cancel:hover{
+    background:#333;
 }
 
-.edit-cancel:hover {
-    background: #333;
+#editMessage{
+
+    text-align:center;
+
+    font-weight:bold;
+
+    margin:
+        15px 0 0;
 }
 
-#editMessage {
-    text-align: center;
-    font-weight: 700;
-    margin: 15px 0 0;
-}
 
-/* BUTTONS ON CARDS */
+/* =====================================================
+   MOBILE
+===================================================== */
 
-.my-actions {
-    display: flex;
+@media(max-width:750px){
 
-    gap: 8px;
+    .my-page-header{
 
-    margin-top: 12px;
-}
+        align-items:flex-start;
 
-.my-action {
-    flex: 1;
-
-    padding: 10px 8px;
-
-    border-radius: 8px;
-
-    border: 1px solid #333;
-
-    background: #111;
-
-    color: #fff;
-
-    font-weight: 700;
-
-    font-size: 13px;
-
-    cursor: pointer;
-
-    text-align: center;
-
-    text-decoration: none;
-
-    transition: .15s ease;
-}
-
-.my-action:hover {
-    transform: translateY(-1px);
-}
-
-.my-action.view {
-    background: #008cff;
-    border-color: #008cff;
-}
-
-.my-action.edit:hover {
-    background: #333;
-    border-color: #008cff;
-}
-
-.my-action.delete {
-    background: rgba(220,40,40,.1);
-    border-color: rgba(220,40,40,.4);
-    color: #ff5b5b;
-}
-
-.my-action.delete:hover {
-    background: #d62828;
-    color: #fff;
-    border-color: #d62828;
-}
-
-@media (max-width: 600px) {
-
-    .edit-box {
-        padding: 22px;
+        flex-direction:column;
     }
 
-    .edit-actions {
-        flex-direction: column;
+    .my-page-header h1{
+        font-size:27px;
+    }
+
+}
+
+@media(max-width:550px){
+
+    .my-listings-grid{
+        grid-template-columns:1fr;
+    }
+
+    .edit-box{
+        padding:22px;
+    }
+
+    .edit-actions{
+        flex-direction:column;
     }
 
 }
@@ -439,102 +627,379 @@
 <body>
 
 
-<header class="topbar">
+<!-- =====================================================
+     TOPBAR
+===================================================== -->
 
-    <div class="topbar-logo">
+<header class="bazar-topbar">
 
-        🛒
+    <a
+        href="bazar.html"
+        class="bazar-brand"
+    >
 
-        <span>TOMIKON</span>
+        <span class="bazar-brand-icon">
+            🛒
+        </span>
 
-        <small>BAZÁR</small>
+        <span class="bazar-brand-text">
 
-    </div>
+            <strong>
+                TOMIKON
+            </strong>
+
+            <small>
+                BAZÁR
+            </small>
+
+        </span>
+
+    </a>
 
 
-    <div class="topbar-user">
+    <div class="bazar-topbar-right">
 
-        <button
-            id="backBazarButton"
-            class="topbar-btn">
-
+        <a
+            href="bazar.html"
+            class="bazar-top-btn"
+        >
             ← Späť na bazár
-
-        </button>
+        </a>
 
     </div>
 
 </header>
 
 
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
 
-<main class="my-page">
-
-
-    <header class="my-header">
-
-        <h1>
-            📦 Moje inzeráty
-        </h1>
-
-        <p id="myUserEmail">
-            Načítavam účet...
-        </p>
-
-    </header>
+<div class="bazar-dashboard">
 
 
-    <section>
+    <!-- =================================================
+         SIDEBAR
+    ================================================= -->
 
-        <div
-            id="myListings"
-            class="my-listings-grid"
+    <aside class="bazar-sidebar">
+
+        <div class="sidebar-mobile-title">
+            TOMIKON BAZÁR
+        </div>
+
+
+        <a
+            href="bazar.html"
+            class="sidebar-item"
         >
+            <span>🏠</span>
+            <span>Bazár</span>
+        </a>
 
-            <div id="myMessage">
-                ⏳ Načítavam tvoje inzeráty...
+
+        <a
+            href="bazar.html"
+            class="sidebar-item"
+        >
+            <span>➕</span>
+            <span>Pridať inzerát</span>
+        </a>
+
+
+        <a
+            href="moje-inzeraty.html"
+            class="sidebar-item sidebar-item-active"
+        >
+            <span>📦</span>
+            <span>Moje inzeráty</span>
+        </a>
+
+
+        <a
+            href="#"
+            class="sidebar-item"
+            onclick="return false;"
+        >
+            <span>💬</span>
+            <span>Správy</span>
+        </a>
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <!-- AUTH -->
+
+        <div class="sidebar-auth-box">
+
+            <div
+                id="sidebarLoggedIn"
+                style="display:none;"
+            >
+
+                <div class="sidebar-user">
+
+                    <div class="sidebar-user-icon">
+                        👤
+                    </div>
+
+                    <div class="sidebar-user-info">
+
+                        <div class="sidebar-user-label">
+                            PRIHLÁSENÝ
+                        </div>
+
+                        <div
+                            id="sidebarUserEmail"
+                            class="sidebar-user-email"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="moje-inzeraty.html"
+                    class="sidebar-item sidebar-item-active"
+                >
+                    <span>📦</span>
+                    <span>Moje inzeráty</span>
+                </a>
+
+
+                <button
+                    id="sidebarLogoutButton"
+                    class="sidebar-item sidebar-logout"
+                    type="button"
+                >
+
+                    <span>🚪</span>
+                    <span>Odhlásiť sa</span>
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="sidebarLoggedOut"
+            >
+
+                <button
+                    id="sidebarLoginButton"
+                    class="sidebar-item sidebar-login"
+                    type="button"
+                >
+
+                    <span>🔐</span>
+                    <span>Prihlásiť sa</span>
+
+                </button>
+
+
+                <button
+                    id="sidebarRegisterButton"
+                    class="sidebar-item sidebar-register"
+                    type="button"
+                >
+
+                    <span>✨</span>
+                    <span>Vytvoriť účet</span>
+
+                </button>
+
             </div>
 
         </div>
 
-    </section>
+    </aside>
 
 
-</main>
+    <!-- =================================================
+         MAIN
+    ================================================= -->
 
-    <!-- EDIT MODAL -->
-<div id="editModal" class="edit-modal">
+    <main class="bazar-main">
+
+
+        <div class="my-page">
+
+
+            <div class="my-page-header">
+
+                <div>
+
+                    <div class="my-page-kicker">
+                        MOJ BAZÁR
+                    </div>
+
+                    <h1>
+                        📦 Moje inzeráty
+                    </h1>
+
+                    <p id="myUserEmail">
+                        Načítavam účet...
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="bazar.html"
+                    class="bazar-main-add-button"
+                >
+                    ➕ Pridať nový inzerát
+                </a>
+
+            </div>
+
+
+            <!-- LISTINGS -->
+
+            <section
+                class="dashboard-panel"
+            >
+
+                <div class="panel-header">
+
+                    <div class="panel-kicker">
+                        TVOJE PONUKY
+                    </div>
+
+                    <h2>
+                        Správa tvojich inzerátov
+                    </h2>
+
+                    <p>
+                        Tu vidíš všetky svoje ponuky,
+                        ich stav a počet zobrazení.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="myListings"
+                    class="my-listings-grid"
+                >
+
+                    <div id="myMessage">
+                        ⏳ Načítavam tvoje inzeráty...
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     EDIT MODAL
+===================================================== -->
+
+<div
+    id="editModal"
+    class="edit-modal"
+>
 
     <div class="edit-box">
 
-        <button id="closeEditModal" class="edit-close">
+        <button
+            id="closeEditModal"
+            class="edit-close"
+            type="button"
+        >
             ✕
         </button>
 
-        <h2>✏️ Upraviť inzerát</h2>
+
+        <h2>
+            ✏️ Upraviť inzerát
+        </h2>
+
 
         <form id="editForm">
 
-            <input type="hidden" id="editId">
+            <input
+                type="hidden"
+                id="editId"
+            >
 
-            <label>Názov</label>
-            <input id="editTitle" required>
 
-            <label>Kategória</label>
-            <select id="editCategory" required>
-                <option value="">Vyber kategóriu</option>
-                <option>Stolný PC</option>
-                <option>Notebook</option>
-                <option>Grafická karta</option>
-                <option>Procesor</option>
-                <option>RAM</option>
-                <option>SSD / HDD</option>
-                <option>Monitor</option>
-                <option>Príslušenstvo</option>
-                <option>Iné</option>
+            <label>
+                Názov
+            </label>
+
+            <input
+                id="editTitle"
+                required
+            >
+
+
+            <label>
+                Kategória
+            </label>
+
+            <select
+                id="editCategory"
+                required
+            >
+
+                <option value="">
+                    Vyber kategóriu
+                </option>
+
+                <option>
+                    Stolný PC
+                </option>
+
+                <option>
+                    Notebook
+                </option>
+
+                <option>
+                    Grafická karta
+                </option>
+
+                <option>
+                    Procesor
+                </option>
+
+                <option>
+                    RAM
+                </option>
+
+                <option>
+                    SSD / HDD
+                </option>
+
+                <option>
+                    Monitor
+                </option>
+
+                <option>
+                    Príslušenstvo
+                </option>
+
+                <option>
+                    Iné
+                </option>
+
             </select>
 
-            <label>Cena (€)</label>
+
+            <label>
+                Cena (€)
+            </label>
+
             <input
                 id="editPrice"
                 type="number"
@@ -543,17 +1008,36 @@
                 required
             >
 
-            <label>Mesto</label>
-            <input id="editCity" required>
 
-            <label>Kontakt</label>
-            <input id="editContact" required>
+            <label>
+                Mesto
+            </label>
 
-            <label>Popis</label>
+            <input
+                id="editCity"
+                required
+            >
+
+
+            <label>
+                Kontakt
+            </label>
+
+            <input
+                id="editContact"
+                required
+            >
+
+
+            <label>
+                Popis
+            </label>
+
             <textarea
                 id="editDescription"
                 required
             ></textarea>
+
 
             <div class="edit-actions">
 
@@ -565,6 +1049,7 @@
                     Zrušiť
                 </button>
 
+
                 <button
                     type="submit"
                     class="edit-save"
@@ -574,6 +1059,7 @@
 
             </div>
 
+
             <p id="editMessage"></p>
 
         </form>
@@ -581,6 +1067,7 @@
     </div>
 
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
