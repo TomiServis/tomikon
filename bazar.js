@@ -1720,6 +1720,84 @@ bazarClient.auth.onAuthStateChange(
 
 })();
 
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+const mobileMenuToggle =
+    document.getElementById("bazarMobileMenuToggle");
+
+const bazarSidebar =
+    document.getElementById("bazarSidebar");
+
+
+if (mobileMenuToggle && bazarSidebar) {
+
+    mobileMenuToggle.addEventListener("click", () => {
+
+        const isOpen =
+            document.body.classList.toggle(
+                "bazar-mobile-menu-open"
+            );
+
+        mobileMenuToggle.textContent =
+            isOpen ? "✕" : "☰";
+
+        mobileMenuToggle.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+
+    });
+
+
+    /* Zavrie menu po kliknutí na položku */
+
+    bazarSidebar.addEventListener("click", (event) => {
+
+        const link =
+            event.target.closest(
+                "a, button"
+            );
+
+        if (!link) return;
+
+        document.body.classList.remove(
+            "bazar-mobile-menu-open"
+        );
+
+        mobileMenuToggle.textContent = "☰";
+
+        mobileMenuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    });
+
+
+    /* Zavrie menu pri zväčšení obrazovky */
+
+    window.addEventListener("resize", () => {
+
+        if (window.innerWidth > 700) {
+
+            document.body.classList.remove(
+                "bazar-mobile-menu-open"
+            );
+
+            mobileMenuToggle.textContent = "☰";
+
+            mobileMenuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+        }
+
+    });
+
+}
+
 
 // =========================
 // SPUSTENIE BAZÁRU
