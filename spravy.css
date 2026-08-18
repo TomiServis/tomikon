@@ -1299,3 +1299,32 @@ body > .bazar-layout > .messages-page .chat-panel {
     font-size: 10px !important;
     margin-top: 5px;
 }
+
+
+/* =====================================================
+   SPRÁVY – ČITATEĽNÝ ČAS V ODOSLANÝCH SPRÁVACH
+===================================================== */
+
+.message-row.sent .message-bubble {
+    background: #087dcc !important;
+    border: 1px solid #1596ff !important;
+    color: #ffffff !important;
+}
+
+.message-row.sent .message-time {
+    display: block !important;
+    color: #bfe3ff !important;
+    opacity: 1 !important;
+    font-size: 9px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    margin-top: 5px !important;
+    text-align: right !important;
+}
+
+.message-row.received .message-time {
+    color: #91a6bb !important;
+    opacity: 1 !important;
+    font-size: 9px !important;
+    font-weight: 500 !important;
+}
