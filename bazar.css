@@ -2369,3 +2369,373 @@ body{
     }
 
 }
+/* =====================================================
+   MOBILE MENU
+   TOMIKON BAZÁR
+===================================================== */
+
+.bazar-mobile-menu-toggle {
+    display: none;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    /* ---------------------------------------------
+       TOPBAR
+    --------------------------------------------- */
+
+    .bazar-topbar {
+        height: 62px;
+        min-height: 62px;
+
+        padding: 0 12px;
+
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+    }
+
+
+    /* ---------------------------------------------
+       HAMBURGER
+    --------------------------------------------- */
+
+    .bazar-mobile-menu-toggle {
+        display: flex;
+
+        width: 40px;
+        height: 40px;
+
+        flex: 0 0 40px;
+
+        align-items: center;
+        justify-content: center;
+
+        border: 1px solid var(--bazar-border-light);
+
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #10243b,
+                #07101c
+            );
+
+        color: #fff;
+
+        font-size: 21px;
+
+        cursor: pointer;
+
+        transition:
+            background .2s,
+            border-color .2s,
+            transform .2s;
+    }
+
+
+    .bazar-mobile-menu-toggle:active {
+        transform: scale(.95);
+    }
+
+
+    .bazar-mobile-menu-toggle:hover {
+        border-color: var(--bazar-blue);
+
+        background:
+            rgba(22,136,255,.12);
+    }
+
+
+    /* ---------------------------------------------
+       BRAND
+    --------------------------------------------- */
+
+    .bazar-brand {
+        min-width: 0;
+    }
+
+
+    .bazar-brand-icon {
+        width: 36px;
+        height: 36px;
+
+        flex: 0 0 36px;
+
+        font-size: 18px;
+    }
+
+
+    .bazar-brand-text {
+        display: flex;
+    }
+
+
+    .bazar-brand-text strong {
+        font-size: 15px;
+    }
+
+
+    .bazar-brand-text small {
+        font-size: 11px;
+    }
+
+
+    /* ---------------------------------------------
+       SIDEBAR - SCHOVANÝ
+    --------------------------------------------- */
+
+    .bazar-sidebar {
+
+        display: none;
+
+        position: fixed;
+
+        top: 62px;
+        left: 0;
+        right: 0;
+
+        width: 100%;
+
+        height: auto;
+        max-height: calc(100dvh - 62px);
+
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        z-index: 999;
+
+        padding: 10px;
+
+        border-right: 0;
+        border-bottom: 1px solid var(--bazar-border);
+
+        background:
+            rgba(5,8,13,.98);
+
+        box-shadow:
+            0 20px 50px rgba(0,0,0,.45);
+
+        backdrop-filter: blur(18px);
+
+        animation:
+            bazarMobileMenuOpen .18s ease;
+    }
+
+
+    /* ---------------------------------------------
+       OTVORENÉ MENU
+    --------------------------------------------- */
+
+    body.bazar-mobile-menu-open .bazar-sidebar {
+        display: block;
+    }
+
+
+    /* ---------------------------------------------
+       MENU POLOŽKY
+    --------------------------------------------- */
+
+    .sidebar-mobile-title {
+        display: block;
+
+        padding:
+            8px
+            10px
+            10px;
+
+        font-size: 10px;
+    }
+
+
+    .sidebar-item {
+
+        width: 100%;
+
+        min-height: 46px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        margin: 0 0 4px;
+
+        padding:
+            11px
+            13px;
+
+        border-radius: 10px;
+
+        font-size: 14px;
+
+        white-space: normal;
+    }
+
+
+    .sidebar-item span:first-child {
+        width: 22px;
+
+        flex: 0 0 22px;
+
+        font-size: 17px;
+    }
+
+
+    .sidebar-item-active {
+        box-shadow:
+            inset 3px 0 0 var(--bazar-blue);
+
+        background:
+            rgba(22,136,255,.14);
+    }
+
+
+    .sidebar-divider {
+        display: block;
+
+        height: 1px;
+
+        margin:
+            10px 5px;
+
+        background:
+            var(--bazar-border);
+    }
+
+
+    /* ---------------------------------------------
+       AUTH BOX
+    --------------------------------------------- */
+
+    .sidebar-auth-box {
+        width: 100%;
+
+        margin-top: 8px;
+    }
+
+
+    .sidebar-user {
+        width: 100%;
+    }
+
+
+    /* ---------------------------------------------
+       MAIN
+    --------------------------------------------- */
+
+    .bazar-main {
+        width: 100%;
+        max-width: none;
+
+        padding:
+            20px
+            12px
+            50px;
+    }
+
+
+    /* ---------------------------------------------
+       GRID
+    --------------------------------------------- */
+
+    .bazar-grid {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+
+    /* ---------------------------------------------
+       SEARCH
+    --------------------------------------------- */
+
+    .bazar-search-panel {
+        grid-template-columns: 1fr;
+    }
+
+
+    .search-main {
+        grid-column: auto;
+    }
+
+
+    /* ---------------------------------------------
+       PAGE HEADER
+    --------------------------------------------- */
+
+    .bazar-page-header {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 15px;
+    }
+
+
+    .bazar-main-add-button {
+        width: 100%;
+    }
+
+}
+
+
+/* =====================================================
+   EXTRA SMALL
+===================================================== */
+
+@media (max-width: 400px) {
+
+    .bazar-topbar {
+        padding: 0 9px;
+    }
+
+
+    .bazar-brand-text {
+        display: none;
+    }
+
+
+    .bazar-mobile-menu-toggle {
+        width: 38px;
+        height: 38px;
+
+        flex-basis: 38px;
+    }
+
+
+    .bazar-main {
+        padding:
+            17px
+            10px
+            40px;
+    }
+
+}
+
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+@keyframes bazarMobileMenuOpen {
+
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
