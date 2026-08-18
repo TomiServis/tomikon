@@ -85,20 +85,22 @@ async function loadUser(){
 
 
     currentUser =
-        data.user;
+    data.user;
 
-    return true;
 
-    const userEmail =
+// Zobrazenie prihlaseneho uctu
+const messagesUserEmail =
     $("messagesUserEmail");
 
-if(userEmail){
+if(messagesUserEmail){
 
-    userEmail.textContent =
+    messagesUserEmail.textContent =
         currentUser.email || "Neznámy účet";
 
 }
-}
+
+
+return true;
 
 
 /* =====================================================
