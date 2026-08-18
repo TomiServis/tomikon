@@ -1039,187 +1039,152 @@ bazarClient
    MOBILNÉ MENU
 ===================================================== */
 
-function initMobileMenu(){
+/* =====================================================
+   TOMIKON BAZÁR – UNIVERZÁLNE MOBILNÉ MENU
+===================================================== */
 
-    const toggle =
-        $("bazarMobileMenuToggle");
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
 
-    const sidebar =
-        $("bazarSidebar");
+        const menuButton =
+            document.getElementById(
+                "bazarMobileMenuToggle"
+            );
 
-    const overlay =
-        $("bazarMobileOverlay");
-
-
-    if(
-        !toggle ||
-        !sidebar
-    ){
-        return;
-    }
+        const sidebar =
+            document.getElementById(
+                "bazarSidebar"
+            );
 
 
-    function openMenu(){
+        if(
+            !menuButton ||
+            !sidebar
+        ){
 
-        sidebar.classList.add(
-            "mobile-open"
-        );
+            console.warn(
+                "TOMIKON: mobilné menu sa nenašlo."
+            );
 
-        if(overlay){
+            return;
+        }
 
-            overlay.classList.add(
-                "mobile-open"
+
+        function closeMenu(){
+
+            document.body.classList.remove(
+                "bazar-mobile-menu-open"
+            );
+
+            menuButton.textContent =
+                "☰";
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                "false"
             );
 
         }
 
-        toggle.classList.add(
-            "menu-open"
-        );
 
-        toggle.textContent = "✕";
+        function toggleMenu(){
 
-        toggle.setAttribute(
-            "aria-expanded",
-            "true"
-        );
-
-        document.body.classList.add(
-            "mobile-menu-active"
-        );
-    }
-
-
-    function closeMenu(){
-
-        sidebar.classList.remove(
-            "mobile-open"
-        );
-
-        if(overlay){
-
-            overlay.classList.remove(
-                "mobile-open"
-            );
-
-        }
-
-        toggle.classList.remove(
-            "menu-open"
-        );
-
-        toggle.textContent = "☰";
-
-        toggle.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-        document.body.classList.remove(
-            "mobile-menu-active"
-        );
-    }
-
-
-    toggle.addEventListener(
-        "click",
-        () => {
-
-            if(
-                sidebar.classList.contains(
-                    "mobile-open"
-                )
-            ){
-
-                closeMenu();
-
-            }else{
-
-                openMenu();
-
-            }
-
-        }
-    );
-
-
-    if(overlay){
-
-        overlay.addEventListener(
-            "click",
-            closeMenu
-        );
-
-    }
-
-
-    /* Klik na odkaz → zavrie menu */
-
-    sidebar
-        .querySelectorAll(
-            ".sidebar-link"
-        )
-        .forEach(
-            link => {
-
-                link.addEventListener(
-                    "click",
-                    () => {
-
-                        if(
-                            window.innerWidth <= 700
-                        ){
-
-                            closeMenu();
-
-                        }
-
-                    }
+            const isOpen =
+                document.body.classList.toggle(
+                    "bazar-mobile-menu-open"
                 );
 
+
+            menuButton.textContent =
+                isOpen
+                    ? "✕"
+                    : "☰";
+
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+        }
+
+
+        /* HAMBURGER */
+
+        menuButton.addEventListener(
+            "click",
+            function(event){
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                toggleMenu();
+
             }
         );
 
 
-    /* ESC */
+        /* KLIK NA POLOŽKU */
 
-    document.addEventListener(
-        "keydown",
-        event => {
+        sidebar.addEventListener(
+            "click",
+            function(event){
 
-            if(
-                event.key === "Escape" &&
-                sidebar.classList.contains(
-                    "mobile-open"
-                )
-            ){
+                const item =
+                    event.target.closest(
+                        "a, button"
+                    );
+
+
+                if(!item){
+                    return;
+                }
+
 
                 closeMenu();
 
             }
-
-        }
-    );
+        );
 
 
-    /* Ak sa otočí telefón / zmení šírka */
+        /* ESC */
 
-    window.addEventListener(
-        "resize",
-        () => {
+        document.addEventListener(
+            "keydown",
+            function(event){
 
-            if(
-                window.innerWidth > 700
-            ){
+                if(
+                    event.key === "Escape"
+                ){
 
-                closeMenu();
+                    closeMenu();
+
+                }
 
             }
+        );
 
-        }
-    );
 
-}
+        /* RESIZE */
+
+        window.addEventListener(
+            "resize",
+            function(){
+
+                if(
+                    window.innerWidth > 700
+                ){
+
+                    closeMenu();
+
+                }
+
+            }
+        );
+
+    }
+);
 
 
 /* Inicializácia */
