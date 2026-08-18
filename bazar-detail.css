@@ -894,3 +894,228 @@
     }
 
 }
+
+/* =====================================================
+   SPRÁVA PREDAJCU
+===================================================== */
+
+.message-seller-box{
+    margin-top:15px;
+}
+
+.message-seller-button{
+
+    width:100%;
+
+    padding:14px 18px;
+
+    border:1px solid #008cff;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #008cff,
+            #006ee6
+        );
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.message-seller-button:hover{
+
+    transform:translateY(-1px);
+
+    box-shadow:
+        0 0 20px
+        rgba(0,140,255,.25);
+}
+
+
+/* =====================================================
+   MESSAGE MODAL
+===================================================== */
+
+.message-modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:9999;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(0,0,0,.82);
+
+    backdrop-filter:blur(8px);
+}
+
+.message-modal.active{
+    display:flex;
+}
+
+.message-box{
+
+    position:relative;
+
+    width:
+        min(520px,100%);
+
+    padding:30px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #151515,
+            #080808
+        );
+
+    border:
+        1px solid #008cff;
+
+    box-shadow:
+        0 0 40px
+        rgba(0,140,255,.25);
+}
+
+.message-close{
+
+    position:absolute;
+
+    top:14px;
+    right:14px;
+
+    width:36px;
+    height:36px;
+
+    border:1px solid #333;
+
+    border-radius:50%;
+
+    background:#111;
+
+    color:#fff;
+
+    font-size:20px;
+
+    cursor:pointer;
+}
+
+.message-close:hover{
+
+    background:#e53935;
+
+    border-color:#e53935;
+}
+
+.message-icon{
+
+    font-size:34px;
+
+    margin-bottom:8px;
+}
+
+.message-box h2{
+
+    margin:
+        0 0 8px;
+
+    font-size:26px;
+}
+
+.message-subtitle{
+
+    color:#999;
+
+    margin:
+        0 0 20px;
+}
+
+.seller-message-input{
+
+    width:100%;
+
+    min-height:150px;
+
+    resize:vertical;
+
+    padding:14px;
+
+    border:
+        1px solid #333;
+
+    border-radius:10px;
+
+    background:#101010;
+
+    color:#fff;
+
+    outline:none;
+
+    font-family:Arial,Helvetica,sans-serif;
+
+    font-size:15px;
+}
+
+.seller-message-input:focus{
+
+    border-color:#008cff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0,140,255,.08);
+}
+
+.message-send-status{
+
+    min-height:22px;
+
+    margin-top:12px;
+
+    font-size:14px;
+
+    font-weight:bold;
+}
+
+.send-message-button{
+
+    width:100%;
+
+    margin-top:8px;
+
+    padding:13px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:#008cff;
+
+    color:#fff;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.send-message-button:hover{
+    background:#009cff;
+}
