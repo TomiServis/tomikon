@@ -2739,3 +2739,219 @@ body{
     }
 
 }
+
+/* =====================================================
+   TOMIKON BAZÁR - MOBILNÉ MENU
+   OPRAVA
+===================================================== */
+
+.bazar-mobile-menu-toggle {
+    display: none;
+}
+
+
+/* =====================================================
+   MOBIL
+===================================================== */
+
+@media (max-width: 700px) {
+
+    /* TOPBAR */
+
+    .bazar-topbar {
+        position: relative;
+        z-index: 1001;
+
+        height: 62px;
+        min-height: 62px;
+
+        display: flex;
+        align-items: center;
+
+        padding: 0 12px;
+
+        gap: 10px;
+    }
+
+
+    /* HAMBURGER */
+
+    .bazar-mobile-menu-toggle {
+        display: flex !important;
+
+        width: 42px;
+        height: 42px;
+
+        flex: 0 0 42px;
+
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+
+        border: 1px solid #263c54;
+        border-radius: 10px;
+
+        background: #081321;
+
+        color: #ffffff;
+
+        font-size: 22px;
+        line-height: 1;
+
+        cursor: pointer;
+
+        z-index: 1002;
+    }
+
+
+    /* SIDEBAR JE SCHOVANÝ */
+
+    .bazar-sidebar {
+        display: none !important;
+
+        position: fixed !important;
+
+        top: 62px !important;
+        left: 0 !important;
+        right: 0 !important;
+
+        width: 100% !important;
+        height: auto !important;
+
+        max-height: calc(100dvh - 62px) !important;
+
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+
+        z-index: 1000 !important;
+
+        box-sizing: border-box;
+
+        padding: 12px !important;
+
+        background: #050a12 !important;
+
+        border-right: 0 !important;
+        border-bottom: 1px solid #1b2d40 !important;
+
+        box-shadow: 0 20px 50px rgba(0,0,0,.55);
+    }
+
+
+    /* SIDEBAR OTVORENÝ */
+
+    body.bazar-mobile-menu-open .bazar-sidebar {
+        display: block !important;
+    }
+
+
+    /* HLAVNÉ MENU LINKY */
+
+    .bazar-sidebar .sidebar-link {
+        display: flex !important;
+
+        width: 100% !important;
+        min-height: 48px;
+
+        box-sizing: border-box;
+
+        align-items: center;
+
+        padding: 12px 14px !important;
+
+        margin-bottom: 5px;
+
+        border-radius: 10px;
+
+        white-space: normal !important;
+
+        font-size: 15px;
+
+        text-decoration: none;
+    }
+
+
+    .bazar-sidebar .sidebar-link.active {
+        background: rgba(22,136,255,.16);
+
+        border-left: 3px solid #1688ff;
+    }
+
+
+    /* TITUL SIDEBARU */
+
+    .bazar-sidebar .sidebar-title {
+        padding: 8px 10px 12px;
+
+        font-size: 10px;
+    }
+
+
+    /* DELIACA CIARA */
+
+    .bazar-sidebar .sidebar-divider {
+        display: block !important;
+
+        height: 1px;
+
+        margin: 12px 4px;
+
+        background: #1b2d40;
+    }
+
+
+    /* SPODNÉ LINKY */
+
+    .bazar-sidebar .sidebar-bottom {
+        display: block;
+    }
+
+
+    /* HLAVNÝ OBSAH */
+
+    .bazar-main {
+        width: 100% !important;
+        max-width: none !important;
+
+        box-sizing: border-box;
+
+        padding:
+            20px
+            14px
+            50px !important;
+    }
+
+
+    /* KARTY */
+
+    .bazar-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+
+    /* SEARCH */
+
+    .bazar-search-panel {
+        grid-template-columns: 1fr !important;
+    }
+
+}
+
+
+/* =====================================================
+   MALÝ TELEFÓN
+===================================================== */
+
+@media (max-width: 400px) {
+
+    .bazar-brand-text {
+        display: none;
+    }
+
+    .bazar-main {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+}
