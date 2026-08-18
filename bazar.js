@@ -1501,146 +1501,106 @@ authSubmitButton
 
 async function updateAuthUI(user = null){
 
-    const loggedOutBox =
-        document.getElementById("loggedOutBox");
+    const sidebarLoggedInMenu =
+        document.getElementById(
+            "sidebarLoggedInMenu"
+        );
 
-    const loggedInBox =
-        document.getElementById("loggedInBox");
+    const sidebarLoggedInAuth =
+        document.getElementById(
+            "sidebarLoggedInAuth"
+        );
 
-    const userEmail =
-        document.getElementById("userEmail");
+    const sidebarLoggedOutAuth =
+        document.getElementById(
+            "sidebarLoggedOutAuth"
+        );
 
-    const sidebarLogoutButton =
-        document.getElementById("sidebarLogoutButton");
-
-    const sidebarMyListingsButton =
-        document.getElementById("sidebarMyListingsButton");
-
-    const sidebarMessagesButton =
-        document.getElementById("sidebarMessagesButton");
-
-    const sidebarFavoritesButton =
-        document.getElementById("sidebarFavoritesButton");
-
-    const sidebarProfileButton =
-        document.getElementById("sidebarProfileButton");
+    const sidebarUserEmail =
+        document.getElementById(
+            "sidebarUserEmail"
+        );
 
 
-    /*
-     * =========================================
-     * PRIHLÁSENÝ
-     * =========================================
-     */
+    /* =========================================
+       PRIHLÁSENÝ
+    ========================================= */
 
     if(user){
 
-        if(loggedOutBox){
-            loggedOutBox.style.display = "none";
+        if(sidebarLoggedInMenu){
+
+            sidebarLoggedInMenu.style.display =
+                "block";
+
         }
 
-        if(loggedInBox){
-            loggedInBox.style.display = "flex";
+
+        if(sidebarLoggedInAuth){
+
+            sidebarLoggedInAuth.style.display =
+                "block";
+
         }
 
-        if(userEmail){
 
-            userEmail.textContent =
+        if(sidebarLoggedOutAuth){
+
+            sidebarLoggedOutAuth.style.display =
+                "none";
+
+        }
+
+
+        if(sidebarUserEmail){
+
+            sidebarUserEmail.textContent =
                 user.email || "";
 
-            userEmail.style.display =
-                "inline-block";
-
         }
 
-        /*
-         * Sidebar
-         */
-
-        if(sidebarLogoutButton){
-            sidebarLogoutButton.style.display =
-                "flex";
-        }
-
-        if(sidebarMyListingsButton){
-            sidebarMyListingsButton.style.display =
-                "flex";
-        }
-
-        if(sidebarMessagesButton){
-            sidebarMessagesButton.style.display =
-                "flex";
-        }
-
-        if(sidebarFavoritesButton){
-            sidebarFavoritesButton.style.display =
-                "flex";
-        }
-
-        if(sidebarProfileButton){
-            sidebarProfileButton.style.display =
-                "flex";
-        }
 
         return;
+
+    }
+
+
+    /* =========================================
+       ODHLÁSENÝ
+    ========================================= */
+
+    if(sidebarLoggedInMenu){
+
+        sidebarLoggedInMenu.style.display =
+            "none";
+
+    }
+
+
+    if(sidebarLoggedInAuth){
+
+        sidebarLoggedInAuth.style.display =
+            "none";
+
+    }
+
+
+    if(sidebarLoggedOutAuth){
+
+        sidebarLoggedOutAuth.style.display =
+            "block";
+
     }
 
 
     /*
-     * =========================================
-     * ODHLÁSENÝ
-     * =========================================
+     * VŽDY VYMAŽ STARÝ EMAIL
      */
 
-    if(loggedOutBox){
-        loggedOutBox.style.display = "flex";
-    }
+    if(sidebarUserEmail){
 
-    if(loggedInBox){
-        loggedInBox.style.display = "none";
-    }
+        sidebarUserEmail.textContent = "";
 
-    /*
-     * DÔLEŽITÉ:
-     * vymažeme starý email okamžite
-     */
-
-    if(userEmail){
-
-        userEmail.textContent = "";
-
-        userEmail.style.display =
-            "none";
-
-    }
-
-
-    /*
-     * Sidebar
-     */
-
-    if(sidebarLogoutButton){
-        sidebarLogoutButton.style.display =
-            "none";
-    }
-
-    if(sidebarMyListingsButton){
-        sidebarMyListingsButton.style.display =
-            "none";
-    }
-
-    if(sidebarMessagesButton){
-        sidebarMessagesButton.style.display =
-            "none";
-    }
-
-    if(sidebarFavoritesButton){
-        sidebarFavoritesButton.style.display =
-            "none";
-    }
-
-    if(sidebarProfileButton){
-        sidebarProfileButton.style.display =
-            "none";
     }
 
 }
