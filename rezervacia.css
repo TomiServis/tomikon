@@ -1,0 +1,841 @@
+/* =====================================================
+   ZÁKLAD
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        "Inter",
+        Arial,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #102b4a 0%,
+            #07111f 38%,
+            #03070d 100%
+        );
+
+    color: white;
+
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   POZADIE
+===================================================== */
+
+.background-glow {
+    position: fixed;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(0, 140, 255, 0.12);
+
+    filter:
+        blur(110px);
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+.glow-one {
+    top: -220px;
+    left: -180px;
+}
+
+.glow-two {
+    right: -220px;
+    bottom: -220px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.reservation-topbar {
+    width: 100%;
+
+    background:
+        rgba(4, 10, 18, 0.82);
+
+    border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    backdrop-filter:
+        blur(18px);
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+}
+
+.topbar-container {
+    width: 100%;
+
+    max-width: 1200px;
+
+    min-height: 82px;
+
+    margin: 0 auto;
+
+    padding:
+        12px 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.reservation-logo {
+    display: flex;
+
+    align-items: center;
+
+    text-decoration: none;
+}
+
+.reservation-logo img {
+    height: 54px;
+
+    width: auto;
+
+    max-width: 240px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+.back-home {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding:
+        11px 18px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+    transition:
+        0.2s ease;
+}
+
+.back-home:hover {
+    background:
+        rgba(0, 140, 255, 0.16);
+
+    border-color:
+        rgba(0, 140, 255, 0.5);
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+    width: 100%;
+
+    max-width: 900px;
+
+    margin:
+        0 auto;
+
+    padding:
+        75px 25px
+        35px;
+
+    text-align: center;
+}
+
+.badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+        9px 17px;
+
+    border-radius: 50px;
+
+    background:
+        rgba(0, 140, 255, 0.12);
+
+    border:
+        1px solid
+        rgba(0, 140, 255, 0.32);
+
+    color:
+        #62baff;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    margin-bottom: 22px;
+
+    letter-spacing: 0.4px;
+}
+
+.hero h1 {
+    margin:
+        0 0 18px;
+
+    font-size:
+        clamp(
+            38px,
+            7vw,
+            68px
+        );
+
+    line-height: 1.05;
+
+    letter-spacing:
+        -2px;
+}
+
+.hero h1 span {
+    color:
+        #008cff;
+}
+
+.hero-text {
+    max-width: 680px;
+
+    margin:
+        0 auto;
+
+    color:
+        #aebdcb;
+
+    font-size: 17px;
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   SLUŽBY
+===================================================== */
+
+.services {
+    max-width: 1100px;
+
+    margin:
+        20px auto
+        0;
+
+    padding:
+        20px 25px;
+}
+
+.section-title {
+    text-align: center;
+
+    font-size: 27px;
+
+    margin:
+        0 0 28px;
+}
+
+.service-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap: 16px;
+}
+
+.service-card {
+    background:
+        rgba(14, 27, 42, 0.82);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    border-radius: 20px;
+
+    padding:
+        25px 20px;
+
+    text-align: center;
+
+    transition:
+        0.25s ease;
+
+    min-height: 190px;
+}
+
+.service-card:hover {
+    transform:
+        translateY(-6px);
+
+    border-color:
+        rgba(0, 140, 255, 0.7);
+
+    box-shadow:
+        0 18px 45px
+        rgba(0, 100, 255, 0.15);
+}
+
+.service-icon {
+    font-size: 38px;
+
+    margin-bottom: 12px;
+}
+
+.service-card h3 {
+    margin:
+        0 0 10px;
+
+    font-size: 18px;
+}
+
+.service-card p {
+    margin: 0;
+
+    color:
+        #9baaba;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   REZERVÁCIA
+===================================================== */
+
+.reservation-section {
+    max-width: 780px;
+
+    margin:
+        55px auto
+        80px;
+
+    padding:
+        0 25px;
+}
+
+.reservation-box {
+    background:
+        rgba(10, 20, 32, 0.92);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+    border-radius: 28px;
+
+    padding: 40px;
+
+    box-shadow:
+        0 30px 90px
+        rgba(0, 0, 0, 0.40);
+}
+
+.reservation-heading {
+    text-align: center;
+
+    margin-bottom: 32px;
+}
+
+.reservation-icon {
+    font-size: 38px;
+
+    margin-bottom: 10px;
+}
+
+.reservation-heading h2 {
+    margin:
+        0 0 10px;
+
+    font-size: 30px;
+}
+
+.reservation-heading p {
+    margin: 0;
+
+    color:
+        #9baaba;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   FORMULÁR
+===================================================== */
+
+.form-row {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 16px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color:
+        #dce8f2;
+}
+
+input,
+textarea {
+    width: 100%;
+
+    outline: none;
+
+    border-radius: 13px;
+
+    padding:
+        15px 16px;
+
+    background:
+        #111e2d;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.09);
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    transition:
+        0.2s ease;
+}
+
+input:focus,
+textarea:focus {
+    border-color:
+        #008cff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0, 140, 255, 0.13);
+}
+
+textarea {
+    resize: vertical;
+
+    min-height: 130px;
+}
+
+
+/* =====================================================
+   VÝBER SLUŽBY
+===================================================== */
+
+.service-options {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            1fr
+        );
+
+    gap: 12px;
+}
+
+.service-option {
+    position: relative;
+
+    margin: 0;
+}
+
+.service-option input {
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.service-option span {
+    display: block;
+
+    padding:
+        15px;
+
+    background:
+        #111e2d;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color:
+        #ffffff;
+}
+
+.service-option span:hover {
+    border-color:
+        rgba(0, 140, 255, 0.6);
+
+    background:
+        rgba(0, 140, 255, 0.08);
+}
+
+.service-option input:checked + span {
+    background:
+        rgba(0, 140, 255, 0.17);
+
+    border-color:
+        #008cff;
+
+    box-shadow:
+        0 0 22px
+        rgba(0, 140, 255, 0.16);
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.submit-button {
+    width: 100%;
+
+    border: none;
+
+    border-radius: 15px;
+
+    padding:
+        18px;
+
+    margin-top: 5px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #008cff,
+            #0066cc
+        );
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 16px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        0.25s ease;
+
+    box-shadow:
+        0 12px 32px
+        rgba(0, 140, 255, 0.28);
+}
+
+.submit-button:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 18px 45px
+        rgba(0, 140, 255, 0.42);
+}
+
+.submit-button:active {
+    transform:
+        translateY(0);
+}
+
+
+/* =====================================================
+   INFO
+===================================================== */
+
+.form-info {
+    margin-top: 20px;
+
+    text-align: center;
+
+    color:
+        #718397;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    text-align: center;
+
+    padding:
+        32px 20px;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+
+    color:
+        #647587;
+
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 850px) {
+
+    .service-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .topbar-container {
+        min-height: 70px;
+
+        padding:
+            10px 16px;
+    }
+
+    .reservation-logo img {
+        height: 42px;
+
+        max-width: 170px;
+    }
+
+    .back-home {
+        padding:
+            9px 11px;
+
+        font-size: 12px;
+    }
+
+
+    .hero {
+        padding:
+            48px 18px
+            25px;
+    }
+
+    .badge {
+        font-size: 11px;
+
+        padding:
+            8px 13px;
+    }
+
+    .hero h1 {
+        font-size:
+            clamp(
+                35px,
+                11vw,
+                50px
+            );
+
+        letter-spacing:
+            -1.5px;
+    }
+
+    .hero-text {
+        font-size: 15px;
+    }
+
+
+    .services {
+        padding:
+            15px;
+    }
+
+    .section-title {
+        font-size: 23px;
+
+        margin-bottom: 20px;
+    }
+
+    .service-grid {
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 10px;
+    }
+
+    .service-card {
+        min-height: 165px;
+
+        padding:
+            18px 12px;
+
+        border-radius: 16px;
+    }
+
+    .service-icon {
+        font-size: 30px;
+
+        margin-bottom: 8px;
+    }
+
+    .service-card h3 {
+        font-size: 14px;
+
+        margin-bottom: 7px;
+    }
+
+    .service-card p {
+        font-size: 11px;
+
+        line-height: 1.5;
+    }
+
+
+    .reservation-section {
+        margin:
+            35px auto
+            60px;
+
+        padding:
+            0 14px;
+    }
+
+    .reservation-box {
+        padding:
+            25px 16px;
+
+        border-radius: 22px;
+    }
+
+    .reservation-heading {
+        margin-bottom: 25px;
+    }
+
+    .reservation-heading h2 {
+        font-size: 24px;
+    }
+
+
+    .form-row {
+        grid-template-columns:
+            1fr;
+
+        gap: 0;
+    }
+
+    .service-options {
+        grid-template-columns:
+            1fr;
+    }
+
+    .service-option span {
+        padding:
+            14px;
+    }
+
+
+    input,
+    textarea {
+        font-size: 16px;
+    }
+
+    .submit-button {
+        padding:
+            17px;
+
+        font-size: 16px;
+    }
+
+}
