@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Rezervácia servisu | TOMIKON</title>
+
+    <!-- FONT -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =====================================================
+           ZÁKLAD
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                "Inter",
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #102b4a 0%,
+                    #07111f 35%,
+                    #03070d 100%
+                );
+
+            color: white;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================================
+           POZADIE
+        ===================================================== */
+
+        .background-glow {
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0, 140, 255, 0.12);
+
+            filter:
+                blur(100px);
+
+            pointer-events: none;
+
+            z-index: -1;
+
+        }
+
+
+        .glow-one {
+
+            top: -200px;
+            left: -150px;
+
+        }
+
+
+        .glow-two {
+
+            right: -200px;
+            bottom: -200px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .topbar {
+
+            width: 100%;
+
+            padding:
+                18px
+                25px;
+
+            display: flex;
+
+            justify-content: center;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            background:
+                rgba(4, 10, 18, 0.75);
+
+            backdrop-filter:
+                blur(15px);
+
+        }
+
+
+        .logo {
+
+            text-decoration: none;
+
+            color: white;
+
+            font-weight: 800;
+
+            font-size: 22px;
+
+            letter-spacing: 1px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .logo span {
+
+            color: #008cff;
+
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            width: 100%;
+
+            max-width: 850px;
+
+            margin:
+                0 auto;
+
+            padding:
+                65px 25px
+                35px;
+
+            text-align: center;
+
+        }
+
+
+        .badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                9px
+                16px;
+
+            border-radius: 50px;
+
+            background:
+                rgba(0, 140, 255, 0.12);
+
+            border:
+                1px solid
+                rgba(0, 140, 255, 0.3);
+
+            color: #5bb7ff;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        h1 {
+
+            margin:
+                0 0 18px;
+
+            font-size:
+                clamp(
+                    34px,
+                    7vw,
+                    65px
+                );
+
+            line-height: 1.05;
+
+        }
+
+
+        .hero h1 span {
+
+            color: #008cff;
+
+        }
+
+
+        .hero-text {
+
+            max-width: 650px;
+
+            margin:
+                0 auto;
+
+            color: #aebdcb;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* =====================================================
+           SERVICES
+        ===================================================== */
+
+        .services {
+
+            max-width: 1050px;
+
+            margin:
+                20px auto
+                0;
+
+            padding:
+                20px 25px;
+
+        }
+
+
+        .section-title {
+
+            text-align: center;
+
+            font-size: 25px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .service-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    1fr
+                );
+
+            gap: 15px;
+
+        }
+
+
+        .service-card {
+
+            background:
+                rgba(14, 27, 42, 0.8);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 18px;
+
+            padding: 22px;
+
+            text-align: center;
+
+            transition:
+                0.25s;
+
+        }
+
+
+        .service-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                rgba(0, 140, 255, 0.7);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 100, 255, 0.12);
+
+        }
+
+
+        .service-icon {
+
+            font-size: 35px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .service-card h3 {
+
+            margin:
+                0 0 8px;
+
+            font-size: 17px;
+
+        }
+
+
+        .service-card p {
+
+            margin: 0;
+
+            color: #9baaba;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =====================================================
+           FORMULÁR
+        ===================================================== */
+
+        .reservation-section {
+
+            max-width: 750px;
+
+            margin:
+                45px auto
+                80px;
+
+            padding:
+                0 25px;
+
+        }
+
+
+        .reservation-box {
+
+            background:
+                rgba(10, 20, 32, 0.9);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.1);
+
+            border-radius: 25px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,0.35);
+
+        }
+
+
+        .reservation-heading {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .reservation-heading h2 {
+
+            margin:
+                0 0 10px;
+
+            font-size: 28px;
+
+        }
+
+
+        .reservation-heading p {
+
+            margin: 0;
+
+            color: #9baaba;
+
+        }
+
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 18px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #d9e4ee;
+
+        }
+
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            border-radius: 12px;
+
+            padding:
+                14px
+                15px;
+
+            background:
+                #111e2d;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+
+        }
+
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color: #008cff;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(0,140,255,0.12);
+
+        }
+
+
+        textarea {
+
+            resize: vertical;
+
+            min-height: 120px;
+
+        }
+
+
+        /* =====================================================
+           VÝBER SLUŽBY
+        ===================================================== */
+
+        .service-options {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    1fr
+                );
+
+            gap: 12px;
+
+        }
+
+
+        .service-option {
+
+            position: relative;
+
+        }
+
+
+        .service-option input {
+
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+        }
+
+
+        .service-option span {
+
+            display: block;
+
+            padding:
+                15px;
+
+            background:
+                #111e2d;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 13px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            font-size: 14px;
+
+        }
+
+
+        .service-option input:checked + span {
+
+            background:
+                rgba(0, 140, 255, 0.16);
+
+            border-color: #008cff;
+
+            box-shadow:
+                0 0 20px
+                rgba(0, 140, 255, 0.15);
+
+        }
+
+
+        .service-option span:hover {
+
+            border-color:
+                rgba(0,140,255,0.5);
+
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .submit-button {
+
+            width: 100%;
+
+            border: none;
+
+            border-radius: 14px;
+
+            padding:
+                17px;
+
+            margin-top: 5px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #008cff,
+                    #0066cc
+                );
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,140,255,0.25);
+
+        }
+
+
+        .submit-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,140,255,0.4);
+
+        }
+
+
+        /* =====================================================
+           INFO
+        ===================================================== */
+
+        .form-info {
+
+            margin-top: 20px;
+
+            text-align: center;
+
+            color: #718397;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            text-align: center;
+
+            padding:
+                30px 20px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            color: #647587;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (
+            max-width: 700px
+        ) {
+
+            .topbar {
+
+                justify-content: center;
+
+                padding:
+                    16px;
+
+            }
+
+
+            .hero {
+
+                padding:
+                    45px 20px
+                    25px;
+
+            }
+
+
+            .hero-text {
+
+                font-size: 15px;
+
+            }
+
+
+            .services {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .service-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+                gap: 10px;
+
+            }
+
+
+            .service-card {
+
+                padding: 17px 12px;
+
+            }
+
+
+            .service-icon {
+
+                font-size: 29px;
+
+            }
+
+
+            .service-card h3 {
+
+                font-size: 14px;
+
+            }
+
+
+            .service-card p {
+
+                font-size: 11px;
+
+            }
+
+
+            .reservation-section {
+
+                margin-top: 30px;
+
+                padding:
+                    0 15px;
+
+            }
+
+
+            .reservation-box {
+
+                padding: 22px 16px;
+
+                border-radius: 20px;
+
+            }
+
+
+            .form-row {
+
+                grid-template-columns:
+                    1fr;
+
+                gap: 0;
+
+            }
+
+
+            .service-options {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .reservation-heading h2 {
+
+                font-size: 23px;
+
+            }
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="background-glow glow-one"></div>
+
+<div class="background-glow glow-two"></div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="topbar">
+
+    <a
+        href="index.html"
+        class="logo"
+    >
+
+        🔧
+
+        TOMI<span>KON</span>
+
+    </a>
+
+</header>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="badge">
+
+        ⚡ TOMIKON PC SERVIS
+
+    </div>
+
+
+    <h1>
+
+        Tvoj počítač
+        <span>si zaslúži viac.</span>
+
+    </h1>
+
+
+    <p class="hero-text">
+
+        Čistenie, servis, upgrade a pomoc
+        s počítačom na jednom mieste.
+        Vyplň formulár a rezervuj si
+        svoj termín.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     SLUŽBY
+===================================================== -->
+
+<section class="services">
+
+    <h2 class="section-title">
+
+        🔧 Čo vieme spraviť?
+
+    </h2>
+
+
+    <div class="service-grid">
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🧹
+            </div>
+
+            <h3>
+                Čistenie PC
+            </h3>
+
+            <p>
+                Odstránenie prachu
+                a kompletné vyčistenie.
+            </p>
+
+        </div>
+
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                ⚡
+            </div>
+
+            <h3>
+                Upgrade PC
+            </h3>
+
+            <p>
+                RAM, SSD, grafická karta
+                a ďalšie komponenty.
+            </p>
+
+        </div>
+
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🌡️
+            </div>
+
+            <h3>
+                Výmena pasty
+            </h3>
+
+            <p>
+                Nižšie teploty
+                a lepšie chladenie.
+            </p>
+
+        </div>
+
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🪟
+            </div>
+
+            <h3>
+                Windows
+            </h3>
+
+            <p>
+                Inštalácia systému,
+                ovládačov a programov.
+            </p>
+
+        </div>
+
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🔍
+            </div>
+
+            <h3>
+                Diagnostika
+            </h3>
+
+            <p>
+                Nájdeme problém
+                s tvojím počítačom.
+            </p>
+
+        </div>
+
+
+
+        <div class="service-card">
+
+            <div class="service-icon">
+                🎮
+            </div>
+
+            <h3>
+                Herné PC
+            </h3>
+
+            <p>
+                Pomoc s výberom
+                alebo skladanie PC.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     REZERVÁCIA
+===================================================== -->
+
+<section class="reservation-section">
+
+    <div class="reservation-box">
+
+
+        <div class="reservation-heading">
+
+            <h2>
+                📅 Rezervuj si servis
+            </h2>
+
+            <p>
+                Vyplň formulár a ozveme sa ti
+                ohľadom termínu.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             FORMULÁR
+        ================================================== -->
+
+        <form
+            action="https://formspree.io/f/mdendypz"
+            method="POST"
+        >
+
+
+            <!-- MENO + TELEFÓN -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label>
+                        👤 Meno
+                    </label>
+
+                    <input
+                        type="text"
+                        name="meno"
+                        placeholder="Tvoje meno"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        📱 Telefón
+                    </label>
+
+                    <input
+                        type="tel"
+                        name="telefon"
+                        placeholder="0900 123 456"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label>
+                    📧 E-mail
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="tvoj@email.sk"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- SLUŽBA -->
+
+            <div class="form-group">
+
+                <label>
+                    🔧 Vyber službu
+                </label>
+
+
+                <div class="service-options">
+
+
+                    <label class="service-option">
+
+                        <input
+                            type="radio"
+                            name="sluzba"
+                            value="Čistenie PC"
+                            required
+                        >
+
+                        <span>
+                            🧹 Čistenie PC
+                        </span>
+
+                    </label>
+
+
+
+                    <label class="service-option">
+
+                        <input
+                            type="radio"
+                            name="sluzba"
+                            value="Upgrade PC"
+                        >
+
+                        <span>
+                            ⚡ Upgrade PC
+                        </span>
+
+                    </label>
+
+
+
+                    <label class="service-option">
+
+                        <input
+                            type="radio"
+                            name="sluzba"
+                            value="Výmena teplovodivej pasty"
+                        >
+
+                        <span>
+                            🌡️ Výmena pasty
+                        </span>
+
+                    </label>
+
+
+
+                    <label class="service-option">
+
+                        <input
+                            type="radio"
+                            name="sluzba"
+                            value="Inštalácia Windows"
+                        >
+
+                        <span>
+                            🪟 Inštalácia Windows
+                        </span>
+
+                    </label>
+
+
+
+                    <label class="service-option">
+
+                        <input
+                            type="radio"
+                            name="sluzba"
+                            value="Diagnostika PC"
+                        >
+
+                        <span>
+                            🔍 Diagnostika PC
+                        </span>
+
+                    </label>
+
+
+
+                    <label class="service-option">
+
+                        <input
+                            type="radio"
+                            name="sluzba"
+                            value="Herné PC / Konzultácia"
+                        >
+
+                        <span>
+                            🎮 Herné PC / Konzultácia
+                        </span>
+
+                    </label>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DÁTUM + ČAS -->
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label>
+                        📅 Preferovaný dátum
+                    </label>
+
+                    <input
+                        type="date"
+                        name="datum"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        🕒 Preferovaný čas
+                    </label>
+
+                    <input
+                        type="time"
+                        name="cas"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- POPIS -->
+
+            <div class="form-group">
+
+                <label>
+                    📝 Popíš, čo potrebuješ
+                </label>
+
+                <textarea
+                    name="poznamka"
+                    placeholder="Napríklad: PC sa prehrieva, chcem vymeniť SSD alebo potrebujem kompletné čistenie..."
+                ></textarea>
+
+            </div>
+
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="submit-button"
+            >
+
+                📅 Rezervovať termín
+
+            </button>
+
+
+            <div class="form-info">
+
+                Po odoslaní tvojej požiadavky
+                ťa budeme kontaktovať ohľadom
+                potvrdenia termínu.
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    © 2026 TOMIKON • PC SERVIS
+
+</footer>
+
+
+</body>
+
+</html>
