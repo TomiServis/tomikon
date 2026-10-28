@@ -20,6 +20,12 @@
 
 
 
+
+.filter-tab{transition:background .16s ease,border-color .16s ease,box-shadow .16s ease}
+.filter-tab.active{background:#0878d1!important;border-color:#49b5ff!important;color:#fff!important;box-shadow:0 0 0 2px rgba(22,140,255,.18),0 4px 14px rgba(22,140,255,.16)}
+.filter-tab.active span{background:#e7f4ff!important;color:#07569a!important}
+.filter-tab:focus-visible{outline:3px solid #8acaff;outline-offset:3px}
+
 .inventory-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:-2px 0 14px}
 .filter-tabs{display:flex;gap:7px;flex-wrap:wrap}
 .filter-tab{display:inline-flex;align-items:center;gap:8px;border:1px solid #30455e;background:#0e1b2b;color:#c5d5e6;border-radius:999px;padding:9px 13px;font-size:14px;font-weight:750}
@@ -240,7 +246,7 @@ function exportCsv(){
  }
 }
 async function render(){const rev=pcs.reduce((s,p)=>s+revenue(p),0),buy=pcs.reduce((s,p)=>s+Number(p.purchase_price||0),0),ex=expenses.reduce((s,e)=>s+Number(e.amount||0),0),profit=rev-buy-ex;$("revenue").textContent=euro(rev);$("purchaseTotal").textContent=euro(buy);$("expenseTotal").textContent=euro(ex);$("profit").textContent=euro(profit);$("profitBox").classList.toggle("loss",profit<0);renderFinancials();$("count").textContent=`${pcs.length} záznamov · ${pcs.filter(p=>p.status==="sold").length} predaných · ${pcs.filter(p=>p.status!=="sold").length} na sklade`;
-$("filterAllCount").textContent=String(pcs.length);$("filterStockCount").textContent=String(pcs.filter(p=>p.status!=="sold").length);$("filterSoldCount").textContent=String(pcs.filter(p=>p.status==="sold").length);$("list").querySelectorAll("[data-filter]").forEach(b=>b.classList.toggle("active",b.dataset.filter===activeFilter));
+$("filterAllCount").textContent=String(pcs.length);$("filterStockCount").textContent=String(pcs.filter(p=>p.status!=="sold").length);$("filterSoldCount").textContent=String(pcs.filter(p=>p.status==="sold").length);document.querySelectorAll(".filter-tab[data-filter]").forEach(b=>{const selected=b.dataset.filter===activeFilter;b.classList.toggle("active",selected);b.setAttribute("aria-pressed",selected?"true":"false")});
 const term=$("search").value.trim().toLowerCase(),sort=$("sortBy").value;
 let rows=pcs.filter(p=>(p.name+" "+(p.configuration||"")+" "+(p.description||"")).toLowerCase().includes(term)&&(activeFilter==="all"||(activeFilter==="sold"?p.status==="sold":p.status!=="sold")));
 rows.sort((a,b)=>{if(sort==="name")return a.name.localeCompare(b.name,"sk");if(sort==="profit")return (revenue(b)-costs(b))-(revenue(a)-costs(a));if(sort==="purchase")return String(b.purchase_date||"").localeCompare(String(a.purchase_date||""));return String(b.created_at||"").localeCompare(String(a.created_at||""))});
