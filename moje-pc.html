@@ -40,7 +40,7 @@
 <section class="panel monthly-panel">
   <div class="monthly-head">
     <div><h2 style="margin:0 0 5px">Finančný prehľad</h2><div class="muted" style="font-size:14px">Mesačné výsledky predaných PC a rýchly prehľad evidencie.</div></div>
-    <button id="exportCsv" class="btn secondary" type="button">Exportovať do Excelu (CSV)</button>
+    <button id="exportCsv" class="btn secondary" type="button">Exportovať do Excelu (CSV)</button><div id="exportStatus" class="notice" role="status" aria-live="polite" style="margin-top:8px"></div>
   </div>
   <div class="stats-subgrid">
     <div class="stats-tile"><span>Najziskovejší predaný PC</span><strong id="bestPc">—</strong><div id="bestPcProfit" class="muted" style="font-size:13px;margin-top:4px">Zatiaľ bez predajov</div></div>
@@ -136,9 +136,26 @@ function exportCsv(){
  rows.push(["Výdavky"]);
  rows.push(["PC","Popis výdavku","Dátum","Suma EUR"]);
  for(const e of expenses){const p=pcs.find(p=>p.id===e.pc_id);rows.push([p?.name||("PC #"+e.pc_id),e.description,e.expense_date||"",Number(e.amount||0).toFixed(2)])}
- const csv="\\ufeff"+rows.map(r=>r.map(csvCell).join(";")).join("\\r\\n");
- const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"}),url=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=url;a.download="moje-pc-tomikon-"+new Date().toISOString().slice(0,10)+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+ const csv="\\uFEFF"+rows.map(r=>r.map(csvCell).join(";")).join("\\r\\n");
+ const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;
+ a.download="moje-pc-tomikon-"+new Date().toISOString().slice(0,10)+".csv";
+ a.style.display="none";
+ document.body.appendChild(a);
+ try {
+   a.click();
+   const status=document.getElementById("exportStatus");
+   if(status) status.textContent="Export pripravený — skontroluj stiahnuté súbory v prehliadači.";
+ } catch(err) {
+   const status=document.getElementById("exportStatus");
+   if(status) status.textContent="Export sa nepodarilo spustiť. Skús to v inom prehliadači.";
+   console.error("CSV export failed",err);
+ } finally {
+   a.remove();
+   window.setTimeout(()=>URL.revokeObjectURL(url),2000);
+ }
 }
 async function render(){const rev=pcs.reduce((s,p)=>s+revenue(p),0),buy=pcs.reduce((s,p)=>s+Number(p.purchase_price||0),0),ex=expenses.reduce((s,e)=>s+Number(e.amount||0),0),profit=rev-buy-ex;$("revenue").textContent=euro(rev);$("purchaseTotal").textContent=euro(buy);$("expenseTotal").textContent=euro(ex);$("profit").textContent=euro(profit);$("profitBox").classList.toggle("loss",profit<0);renderFinancials();$("count").textContent=`${pcs.length} záznamov · ${pcs.filter(p=>p.status==="sold").length} predaných · ${pcs.filter(p=>p.status!=="sold").length} na sklade`;
 const term=$("search").value.trim().toLowerCase(),rows=pcs.filter(p=>(p.name+" "+(p.configuration||"")+" "+(p.description||"")).toLowerCase().includes(term));if(!rows.length){$("list").innerHTML='<div class="empty">'+(pcs.length?"Nenašli sa záznamy.":"Zatiaľ nemáš žiadne PC. Pridaj prvý vyššie.")+'</div>';return}
@@ -155,6 +172,6 @@ async function delExpense(id){if(!confirm("Vymazať tento výdavok?"))return;con
 async function delPc(id){const p=pcs.find(x=>x.id===id);if(!p||!confirm(`Vymazať PC „${p.name}“, jeho výdavky a fotky?`))return;const fs=photos.filter(f=>f.pc_id===id);for(const f of fs)await db.storage.from("pc-photos").remove([f.storage_path]);const {error}=await db.from("pc_inventory").delete().eq("id",id);if(error){alert("Chyba: "+error.message);return}if($("pcId").value===String(id))reset();await load()}
 $("search").addEventListener("input",()=>render());
 db.auth.onAuthStateChange((_event,session)=>{if(!session){user=null;showLogin()}});
-$("exportCsv").addEventListener("click",exportCsv);authCheck();if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./moje-pc-sw.js").catch(()=>{}));
+$("exportCsv").addEventListener("click",()=>{try{exportCsv()}catch(err){console.error("CSV export failed",err);const status=$("exportStatus");if(status)status.textContent="Export zlyhal. Skús obnoviť stránku a zopakovať export."}});authCheck();if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./moje-pc-sw.js").catch(()=>{}));
 })();
 </script></body></html>
