@@ -36,20 +36,6 @@
 .sort-control select{max-width:100%;background:#081421;border:1px solid #30455e;border-radius:9px;padding:10px;color:white;font-size:14px}
 @media(max-width:600px){.inventory-toolbar{align-items:stretch;flex-direction:column}.inventory-toolbar input{max-width:none!important}.inventory-controls{align-items:stretch;flex-direction:column}.filter-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.filter-tab{justify-content:center;padding:8px 5px;font-size:12px;gap:5px}.filter-tab span{min-width:19px;height:19px;font-size:11px}.sort-control{justify-content:space-between}.sort-control select{flex:1;max-width:70%}}
 
-
-/* Desktop scroll/render performance */
-@media (min-width: 851px){
-  .pc{
-    content-visibility:auto;
-    contain-intrinsic-size:auto 460px;
-    contain:layout paint style;
-  }
-  .photo-grid img{
-    content-visibility:auto;
-    contain-intrinsic-size:160px 130px;
-  }
-}
-
 /* Mobile layout refinements */
 @media(max-width:600px){
   html,body{width:100%;max-width:100%;overflow-x:hidden}
