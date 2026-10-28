@@ -18,6 +18,63 @@
 .monthly-panel{margin:18px 0}.monthly-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}.monthly-table-wrap{overflow-x:auto;margin-top:12px}table.monthly-table{width:100%;border-collapse:collapse;min-width:480px}table.monthly-table th,table.monthly-table td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:14px}table.monthly-table th{color:#b6c8dc;font-size:12px;text-transform:uppercase;letter-spacing:.04em}table.monthly-table td:last-child,table.monthly-table th:last-child{text-align:right}.highlight-number{font-weight:800;color:var(--green)}.stats-subgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.stats-tile{border:1px solid var(--line);border-radius:12px;padding:14px;background:#0d1a29}.stats-tile span{display:block;color:#b6c8dc;font-size:13px;margin-bottom:6px}.stats-tile strong{font-size:19px;overflow-wrap:anywhere}
 @media(max-width:600px){.stats-subgrid{grid-template-columns:1fr}.monthly-panel{padding:14px}table.monthly-table th,table.monthly-table td{padding:10px 8px;font-size:13px}}
 
+
+/* Mobile layout refinements */
+@media(max-width:600px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  .wrap{width:100%;max-width:100%;padding:12px 10px 32px}
+  .top{gap:8px;margin-bottom:16px;align-items:center}
+  .top h1{font-size:clamp(22px,6vw,29px);line-height:1.15}
+  .eyebrow{font-size:10px;letter-spacing:1.5px}
+  .top .btn{font-size:13px;padding:8px 10px;white-space:nowrap}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0}
+  .stat{padding:12px 11px;border-radius:13px;min-width:0}
+  .stat span{font-size:12px;line-height:1.25;min-height:0;margin-bottom:8px}
+  .stat strong{font-size:clamp(16px,4.5vw,21px);line-height:1.2}
+  .panel{padding:14px;border-radius:15px;min-width:0}
+  .panel h2{font-size:22px;line-height:1.25}
+  .monthly-panel{margin:14px 0;padding:14px}
+  .monthly-head{display:block}
+  .monthly-head>div:first-child{margin-bottom:8px}
+  .monthly-head .muted{font-size:13px!important}
+  .stats-subgrid{grid-template-columns:1fr;gap:9px;margin-top:12px}
+  .stats-tile{padding:12px}
+  .stats-tile span{font-size:13px}
+  .stats-tile strong{font-size:19px}
+  .monthly-table-wrap{overflow:visible;margin-top:12px}
+  table.monthly-table{width:100%;min-width:0;display:block;border-collapse:separate}
+  table.monthly-table thead{display:none}
+  table.monthly-table tbody{display:grid;gap:10px}
+  table.monthly-table tbody tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#0d1a29}
+  table.monthly-table tbody td{display:block;border:0;padding:0!important;text-align:left!important;font-size:14px;min-width:0;overflow-wrap:anywhere}
+  table.monthly-table tbody td:before{content:attr(data-label);display:block;color:#9fb1c5;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+  table.monthly-table tbody td:first-child{grid-column:1/-1;font-size:16px;font-weight:750}
+  table.monthly-table tbody td:first-child:before{font-size:11px}
+  table.monthly-table tbody td[colspan="4"]{grid-column:1/-1}
+  .toolbar{gap:10px}
+  .toolbar h2{font-size:21px}
+  .cards{grid-template-columns:minmax(0,1fr);gap:11px}
+  .pc{padding:14px;min-width:0}
+  .pc h3{font-size:20px}
+  .pc-data{gap:7px}
+  .mini{padding:9px}
+  .mini span{font-size:12px}
+  .mini strong{font-size:16px}
+  .desc{font-size:14px}
+  .photo-grid img{width:calc(50% - 5px);height:130px}
+  .formgrid{grid-template-columns:minmax(0,1fr)}
+  .field label{font-size:14px}
+  .field input,.field textarea,.field select{font-size:16px}
+  .actions .btn{min-height:40px}
+  .notice{font-size:12px}
+}
+@media(min-width:601px) and (max-width:850px){
+  .wrap{padding:18px 14px 40px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .monthly-table-wrap{overflow-x:auto}
+}
+
 .lightbox{position:fixed;inset:0;z-index:9999;background:rgba(2,7,14,.94);display:flex;align-items:center;justify-content:center;padding:24px}
 .lightbox.hidden{display:none!important}
 .lightbox img{display:block;max-width:min(92vw,1400px);max-height:86vh;width:auto;height:auto;object-fit:contain;border-radius:12px;box-shadow:0 18px 70px #0009}
@@ -35,19 +92,18 @@
 <header class="top"><div><div class="eyebrow">Súkromná evidencia</div><h1>Moje PC <span style="color:#55adff">TOMIKON</span></h1><div class="muted" style="font-size:14px">Nákupy · výdavky · predaje · zisk</div></div><button id="logout" class="btn secondary hidden">Odhlásiť</button></header>
 <section id="login" class="panel login"><h2>🔐 Súkromný prístup</h2><p class="muted">Prihlás sa existujúcim administrátorským účtom TOMIKON.</p><form id="loginForm"><div class="field"><label for="email">E-mail</label><input id="email" type="email" autocomplete="username" required></div><div class="field"><label for="password">Heslo</label><input id="password" type="password" autocomplete="current-password" required></div><button class="btn" style="width:100%">Prihlásiť sa</button><div id="loginMsg" class="msg error"></div></form></section>
 <main id="app" class="hidden">
-<div class="grid"><div class="stat"><span>Celkové tržby</span><strong id="revenue">0,00 €</strong></div><div class="stat"><span>Nákupné ceny</span><strong id="purchaseTotal">0,00 €</strong></div><div class="stat"><span>Dodatočné náklady</span><strong id="expenseTotal">0,00 €</strong></div><div class="stat profit" id="profitBox"><span>Čistý zisk</span><strong id="profit">0,00 €</strong></div></div>
+<div class="grid"><div class="stat"><span>Celkové tržby</span><strong id="revenue">0,00 €</strong></div><div class="stat"><span>Nákupné ceny</span><strong id="purchaseTotal">0,00 €</strong></div><div class="stat"><span>Dodatočné náklady</span><strong id="expenseTotal">0,00 €</strong></div><div class="stat profit" id="profitBox"><span>Čistý výsledok</span><strong id="profit">0,00 €</strong></div></div>
 
 <section class="panel monthly-panel">
   <div class="monthly-head">
     <div><h2 style="margin:0 0 5px">Finančný prehľad</h2><div class="muted" style="font-size:14px">Mesačné výsledky predaných PC a rýchly prehľad evidencie.</div></div>
-    <button id="exportCsv" class="btn secondary" type="button">Exportovať do Excelu (CSV)</button><div id="exportStatus" class="notice" role="status" aria-live="polite" style="margin-top:8px"></div>
   </div>
   <div class="stats-subgrid">
     <div class="stats-tile"><span>Najziskovejší predaný PC</span><strong id="bestPc">—</strong><div id="bestPcProfit" class="muted" style="font-size:13px;margin-top:4px">Zatiaľ bez predajov</div></div>
     <div class="stats-tile"><span>Počet predaných PC</span><strong id="soldCount">0</strong><div class="muted" style="font-size:13px;margin-top:4px">Počítače so stavom „Predaný“</div></div>
   </div>
   <div class="monthly-table-wrap">
-    <table class="monthly-table"><thead><tr><th>Mesiac</th><th>Tržby</th><th>Náklady predajov</th><th>Zisky</th></tr></thead><tbody id="monthlyRows"><tr><td colspan="4" class="muted">Zatiaľ bez údajov.</td></tr></tbody></table>
+    <table class="monthly-table"><thead><tr><th>Mesiac</th><th>Tržby</th><th>Náklady predajov</th><th>Výsledok</th></tr></thead><tbody id="monthlyRows"><tr><td colspan="4" class="muted">Zatiaľ bez údajov.</td></tr></tbody></table>
   </div>
   <p class="notice">Mesačný výsledok priraďuje celý nákup a súvisiace výdavky k mesiacu predaja. Celkový výsledok hore zahŕňa aj náklady na PC, ktoré ešte nie sú predané.</p>
 </section>
@@ -126,7 +182,7 @@ function renderFinancials(){
  $("soldCount").textContent=String(sold.length);
  if(ranked.length){$("bestPc").textContent=ranked[0].p.name;$("bestPcProfit").textContent="Zisk: "+euro(ranked[0].profit);$("bestPcProfit").style.color=ranked[0].profit<0?"var(--red)":"var(--green)"}else{$("bestPc").textContent="—";$("bestPcProfit").textContent="Zatiaľ bez predajov";$("bestPcProfit").style.color="var(--muted)"}
  const rows=monthlyData();
- $("monthlyRows").innerHTML=rows.map(r=>`<tr><td>${esc(r.label)}${r.count?`<div class="muted" style="font-size:12px">${r.count} predajov</div>`:""}</td><td>${euro(r.revenue)}</td><td>${euro(r.cost)}</td><td class="${r.profit>=0?"highlight-number":""}" style="${r.profit<0?"color:var(--red)":""}">${euro(r.profit)}</td></tr>`).join("");
+ $("monthlyRows").innerHTML=rows.map(r=>`<tr><td data-label="Mesiac">${esc(r.label)}${r.count?`<div class="muted" style="font-size:12px">${r.count} predajov</div>`:""}</td><td data-label="Tržby">${euro(r.revenue)}</td><td data-label="Náklady predajov">${euro(r.cost)}</td><td data-label="Výsledok" class="${r.profit>=0?"highlight-number":""}" style="${r.profit<0?"color:var(--red)":""}">${euro(r.profit)}</td></tr>`).join("");
 }
 function csvCell(value){const s=String(value??"");return '"'+s.replace(/"/g,'""')+'"'}
 function exportCsv(){
@@ -172,6 +228,6 @@ async function delExpense(id){if(!confirm("Vymazať tento výdavok?"))return;con
 async function delPc(id){const p=pcs.find(x=>x.id===id);if(!p||!confirm(`Vymazať PC „${p.name}“, jeho výdavky a fotky?`))return;const fs=photos.filter(f=>f.pc_id===id);for(const f of fs)await db.storage.from("pc-photos").remove([f.storage_path]);const {error}=await db.from("pc_inventory").delete().eq("id",id);if(error){alert("Chyba: "+error.message);return}if($("pcId").value===String(id))reset();await load()}
 $("search").addEventListener("input",()=>render());
 db.auth.onAuthStateChange((_event,session)=>{if(!session){user=null;showLogin()}});
-$("exportCsv").addEventListener("click",()=>{try{exportCsv()}catch(err){console.error("CSV export failed",err);const status=$("exportStatus");if(status)status.textContent="Export zlyhal. Skús obnoviť stránku a zopakovať export."}});authCheck();if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./moje-pc-sw.js").catch(()=>{}));
+authCheck();if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./moje-pc-sw.js").catch(()=>{}));
 })();
 </script></body></html>
