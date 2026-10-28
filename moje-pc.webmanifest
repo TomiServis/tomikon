@@ -1,0 +1,10 @@
+{
+  "name": "Moje PC TOMIKON",
+  "short_name": "Moje PC",
+  "description": "Súkromná evidencia nákupov, výdavkov a predajov počítačov.",
+  "start_url": "./moje-pc.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f"
+}
