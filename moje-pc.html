@@ -138,7 +138,7 @@ function exportCsv(){
  for(const e of expenses){const p=pcs.find(p=>p.id===e.pc_id);rows.push([p?.name||("PC #"+e.pc_id),e.description,e.expense_date||"",Number(e.amount||0).toFixed(2)])}
  const csv="\\uFEFF"+rows.map(r=>r.map(csvCell).join(";")).join("\\r\\n");
  const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
- const url=URL.createObjectURL(blob);
+ const url=window.URL.createObjectURL(blob);
  const a=document.createElement("a");
  a.href=url;
  a.download="moje-pc-tomikon-"+new Date().toISOString().slice(0,10)+".csv";
@@ -154,7 +154,7 @@ function exportCsv(){
    console.error("CSV export failed",err);
  } finally {
    a.remove();
-   window.setTimeout(()=>URL.revokeObjectURL(url),2000);
+   window.setTimeout(()=>window.URL.revokeObjectURL(url),2000);
  }
 }
 async function render(){const rev=pcs.reduce((s,p)=>s+revenue(p),0),buy=pcs.reduce((s,p)=>s+Number(p.purchase_price||0),0),ex=expenses.reduce((s,e)=>s+Number(e.amount||0),0),profit=rev-buy-ex;$("revenue").textContent=euro(rev);$("purchaseTotal").textContent=euro(buy);$("expenseTotal").textContent=euro(ex);$("profit").textContent=euro(profit);$("profitBox").classList.toggle("loss",profit<0);renderFinancials();$("count").textContent=`${pcs.length} záznamov · ${pcs.filter(p=>p.status==="sold").length} predaných · ${pcs.filter(p=>p.status!=="sold").length} na sklade`;
