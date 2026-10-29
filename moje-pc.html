@@ -36,6 +36,26 @@
 .sort-control select{max-width:100%;background:#081421;border:1px solid #30455e;border-radius:9px;padding:10px;color:white;font-size:14px}
 @media(max-width:600px){.inventory-toolbar{align-items:stretch;flex-direction:column}.inventory-toolbar input{max-width:none!important}.inventory-controls{align-items:stretch;flex-direction:column}.filter-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.filter-tab{justify-content:center;padding:8px 5px;font-size:12px;gap:5px}.filter-tab span{min-width:19px;height:19px;font-size:11px}.sort-control{justify-content:space-between}.sort-control select{flex:1;max-width:70%}}
 
+
+.current-period-panel{margin:16px 0 20px;padding:20px;background:linear-gradient(135deg,#102943 0%,#0d1a2a 58%,#102238 100%);border-color:#315477}
+.current-period-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:17px}
+.period-eyebrow{display:flex;align-items:center;gap:8px;color:#8bcaff;font-size:11px;font-weight:850;letter-spacing:1.7px;margin-bottom:7px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#36d399;box-shadow:0 0 0 4px #36d39920}
+.current-period-head h2{font-size:26px;line-height:1.2;margin:0 0 6px}
+.current-period-head p{font-size:14px;margin:0}
+.period-status{border:1px solid #315477;background:#122b42;color:#cde8ff;border-radius:999px;padding:9px 13px;font-size:13px;font-weight:750}
+.period-status.good{background:#123b32;border-color:#226b55;color:#7ff0bd}
+.period-status.warn{background:#3c2c16;border-color:#80602b;color:#ffd28a}
+.period-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.period-metric{min-width:0;background:#0a1726b8;border:1px solid #29415a;border-radius:13px;padding:14px}
+.period-metric span{display:block;color:#b8cde1;font-size:13px;font-weight:700;margin-bottom:9px}
+.period-metric strong{display:block;font-size:clamp(19px,2.3vw,26px);line-height:1.2;overflow-wrap:anywhere;font-weight:850}
+.period-metric:nth-child(2) strong{color:#42dba3}
+.period-metric small{display:block;color:#91a9c2;font-size:12px;line-height:1.4;margin-top:8px}
+.period-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid #29415a;margin-top:14px;padding-top:13px;color:#c6d8e9;font-size:13px}
+.period-margin{font-weight:800;color:#72e6b4}
+@media(max-width:760px){.current-period-panel{padding:15px;margin:13px 0 16px}.current-period-head{gap:10px;margin-bottom:13px}.current-period-head h2{font-size:23px}.period-status{font-size:12px;padding:7px 10px}.period-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.period-metric{padding:12px}.period-metric span{font-size:12px;min-height:30px}.period-metric strong{font-size:20px}.period-metric small{font-size:11px}.period-bottom{font-size:12px}}
+
 /* Mobile layout refinements */
 @media(max-width:600px){
   html,body{width:100%;max-width:100%;overflow-x:hidden}
@@ -110,6 +130,28 @@
 <section id="login" class="panel login"><h2>🔐 Súkromný prístup</h2><p class="muted">Prihlás sa existujúcim administrátorským účtom TOMIKON.</p><form id="loginForm"><div class="field"><label for="email">E-mail</label><input id="email" type="email" autocomplete="username" required></div><div class="field"><label for="password">Heslo</label><input id="password" type="password" autocomplete="current-password" required></div><button class="btn" style="width:100%">Prihlásiť sa</button><div id="loginMsg" class="msg error"></div></form></section>
 <main id="app" class="hidden">
 <div class="grid"><div class="stat"><span>Celkové tržby</span><strong id="revenue">0,00 €</strong></div><div class="stat"><span>Nákupné ceny</span><strong id="purchaseTotal">0,00 €</strong></div><div class="stat"><span>Dodatočné náklady</span><strong id="expenseTotal">0,00 €</strong></div><div class="stat profit" id="profitBox"><span>Čistý výsledok</span><strong id="profit">0,00 €</strong></div></div>
+
+
+<section class="panel current-period-panel">
+  <div class="current-period-head">
+    <div>
+      <div class="period-eyebrow"><span class="live-dot"></span> AKTUÁLNE OBDOBIE</div>
+      <h2 id="currentPeriodTitle">Tento mesiac</h2>
+      <p id="currentPeriodSubtitle" class="muted">Tvoj prehľad predajov a výsledkov za aktuálny mesiac.</p>
+    </div>
+    <div id="currentPeriodStatus" class="period-status">Načítavam výsledky…</div>
+  </div>
+  <div class="period-metrics">
+    <div class="period-metric"><span>Tržby tento mesiac</span><strong id="periodRevenue">0,00 €</strong><small id="periodRevenueCompare">Z predaných PC</small></div>
+    <div class="period-metric"><span>Zisk tento mesiac</span><strong id="periodProfit">0,00 €</strong><small id="periodProfitCompare">Po odpočítaní nákladov</small></div>
+    <div class="period-metric"><span>Predané počítače</span><strong id="periodSalesCount">0</strong><small id="periodSalesHint">Počet predajov v tomto mesiaci</small></div>
+    <div class="period-metric"><span>Peniaze v sklade</span><strong id="periodStockCost">0,00 €</strong><small id="periodStockCount">0 PC čaká na predaj</small></div>
+  </div>
+  <div class="period-bottom">
+    <span id="periodInsight">Tu sa zobrazí stručné zhodnotenie mesiaca.</span>
+    <span id="periodMargin" class="period-margin">Marža: —</span>
+  </div>
+</section>
 
 <section class="panel monthly-panel">
   <div class="monthly-head">
@@ -209,7 +251,41 @@ function monthlyData(){
  Object.keys(map).sort().forEach(k=>{if(!keys.includes(k))keys.push(k)});
  return keys.sort().map(key=>({key,label:monthLabel(key),...(map[key]||{revenue:0,cost:0,profit:0,count:0})}));
 }
+
+function renderCurrentPeriod(){
+ const now=new Date();
+ const key=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+ const prevDate=new Date(now.getFullYear(),now.getMonth()-1,1);
+ const prevKey=`${prevDate.getFullYear()}-${String(prevDate.getMonth()+1).padStart(2,"0")}`;
+ const sold=pcs.filter(p=>p.status==="sold"&&p.sale_date);
+ const current=sold.filter(p=>String(p.sale_date).slice(0,7)===key);
+ const previous=sold.filter(p=>String(p.sale_date).slice(0,7)===prevKey);
+ const sumFor=list=>list.reduce((acc,p)=>{const c=costs(p),r=Number(p.sale_price||0);acc.revenue+=r;acc.cost+=c;acc.profit+=r-c;return acc},{revenue:0,cost:0,profit:0});
+ const cur=sumFor(current),prev=sumFor(previous);
+ const stock=pcs.filter(p=>p.status!=="sold");
+ const stockCost=stock.reduce((sum,p)=>sum+costs(p),0);
+ const monthName=now.toLocaleDateString("sk-SK",{month:"long",year:"numeric"});
+ $("currentPeriodTitle").textContent=monthName.charAt(0).toLocaleUpperCase("sk-SK")+monthName.slice(1);
+ $("currentPeriodSubtitle").textContent="Prehľad predajov a výsledku za aktuálny kalendárny mesiac.";
+ $("periodRevenue").textContent=euro(cur.revenue);
+ $("periodProfit").textContent=euro(cur.profit);
+ $("periodProfit").style.color=cur.profit<0?"var(--red)":"var(--green)";
+ $("periodSalesCount").textContent=String(current.length);
+ $("periodStockCost").textContent=euro(stockCost);
+ $("periodStockCount").textContent=`${stock.length} ${stock.length===1?"PC čaká":stock.length<5?"PC čakajú":"PC čaká"} na predaj`;
+ $("periodRevenueCompare").textContent=previous.length?`Minulý mesiac: ${euro(prev.revenue)}`:"Tržby z predaných PC";
+ $("periodSalesHint").textContent=current.length===1?"1 predaj v tomto mesiaci":`${current.length} predajov v tomto mesiaci`;
+ const status=$("currentPeriodStatus");
+ if(!current.length){status.textContent="Zatiaľ bez predaja";status.className="period-status warn";$("periodInsight").textContent="Ešte nemáš zaevidovaný predaj v tomto mesiaci. Predané PC sa sem započítajú podľa dátumu predaja."}
+ else if(cur.profit>0){status.textContent="Mesiac v pluse";status.className="period-status good";$("periodInsight").textContent=`Predal si ${current.length} ${current.length===1?"počítač":current.length<5?"počítače":"počítačov"} a zatiaľ si v pluse ${euro(cur.profit)}.`}
+ else if(cur.profit<0){status.textContent="Zatiaľ v mínuse";status.className="period-status warn";$("periodInsight").textContent="Náklady na doterajšie predaje sú vyššie než tržby. Skontroluj ceny a výdavky."}
+ else{status.textContent="Na nule";status.className="period-status";$("periodInsight").textContent="Tržby a náklady predaných PC sú zatiaľ vyrovnané."}
+ const margin=cur.revenue>0?(cur.profit/cur.revenue)*100:null;
+ $("periodMargin").textContent=margin===null?"Marža: —":`Marža: ${margin.toLocaleString("sk-SK",{maximumFractionDigits:1,minimumFractionDigits:1})} %`;
+}
+
 function renderFinancials(){
+ renderCurrentPeriod();
  const sold=pcs.filter(p=>p.status==="sold");
  const ranked=sold.map(p=>({p,profit:Number(p.sale_price||0)-costs(p)})).sort((a,b)=>b.profit-a.profit);
  $("soldCount").textContent=String(sold.length);
