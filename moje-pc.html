@@ -89,6 +89,15 @@
 .stock-age-tag.critical{border-color:#7f3f47;background:#351b25;color:#ffabb5}
 .stock-age-tag.fresh{border-color:#285a4b;background:#112b25;color:#8be5bc}
 
+
+.backup-panel{margin:16px 0 20px;padding:20px;background:linear-gradient(135deg,#10253b,#0d1a2a 70%);border-color:#2b4b69}
+.backup-head h2{font-size:23px;margin:0 0 6px}.backup-head p{font-size:14px;margin:0}
+.backup-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.backup-file-label{display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.backup-status{font-size:13px;color:#b9d4e9;background:#0a1726;border:1px solid #29415a;border-radius:10px;padding:11px 12px;margin-top:12px;line-height:1.5}
+.backup-note{font-size:12px;color:#91a9c2;line-height:1.5;margin:10px 0 0}
+@media(max-width:600px){.backup-panel{padding:15px}.backup-actions{display:grid;grid-template-columns:1fr}.backup-actions .btn,.backup-file-label{width:100%;box-sizing:border-box}}
+
 /* Mobile layout refinements */
 @media(max-width:600px){
   html,body{width:100%;max-width:100%;overflow-x:hidden}
@@ -217,6 +226,20 @@
   </div>
 </section>
 
+
+<section class="panel backup-panel">
+  <div class="backup-head">
+    <div><div class="period-eyebrow"><span class="live-dot"></span> OCHRANA ÚDAJOV</div><h2>Záloha tvojej evidencie</h2><p class="muted">Stiahni si bezpečnostnú kópiu počítačov, výdavkov a záznamov o fotkách.</p></div>
+  </div>
+  <div class="backup-actions">
+    <button type="button" id="backupDownload" class="btn">⬇ Stiahnuť zálohu</button>
+    <label for="backupFile" class="btn secondary backup-file-label">↻ Obnoviť zo zálohy</label>
+    <input type="file" id="backupFile" accept=".json,application/json" class="hidden">
+  </div>
+  <div id="backupStatus" class="backup-status" role="status" aria-live="polite">Odporúčanie: ulož si zálohu po väčších zmenách a drž si ju aj mimo počítača.</div>
+  <p class="backup-note">Záloha obsahuje údaje z databázy a odkazy/cesty k fotografiám, nie samotné obrazové súbory. Obnova pridá alebo aktualizuje záznamy podľa ich ID; existujúce údaje sa automaticky nemažú.</p>
+</section>
+
 <section class="panel monthly-panel">
   <div class="monthly-head">
     <div><h2 style="margin:0 0 5px">Finančný prehľad</h2><div class="muted" style="font-size:14px">Mesačné výsledky predaných PC a rýchly prehľad evidencie.</div></div>
@@ -317,6 +340,51 @@ function monthlyData(){
 }
 
 
+
+
+function setBackupStatus(message,isError=false){
+ const el=$("backupStatus");el.textContent=message;el.style.color=isError?"#ffabb5":"#b9d4e9";
+}
+async function downloadBackup(){
+ try{
+  setBackupStatus("Pripravujem zálohu…");
+  const payload={
+   app:"Moje PC TOMIKON",
+   formatVersion:1,
+   createdAt:new Date().toISOString(),
+   note:"Záloha databázových záznamov. Fotografie ako súbory nie sú súčasťou zálohy.",
+   pc_inventory:pcs,
+   pc_expenses:expenses,
+   pc_photos:photos
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json;charset=utf-8"});
+  const url=window.URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="moje-pc-tomikon-zaloha-"+new Date().toISOString().slice(0,10)+".json";
+  a.style.display="none";document.body.appendChild(a);a.click();a.remove();
+  window.setTimeout(()=>window.URL.revokeObjectURL(url),3000);
+  setBackupStatus(`Záloha pripravená: ${pcs.length} PC, ${expenses.length} výdavkov a ${photos.length} záznamov o fotkách. Ulož súbor na bezpečné miesto.`);
+ }catch(err){console.error(err);setBackupStatus("Zálohu sa nepodarilo vytvoriť. Obnov stránku a skús to znova.",true)}
+}
+async function restoreBackup(file){
+ if(!file)return;
+ try{
+  const text=await file.text(),data=JSON.parse(text);
+  if(data.app!=="Moje PC TOMIKON"||data.formatVersion!==1||!Array.isArray(data.pc_inventory)||!Array.isArray(data.pc_expenses)||!Array.isArray(data.pc_photos))throw new Error("Toto nie je platná záloha Moje PC TOMIKON.");
+  const summary=`Záloha z ${data.createdAt?new Date(data.createdAt).toLocaleString("sk-SK"):"neznámeho dátumu"} obsahuje ${data.pc_inventory.length} PC, ${data.pc_expenses.length} výdavkov a ${data.pc_photos.length} záznamov o fotkách.\\n\\nObnova pridá alebo aktualizuje záznamy podľa ID. Existujúce záznamy sa nevymažú. Pokračovať?`;
+  if(!window.confirm(summary)){setBackupStatus("Obnova zrušená.");return}
+  setBackupStatus("Obnovujem záznamy… nezatváraj aplikáciu.");
+  const groups=[["pc_inventory",data.pc_inventory],["pc_expenses",data.pc_expenses],["pc_photos",data.pc_photos]];
+  for(const [table,rows] of groups){
+   if(!rows.length)continue;
+   const {error}=await db.from(table).upsert(rows,{onConflict:"id"});
+   if(error)throw new Error(`Chyba pri obnove tabuľky ${table}: ${error.message}`);
+  }
+  setBackupStatus("Obnova dokončená. Načítavam údaje z databázy…");
+  await load();
+  setBackupStatus("Obnova dokončená. Záznamy boli obnovené alebo aktualizované. Skontroluj fotografie — samotné obrazové súbory záloha neobsahuje.");
+ }catch(err){console.error(err);setBackupStatus(err.message||"Zálohu sa nepodarilo obnoviť.",true)}
+ finally{$("backupFile").value=""}
+}
 
 function stockAgeDays(p){
  const date=p.purchase_date||String(p.created_at||"").slice(0,10);
@@ -482,6 +550,6 @@ $("search").addEventListener("input",()=>render());
 $("sortBy").addEventListener("change",()=>render());
 document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{activeFilter=b.dataset.filter;render()}));
 db.auth.onAuthStateChange((_event,session)=>{if(!session){user=null;showLogin()}});
-$("calcPc").addEventListener("change",updatePriceCalculator);$("calcProfit").addEventListener("input",updatePriceCalculator);$("calcMargin").addEventListener("input",updatePriceCalculator);authCheck();if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./moje-pc-sw.js").catch(()=>{}));
+$("calcPc").addEventListener("change",updatePriceCalculator);$("calcProfit").addEventListener("input",updatePriceCalculator);$("calcMargin").addEventListener("input",updatePriceCalculator);$("backupDownload").addEventListener("click",downloadBackup);$("backupFile").addEventListener("change",ev=>restoreBackup(ev.target.files&&ev.target.files[0]));authCheck();if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./moje-pc-sw.js").catch(()=>{}));
 })();
 </script></body></html>
