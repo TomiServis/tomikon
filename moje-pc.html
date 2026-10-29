@@ -56,6 +56,31 @@
 .period-margin{font-weight:800;color:#72e6b4}
 @media(max-width:760px){.current-period-panel{padding:15px;margin:13px 0 16px}.current-period-head{gap:10px;margin-bottom:13px}.current-period-head h2{font-size:23px}.period-status{font-size:12px;padding:7px 10px}.period-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.period-metric{padding:12px}.period-metric span{font-size:12px;min-height:30px}.period-metric strong{font-size:20px}.period-metric small{font-size:11px}.period-bottom{font-size:12px}}
 
+
+.stock-calculator-panel{margin:16px 0 20px;padding:20px;background:linear-gradient(135deg,#10253b,#0d1a2a 70%);border-color:#2b4b69}
+.stock-calculator-head h2{margin:0 0 6px;font-size:24px;line-height:1.25}
+.stock-calculator-head p{margin:0;font-size:14px}
+.stock-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:17px 0}
+.stock-summary-item{min-width:0;background:#0a1726;border:1px solid #29415a;border-radius:12px;padding:13px}
+.stock-summary-item span,.price-result span{display:block;color:#b8cde1;font-size:12px;font-weight:750;margin-bottom:7px}
+.stock-summary-item strong{display:block;font-size:22px;line-height:1.25;overflow-wrap:anywhere}
+.stock-summary-item small{display:block;color:#91a9c2;font-size:11px;margin-top:6px;line-height:1.4}
+.price-calculator{border-top:1px solid #29415a;padding-top:17px;margin-top:8px}
+.price-calculator-title{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.calculator-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:#173e5d;color:#83cbff;font-size:23px;font-weight:900}
+.price-calculator-title h3{margin:0 0 3px;font-size:18px}
+.price-calculator-title p{margin:0;font-size:13px}
+.price-calculator-fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.price-calculator-fields .field{margin:0;min-width:0}
+.price-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:13px}
+.price-result{min-width:0;border:1px solid #29415a;border-radius:12px;background:#0a1726;padding:13px}
+.price-result strong{display:block;font-size:clamp(19px,2.4vw,25px);line-height:1.25;overflow-wrap:anywhere}
+.price-result small{display:block;color:#91a9c2;font-size:11px;margin-top:6px;line-height:1.4}
+.price-result.recommended{border-color:#267f66;background:linear-gradient(135deg,#10372f,#0a1726)}
+.price-result.recommended strong{color:#6ce8b4}
+.calculator-note{margin:12px 0 0;color:#91a9c2;font-size:12px;line-height:1.5}
+@media(max-width:760px){.stock-calculator-panel{padding:15px;margin:13px 0 16px}.stock-calculator-head h2{font-size:21px}.stock-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:13px 0}.stock-summary-item{padding:11px}.stock-summary-item strong{font-size:19px}.stock-summary-item:last-child{grid-column:1/-1}.price-calculator-fields{grid-template-columns:1fr 1fr;gap:10px}.price-calculator-fields .field:first-child{grid-column:1/-1}.price-results{grid-template-columns:1fr;gap:8px}.price-result{padding:12px}.price-result strong{font-size:21px}}
+
 /* Mobile layout refinements */
 @media(max-width:600px){
   html,body{width:100%;max-width:100%;overflow-x:hidden}
@@ -150,6 +175,36 @@
   <div class="period-bottom">
     <span id="periodInsight">Tu sa zobrazí stručné zhodnotenie mesiaca.</span>
     <span id="periodMargin" class="period-margin">Marža: —</span>
+  </div>
+</section>
+
+
+<section class="panel stock-calculator-panel">
+  <div class="stock-calculator-head">
+    <div>
+      <div class="period-eyebrow"><span class="live-dot"></span> SKLAD A CENOTVORBA</div>
+      <h2>Koľko máš v sklade a za koľko predať?</h2>
+      <p class="muted">Prehľad peňazí v nepredaných PC a rýchla kalkulačka predajnej ceny.</p>
+    </div>
+  </div>
+  <div class="stock-summary-grid">
+    <div class="stock-summary-item"><span>PC na sklade</span><strong id="stockOverviewCount">0</strong><small>Čakajú na predaj</small></div>
+    <div class="stock-summary-item"><span>Vložené peniaze</span><strong id="stockOverviewCost">0,00 €</strong><small>Nákup + evidované výdavky</small></div>
+    <div class="stock-summary-item"><span>Najdlhšie na sklade</span><strong id="stockOldestName">—</strong><small id="stockOldestAge">Zatiaľ bez PC na sklade</small></div>
+  </div>
+  <div class="price-calculator">
+    <div class="price-calculator-title"><span class="calculator-icon">€</span><div><h3>Kalkulačka predajnej ceny</h3><p class="muted">Vyber PC a nastav, koľko chceš zarobiť.</p></div></div>
+    <div class="price-calculator-fields">
+      <div class="field"><label for="calcPc">Počítač</label><select id="calcPc"></select></div>
+      <div class="field"><label for="calcProfit">Požadovaný zisk (€)</label><input id="calcProfit" type="number" min="0" step="5" value="80"></div>
+      <div class="field"><label for="calcMargin">Cieľová marža (%)</label><input id="calcMargin" type="number" min="0" max="90" step="1" value="20"></div>
+    </div>
+    <div class="price-results">
+      <div class="price-result"><span>Celkové náklady PC</span><strong id="calcCost">—</strong></div>
+      <div class="price-result recommended"><span>Cena pre zvolený zisk</span><strong id="calcFixedPrice">—</strong><small id="calcFixedHint">Náklady + požadovaný zisk</small></div>
+      <div class="price-result"><span>Cena pre cieľovú maržu</span><strong id="calcMarginPrice">—</strong><small id="calcMarginHint">Podľa nastavenej marže</small></div>
+    </div>
+    <p id="calcNote" class="calculator-note">Výpočet zahŕňa nákupnú cenu a výdavky pridané ku konkrétnemu PC.</p>
   </div>
 </section>
 
@@ -252,6 +307,38 @@ function monthlyData(){
  return keys.sort().map(key=>({key,label:monthLabel(key),...(map[key]||{revenue:0,cost:0,profit:0,count:0})}));
 }
 
+
+function renderStockAndCalculator(){
+ const stock=pcs.filter(p=>p.status!=="sold");
+ const total=stock.reduce((sum,p)=>sum+costs(p),0);
+ $("stockOverviewCount").textContent=String(stock.length);
+ $("stockOverviewCost").textContent=euro(total);
+ const dated=stock.map(p=>({p,date:p.purchase_date||String(p.created_at||"").slice(0,10)})).filter(x=>x.date).sort((a,b)=>a.date.localeCompare(b.date));
+ if(dated.length){
+   const oldest=dated[0],days=Math.max(0,Math.floor((Date.now()-new Date(oldest.date+"T00:00:00").getTime())/86400000));
+   $("stockOldestName").textContent=oldest.p.name;
+   $("stockOldestAge").textContent=days===0?"Pridaný dnes":`Na sklade ${days} ${days===1?"deň":days<5?"dni":"dní"}`;
+ }else{$("stockOldestName").textContent="—";$("stockOldestAge").textContent="Zatiaľ bez PC na sklade"}
+ const select=$("calcPc"),previous=select.value;
+ const options=pcs.map(p=>({p,cost:costs(p)})).sort((a,b)=>(a.p.status==="sold")-(b.p.status==="sold")||a.p.name.localeCompare(b.p.name,"sk"));
+ select.innerHTML=options.length?options.map(({p,cost})=>`<option value="${p.id}">${esc(p.name)}${p.status==="sold"?" (predaný)":""} — ${euro(cost)}</option>`).join(""):'<option value="">Najprv pridaj počítač</option>';
+ if(options.some(x=>String(x.p.id)===previous))select.value=previous;
+ updatePriceCalculator();
+}
+function updatePriceCalculator(){
+ const id=$("calcPc").value;
+ const p=pcs.find(x=>String(x.id)===String(id));
+ if(!p){$("calcCost").textContent="—";$("calcFixedPrice").textContent="—";$("calcMarginPrice").textContent="—";$("calcNote").textContent="Najprv pridaj počítač do evidencie.";return}
+ const cost=costs(p),profit=Math.max(0,Number($("calcProfit").value||0)),rawMargin=Number($("calcMargin").value||0),margin=Math.min(90,Math.max(0,rawMargin));
+ const fixed=cost+profit,marginPrice=margin>=100?null:cost/(1-margin/100);
+ $("calcCost").textContent=euro(cost);
+ $("calcFixedPrice").textContent=euro(fixed);
+ $("calcFixedHint").textContent=`Zisk ${euro(profit)} pred prípadnými ďalšími nákladmi`;
+ $("calcMarginPrice").textContent=marginPrice===null?"—":euro(marginPrice);
+ $("calcMarginHint").textContent=`Marža ${margin.toLocaleString("sk-SK",{maximumFractionDigits:1})} %`;
+ $("calcNote").textContent=p.status==="sold"?"Vybraný PC je už označený ako predaný. Kalkulačka slúži na orientačné porovnanie ceny.":"Výpočet zahŕňa nákupnú cenu a zaevidované výdavky tohto PC. Zaokrúhlenie cien je orientačné.";
+}
+
 function renderCurrentPeriod(){
  const now=new Date();
  const key=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
@@ -286,6 +373,7 @@ function renderCurrentPeriod(){
 
 function renderFinancials(){
  renderCurrentPeriod();
+ renderStockAndCalculator();
  const sold=pcs.filter(p=>p.status==="sold");
  const ranked=sold.map(p=>({p,profit:Number(p.sale_price||0)-costs(p)})).sort((a,b)=>b.profit-a.profit);
  $("soldCount").textContent=String(sold.length);
@@ -357,6 +445,6 @@ $("search").addEventListener("input",()=>render());
 $("sortBy").addEventListener("change",()=>render());
 document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{activeFilter=b.dataset.filter;render()}));
 db.auth.onAuthStateChange((_event,session)=>{if(!session){user=null;showLogin()}});
-authCheck();if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./moje-pc-sw.js").catch(()=>{}));
+$("calcPc").addEventListener("change",updatePriceCalculator);$("calcProfit").addEventListener("input",updatePriceCalculator);$("calcMargin").addEventListener("input",updatePriceCalculator);authCheck();if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./moje-pc-sw.js").catch(()=>{}));
 })();
 </script></body></html>
