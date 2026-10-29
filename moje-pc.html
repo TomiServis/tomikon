@@ -167,6 +167,41 @@
 @media(max-width:600px){.lightbox{padding:12px}.lightbox img{max-width:96vw;max-height:78vh}.lightbox-close{right:10px;top:10px;width:44px;height:44px}.lightbox-prev{left:8px}.lightbox-next{right:8px}.lightbox-nav{width:40px;height:40px}.lightbox-caption{bottom:10px;font-size:13px;left:50px;right:50px}}
 
 @media(max-width:760px){.wrap{padding:15px 11px 40px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cards{grid-template-columns:1fr}.panel{padding:15px}.top{align-items:flex-start}.top .btn{padding:9px 11px}.formgrid{grid-template-columns:1fr}.wide{grid-column:auto}.toolbar{align-items:flex-start;flex-direction:column}.stat{padding:13px}.stat span{min-height:30px}.pc{padding:16px}.pc-data{gap:8px}.photo-grid img{width:calc(50% - 5px);height:145px}.expense-fields{grid-template-columns:1fr}.expense-fields .wide{grid-column:auto}}
+
+
+/* TOMIKON visual polish v20: jemné svetelné akcenty a plynulé mikroanimácie */
+:root{--glow-blue:rgba(22,140,255,.18);--glow-green:rgba(69,212,154,.12)}
+body{background:radial-gradient(ellipse at 12% 4%,rgba(22,140,255,.15),transparent 34rem),radial-gradient(ellipse at 92% 24%,rgba(69,212,154,.07),transparent 30rem),linear-gradient(180deg,#102b48 0,#07111f 560px,#07111f 100%);background-attachment:fixed}
+body:before{content:"";position:fixed;inset:-20%;z-index:-1;pointer-events:none;background:radial-gradient(circle at 20% 20%,rgba(22,140,255,.07),transparent 28%),radial-gradient(circle at 75% 55%,rgba(69,212,154,.045),transparent 25%);animation:ambient-drift 18s ease-in-out infinite alternate}
+@keyframes ambient-drift{from{transform:translate3d(-1%,0,0) scale(1)}to{transform:translate3d(1%,1.5%,0) scale(1.035)}}
+.panel{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 14px 40px rgba(0,0,0,.18);transition:border-color .22s ease,box-shadow .22s ease,transform .22s ease}
+.panel:hover{border-color:#355777;box-shadow:0 18px 46px rgba(0,0,0,.24),0 0 0 1px rgba(73,181,255,.035)}
+.current-period-panel,.stock-calculator-panel{position:relative;overflow:hidden}
+.current-period-panel:before,.stock-calculator-panel:before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(116,198,255,.65),rgba(69,212,154,.4),transparent);pointer-events:none}
+.stat,.period-metric,.stock-summary-item,.stats-tile{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.stat:hover,.period-metric:hover,.stock-summary-item:hover,.stats-tile:hover{transform:translateY(-2px);border-color:#3c5e7e;box-shadow:0 9px 24px rgba(0,0,0,.18)}
+.pc{position:relative;overflow:hidden;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;animation:card-enter .38s both}
+.pc:before{content:"";position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,rgba(99,181,255,.5),transparent);opacity:.55;pointer-events:none}
+.pc:hover{transform:translateY(-3px);border-color:#3b5b7b;box-shadow:0 14px 32px rgba(0,0,0,.24),0 0 24px rgba(22,140,255,.055)}
+@keyframes card-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.btn{position:relative;overflow:hidden;transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
+.btn:hover{filter:brightness(1.1);box-shadow:0 5px 16px rgba(0,0,0,.18)}
+.btn:active{transform:translateY(1px) scale(.985);filter:brightness(.96)}
+.btn:not(.secondary):not(.danger){box-shadow:0 4px 14px rgba(22,140,255,.14)}
+.btn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #83caff;outline-offset:3px}
+.photo-grid a{display:block;overflow:hidden;border-radius:12px;line-height:0}
+.photo-grid img{transition:transform .28s ease,filter .28s ease;will-change:transform}
+.photo-grid a:hover img{transform:scale(1.055);filter:brightness(1.08)}
+.details-box{transition:border-color .2s ease,background .2s ease}
+.details-box[open]{border-color:#355d7e;background:#0c1b2c}
+.filter-tab{transition:transform .16s ease,background .16s ease,border-color .16s ease,box-shadow .16s ease}
+.filter-tab:hover{transform:translateY(-1px);border-color:#477096}
+input,textarea,select{transition:border-color .18s ease,box-shadow .18s ease}
+.field input:focus,.field textarea:focus,.field select:focus,.expense-fields input:focus{border-color:#3d9fff;box-shadow:0 0 0 3px rgba(22,140,255,.12);outline:none}
+::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:#07111f}::-webkit-scrollbar-thumb{background:#29435e;border:2px solid #07111f;border-radius:999px}::-webkit-scrollbar-thumb:hover{background:#3b6288}
+@media(max-width:600px){.panel:hover,.pc:hover,.stat:hover,.period-metric:hover,.stock-summary-item:hover,.stats-tile:hover{transform:none}.panel{backdrop-filter:none;-webkit-backdrop-filter:none}.pc{animation-duration:.25s}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important;transform:none!important}}
+
 </style>
 </head>
 <body><div class="wrap">
