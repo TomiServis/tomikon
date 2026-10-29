@@ -81,6 +81,14 @@
 .calculator-note{margin:12px 0 0;color:#91a9c2;font-size:12px;line-height:1.5}
 @media(max-width:760px){.stock-calculator-panel{padding:15px;margin:13px 0 16px}.stock-calculator-head h2{font-size:21px}.stock-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:13px 0}.stock-summary-item{padding:11px}.stock-summary-item strong{font-size:19px}.stock-summary-item:last-child{grid-column:1/-1}.price-calculator-fields{grid-template-columns:1fr 1fr;gap:10px}.price-calculator-fields .field:first-child{grid-column:1/-1}.price-results{grid-template-columns:1fr;gap:8px}.price-result{padding:12px}.price-result strong{font-size:21px}}
 
+
+.stock-alerts{border:1px solid #74552c;background:#2b2115;border-radius:12px;padding:12px 14px;margin:0 0 16px;color:#f6d59a}
+.stock-alerts strong{display:block;font-size:14px;margin-bottom:5px}
+.stock-alerts p{font-size:12px;line-height:1.5;margin:0;color:#d9c39c}
+.stock-age-tag{display:inline-flex;align-items:center;gap:5px;border:1px solid #74552c;background:#2b2115;color:#ffd18a;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;margin-top:7px}
+.stock-age-tag.critical{border-color:#7f3f47;background:#351b25;color:#ffabb5}
+.stock-age-tag.fresh{border-color:#285a4b;background:#112b25;color:#8be5bc}
+
 /* Mobile layout refinements */
 @media(max-width:600px){
   html,body{width:100%;max-width:100%;overflow-x:hidden}
@@ -192,6 +200,7 @@
     <div class="stock-summary-item"><span>Vložené peniaze</span><strong id="stockOverviewCost">0,00 €</strong><small>Nákup + evidované výdavky</small></div>
     <div class="stock-summary-item"><span>Najdlhšie na sklade</span><strong id="stockOldestName">—</strong><small id="stockOldestAge">Zatiaľ bez PC na sklade</small></div>
   </div>
+  <div id="stockAlerts" class="stock-alerts hidden" role="status" aria-live="polite"></div>
   <div class="price-calculator">
     <div class="price-calculator-title"><span class="calculator-icon">€</span><div><h3>Kalkulačka predajnej ceny</h3><p class="muted">Vyber PC a nastav, koľko chceš zarobiť.</p></div></div>
     <div class="price-calculator-fields">
@@ -308,9 +317,37 @@ function monthlyData(){
 }
 
 
+
+function stockAgeDays(p){
+ const date=p.purchase_date||String(p.created_at||"").slice(0,10);
+ if(!date)return null;
+ const stamp=new Date(date+"T00:00:00").getTime();
+ if(!Number.isFinite(stamp))return null;
+ return Math.max(0,Math.floor((Date.now()-stamp)/86400000));
+}
+function stockAgeBadge(p){
+ if(p.status==="sold")return "";
+ const days=stockAgeDays(p);
+ if(days===null)return "";
+ if(days>=60)return `<span class="stock-age-tag critical">⚠ ${days} dní na sklade</span>`;
+ if(days>=30)return `<span class="stock-age-tag">⏳ ${days} dní na sklade</span>`;
+ if(days>=0)return `<span class="stock-age-tag fresh">${days===0?"Pridaný dnes":`${days} dní na sklade`}</span>`;
+ return "";
+}
+
 function renderStockAndCalculator(){
  const stock=pcs.filter(p=>p.status!=="sold");
  const total=stock.reduce((sum,p)=>sum+costs(p),0);
+ const aged=stock.map(p=>({p,days:stockAgeDays(p)})).filter(x=>x.days!==null&&x.days>=30).sort((a,b)=>b.days-a.days);
+ const alert=$("stockAlerts");
+ if(aged.length){
+   alert.classList.remove("hidden");
+   const critical=aged.filter(x=>x.days>=60);
+   alert.innerHTML=`<strong>⚠ ${aged.length} ${aged.length===1?"počítač čaká":"počítače čakajú"} na predaj viac než 30 dní${critical.length?` · ${critical.length} už viac než 60 dní`:""}</strong><p>${aged.slice(0,4).map(x=>`${esc(x.p.name)} (${x.days} dní)`).join(" · ")}${aged.length>4?` · +${aged.length-4} ďalšie`:""}. Zváž úpravu ceny alebo obnovenie inzerátu.</p>`;
+ }else{
+   alert.classList.add("hidden");
+   alert.textContent="";
+ }
  $("stockOverviewCount").textContent=String(stock.length);
  $("stockOverviewCost").textContent=euro(total);
  const dated=stock.map(p=>({p,date:p.purchase_date||String(p.created_at||"").slice(0,10)})).filter(x=>x.date).sort((a,b)=>a.date.localeCompare(b.date));
@@ -431,7 +468,7 @@ await Promise.all(visiblePhotos.map(async f=>{
     signedPhotoCache.set(f.storage_path,{url:data.signedUrl,expiresAt:Date.now()+12*60*1000});
   }
 }));
-$("list").innerHTML=rows.map(p=>{const exs=expenses.filter(x=>x.pc_id===p.id),cost=costs(p),result=revenue(p)-cost;return `<article class="pc"><div class="pc-head"><div><h3>${esc(p.name)}</h3><span class="tag ${p.status==="sold"?"":"stock"}">${p.status==="sold"?"Predaný":"Na sklade / rozpracovaný"}</span></div><strong style="color:${p.status==="sold"?(result>=0?"var(--green)":"var(--red)"):"var(--muted)"}">${p.status==="sold"?euro(result):"Náklady: "+euro(cost)}</strong></div><div class="pc-data"><div class="mini"><span>Nákup</span><strong>${euro(p.purchase_price)}</strong><div class="muted">${dateText(p.purchase_date)}</div></div><div class="mini"><span>Predaj</span><strong>${p.status==="sold"?euro(p.sale_price):"—"}</strong><div class="muted">${dateText(p.sale_date)}</div></div><div class="mini"><span>Dodatočné náklady</span><strong>${euro(cost-Number(p.purchase_price||0))}</strong></div><div class="mini"><span>Celkové náklady</span><strong>${euro(cost)}</strong></div></div>${(p.configuration||p.description)?`<details class="details-box"><summary>Zobraziť konfiguráciu a celý popis</summary>${p.configuration?`<p class="desc"><b>Konfigurácia:</b><br>${esc(p.configuration)}</p>`:""}${p.description?`<p class="desc">${esc(p.description)}</p>`:""}</details>`:""}<div class="photo-grid">${photos.filter(f=>f.pc_id===p.id&&photoUrls[f.id]).map(f=>`<a href="${photoUrls[f.id]}" class="photo-open" data-photo-src="${photoUrls[f.id]}" data-photo-caption="${esc(f.caption||p.name)}" title="Zobraziť náhľad"><img src="${photoUrls[f.id]}" alt="${esc(f.caption||p.name)}" loading="lazy" decoding="async"></a>`).join("")}</div><div class="actions"><button class="btn secondary small" data-edit="${p.id}">Upraviť</button><button class="btn secondary small" data-expense="${p.id}">+ Výdavok</button><button class="btn danger small" data-delete="${p.id}">Vymazať</button></div><form class="expense-form hidden" id="expense-form-${p.id}" data-expense-form="${p.id}"><h4>Pridať výdavok</h4><div class="expense-fields"><input class="wide" name="expense-description" required maxlength="140" placeholder="Za čo? Napr. RAM, SSD, doprava"><input name="expense-amount" type="number" min="0" step=".01" required placeholder="Suma v €"><input name="expense-date" type="date" aria-label="Dátum výdavku"></div><div class="actions"><button class="btn small" type="submit">Uložiť výdavok</button><button class="btn secondary small" type="button" data-expense-cancel="${p.id}">Zrušiť</button></div></form>${exs.length?`<div class="expense-list"><b style="font-size:14px">Výdavky</b>${exs.map(x=>`<div class="expense-row"><span>${esc(x.description)} ${x.expense_date?"· "+dateText(x.expense_date):""}</span><span><b>${euro(x.amount)}</b> <button class="btn danger small" data-del-exp="${x.id}" aria-label="Vymazať výdavok">×</button></span></div>`).join("")}</div>`:""}</article>`}).join("");
+$("list").innerHTML=rows.map(p=>{const exs=expenses.filter(x=>x.pc_id===p.id),cost=costs(p),result=revenue(p)-cost;return `<article class="pc"><div class="pc-head"><div><h3>${esc(p.name)}</h3><span class="tag ${p.status==="sold"?"":"stock"}">${p.status==="sold"?"Predaný":"Na sklade / rozpracovaný"}</span>${stockAgeBadge(p)}</div><strong style="color:${p.status==="sold"?(result>=0?"var(--green)":"var(--red)"):"var(--muted)"}">${p.status==="sold"?euro(result):"Náklady: "+euro(cost)}</strong></div><div class="pc-data"><div class="mini"><span>Nákup</span><strong>${euro(p.purchase_price)}</strong><div class="muted">${dateText(p.purchase_date)}</div></div><div class="mini"><span>Predaj</span><strong>${p.status==="sold"?euro(p.sale_price):"—"}</strong><div class="muted">${dateText(p.sale_date)}</div></div><div class="mini"><span>Dodatočné náklady</span><strong>${euro(cost-Number(p.purchase_price||0))}</strong></div><div class="mini"><span>Celkové náklady</span><strong>${euro(cost)}</strong></div></div>${(p.configuration||p.description)?`<details class="details-box"><summary>Zobraziť konfiguráciu a celý popis</summary>${p.configuration?`<p class="desc"><b>Konfigurácia:</b><br>${esc(p.configuration)}</p>`:""}${p.description?`<p class="desc">${esc(p.description)}</p>`:""}</details>`:""}<div class="photo-grid">${photos.filter(f=>f.pc_id===p.id&&photoUrls[f.id]).map(f=>`<a href="${photoUrls[f.id]}" class="photo-open" data-photo-src="${photoUrls[f.id]}" data-photo-caption="${esc(f.caption||p.name)}" title="Zobraziť náhľad"><img src="${photoUrls[f.id]}" alt="${esc(f.caption||p.name)}" loading="lazy" decoding="async"></a>`).join("")}</div><div class="actions"><button class="btn secondary small" data-edit="${p.id}">Upraviť</button><button class="btn secondary small" data-expense="${p.id}">+ Výdavok</button><button class="btn danger small" data-delete="${p.id}">Vymazať</button></div><form class="expense-form hidden" id="expense-form-${p.id}" data-expense-form="${p.id}"><h4>Pridať výdavok</h4><div class="expense-fields"><input class="wide" name="expense-description" required maxlength="140" placeholder="Za čo? Napr. RAM, SSD, doprava"><input name="expense-amount" type="number" min="0" step=".01" required placeholder="Suma v €"><input name="expense-date" type="date" aria-label="Dátum výdavku"></div><div class="actions"><button class="btn small" type="submit">Uložiť výdavok</button><button class="btn secondary small" type="button" data-expense-cancel="${p.id}">Zrušiť</button></div></form>${exs.length?`<div class="expense-list"><b style="font-size:14px">Výdavky</b>${exs.map(x=>`<div class="expense-row"><span>${esc(x.description)} ${x.expense_date?"· "+dateText(x.expense_date):""}</span><span><b>${euro(x.amount)}</b> <button class="btn danger small" data-del-exp="${x.id}" aria-label="Vymazať výdavok">×</button></span></div>`).join("")}</div>`:""}</article>`}).join("");
 $("list").querySelectorAll(".photo-open").forEach(a=>a.addEventListener("click",ev=>{ev.preventDefault();const card=a.closest(".pc");const items=[...card.querySelectorAll(".photo-open")].map(link=>({src:link.dataset.photoSrc,caption:link.dataset.photoCaption||"Fotografia"}));const index=[...card.querySelectorAll(".photo-open")].indexOf(a);openLightbox(items,index)}));
 $("list").querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>edit(Number(b.dataset.edit)));$("list").querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>delPc(Number(b.dataset.delete)));$("list").querySelectorAll("[data-expense]").forEach(b=>b.onclick=()=>{const form=$("expense-form-"+b.dataset.expense);form.classList.toggle("hidden");if(!form.classList.contains("hidden"))form.querySelector("[name=expense-description]").focus()});$("list").querySelectorAll("[data-expense-cancel]").forEach(b=>b.onclick=()=>{$("expense-form-"+b.dataset.expenseCancel).classList.add("hidden")});$("list").querySelectorAll("[data-expense-form]").forEach(form=>form.onsubmit=async ev=>{ev.preventDefault();const id=Number(form.dataset.expenseForm),desc=form.querySelector("[name=expense-description]").value.trim(),amount=Number(form.querySelector("[name=expense-amount]").value),date=form.querySelector("[name=expense-date]").value||null;if(!desc||!Number.isFinite(amount)||amount<0){alert("Vyplň popis a platnú nezápornú sumu.");return}const save=form.querySelector('button[type="submit"]');save.disabled=true;const {error}=await db.from("pc_expenses").insert({pc_id:id,owner_id:user.id,description:desc,amount,expense_date:date});save.disabled=false;if(error){alert("Výdavok sa nepodarilo uložiť: "+error.message);return}await load()});$("list").querySelectorAll("[data-del-exp]").forEach(b=>b.onclick=()=>delExpense(Number(b.dataset.delExp)))}
 function reset(){ $("pcForm").reset();$("pcId").value="";$("purchasePrice").value="0";$("formTitle").textContent="Pridať počítač";$("savePc").textContent="Uložiť počítač";$("cancel").classList.add("hidden");message("pcMsg","","")}
