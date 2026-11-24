@@ -229,6 +229,18 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
 @media(max-width:600px){.app-tabs{top:4px;gap:6px;padding:6px}.app-tab{padding:10px 12px;font-size:13px}}
 @media(prefers-reduced-motion:reduce){.app-page{animation:none}}
 </style>
+
+<style id="tomikon-layout-fix">
+/* TOMIKON FIX: nav + inventory spacing */
+/* Zjednotenie navigacie a vycistenie rozlozenia */
+.app-tabs{display:flex!important;gap:8px;align-items:center;flex-wrap:wrap;overflow-x:auto;padding:9px;margin:0 0 22px;position:sticky;top:8px;z-index:30;background:#091523;border:1px solid #263b52;border-radius:14px;backdrop-filter:none;box-shadow:0 5px 16px rgba(0,0,0,.14)}
+.app-tab{min-height:44px;padding:10px 16px;border-radius:11px;white-space:nowrap}
+.app-page{min-width:0}
+.inventory-toolbar{display:grid!important;grid-template-columns:minmax(220px,1fr) minmax(260px,min(42%,420px));align-items:center;gap:14px;margin:24px 0 14px}
+.inventory-toolbar>div{min-width:0}.inventory-toolbar h2{margin:0 0 3px;line-height:1.25}.inventory-toolbar #count{line-height:1.45;overflow-wrap:anywhere}
+.inventory-toolbar input{width:100%!important;max-width:none!important;min-width:0}.inventory-controls{margin-top:12px}
+@media(max-width:700px){.app-tabs{position:static;flex-wrap:nowrap;overflow-x:auto;margin-bottom:16px}.app-tab{padding:9px 12px;min-height:40px}.inventory-toolbar{grid-template-columns:minmax(0,1fr);gap:10px;margin:18px 0 12px}.inventory-toolbar input{max-width:none!important}}
+</style>
 </head>
 <body><div class="wrap">
 <header class="top"><div><div class="eyebrow">Súkromná evidencia</div><h1>Moje PC <span style="color:#55adff">TOMIKON</span></h1><div class="muted" style="font-size:14px">Nákupy · výdavky · predaje · zisk</div></div><button id="logout" class="btn secondary hidden">Odhlásiť</button></header>
