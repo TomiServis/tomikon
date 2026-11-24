@@ -435,7 +435,7 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
   <div id="lightboxCaption" class="lightbox-caption"></div>
 </div>
 
-<script>
+<div id="pcQrModal" class="qr-modal" role="dialog" aria-modal="true" aria-label="QR štítok počítača"><div class="qr-sheet"><h2 id="pcQrName">TOMIKON</h2><p>Identifikačný QR kód počítača</p><div id="pcQrCode" class="qr-code"></div><div id="pcQrId" class="qr-id"></div><div class="qr-actions"><button type="button" class="qr-print" id="pcQrPrint">Vytlačiť štítok</button><button type="button" class="qr-close" id="pcQrClose">Zavrieť</button></div></div></div><script>
 (()=> {
 const URL="https://sjhlzllylobreeehziae.supabase.co";
 const KEY="sb_publishable_3GLcmT1aTqaGija1nFtziA_iGUYqt7_";
@@ -729,4 +729,4 @@ $("calcPc").addEventListener("change",updatePriceCalculator);$("calcProfit").add
   const initial=location.hash.slice(1);
   if(pages.some(p=>p.dataset.pageContent===initial)) showPage(initial);
 })();
-</script><div id="pcQrModal" class="qr-modal" role="dialog" aria-modal="true" aria-label="QR štítok počítača"><div class="qr-sheet"><h2 id="pcQrName">TOMIKON</h2><p>Identifikačný QR kód počítača</p><div id="pcQrCode" class="qr-code"></div><div id="pcQrId" class="qr-id"></div><div class="qr-actions"><button type="button" class="qr-print" id="pcQrPrint">Vytlačiť štítok</button><button type="button" class="qr-close" id="pcQrClose">Zavrieť</button></div></div></div></body></html>
+</script></body></html>
