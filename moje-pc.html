@@ -241,6 +241,52 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
 .inventory-toolbar input{width:100%!important;max-width:none!important;min-width:0}.inventory-controls{margin-top:12px}
 @media(max-width:700px){.app-tabs{position:static;flex-wrap:nowrap;overflow-x:auto;margin-bottom:16px}.app-tab{padding:9px 12px;min-height:40px}.inventory-toolbar{grid-template-columns:minmax(0,1fr);gap:10px;margin:18px 0 12px}.inventory-toolbar input{max-width:none!important}}
 </style>
+
+<style id="tomikon-v27-responsive">
+/* TOMIKON v27: desktop sidebar + iPhone responsive */
+/* Desktop: navigacia vlavo, obsah vpravo */
+@media(min-width:900px){
+ main#app:not(.hidden){display:grid!important;grid-template-columns:218px minmax(0,1fr);align-items:start;column-gap:22px;row-gap:0}
+ main#app>.app-tabs{grid-column:1;grid-row:1 / span 20;position:sticky;top:18px;display:flex!important;flex-direction:column;align-items:stretch;gap:8px;width:100%;margin:0;padding:12px;background:#091523;border:1px solid #263b52;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.16);backdrop-filter:none;overflow:visible}
+ main#app>.app-tabs:before{content:'TOMIKON';display:block;color:#55adff;font-size:12px;font-weight:900;letter-spacing:2px;padding:8px 10px 12px}
+ main#app>.app-tabs .app-tab{width:100%;text-align:left;min-height:46px;padding:12px 14px;border-radius:11px}
+ main#app>.app-page{grid-column:2;grid-row:auto;min-width:0;width:100%}
+ main#app>.app-page+.app-page{grid-column:2}
+}
+/* Mobil: navigacia hore v jednom posuvnom riadku, bez bocneho panelu */
+@media(max-width:899px){
+ main#app:not(.hidden){display:flex!important;flex-direction:column;gap:14px}
+ main#app>.app-tabs{position:sticky;top:0;z-index:40;display:flex!important;flex-direction:row;flex-wrap:nowrap;align-items:center;gap:7px;width:100%;margin:0 0 4px;padding:8px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;border-radius:13px;background:#091523;border:1px solid #263b52;backdrop-filter:none;-webkit-overflow-scrolling:touch}
+ main#app>.app-tabs::-webkit-scrollbar{display:none}
+ main#app>.app-tabs:before{display:none}
+ main#app>.app-tabs .app-tab{flex:0 0 auto;width:auto;min-height:42px;padding:10px 13px;font-size:13px;white-space:nowrap}
+ main#app>.app-page{width:100%;min-width:0}
+}
+/* iPhone safe areas and compact screens */
+@supports(padding:max(0px)){
+ body{padding-bottom:env(safe-area-inset-bottom)}
+ @media(max-width:899px){.wrap{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));padding-top:max(12px,env(safe-area-inset-top))}}
+}
+@media(max-width:600px){
+ .top{gap:12px;align-items:flex-start;flex-wrap:wrap}
+ .top h1{font-size:clamp(25px,7vw,34px);line-height:1.12}
+ .top .muted{font-size:13px!important}
+ .top #logout{margin-left:auto;padding:9px 12px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .stat{min-width:0;padding:11px}
+ .stat strong{font-size:clamp(17px,5vw,23px);overflow-wrap:anywhere}
+ .current-period-panel,.panel{min-width:0}
+ .period-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .period-metric{min-width:0;padding:11px}
+ .period-metric strong{font-size:clamp(18px,5vw,24px);overflow-wrap:anywhere}
+ .inventory-toolbar{grid-template-columns:minmax(0,1fr)!important}
+ .inventory-toolbar input{max-width:none!important;width:100%!important}
+ .filter-tabs{max-width:100%;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+ .filter-tab{flex:0 0 auto}
+}
+@media(max-width:380px){.grid,.period-metrics{grid-template-columns:minmax(0,1fr)}.app-tab{padding:9px 11px!important}}
+@media(prefers-reduced-motion:reduce){.app-page{animation:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body><div class="wrap">
 <header class="top"><div><div class="eyebrow">Súkromná evidencia</div><h1>Moje PC <span style="color:#55adff">TOMIKON</span></h1><div class="muted" style="font-size:14px">Nákupy · výdavky · predaje · zisk</div></div><button id="logout" class="btn secondary hidden">Odhlásiť</button></header>
