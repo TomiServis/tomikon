@@ -189,10 +189,6 @@ body{background:linear-gradient(180deg,#10243b 0,#07111f 460px,#07111f 100%)}
 @media(prefers-reduced-motion:reduce){.sale-toast{transition:none}.sale-confetti{display:none}}
 
 
-/* v23 – prehľadnejšie rozloženie a rýchla navigácia */
-.quick-nav{display:flex;gap:8px;overflow-x:auto;padding:3px 1px 13px;margin:-7px 0 16px;scrollbar-width:thin;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#07111f 78%,transparent);}
-.quick-nav a{flex:0 0 auto;text-decoration:none;color:#cfe4fa;background:#12243a;border:1px solid #2b4562;border-radius:999px;padding:8px 13px;font-size:13px;font-weight:750;white-space:nowrap}
-.quick-nav a:focus,.quick-nav a:hover{background:#1b4164;border-color:#3999ed;outline:none}
 main#app{display:flex;flex-direction:column;gap:18px}
 main#app>.grid{margin:0;scroll-margin-top:65px}
 main#app>.panel{margin:0;scroll-margin-top:65px}
@@ -220,11 +216,8 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
  .stat{padding:12px}
  .cards{grid-template-columns:1fr;gap:11px}
- .quick-nav{margin-left:-12px;margin-right:-12px;padding-left:12px;padding-right:12px}
  .pc{padding:14px}
 }
-@media(prefers-reduced-motion:reduce){.quick-nav a{scroll-behavior:auto}}
-
 </style>
 
 <style>
@@ -239,7 +232,6 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
 </head>
 <body><div class="wrap">
 <header class="top"><div><div class="eyebrow">Súkromná evidencia</div><h1>Moje PC <span style="color:#55adff">TOMIKON</span></h1><div class="muted" style="font-size:14px">Nákupy · výdavky · predaje · zisk</div></div><button id="logout" class="btn secondary hidden">Odhlásiť</button></header>
-<nav class="quick-nav" aria-label="Rýchla navigácia"><a href="#prehled">Prehľad</a><a href="#sklad">Sklad</a><a href="#financie">Financie</a><a href="#pridat">Pridať PC</a><a href="#zoznam">Zoznam PC</a><a href="#zalohovanie">Záloha</a></nav>
 <section id="login" class="panel login"><h2>🔐 Súkromný prístup</h2><p class="muted">Prihlás sa existujúcim administrátorským účtom TOMIKON.</p><form id="loginForm"><div class="field"><label for="email">E-mail</label><input id="email" type="email" autocomplete="username" required></div><div class="field"><label for="password">Heslo</label><input id="password" type="password" autocomplete="current-password" required></div><button class="btn" style="width:100%">Prihlásiť sa</button><div id="loginMsg" class="msg error"></div></form></section>
 <main id="app" class="hidden">
 <nav class="app-tabs" aria-label="Hlavné sekcie">
