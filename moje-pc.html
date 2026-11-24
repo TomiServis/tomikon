@@ -226,12 +226,31 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
 @media(prefers-reduced-motion:reduce){.quick-nav a{scroll-behavior:auto}}
 
 </style>
+
+<style>
+.app-tabs{display:flex;gap:8px;overflow-x:auto;padding:8px;margin:0 0 18px;position:sticky;top:8px;z-index:20;background:rgba(7,17,29,.94);border:1px solid #263b52;border-radius:14px;backdrop-filter:blur(8px);scrollbar-width:thin}
+.app-tab{flex:0 0 auto;border:1px solid #30465f;background:#102033;color:#cbd8e8;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}
+.app-tab.active{background:#1767a8;border-color:#3999e8;color:#fff;box-shadow:0 3px 12px rgba(35,135,220,.2)}
+.app-page{display:none;animation:pageIn .16s ease-out}.app-page.active{display:block}
+@keyframes pageIn{from{opacity:.75;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.app-tabs{top:4px;gap:6px;padding:6px}.app-tab{padding:10px 12px;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.app-page{animation:none}}
+</style>
 </head>
 <body><div class="wrap">
 <header class="top"><div><div class="eyebrow">Súkromná evidencia</div><h1>Moje PC <span style="color:#55adff">TOMIKON</span></h1><div class="muted" style="font-size:14px">Nákupy · výdavky · predaje · zisk</div></div><button id="logout" class="btn secondary hidden">Odhlásiť</button></header>
 <nav class="quick-nav" aria-label="Rýchla navigácia"><a href="#prehled">Prehľad</a><a href="#sklad">Sklad</a><a href="#financie">Financie</a><a href="#pridat">Pridať PC</a><a href="#zoznam">Zoznam PC</a><a href="#zalohovanie">Záloha</a></nav>
 <section id="login" class="panel login"><h2>🔐 Súkromný prístup</h2><p class="muted">Prihlás sa existujúcim administrátorským účtom TOMIKON.</p><form id="loginForm"><div class="field"><label for="email">E-mail</label><input id="email" type="email" autocomplete="username" required></div><div class="field"><label for="password">Heslo</label><input id="password" type="password" autocomplete="current-password" required></div><button class="btn" style="width:100%">Prihlásiť sa</button><div id="loginMsg" class="msg error"></div></form></section>
 <main id="app" class="hidden">
+<nav class="app-tabs" aria-label="Hlavné sekcie">
+<button type="button" class="app-tab active" data-page="home">Prehľad</button>
+<button type="button" class="app-tab" data-page="stock">Sklad</button>
+<button type="button" class="app-tab" data-page="finance">Financie</button>
+<button type="button" class="app-tab" data-page="add">Pridať PC</button>
+<button type="button" class="app-tab" data-page="inventory">Zoznam PC</button>
+<button type="button" class="app-tab" data-page="backup">Záloha</button>
+</nav>
+<div class="app-page active" data-page-content="home">
 <div id="prehled" class="grid"><div class="stat"><span>Celkové tržby</span><strong id="revenue">0,00 €</strong></div><div class="stat"><span>Nákupné ceny</span><strong id="purchaseTotal">0,00 €</strong></div><div class="stat"><span>Dodatočné náklady</span><strong id="expenseTotal">0,00 €</strong></div><div class="stat profit" id="profitBox"><span>Čistý výsledok</span><strong id="profit">0,00 €</strong></div></div>
 
 
@@ -255,8 +274,9 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
     <span id="periodMargin" class="period-margin">Marža: —</span>
   </div>
 </section>
+</div>
 
-
+<div class="app-page" data-page-content="stock">
 <section id="sklad" class="panel stock-calculator-panel">
   <div class="stock-calculator-head">
     <div>
@@ -286,8 +306,9 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
     <p id="calcNote" class="calculator-note">Výpočet zahŕňa nákupnú cenu a výdavky pridané ku konkrétnemu PC.</p>
   </div>
 </section>
+</div>
 
-
+<div class="app-page" data-page-content="backup">
 <section id="zalohovanie" class="panel backup-panel">
   <div class="backup-head">
     <div><div class="period-eyebrow"><span class="live-dot"></span> OCHRANA ÚDAJOV</div><h2>Záloha tvojej evidencie</h2><p class="muted">Stiahni si bezpečnostnú kópiu počítačov, výdavkov a záznamov o fotkách.</p></div>
@@ -300,7 +321,9 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
   <div id="backupStatus" class="backup-status" role="status" aria-live="polite">Odporúčanie: ulož si zálohu po väčších zmenách a drž si ju aj mimo počítača.</div>
   <p class="backup-note">Záloha obsahuje údaje z databázy a odkazy/cesty k fotografiám, nie samotné obrazové súbory. Obnova pridá alebo aktualizuje záznamy podľa ich ID; existujúce údaje sa automaticky nemažú.</p>
 </section>
+</div>
 
+<div class="app-page" data-page-content="finance">
 <section id="financie" class="panel monthly-panel">
   <div class="monthly-head">
     <div><h2 style="margin:0 0 5px">Finančný prehľad</h2><div class="muted" style="font-size:14px">Mesačné výsledky predaných PC a rýchly prehľad evidencie.</div></div>
@@ -314,7 +337,9 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
   </div>
   <p class="notice">Mesačný výsledok priraďuje celý nákup a súvisiace výdavky k mesiacu predaja. Celkový výsledok hore zahŕňa aj náklady na PC, ktoré ešte nie sú predané.</p>
 </section>
+</div>
 
+<div class="app-page" data-page-content="add">
 <section id="pridat" class="panel"><div class="toolbar" style="margin-top:0"><div><h2 id="formTitle">Pridať počítač</h2><div class="muted" style="font-size:14px">Polia označené * sú povinné.</div></div><button id="cancel" type="button" class="btn secondary hidden">Zrušiť úpravu</button></div>
 <form id="pcForm"><input id="pcId" type="hidden"><div class="formgrid">
 <div class="field"><label for="name">Názov PC *</label><input id="name" maxlength="140" required placeholder="Napr. Herný PC Ryzen 5"></div>
@@ -327,6 +352,9 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
 <div class="field wide"><label for="description">Poznámky</label><textarea id="description" placeholder="Stav, opravy a ďalšie poznámky"></textarea></div>
 <div class="field wide"><label for="photos">Fotografie PC</label><input id="photos" type="file" accept="image/*" multiple><div class="notice">Fotky sa nahrajú do súkromného Supabase úložiska po uložení PC. Pred prvým použitím treba spustiť priložený SQL skript pre úložisko.</div></div>
 </div><button id="savePc" class="btn">Uložiť počítač</button><div id="pcMsg" class="msg"></div></form></section>
+</div>
+
+<div class="app-page" data-page-content="inventory">
 <div id="zoznam" class="toolbar inventory-toolbar"><div><h2>Moje počítače</h2><div id="count" class="muted" style="font-size:14px"></div></div><input id="search" aria-label="Hľadať PC" placeholder="Hľadať podľa názvu alebo komponentov..." style="background:#081421;border:1px solid #30455e;border-radius:10px;padding:11px;color:white;max-width:340px;width:100%"></div>
 <div class="inventory-controls">
   <div class="filter-tabs" role="group" aria-label="Filtrovať počítače">
@@ -343,7 +371,7 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
     </select>
   </label>
 </div>
-<div id="list" class="cards"></div></main><div class="footer">TOMIKON · Súkromná evidencia PC</div></div>
+<div id="list" class="cards"></div></div></main><div class="footer">TOMIKON · Súkromná evidencia PC</div></div>
 
 <div id="photoLightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Náhľad fotografií">
   <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Zavrieť náhľad">×</button>
@@ -625,5 +653,20 @@ $("sortBy").addEventListener("change",()=>render());
 document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{activeFilter=b.dataset.filter;render()}));
 db.auth.onAuthStateChange((_event,session)=>{if(!session){user=null;showLogin()}});
 $("calcPc").addEventListener("change",updatePriceCalculator);$("calcProfit").addEventListener("input",updatePriceCalculator);$("calcMargin").addEventListener("input",updatePriceCalculator);$("backupDownload").addEventListener("click",downloadBackup);$("backupFile").addEventListener("change",ev=>restoreBackup(ev.target.files&&ev.target.files[0]));authCheck();if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./moje-pc-sw.js").catch(()=>{}));
+})();
+
+// Jednoduchá navigácia medzi samostatnými obrazovkami
+(function(){
+  const tabs=[...document.querySelectorAll('.app-tab')];
+  const pages=[...document.querySelectorAll('.app-page')];
+  function showPage(name){
+    pages.forEach(p=>p.classList.toggle('active',p.dataset.pageContent===name));
+    tabs.forEach(t=>{const active=t.dataset.page===name;t.classList.toggle('active',active);t.setAttribute('aria-current',active?'page':'false');});
+    try{history.replaceState(null,'','#'+name);}catch(e){}
+    window.scrollTo({top:0,behavior:'auto'});
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>showPage(t.dataset.page)));
+  const initial=location.hash.slice(1);
+  if(pages.some(p=>p.dataset.pageContent===initial)) showPage(initial);
 })();
 </script></body></html>
