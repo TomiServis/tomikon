@@ -1,4 +1,4 @@
-const CACHE_NAME = "tomikon-pc-shell-v32";
+const CACHE_NAME = "tomikon-pc-shell-v33";
 const SHELL = ["./moje-pc.html", "./moje-pc.webmanifest"];
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
