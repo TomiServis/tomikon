@@ -287,7 +287,7 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
 @media(max-width:380px){.grid,.period-metrics{grid-template-columns:minmax(0,1fr)}.app-tab{padding:9px 11px!important}}
 @media(prefers-reduced-motion:reduce){.app-page{animation:none!important;scroll-behavior:auto!important}}
 </style>
-</head>
+<style id="tomikon-v28-chart">.finance-chart-card{margin:18px 0 12px;padding:18px;border:1px solid rgba(91,139,181,.28);border-radius:16px;background:linear-gradient(145deg,rgba(18,39,60,.76),rgba(9,22,36,.72))}.finance-chart-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px}.finance-chart-head h3{margin:0 0 4px;font-size:17px}.finance-chart-head p{margin:0;font-size:13px}.chart-legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap;color:#b9cce0;font-size:12px}.chart-legend span{display:flex;align-items:center;gap:6px}.chart-legend i{display:inline-block;width:9px;height:9px;border-radius:3px}.legend-revenue{background:#42a5ff}.legend-profit{background:#36d6a0}.finance-chart{width:100%;min-height:190px;overflow:hidden}.finance-chart svg{display:block;width:100%;height:auto;max-height:270px}.chart-empty{padding:35px 10px;text-align:center}.chart-label{fill:#91a9c2;font-size:11px}.chart-gridline{stroke:rgba(145,169,194,.14);stroke-width:1}@media(max-width:600px){.finance-chart-card{padding:13px;margin:14px 0 10px}.finance-chart{min-height:155px}.finance-chart-head h3{font-size:16px}.chart-legend{gap:10px}}</style></head>
 <body><div class="wrap">
 <header class="top"><div><div class="eyebrow">Súkromná evidencia</div><h1>Moje PC <span style="color:#55adff">TOMIKON</span></h1><div class="muted" style="font-size:14px">Nákupy · výdavky · predaje · zisk</div></div><button id="logout" class="btn secondary hidden">Odhlásiť</button></header>
 <section id="login" class="panel login"><h2>🔐 Súkromný prístup</h2><p class="muted">Prihlás sa existujúcim administrátorským účtom TOMIKON.</p><form id="loginForm"><div class="field"><label for="email">E-mail</label><input id="email" type="email" autocomplete="username" required></div><div class="field"><label for="password">Heslo</label><input id="password" type="password" autocomplete="current-password" required></div><button class="btn" style="width:100%">Prihlásiť sa</button><div id="loginMsg" class="msg error"></div></form></section>
@@ -382,6 +382,9 @@ main#app>.panel{margin:0;scroll-margin-top:65px}
     <div class="stats-tile"><span>Najziskovejší predaný PC</span><strong id="bestPc">—</strong><div id="bestPcProfit" class="muted" style="font-size:13px;margin-top:4px">Zatiaľ bez predajov</div></div>
     <div class="stats-tile"><span>Počet predaných PC</span><strong id="soldCount">0</strong><div class="muted" style="font-size:13px;margin-top:4px">Počítače so stavom „Predaný“</div></div>
   </div>
+
+<!-- TOMIKON v28: monthly financial chart -->
+<div class="finance-chart-card"><div class="finance-chart-head"><div><h3>Vývoj tržieb a zisku</h3><p class="muted">Mesačné porovnanie podľa dátumu predaja</p></div><div class="chart-legend"><span><i class="legend-revenue"></i>Tržby</span><span><i class="legend-profit"></i>Zisk</span></div></div><div id="monthlyChart" class="finance-chart" role="img" aria-label="Stĺpcový graf mesačných tržieb a zisku"><div class="muted chart-empty">Graf sa načíta po načítaní údajov.</div></div></div>
   <div class="monthly-table-wrap">
     <table class="monthly-table"><thead><tr><th>Mesiac</th><th>Tržby</th><th>Náklady predajov</th><th>Výsledok</th></tr></thead><tbody id="monthlyRows"><tr><td colspan="4" class="muted">Zatiaľ bez údajov.</td></tr></tbody></table>
   </div>
@@ -615,6 +618,8 @@ function renderCurrentPeriod(){
  $("periodMargin").textContent=margin===null?"Marža: —":`Marža: ${margin.toLocaleString("sk-SK",{maximumFractionDigits:1,minimumFractionDigits:1})} %`;
 }
 
+
+function renderMonthlyChart(rows){const host=$("monthlyChart");if(!host)return;const data=rows.slice(-6);if(!data.length){host.innerHTML='<div class="muted chart-empty">Zatiaľ nie sú dostupné údaje.</div>';return;}const W=720,H=230,L=42,R=12,T=16,B=38,plotW=W-L-R,plotH=H-T-B;const maxRaw=Math.max(1,...data.flatMap(d=>[Number(d.revenue)||0,Number(d.profit)||0]));const minRaw=Math.min(0,...data.map(d=>Number(d.profit)||0));const max=Math.max(1,maxRaw*1.12),min=Math.min(0,minRaw*1.12),span=max-min||1;const y=v=>T+(max-v)/span*plotH,zero=y(0),group=plotW/data.length,bw=Math.min(25,group*.27);let svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Tržby a zisk za posledných šesť mesiacov">';for(let j=0;j<4;j++){const val=min+(max-min)*j/3,yy=y(val);svg+='<line class="chart-gridline" x1="'+L+'" y1="'+yy+'" x2="'+(W-R)+'" y2="'+yy+'"/><text class="chart-label" x="'+(L-7)+'" y="'+(yy+4)+'" text-anchor="end">'+Math.round(val).toLocaleString("sk-SK")+'</text>';}data.forEach((d,i)=>{const cx=L+group*(i+.5),rv=Number(d.revenue)||0,pv=Number(d.profit)||0,rY=y(rv),pY=y(pv),rh=Math.max(1,Math.abs(zero-rY)),ph=Math.max(1,Math.abs(zero-pY));svg+='<rect x="'+(cx-bw-3)+'" y="'+Math.min(zero,rY)+'" width="'+bw+'" height="'+rh+'" rx="4" fill="#42a5ff" opacity=".9"><title>'+esc(d.label)+' · Tržby: '+euro(rv)+'</title></rect><rect x="'+(cx+3)+'" y="'+Math.min(zero,pY)+'" width="'+bw+'" height="'+ph+'" rx="4" fill="'+(pv<0?"#ff7185":"#36d6a0")+'" opacity=".95"><title>'+esc(d.label)+' · Zisk: '+euro(pv)+'</title></rect><text class="chart-label" x="'+cx+'" y="'+(H-12)+'" text-anchor="middle">'+esc(d.label.split(" ")[0].slice(0,3))+'</text>';});svg+='<line class="chart-gridline" x1="'+L+'" y1="'+zero+'" x2="'+(W-R)+'" y2="'+zero+'" stroke-dasharray="3 4"/></svg>';host.innerHTML=svg;}
 function renderFinancials(){
  renderCurrentPeriod();
  renderStockAndCalculator();
@@ -623,6 +628,7 @@ function renderFinancials(){
  $("soldCount").textContent=String(sold.length);
  if(ranked.length){$("bestPc").textContent=ranked[0].p.name;$("bestPcProfit").textContent="Zisk: "+euro(ranked[0].profit);$("bestPcProfit").style.color=ranked[0].profit<0?"var(--red)":"var(--green)"}else{$("bestPc").textContent="—";$("bestPcProfit").textContent="Zatiaľ bez predajov";$("bestPcProfit").style.color="var(--muted)"}
  const rows=monthlyData();
+ renderMonthlyChart(rows);
  $("monthlyRows").innerHTML=rows.map(r=>`<tr><td data-label="Mesiac">${esc(r.label)}${r.count?`<div class="muted" style="font-size:12px">${r.count} predajov</div>`:""}</td><td data-label="Tržby">${euro(r.revenue)}</td><td data-label="Náklady predajov">${euro(r.cost)}</td><td data-label="Výsledok" class="${r.profit>=0?"highlight-number":""}" style="${r.profit<0?"color:var(--red)":""}">${euro(r.profit)}</td></tr>`).join("");
 }
 function csvCell(value){const s=String(value??"");return '"'+s.replace(/"/g,'""')+'"'}
